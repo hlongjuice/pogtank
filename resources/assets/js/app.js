@@ -16,6 +16,7 @@ window.Vue = require('vue');
  */
 
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
+Vue.component('materials-items-create',require('./components/materials/items/CreateComponent.vue'));
 
 const app = new Vue({
     el: '#app'

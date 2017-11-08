@@ -26,54 +26,25 @@
                     <span class="title">Dashboard</span>
                 </a>
             </li>
-            {{--Layout--}}
+            {{--Materials--}}
             <li>
                 <a href="javascript:;">
                     <i class="icon-puzzle"></i>
-                    <span class="title">Page Layouts</span>
+                    <span class="title">วัสดุอุปกรณ์</span>
                     <span class="arrow"></span>
                 </a>
                 <ul class="sub-menu">
                     <li>
-                        <a href="layout_sidebar_fixed.html">
+                        <a href="{{route('admin.materials.types.index')}}">
                             <i class="icon-anchor"></i>
-                            Sidebar Fixed Page</a>
+                           หมวดหมู่วัสดุ/อุปกรณ์</a>
                     </li>
                     <li>
-                        <a href="layout_sidebar_closed.html">
+                        <a href="{{route('admin.materials.items.index')}}">
                             <i class="icon-book-open"></i>
-                            Sidebar Closed Page</a>
+                            วัสดุ/อุปกรณ์</a>
                     </li>
-                    <li>
-                        <a href="layout_boxed_page.html">
-                            <i class="icon-pin"></i>
-                            Boxed Page</a>
-                    </li>
-                    <li>
-                        <a href="layout_session_timeout.html">
-                            <i class="icon-vector"></i>
-                            <span class="badge badge-warning">new</span>Session Timeout</a>
-                    </li>
-                    <li>
-                        <a href="layout_idle_timeout.html">
-                            <i class="icon-cursor"></i>
-                            User Idle Timeout</a>
-                    </li>
-                    <li>
-                        <a href="layout_language_bar.html">
-                            <i class="icon-rocket"></i>
-                            Language Bar</a>
-                    </li>
-                    <li>
-                        <a href="layout_disabled_menu.html">
-                            <i class="icon-link"></i>
-                            Disabled Menu Links</a>
-                    </li>
-                    <li>
-                        <a href="layout_sidebar_reversed.html">
-                            <i class="icon-settings"></i>
-                            <span class="badge badge-success">new</span>Reversed Sidebar</a>
-                    </li>
+
                     <li class="active">
                         <a href="layout_blank_page.html">
                             <i class="icon-paper-clip"></i>

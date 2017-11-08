@@ -24,6 +24,10 @@ License: You must have a valid license purchased only from themeforest(the above
     <meta content="" name="description"/>
     <meta content="" name="author"/>
     <meta name="MobileOptimized" content="320">
+
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <!-- BEGIN GLOBAL MANDATORY STYLES -->
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css"/>
     <link href="{{asset('templates/admin/conquer/theme/assets/plugins/font-awesome/css/font-awesome.min.css')}} " rel="stylesheet" type="text/css"/>
@@ -31,6 +35,10 @@ License: You must have a valid license purchased only from themeforest(the above
     <link href="{{asset('templates/admin/conquer/theme/assets/plugins/bootstrap/css/bootstrap.min.css')}} " rel="stylesheet" type="text/css"/>
     <link href="{{asset('templates/admin/conquer/theme/assets/plugins/uniform/css/uniform.default.css')}} " rel="stylesheet" type="text/css"/>
     <!-- END GLOBAL MANDATORY STYLES -->
+    <!-- BEGIN PAGE LEVEL STYLES -->
+    <link rel="stylesheet" type="text/css" href="{{asset('templates/admin/conquer/theme/assets/plugins/select2/select2.css')}}"/>
+    <link rel="stylesheet" type="text/css" href="{{asset('templates/admin/conquer/theme/assets/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.css')}}"/>
+    <!-- END PAGE LEVEL STYLES -->
     <!-- BEGIN THEME STYLES -->
     <link href="{{asset('templates/admin/conquer/theme/assets/css/style-conquer.css')}} " rel="stylesheet" type="text/css"/>
     <link href="{{asset('templates/admin/conquer/theme/assets/css/style.css')}} " rel="stylesheet" type="text/css"/>
@@ -546,7 +554,7 @@ License: You must have a valid license purchased only from themeforest(the above
                 Blank Page <small>blank page</small>
             </h3>
             <div class="page-bar">
-                <ul class="page-breadcrumb">
+        {{--        <ul class="page-breadcrumb">
                     <li>
                         <i class="fa fa-home"></i>
                         <a href="index.html">Home</a>
@@ -559,36 +567,14 @@ License: You must have a valid license purchased only from themeforest(the above
                     <li>
                         <a href="#">Blank Page</a>
                     </li>
-                </ul>
-                <div class="page-toolbar">
-                    <div class="btn-group pull-right">
-                        <button type="button" class="btn btn-fit-height default dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true">
-                            Actions <i class="fa fa-angle-down"></i>
-                        </button>
-                        <ul class="dropdown-menu pull-right" role="menu">
-                            <li>
-                                <a href="#">Action</a>
-                            </li>
-                            <li>
-                                <a href="#">Another action</a>
-                            </li>
-                            <li>
-                                <a href="#">Something else here</a>
-                            </li>
-                            <li class="divider">
-                            </li>
-                            <li>
-                                <a href="#">Separated link</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+                </ul>--}}
+                @yield('breadcrumb')
             </div>
             <!-- END PAGE HEADER-->
             <!-- BEGIN PAGE CONTENT-->
-            <div class="row">
+            <div id="app" class="row">
                 <div class="col-md-12">
-                    Blank page content goes here
+                @yield('content')
                 </div>
             </div>
             <!-- END PAGE CONTENT-->
@@ -613,6 +599,9 @@ License: You must have a valid license purchased only from themeforest(the above
 <!-- BEGIN CORE PLUGINS -->
 <script src="{{asset('templates/admin/conquer/theme/assets/plugins/jquery-1.11.0.min.js')}}" type="text/javascript"></script>
 <script src="{{asset('templates/admin/conquer/theme/assets/plugins/jquery-migrate-1.2.1.min.js')}}" type="text/javascript"></script>
+
+<!-- Build in Scripts -->
+<script src="{{ asset('js/app.js') }}"></script>
 <!-- IMPORTANT! Load jquery-ui-1.10.3.custom.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
 <script src="{{asset('templates/admin/conquer/theme/assets/plugins/jquery-ui/jquery-ui-1.10.3.custom.min.js')}}" type="text/javascript"></script>
 <script src="{{asset('templates/admin/conquer/theme/assets/plugins/bootstrap/js/bootstrap.min.js')}}" type="text/javascript"></script>
@@ -620,13 +609,26 @@ License: You must have a valid license purchased only from themeforest(the above
 <script src="{{asset('templates/admin/conquer/theme/assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js')}}" type="text/javascript"></script>
 <script src="{{asset('templates/admin/conquer/theme/assets/plugins/jquery.blockui.min.js')}}" type="text/javascript"></script>
 <script src="{{asset('templates/admin/conquer/theme/assets/plugins/uniform/jquery.uniform.min.js')}}" type="text/javascript"></script>
+
+<!-- BEGIN PAGE LEVEL PLUGINS -->
+<script type="text/javascript" src="{{asset('templates/admin/conquer/theme/assets/plugins/ckeditor/ckeditor.js')}}"></script>
+<script type="text/javascript" src="{{asset('templates/admin/conquer/theme/assets/plugins/select2/select2.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('templates/admin/conquer/theme/assets/plugins/datatables/media/js/jquery.dataTables.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('templates/admin/conquer/theme/assets/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.js')}}"></script>
 <!-- END CORE PLUGINS -->
 <script src="{{asset('templates/admin/conquer/theme/assets/scripts/app.js')}}"></script>
+<script src="{{asset('templates/admin/conquer/theme/assets/scripts/table-editable.js')}}"></script>
+<script src="{{asset('templates/admin/conquer/theme/assets/scripts/form-samples.js')}}"></script>
+
+
 <script>
     jQuery(document).ready(function() {
         App.init();
+        TableEditable.init();
+        FormSamples.init();
     });
 </script>
+@yield('script')
 <!-- END JAVASCRIPTS -->
 </body>
 <!-- END BODY -->
