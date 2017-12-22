@@ -11,9 +11,14 @@ Breadcrumbs::register('materialTypes', function ($breadcrumbs) {
     $breadcrumbs->push('หมวดหมู่วัสดุ/อุปกรณ์', route('admin.materials.types.index'));
 });
 // -- create
-Breadcrumbs::register('materialTypesCreate',function($breadcrumbs){
+Breadcrumbs::register('materialTypeCreate',function($breadcrumbs){
    $breadcrumbs->parent('materialTypes');
    $breadcrumbs->push('Create',route('admin.materials.types.create'));
+});
+// -- edit
+Breadcrumbs::register('materialTypeEdit',function ($breadcrumbs,$oldType){
+   $breadcrumbs->parent('materialTypes');
+   $breadcrumbs->push('Edit - '.$oldType->name,route('admin.materials.types.edit',$oldType->id));
 });
 
 //Materials Items

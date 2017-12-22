@@ -1,3 +1,9 @@
 {
-    "/js/app.js": "/js/app.js"
+    "/js/app.js": "/js/app.js",
+    "/css/app.css": "/css/app.css",
+    "/views/admin/materials/types/js/type_edit.js": "/views/admin/materials/types/js/type_edit.js",
+    "/views/admin/materials/types/js/type_create.js": "/views/admin/materials/types/js/type_create.js",
+    "/views/admin/materials/items/js/item_edit_add_modal.js": "/views/admin/materials/items/js/item_edit_add_modal.js",
+    "/views/admin/materials/items/js/item_edit.js": "/views/admin/materials/items/js/item_edit.js",
+    "/views/admin/materials/items/js/item_create.js": "/views/admin/materials/items/js/item_create.js"
 }

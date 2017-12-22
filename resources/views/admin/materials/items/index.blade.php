@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 @section('breadcrumb')
     {{Breadcrumbs::render('materialItems')}}
-    @endsection
+@endsection
 @section('content')
     <div class="row">
         <div class="col-md-12">
@@ -9,7 +9,7 @@
             <div class="portlet">
                 <div class="portlet-title">
                     <div class="caption">
-                        <i class="fa fa-edit"></i>Editable Table
+                        <i class="fa fa-edit"></i>วัสดุ/อุปกรณ์
                     </div>
                     <div class="tools">
                         <a href="javascript:;" class="collapse">
@@ -25,16 +25,18 @@
                 <div class="portlet-body">
                     <div class="table-toolbar">
                         <div class="row">
+                            <!-- Add New Item -->
                             <div class="col-md-6">
                                 <div class="btn-group">
                                     <a href="{{route('admin.materials.items.create')}}" class="btn btn-success">
-                                        เพิ่มหมวดหมู่ <i class="fa fa-plus"></i>
+                                         เพิ่มวัสดุ / อุปกรณ์ <i class="fa fa-plus"></i>
                                     </a>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="btn-group pull-right">
-                                    <button class="btn dropdown-toggle" data-toggle="dropdown">Tools <i class="fa fa-angle-down"></i>
+                                    <button class="btn dropdown-toggle" data-toggle="dropdown">Tools <i
+                                                class="fa fa-angle-down"></i>
                                     </button>
                                     <ul class="dropdown-menu pull-right">
                                         <li>
@@ -54,162 +56,38 @@
                             </div>
                         </div>
                     </div>
+                    <!-- Table -->
                     <table class="table table-striped table-hover table-bordered" id="sample_editable_1">
+                        <!-- -- Table Header -->
                         <thead>
                         <tr>
-                            <th>
-                                Username
-                            </th>
-                            <th>
-                                Full Name
-                            </th>
-                            <th>
-                                Points
-                            </th>
-                            <th>
-                                Notes
-                            </th>
-                            <th>
-                                Edit
-                            </th>
-                            <th>
-                                Delete
-                            </th>
+                            <td>ชื่อวัสดุ/อุปกรณ์</td>
+                            <td>หมวดหมู่</td>
+                            <td>สถาณะ</td>
+                            <th>Edit</th>
+                            <th>Delete</th>
                         </tr>
                         </thead>
+                        <!-- -- Table Body -->
                         <tbody>
-                        <tr>
-                            <td>
-                                alex
-                            </td>
-                            <td>
-                                Alex Nilson
-                            </td>
-                            <td>
-                                1234
-                            </td>
-                            <td class="center">
-                                power user
-                            </td>
-                            <td>
-                                <a class="edit" href="javascript:;">
-                                    Edit </a>
-                            </td>
-                            <td>
-                                <a class="delete" href="javascript:;">
-                                    Delete </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                lisa
-                            </td>
-                            <td>
-                                Lisa Wong
-                            </td>
-                            <td>
-                                434
-                            </td>
-                            <td class="center">
-                                new user
-                            </td>
-                            <td>
-                                <a class="edit" href="javascript:;">
-                                    Edit </a>
-                            </td>
-                            <td>
-                                <a class="delete" href="javascript:;">
-                                    Delete </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                nick12
-                            </td>
-                            <td>
-                                Nick Roberts
-                            </td>
-                            <td>
-                                232
-                            </td>
-                            <td class="center">
-                                power user
-                            </td>
-                            <td>
-                                <a class="edit" href="javascript:;">
-                                    Edit </a>
-                            </td>
-                            <td>
-                                <a class="delete" href="javascript:;">
-                                    Delete </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                goldweb
-                            </td>
-                            <td>
-                                Sergio Jackson
-                            </td>
-                            <td>
-                                132
-                            </td>
-                            <td class="center">
-                                elite user
-                            </td>
-                            <td>
-                                <a class="edit" href="javascript:;">
-                                    Edit </a>
-                            </td>
-                            <td>
-                                <a class="delete" href="javascript:;">
-                                    Delete </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                webriver
-                            </td>
-                            <td>
-                                Antonio Sanches
-                            </td>
-                            <td>
-                                462
-                            </td>
-                            <td class="center">
-                                new user
-                            </td>
-                            <td>
-                                <a class="edit" href="javascript:;">
-                                    Edit </a>
-                            </td>
-                            <td>
-                                <a class="delete" href="javascript:;">
-                                    Delete </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                gist124
-                            </td>
-                            <td>
-                                Nick Roberts
-                            </td>
-                            <td>
-                                62
-                            </td>
-                            <td class="center">
-                                new user
-                            </td>
-                            <td>
-                                <a class="edit" href="javascript:;">
-                                    Edit </a>
-                            </td>
-                            <td>
-                                <a class="delete" href="javascript:;">
-                                    Delete </a>
-                            </td>
-                        </tr>
+                        @foreach($materials as $material)
+                            <tr>
+                                <td>{{$material->name}}</td>
+                                <td>{{$material->type ? $material->type->name:''}}</td>
+                                <td class=""><p class=" text-success">{{$material->published->name}}</p></td>
+                                <td>
+                                    <a class="btn btn-info" href="{{route('admin.materials.items.edit',$material->id)}}">Edit </a>
+                                </td>
+                                <td>
+                                    <form onsubmit="return confirm('ยืนยันการลบ')" method="POST" action="{{route('admin.materials.items.destroy',$material->id)}}">
+                                        {{ csrf_field() }}
+                                        {{ method_field('DELETE') }}
+                                        <button class="btn btn-danger" type="submit">
+                                            Delete </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -217,7 +95,17 @@
             <!-- END EXAMPLE TABLE PORTLET-->
         </div>
     </div>
-    @endsection
+@endsection
 @section('script')
-
-    @endsection
+    <script>
+        var submitted='{!! $submitted !!}';
+        $('#sample_editable_1').dataTable();
+        if(submitted=='added'){
+            toastr.success('การบันทึกเสร็จสมบูรณ์')
+        }else if(submitted=='updated'){
+            toastr.success('การแก้ไข้เสร็จสมบูรณ์')
+        }else if(submitted=='deleted'){
+            toastr.success('การลบเสร็จสมบูรณ์')
+        }
+    </script>
+@endsection

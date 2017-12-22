@@ -19,7 +19,6 @@ class CreateProducts extends Migration
             $table->string('name');
             NestedSet::columns($table);
             $table->timestamps();
-
         });
     }
 
