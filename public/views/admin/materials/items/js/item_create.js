@@ -128,11 +128,12 @@ var vm = new Vue({
                 if (result) {
                     axios.post('/admin/materials/items', vm.form).then(function (result) {
                         alert('เพิ่มเสร็จแล้ว');
-                        window.location = indexRoute + '/added';
-                        // console.log(result.data);
+                        // window.location=indexRoute+'/added';
+                        console.log(result);
                     }).catch(function (err) {
                         alert('ไม่สามารถเพิ่มข้อมูลได้ลองใหม่อีกครั้ง');
                         console.log(err);
+                        console.log('Bad!!');
                     });
                 } else {
                     vm.$validator.errors.items.forEach(function (error) {
@@ -149,8 +150,12 @@ var vm = new Vue({
                 amphoe: '',
                 district: '',
                 amphoes: [],
-                districts: []
+                districts: [],
+                localCost: 0,
+                localPrice: 0,
+                wage: 0
             };
+            // let city='';
             this.form.cities.push(city);
         },
         // -- Get Amphoe

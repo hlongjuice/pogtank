@@ -65,6 +65,8 @@ License: You must have a valid license purchased only from themeforest(the above
     {{--Extend Css--}}
     @yield('css')
     <link href="{{asset('css/app.css')}}" rel="stylesheet"/>
+    {{--Font Awesome--}}
+    <link rel="stylesheet" href="{{asset('css/font-awesome/css/fontawesome-all.min.css')}}">
 </head>
 <!-- END HEAD -->
 <!-- BEGIN BODY -->
@@ -473,7 +475,10 @@ License: You must have a valid license purchased only from themeforest(the above
                     <li class="divider">
                     </li>
                     <li>
-                        <a href="login.html"><i class="fa fa-key"></i> Log Out</a>
+                        <form method="POST" action="{{route('logout')}}">
+                            {{csrf_field()}}
+                            <button class="btn btn-navbar" type="submit"><i class="fa fa-key"></i> Log Out</button>
+                        </form>
                     </li>
                 </ul>
             </li>

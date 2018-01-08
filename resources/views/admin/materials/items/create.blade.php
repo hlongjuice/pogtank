@@ -26,7 +26,7 @@
                         </li>
                         <!-- -- Tab Local Price-->
                         <li>
-                            <a href="#localPrice" data-toggle="tab">ราคาประจำตำบล</a>
+                            <a href="#localPrice" data-toggle="tab">ราคาประจำท้องถิ่น</a>
                         </li>
                     </ul>
                     <!--Tab Content-->

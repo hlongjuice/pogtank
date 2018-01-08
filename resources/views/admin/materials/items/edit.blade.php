@@ -9,11 +9,13 @@
         {{-- Form--}}
         <form method="POST" action="{{route('admin.materials.items.store')}}" @submit="validateForm('form',$event)"
               data-vv-scope="form">
-            {{csrf_field()}}
+            {{--Save Button--}}
             <div class="col-xs-12">
                 <button type="submit" class="visible-xs col-xs-6 pull-right btn btn-success margin-bottom-20">บันทึก
                 </button>
             </div>
+            {{csrf_field()}}
+            {{--Portlets--}}
             <div class="col-xs-12">
                 <div class="tabbable tabbable-custom">
                     <!-- -- Submit Button-->
@@ -28,12 +30,27 @@
                         </li>
                         <!-- -- Tab Local Price-->
                         <li>
-                            <a href="#localPrice" data-toggle="tab">ราคาประจำตำบล</a>
+                            <a href="#localPrice" data-toggle="tab">ราคาประจำท้องถิ่น</a>
+                        </li>
+                        <li>
+                            <a href="#lastUpdatedLocalPrice" data-toggle="tab">
+                                รายการแก้ไขรออนุมัติ
+                                @if($material->localPrices()->count()>0)
+                                    @if($material->waitingGlobalPrice()->count()>0
+                                    && $material->localPrices()->waitingPrices()->count()>0)
+                                        <span class="badge badge-danger badge-notify">
+                                        {{$material->waitingGlobalPrice()->count()
+                                        + $material->localPrices()->waitingPrices()->count()}}
+                                            รายการ
+                                    </span>
+                                    @endif
+                                @endif
+                            </a>
                         </li>
                     </ul>
                     <!--Tab Content-->
                     <div class="tab-content">
-                        <!--  -- Item Details-->
+                        <!-- --Approved Global Price and  Details Tab-->
                         <div class="tab-pane active" id="item-details">
                             <div class="portlet">
                                 <div class="portlet-title">
@@ -52,6 +69,16 @@
                                         <div class="form-body">
                                             <h3 class="form-section">
                                                 รายละเอียดวัสดุ/อุปกรณ์
+                                                @if($material->approvedGlobalPrice!=null)
+                                                    <span class="small text-info">
+                                                        อัพเดทล่าสุด : {{$material->approvedGlobalPrice->updated_at->format('d/m/Y')}}
+                                                    </span>
+                                                @endif
+                                                <small class="margin-top-10 pull-right">
+                                                    <span class="text-{{$material->published->color}}">
+                                                        สถาณะ: {{$material->published->name}}
+                                                    </span>
+                                                </small>
                                             </h3>
                                             <div class="row">
                                                 <!-- -- -- Material Name-->
@@ -197,55 +224,193 @@
                             </div>
                         </div>
                     {{-- -- End Details Tab--}}
-                    <!-- --  Local Price-->
+                    <!-- --Approved Local Price Tab-->
                         <div class="tab-pane" id="localPrice">
+                            {{-- --  -- Add New Local Price--}}
                             <div class="col-xs-12 col-md-4">
-                                <button class="btn btn-primary" @click="showAddPriceModal" type="button">เพิ่มรายการ</button>
+                                <button class="margin-bottom-15 btn btn-primary" @click="showAddPriceModal"
+                                        type="button">เพิ่มรายการ
+                                </button>
                             </div>
-                            <!-- Table -->
-                            <table class="table table-striped table-hover table-bordered" id="sample_editable_1">
-                                <!-- -- Table Header -->
-                                <thead>
-                                <tr>
-                                    <td>จังหวัด</td>
-                                    <td>อำเภอ</td>
-                                    <td>ตำบล</td>
-                                    <td>ราคาทุน</td>
-                                    <td>ราคาขาย</td>
-                                    <td>ค่าแรง</td>
-                                    <th>Edit</th>
-                                    <th>Delete</th>
-                                </tr>
-                                </thead>
-                                <!-- -- Table Body -->
-                                <tbody>
-                                {{--{{dd($material)}}--}}
-                                @foreach($material->localPrices as $localPrice)
-                                    <tr>
-                                        <td>{{$localPrice->province->name}}</td>
-                                        <td>{{$localPrice->amphoe->name}}</td>
-                                        <td>{{$localPrice->district->name}}</td>
-                                        <td>{{$localPrice->cost}}</td>
-                                        <td>{{$localPrice->price}}</td>
-                                        <td>{{$localPrice->wage}}</td>
-                                        <td>
-                                            <a class="btn btn-info"
-                                               href="{{route('admin.materials.items.edit',$localPrice->id)}}">Edit </a>
-                                        </td>
-                                        <td>
-                                            <form onsubmit="return confirm('ยืนยันการลบ')" method="POST"
-                                                  action="{{route('admin.materials.items.destroy',$localPrice->id)}}">
-                                                {{ csrf_field() }}
-                                                {{ method_field('DELETE') }}
-                                                <button class="btn btn-danger" type="submit">
-                                                    Delete
-                                                </button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
+                            {{-- -- -- Approved Local Price--}}
+                            <div class="portlet">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        <i class="fa fa-edit"></i>ราคาตามพื้นที่
+                                    </div>
+                                </div>
+                                <div class="portlet-body">
+                                    <!-- -- -- --Approved Local Price Table -->
+                                    <table class="table table-striped table-hover table-bordered"
+                                           id="sample_editable_1">
+                                        <!-- -- -- -- --Approved Local Price Table Header -->
+                                        <thead>
+                                        <tr>
+                                            <td>จังหวัด</td>
+                                            <td>อำเภอ</td>
+                                            <td>ตำบล</td>
+                                            <td>ราคาทุน</td>
+                                            <td>ราคาขาย</td>
+                                            <td>ค่าแรง</td>
+                                            <th>Edit</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                        </thead>
+                                        <!-- -- -- -- --Apprpved Local Price Table Body -->
+                                        <tbody>
+                                        {{--{{dd($material)}}--}}
+                                        @foreach($material->localPrices as $localPrice)
+                                            <tr>
+                                                <td>{{$localPrice->approvedPrice->province->name}}</td>
+                                                <td>{{$localPrice->approvedPrice->amphoe->name}}</td>
+                                                <td>{{$localPrice->approvedPrice->district->name}}</td>
+                                                <td>{{$localPrice->approvedPrice->cost}}</td>
+                                                <td>{{$localPrice->approvedPrice->price}}</td>
+                                                <td>{{$localPrice->approvedPrice->wage}}</td>
+                                                <td>
+                                                    <a class="btn btn-info"
+                                                       href="{{route('admin.materials.items.edit',$localPrice->id)}}">Edit </a>
+                                                </td>
+                                                <td>
+                                                    <form onsubmit="return confirm('ยืนยันการลบ')" method="POST"
+                                                          action="{{route('admin.materials.items.destroy',$localPrice->id)}}">
+                                                        {{ csrf_field() }}
+                                                        {{ method_field('DELETE') }}
+                                                        <button class="btn btn-danger" type="submit">
+                                                            Delete
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        {{-- -- Waiting For Approval Tabs --}}
+                        <div class="tab-pane" id="lastUpdatedLocalPrice">
+                            {{-- -- -- Waiting Global Price--}}
+                            <div class="portlet">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        <i class="fa fa-edit"></i>รายละเอียดสินค้า
+                                    </div>
+                                </div>
+                                <div class="portlet-body">
+                                    <!-- -- -- --Waiting Global Price Table -->
+                                    <table class="table table-striped table-hover table-bordered"
+                                           id="sample_editable_1">
+                                        <!-- -- Table Header -->
+                                        <thead>
+                                        <tr>
+                                            <td>ชื่อ</td>
+                                            <td>หมวดหมู่</td>
+                                            <td>หน่วย</td>
+                                            <td>แหล่งที่มา</td>
+                                            <td>ราคาทุนกลาง</td>
+                                            <td>ราคาขายกลาง</td>
+                                            <th>ราคาทุนใบเสนอราคา</th>
+                                            <th>ราคาขายใบเสนอราคา</th>
+                                            <th>Edit</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                        </thead>
+                                        <!-- -- -- -- --Table Waiting Global Price Table Body -->
+                                        <tbody>
+                                        @if($material->waitingGlobalPrice!=null)
+                                            <tr>
+                                                <td>{{$material->waitingGlobalPrice->name}}</td>
+                                                <td>{{$material->waitingGlobalPrice->type->name}}</td>
+                                                <td>{{$material->waitingGlobalPrice->unit}}</td>
+                                                <td>
+                                                    @if($material->waitingGlobalPrice->vendor)
+                                                        {{$material->waitingGlobalPrice->vendor->name}}
+                                                    @else
+                                                        -
+                                                    @endif
+                                                </td>
+                                                <td>{{$material->waitingGlobalPrice->global_cost}}</td>
+                                                <td>{{$material->waitingGlobalPrice->global_price}}</td>
+                                                <td>{{$material->waitingGlobalPrice->invoice_cost}}</td>
+                                                <td>{{$material->waitingGlobalPrice->invoice_price}}</td>
+                                                <td>
+                                                    <a class="btn btn-info"
+                                                       href="{{route('admin.materials.items.edit',$material->waitingGlobalPrice->id)}}">Edit </a>
+                                                </td>
+                                                <td>
+                                                    <form onsubmit="return confirm('ยืนยันการลบ')" method="POST"
+                                                          action="{{route('admin.materials.items.destroy',$material->waitingGlobalPrice->id)}}">
+                                                        {{ csrf_field() }}
+                                                        {{ method_field('DELETE') }}
+                                                        <button class="btn btn-danger" type="submit">
+                                                            Delete
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        @endif
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            {{-- -- -- Waiting  Local Price--}}
+                            <div class="portlet">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        <i class="fa fa-edit"></i>ราคาตามพื้นที่
+                                    </div>
+                                </div>
+                                <div class="portlet-body">
+                                    <!-- -- -- --Wating Local Price Table -->
+                                    <table class="table table-striped table-hover table-bordered"
+                                           id="sample_editable_1">
+                                        <!-- -- -- -- --Table Header -->
+                                        <thead>
+                                        <tr>
+                                            <td>จังหวัด</td>
+                                            <td>อำเภอ</td>
+                                            <td>ตำบล</td>
+                                            <td>ราคาทุน</td>
+                                            <td>ราคาขาย</td>
+                                            <td>ค่าแรง</td>
+                                            <th>Edit</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                        </thead>
+                                        <!-- -- -- -- --Waiting Local Price Table Body -->
+                                        <tbody>
+                                        {{--{{dd($material)}}--}}
+                                        @foreach($material->localPrices as $localPrice)
+                                            @if($localPrice->waitingPrice)
+                                                <tr>
+                                                    <td>{{$localPrice->approvedPrice->province->name}}</td>
+                                                    <td>{{$localPrice->approvedPrice->amphoe->name}}</td>
+                                                    <td>{{$localPrice->approvedPrice->district->name}}</td>
+                                                    <td>{{$localPrice->approvedPrice->cost}}</td>
+                                                    <td>{{$localPrice->approvedPrice->price}}</td>
+                                                    <td>{{$localPrice->approvedPrice->wage}}</td>
+                                                    <td>
+                                                        <a class="btn btn-info"
+                                                           href="{{route('admin.materials.items.edit',$localPrice->id)}}">Edit </a>
+                                                    </td>
+                                                    <td>
+                                                        <form onsubmit="return confirm('ยืนยันการลบ')" method="POST"
+                                                              action="{{route('admin.materials.items.destroy',$localPrice->id)}}">
+                                                            {{ csrf_field() }}
+                                                            {{ method_field('DELETE') }}
+                                                            <button class="btn btn-danger" type="submit">
+                                                                Delete
+                                                            </button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            @endif
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -263,6 +428,14 @@
         var provinces = JSON.parse('{!! $provinces !!}');
         var material = JSON.parse('{!! $material !!}');
         var indexRoute = '{!! $indexRoute !!}';
+        var globalPrice = '';
+        var localPrices = [];
+        if (material.published.name_eng == 'waiting') {
+            globalPrice = material.waiting_global_price;
+        } else if (material.published.name_eng == 'approved') {
+            globalPrice = material.approved_global_price;
+        }
+        console.log(material);
     </script>
     <script src="{{asset('views/admin/materials/items/js/item_edit.js')}}"></script>
     <script src="{{asset('views/admin/materials/items/js/item_edit_add_modal.js')}}"></script>

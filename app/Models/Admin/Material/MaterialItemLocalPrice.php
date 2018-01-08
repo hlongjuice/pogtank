@@ -2,23 +2,46 @@
 
 namespace App\Models\Admin\Material;
 
+use App\Http\Controllers\GlobalVariableController;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class MaterialItemLocalPrice extends Model
 {
-    protected $table='material_local_prices';
+    use SoftDeletes;
+    protected $table='material_local_price';
     protected $guarded=[];
+    private $publishedStatus='';
 
-    //Province
-    public function province(){
-        return $this->belongsTo('App\Models\City\Province','province_id');
+    public function __construct(array $attributes = [])
+    {
+        parent::__construct($attributes);
+        $this->publishedStatus=GlobalVariableController::$publishedStatus;
     }
-    //Amphoe
-    public function amphoe(){
-        return $this->belongsTo('App\Models\City\Amphoe','amphoe_id');
+
+    //Local Price Version
+    public function priceDetails(){
+        return $this->hasMany('App\Models\Admin\Material\MaterialItemLocalPriceVersion',
+            'local_price_id');
     }
-    //District
-    public function district(){
-        return $this->belongsTo('App\Models\City\District','district_id');
+    //Approved Prices
+    public function approvedPrice(){
+        return $this->hasOne('App\Models\Admin\Material\MaterialItemLocalPriceVersion',
+            'local_price_id')
+            ->with('province.amphoes','amphoe.districts','district')
+            ->where('published_id',$this->publishedStatus['approved'])
+            ->orderBy('updated_at','DESC');
+    }
+    //Waiting Prices
+    public function waitingPrices(){
+        return $this->hasMany('App\Models\Admin\Material\MaterialItemLocalPriceVersion',
+            'local_price_id')
+            ->with('province.amphoes','amphoe.districts','district')
+            ->where('published_id',$this->publishedStatus['waiting'])
+            ->orderBy('updated_at','DESC');
+    }
+    //Published Status
+    public function published(){
+        return $this->belongsTo('App\Models\Admin\PublishedStatus','published_id');
     }
 }

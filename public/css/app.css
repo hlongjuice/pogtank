@@ -6,6 +6,32 @@ fieldset[disabled] .multiselect{pointer-events:none}.multiselect__spinner{positi
   line-height: 1.1;
 }
 
+.v--modal-overlay {
+  z-index: 9999 !important;
+}
+
+.portlet-primary .portlet-title,
+.portlet-primary .tools {
+  background-color: #007bff;
+}
+
+.portlet-primary .portlet-title *,
+.portlet-primary .tools * {
+  color: #f8f9fa !important;
+}
+
+.badge-notify {
+  margin-bottom: 3px;
+}
+
+.table td {
+  vertical-align: middle !important;
+}
+
+.label-status {
+  font-size: 1.2em;
+}
+
 .text-warning {
   color: #ffc107;
 }
@@ -68,5 +94,14 @@ fieldset[disabled] .multiselect{pointer-events:none}.multiselect__spinner{positi
 
 .form-submit-button .w-50 {
   width: 50%;
+}
+
+.line {
+  border-bottom: solid 1px;
+  margin-bottom: 10px;
+}
+
+.line.line-gray {
+  border-bottom-color: #E0DFDF;
 }
 

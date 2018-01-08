@@ -83,7 +83,6 @@ var dict = {
         materialUnit: { required: 'หน่วย' }
     }
 };
-console.log(material);
 var vm = new Vue({
     el: '#app',
     data: {
@@ -95,14 +94,14 @@ var vm = new Vue({
         form: {
             cities: [],
             materialVendor: '',
-            materialName: material.name,
-            materialUnit: material.unit,
-            materialType: material.type.name,
-            materialTypeID: material.type.id,
-            globalCost: 0,
-            globalPrice: 0,
-            invoiceCost: 0,
-            invoicePrice: 0
+            materialName: globalPrice.name,
+            materialUnit: globalPrice.unit,
+            materialType: globalPrice.type,
+            materialTypeID: globalPrice.type.id,
+            globalCost: globalPrice.global_cost,
+            globalPrice: globalPrice.global_price,
+            invoiceCost: globalPrice.invoice_cost,
+            invoicePrice: globalPrice.invoice_price
         },
         displayStatus: []
     },
@@ -189,6 +188,8 @@ var vm = new Vue({
         }
     }
 });
+
+console.log(vm.form);
 
 /***/ })
 

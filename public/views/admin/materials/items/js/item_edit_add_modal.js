@@ -81,24 +81,49 @@ var addModal = new Vue({
     data: {
         provinces: provinces,
         form: {
-            province: '',
-            amphoe: '',
-            district: '',
-            amphoes: [],
-            districts: []
+            cities: [{
+                province: '',
+                amphoe: '',
+                district: '',
+                amphoes: [],
+                districts: [],
+                localCost: 0,
+                localPrice: 0,
+                wage: 0
+            }]
         }
     },
     methods: {
         // -- Get Amphoe
-        getAmphoes: function getAmphoes() {
-            this.form.districts.splice(0);
-            this.form.amphoes = this.form.province.amphoes;
+        getAmphoes: function getAmphoes(index) {
+            this.form.cities[index].districts.splice(0);
+            this.form.cities[index].amphoes = this.form.cities[index].province.amphoes;
         },
+        // Close Add Price Modal
         closeAddPriceModal: function closeAddPriceModal() {
             this.$modal.hide('add-local-price-modal');
         },
+        // Before Open Modal
         beforeOpen: function beforeOpen(event) {
             console.log(event);
+        },
+        // -- Add more Local Price Input
+        addPriceInput: function addPriceInput() {
+            var city = {
+                province: '',
+                amphoe: '',
+                district: '',
+                amphoes: [],
+                districts: [],
+                localPrice: 0,
+                localCost: 0,
+                wage: 0
+            };
+            this.form.cities.push(city);
+        },
+        // -- Delete Local Price
+        deleteLocalPrice: function deleteLocalPrice(index) {
+            this.form.cities.splice(index, 1);
         }
     }
 });

@@ -2,7 +2,10 @@
 
 namespace App\Models\Admin\Material;
 
+use App\Http\Controllers\GlobalVariableController;
+use App\Models\Admin\PublishedStatus;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Kalnoy\Nestedset\NodeTrait;
 
 class MaterialType extends Model
@@ -13,6 +16,6 @@ class MaterialType extends Model
 
     //Items
     public function items(){
-        return $this->hasMany('App\Models\Admin\Material\MaterialItem','type_id');
+        return $this->hasMany('App\Models\Admin\Material\MaterialItemVersion','type_id');
     }
 }
