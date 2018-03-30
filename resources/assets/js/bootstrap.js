@@ -1,5 +1,7 @@
 
 window._ = require('lodash');
+import WebUrl from './services/webUrl';
+let webUrl = new WebUrl();
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -20,9 +22,20 @@ try {
  */
 
 window.axios = require('axios');
-
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-window.axios.defaults.baseURL='http://localhost:3000/pogtank/public';
+window.axios.defaults.baseURL=webUrl.getUrl();
+// window.axios.defaults.baseURL='http://localhost:3000/pogtank/public';
+
+window.axios.interceptors.response.use(null, function(error) {
+    alert('Axios Error');
+    console.log('Axios Error :',error);
+
+    if (error.response.status === 401) {
+      // window.location='http://localhost:3000/pogtank/public/login';
+        window.location=webUrl.getRoute('/login');
+    }
+    return Promise.reject(error);
+});
 
 /**
  * Next we will register the CSRF Token as a common header with Axios so that

@@ -3,7 +3,8 @@
     {{Breadcrumbs::render('materialTypeEdit',$oldType)}}
 @endsection
 @section('content')
-    <div id="app" class="row">
+    <div id="material-type-edit" class="row">
+        <loading :show="showLoading"></loading>
         <div class="col-xs-12">
             <!-- BEGIN FORM-->
             <form @submit.prevent="validateForm('form')"
@@ -84,10 +85,5 @@
 @endsection
 <!-- SCRIPT -->
 @section('script')
-    <script>
-        var oldType=JSON.parse('{!! $oldType !!}');
-        var parentTypeModel=JSON.parse('{!! $parentTypes !!}');
-        var indexRoute='{!! $indexRoute !!}';
-    </script>
     <script src="{{asset('views/admin/materials/types/js/type_edit.js')}}"></script>
 @endsection

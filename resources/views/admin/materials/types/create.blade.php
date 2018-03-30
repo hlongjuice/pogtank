@@ -4,7 +4,11 @@
     {{Breadcrumbs::render('materialTypeCreate')}}
 @endsection
 @section('content')
-    <div id="app" class="row">
+    <div id="material-type-create" class="row">
+        <loading
+                :show="showLoading"
+        >
+        </loading>
         <div class="col-xs-12">
             <!-- FORM-->
             <form
@@ -101,10 +105,5 @@
     </div>
 @endsection
 @section('script')
-    {{--Script--}}
-    <script>
-        var parentTypeModel = JSON.parse('{!! $parentTypes !!}');
-        var indexRoute = '{!! $indexRoute !!}';
-    </script>
     <script src="{{asset('views/admin/materials/types/js/type_create.js')}}"></script>
 @endsection

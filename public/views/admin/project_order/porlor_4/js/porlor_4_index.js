@@ -1,0 +1,401 @@
+/******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 212);
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ 160:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__webUrl__ = __webpack_require__(3);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+
+var webUrl = new __WEBPACK_IMPORTED_MODULE_0__webUrl__["a" /* default */]();
+
+var Porlor4Service = function () {
+    function Porlor4Service() {
+        _classCallCheck(this, Porlor4Service);
+
+        this.url = webUrl.getUrl();
+    }
+    //Add New Part
+
+
+    _createClass(Porlor4Service, [{
+        key: 'addNewPart',
+        value: function addNewPart(order_id, dataInput) {
+            var url = this.url + '/admin/project_order/' + order_id + '/porlor_4/add_part';
+            return new Promise(function (resolve, reject) {
+                axios.post(url, dataInput).then(function (result) {
+                    resolve(result.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
+        //Get All Porlor 4
+
+    }, {
+        key: 'getAllParts',
+        value: function getAllParts(order_id) {
+            var url = this.url + '/admin/project_order/' + order_id + '/porlor_4/get_all_parts';
+            return new Promise(function (resolve, reject) {
+                axios.get(url).then(function (result) {
+                    resolve(result.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
+        //Get Project Details
+
+    }, {
+        key: 'getProjectDetails',
+        value: function getProjectDetails(order_id) {
+            var url = this.url + '/admin/project_order/' + order_id + '/porlor_4/get_project_details';
+            return new Promise(function (resolve, reject) {
+                axios.get(url).then(function (result) {
+                    console.log('Get Project Details Service');
+                    resolve(result.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
+    }]);
+
+    return Porlor4Service;
+}();
+
+/* harmony default export */ __webpack_exports__["a"] = (Porlor4Service);
+
+/***/ }),
+
+/***/ 212:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(213);
+
+
+/***/ }),
+
+/***/ 213:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_service__ = __webpack_require__(160);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__add_part_modal__ = __webpack_require__(214);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__assets_js_services_webUrl__ = __webpack_require__(3);
+
+
+
+var webUrl = new __WEBPACK_IMPORTED_MODULE_2__assets_js_services_webUrl__["a" /* default */]();
+var porlor4Service = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_service__["a" /* default */]();
+new Vue({
+    el: '#porlor-4-index',
+    mixins: [__WEBPACK_IMPORTED_MODULE_1__add_part_modal__["a" /* AddNewPartModal */]],
+    data: {
+        addNewPartStatus: false,
+        order_id: orderID,
+        showLoading: '',
+        project_porlor_4_parts: [],
+        project_details: {}
+    },
+    mounted: function mounted() {
+        this.showLoading = true;
+        this.initialData();
+    },
+    methods: {
+        initialData: function initialData() {
+            var _this = this;
+
+            console.log('InitialData Method');
+            Promise.all([
+            //Project Details
+            porlor4Service.getProjectDetails(this.order_id).then(function (result) {
+                _this.project_details = result;
+            }).catch(function (err) {
+                alert(err);
+            }),
+            //Order Parts
+            porlor4Service.getAllParts(this.order_id).then(function (result) {
+                console.log('Project Porlor 4 Part :', result);
+                _this.project_porlor_4_parts = result;
+            }).catch(function (err) {
+                alert(err);
+            })]).then(function () {
+                _this.showLoading = false;
+            }).catch(function (err) {
+                alert(err);
+            });
+        },
+
+        //Refresh Data
+        refreshData: function refreshData() {
+            var _this2 = this;
+
+            console.log('RefreshData method');
+            this.showLoading = true;
+            this.addNewPartStatus = false;
+            //Order Parts
+            porlor4Service.getAllParts(this.order_id).then(function (result) {
+                _this2.project_porlor_4_parts = result;
+                _this2.showLoading = false;
+            }).catch(function (err) {
+                alert(err);
+                _this2.showLoading = false;
+            });
+        },
+
+        //Open Jobs
+        openPorlor4JobsPage: function openPorlor4JobsPage(id) {
+            console.log('Porlor 4 ID :', id);
+            window.location = webUrl.getRoute('/admin/project_order/porlor_4_id/' + id + '/jobs');
+        },
+        showAddNewPartModal: function showAddNewPartModal() {
+            // this.addNewPartStatus=false,
+            console.log('Show Add New Part Modal');
+            this.$modal.show('porlor-4-add-new-part-modal');
+        },
+
+        //Before Close Add New Part Modal
+        beforeCloseAddNewPartModal: function beforeCloseAddNewPartModal() {
+            if (this.addNewPartStatus) {
+                console.log('Refresh');
+                this.refreshData();
+            }
+        },
+        closeAddNewPartModal: function closeAddNewPartModal() {
+            this.$modal.hide('porlor-4-add-new-part-modal');
+        }
+    }
+});
+
+/***/ }),
+
+/***/ 214:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AddNewPartModal; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_part_service__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_js_services_project_order_porlor_4_service__ = __webpack_require__(160);
+
+
+var porlor4Service = new __WEBPACK_IMPORTED_MODULE_1__assets_js_services_project_order_porlor_4_service__["a" /* default */]();
+var porlor4PartService = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_part_service__["a" /* default */]();
+var AddNewPartModal = {
+    data: function data() {
+        return {
+            parts: [],
+            form: {
+                part: ''
+            }
+        };
+    },
+    methods: {
+        beforeOpenAddNewPartModal: function beforeOpenAddNewPartModal() {
+            var _this = this;
+
+            this.addNewPartStatus = false;
+            this.form = {
+                part: ''
+            };
+            this.showLoading = true;
+            porlor4PartService.getAll().then(function (result) {
+                console.log('Get All Part :', result);
+                _this.parts = result.filter(function (part) {
+                    var project_porlor_4_part = _this.project_porlor_4_parts.find(function (item) {
+                        return item.part_id === part.id;
+                    });
+                    // If already exist part return 0
+                    if (project_porlor_4_part) {
+                        return 0; // หมายถึงมีการใช้งาน part นี้แล้ว
+                    } else {
+                        return 1; // หาก project porlor 4 part เป็น null คือ part นี้ยังไม่ได้ใช้งาน
+                    }
+                });
+                console.log('This part After filter :', _this.parts);
+                // this.parts=result;
+                _this.showLoading = false;
+            }).catch(function (err) {
+                alert(err);
+            });
+        },
+
+        //Add Part
+        addPart: function addPart() {
+            var _this2 = this;
+
+            porlor4Service.addNewPart(this.order_id, this.form).then(function (result) {
+                _this2.addNewPartStatus = true;
+                _this2.closeAddNewPartModal();
+            }).catch(function (err) {
+                alert(err);
+            });
+        }
+    }
+};
+
+/***/ }),
+
+/***/ 3:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var WebUrl = function () {
+    function WebUrl()
+    // private url:string
+    {
+        _classCallCheck(this, WebUrl);
+
+        this.url = 'http://localhost:3000/pogtank/public';
+    }
+
+    _createClass(WebUrl, [{
+        key: 'getUrl',
+        value: function getUrl() {
+            return this.url;
+        }
+    }, {
+        key: 'getRoute',
+        value: function getRoute(url) {
+            return this.url + url;
+        }
+    }]);
+
+    return WebUrl;
+}();
+
+/* harmony default export */ __webpack_exports__["a"] = (WebUrl);
+
+/***/ }),
+
+/***/ 33:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__webUrl__ = __webpack_require__(3);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+
+var webUrl = new __WEBPACK_IMPORTED_MODULE_0__webUrl__["a" /* default */]();
+
+var Porlor4Part = function () {
+    function Porlor4Part() {
+        _classCallCheck(this, Porlor4Part);
+
+        this.url = webUrl.getUrl();
+    }
+    //Add New Part
+
+
+    _createClass(Porlor4Part, [{
+        key: 'addNewPart',
+        value: function addNewPart(dataInputs) {
+            var url = this.url + '/admin/porlor_4_parts/add_new_part';
+            return new Promise(function (resolve, reject) {
+                axios.post(url, dataInputs).then(function (result) {
+                    resolve(result.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
+        //Get All Parts
+
+    }, {
+        key: 'getAll',
+        value: function getAll() {
+            var url = this.url + '/admin/porlor_4_parts/get_all';
+            return new Promise(function (resolve, reject) {
+                axios.get(url).then(function (result) {
+                    resolve(result.data);
+                    console.log('Porlor 4 Part Service :', result.data);
+                }).catch(function (err) {
+                    alert(err);
+                });
+            });
+        }
+    }]);
+
+    return Porlor4Part;
+}();
+
+/* harmony default export */ __webpack_exports__["a"] = (Porlor4Part);
+
+/***/ })
+
+/******/ });

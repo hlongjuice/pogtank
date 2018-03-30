@@ -93,10 +93,11 @@
                                     @foreach($approvedMaterials as $material)
                                         <tr>
                                             <td>
+                                                {{-- -- -- -- --Edit Button--}}
                                                 <a href="{{route('admin.materials.items.edit',$material->id)}}">
-                                                    {{$material->approvedGlobalPrice->name}}
+                                                    {{$material->approvedGlobalDetails->name}}
                                                 </a></td>
-                                            <td>{{$material->approvedGlobalPrice->type ? $material->approvedGlobalPrice->type->name:''}}</td>
+                                            <td>{{$material->approvedGlobalDetails->type ? $material->approvedGlobalDetails->type->name:''}}</td>
                                             <td class=""><p class=" text-success">{{$material->published->name}}</p>
                                             </td>
                                             <td>
@@ -106,6 +107,7 @@
                                                     <span class="hidden-xs">Edit</span>
                                                 </a>
                                             </td>
+                                            {{-- -- -- -- --Delete--}}
                                             <td>
                                                 <form onsubmit="return confirm('ยืนยันการลบ')" method="POST"
                                                       action="{{route('admin.materials.items.destroy',$material->id)}}">
@@ -149,41 +151,55 @@
                                     <tr>
                                         <td>ชื่อวัสดุ/อุปกรณ์</td>
                                         <td>หมวดหมู่</td>
-                                        <td>สถาณะ</td>
                                         <th>รายละเอียด</th>
                                         <th>Delete</th>
                                     </tr>
                                     </thead>
                                     <!-- -- -- Table Body -->
                                     <tbody>
-                                    @foreach($waitingMaterials as $material)
-                                        <tr>
-                                            <td>
-                                                <a href="{{route('admin.materials.items.edit',$material->id)}}">
-                                                    {{$material->waitingGlobalPrice->name}}
-                                                </a>
-                                            </td>
-                                            <td>{{$material->waitingGlobalPrice->type ? $material->waitingGlobalPrice->type->name:''}}</td>
-                                            <td class="text-{{$material->published->color}}">{{$material->published->name}}</td>
-                                            <td>
-                                                <a class="btn btn-primary"
-                                                   href="{{route('admin.materials.items.edit',$material->id)}}">
-                                                    <i class="fal fa-file-alt"></i>
-                                                    <span class="hidden-xs">ดูรายละเอียด</span>
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <form onsubmit="return confirm('ยืนยันการลบ')" method="POST"
-                                                      action="{{route('admin.materials.items.destroy',$material->id)}}">
-                                                    {{ csrf_field() }}
-                                                    {{ method_field('DELETE') }}
-                                                    <button class="btn btn-danger" type="submit">
-                                                        <i class="far fa-trash-alt"></i>
-                                                        <span class="hidden-xs">Delete</span>
-                                                    </button>
-                                                </form>
-                                            </td>
-                                        </tr>
+                                    {{--{{dd($waitingMaterials)}}--}}
+                                    @foreach($waitingMaterials as $waitingMaterial)
+                                        @if($waitingMaterial->approvedGlobalDetails)
+                                            <tr>
+                                                <td>
+                                                    {{-- -- -- -- --Edit Button--}}
+                                                    <a href="{{route('admin.materials.items.edit',$waitingMaterial->id)}}">
+                                                        {{$waitingMaterial->approvedGlobalDetails->name}}
+                                                    </a>
+                                                </td>
+                                                <td>{{$waitingMaterial->approvedGlobalDetails->type ? $waitingMaterial->approvedGlobalDetails->type->name:''}}</td>
+                                                <td>
+                                                    <a class="btn btn-primary"
+                                                       href="{{route('admin.materials.items.edit',$waitingMaterial->id)}}">
+                                                        <i class="fal fa-file-alt"></i>
+                                                        <span class="hidden-xs">ดูรายละเอียด</span>
+                                                    </a>
+                                                </td>
+                                                {{-- -- -- -- --Delete--}}
+                                                <td>
+                                                </td>
+                                            </tr>
+                                        @else
+                                            <tr>
+                                                <td>
+                                                    {{-- -- -- -- --Edit Button--}}
+                                                    <a href="{{route('admin.materials.items.edit',$waitingMaterial->id)}}">
+                                                        {{$waitingMaterial->waitingGlobalDetails->name}}
+                                                    </a>
+                                                </td>
+                                                <td>{{$waitingMaterial->waitingGlobalDetails->type ? $waitingMaterial->waitingGlobalDetails->type->name:''}}</td>
+                                                <td>
+                                                    <a class="btn btn-primary"
+                                                       href="{{route('admin.materials.items.edit',$waitingMaterial->id)}}">
+                                                        <i class="fal fa-file-alt"></i>
+                                                        <span class="hidden-xs">ดูรายละเอียด</span>
+                                                    </a>
+                                                </td>
+                                                {{-- -- -- -- --Delete--}}
+                                                <td>
+                                                </td>
+                                            </tr>
+                                        @endif
                                     @endforeach
                                     </tbody>
                                 </table>

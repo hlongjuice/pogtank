@@ -1,3 +1,4 @@
+import MaterialType from '../../../../../assets/js/services/material/material_type_service';
 const dict = {
     custom: {
         typeName: {required: 'ชื่อหมวดหมู่'},
@@ -5,26 +6,63 @@ const dict = {
         codePrefix: {required: 'รหัสหมวดหมู่'}
     }
 };
-console.log(oldType);
+let path =window.location.pathname;
+let typeID = path.split("/").slice(-1);
+let materialType = new MaterialType();
+let oldType={};
 let vm = new Vue({
-        el: '#app',
+        el: '#material-type-edit',
         //Created
         created: function () {
             this.$validator.localize('en', dict);
         },
         //Data
         data: {
-            parentTypes: parentTypeModel,
+            showLoading:'',
+            parentTypes:[],
             form: {
-                name: oldType.name,
+                name: '',
                 parentType: {
-                    id: oldType.ancestors[0] ? oldType.ancestors[0].id : 0,
-                    name: oldType.ancestors[0] ? oldType.ancestors[0].id : 'หมวดหมู่หลัก'
+                    id:'',
+                    name: ''
                 },
-                details: oldType.details,
-                codePrefix: oldType.code_prefix,
-                parentTypeID: oldType.ancestors[0] ? oldType.ancestors[0].id : 0
+                details: '',
+                codePrefix: '',
+                parentTypeID: ''
             }
+        },
+        mounted:function(){
+            this.showLoading=true;
+
+            Promise.all([
+                //Get Old Types
+               materialType.getMaterialType(typeID)
+                   .then(oldType=>{
+                       console.log(oldType);
+                       vm.form= {
+                           name: oldType.name,
+                           parentType: {
+                               id: oldType.ancestors[0] ? oldType.ancestors[0].id : 0,
+                               name: oldType.ancestors[0] ? oldType.ancestors[0].name : 'หมวดหมู่หลัก'
+                           },
+                           details: oldType.details,
+                           codePrefix: oldType.code_prefix,
+                           parentTypeID: oldType.ancestors[0] ? oldType.ancestors[0].id : 0
+                       };
+                   }).catch(err=>{
+                       console.log(err)
+               }),
+                //Get all Parent and Sibling Types
+                materialType.getMaterialParentSiblingTypes(typeID)
+                    .then(result=>{
+                        vm.parentTypes=result;
+                        console.log(result);
+                    }).catch(err=>{
+                        console.log(err)
+                })
+            ]).then(()=>{
+                vm.showLoading=false;
+            });
         },
         methods: {
             validateForm: function (scope) {

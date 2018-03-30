@@ -25,4 +25,9 @@ class MaterialItemLocalPriceVersion extends Model
     public function district(){
         return $this->belongsTo('App\Models\City\District','district_id');
     }
+    //parent or LocalPrice
+    public function parent(){
+        return $this->belongsTo('App\Models\Admin\Material\MaterialItemLocalPrice','local_price_id');
+    }
+
 }

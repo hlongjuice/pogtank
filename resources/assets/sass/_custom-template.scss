@@ -24,11 +24,18 @@
 }
 //Badge
 .badge-notify{
-  margin-bottom: 3px;
+  //margin-bottom: 3px;
+  height: inherit;
 }
 //Table
 .table td{
   vertical-align: middle !important;
+}
+.table-header-green{
+  th{
+    background-color:#DAE3C0;
+    border:1px solid map_get($colors,dark-light) !important;
+  }
 }
 
 //Text
@@ -47,6 +54,9 @@
 
 .text-success {
   color: map_get($colors, success);
+}
+.text-secondary {
+  color:map_get($colors,secondary);
 }
 
 //Form

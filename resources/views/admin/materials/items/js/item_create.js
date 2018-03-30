@@ -1,19 +1,27 @@
+import City from '../../../../../assets/js/services/city';
+import MaterialType from '../../../../../assets/js/services/material/material_type_service';
+
 const dict = {
     custom: {
         materialName: {required: 'ชื่อสินค้า'},
         materialTypeID: {required: 'หมวดหมู่'},
-        materialUnit: {required: 'หน่วย'}
+        materialUnit: {required: 'หน่วย'},
+        province: {required: 'จังหวัด'},
+        amphoe: {required: 'อำเภอ'},
+        district: {required: 'ตำบล'}
     }
 };
 //Created Vue Instance
 let vm = new Vue({
-    el: '#app',
+    el: '#material-item-create',
     data: {
+        show:'',
+        city:new City(),
         materialName: '',
         test: 'abc',
         item: '',
-        materialTypes: materialTypes,
-        provinces: provinces,
+        materialTypes:[],
+        provinces:[],
         form: {
             cities: [{
                 province: '',
@@ -38,8 +46,32 @@ let vm = new Vue({
         displayStatus: []
     },
     created: function () {
+    },
+    //Mounted
+    mounted:function(){
+        console.log('Mounted');
+        this.show=true;
         this.$validator.localize('en', dict);
         this.displayStatus.push(false);
+        let materialTypes=new MaterialType();
+        Promise.all([
+            materialTypes.getMaterialTypeTree()//Get All Materials
+                .then(result=>{
+                    console.log(result);
+                    vm.materialTypes=result;
+                }).catch(err=>{
+            }),
+            this.city.getProvinces() // Get Provinces
+                .then(result => {
+                    vm.provinces=result;
+                }).catch(err => {
+                console.log(err)
+            })
+        ])
+            .then(()=>{
+                this.show=false;
+            })
+            .catch();
     },
 //Methods
     methods: {
@@ -79,7 +111,7 @@ let vm = new Vue({
                 localPrice: 0,
                 wage: 0
             };
-          // let city='';
+            // let city='';
             this.form.cities.push(city);
         },
         // -- Get Amphoe

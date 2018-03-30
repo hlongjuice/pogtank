@@ -3,7 +3,11 @@
     {{Breadcrumbs::render('materialItemsCreate')}}
 @endsection
 @section('content')
-    <div id="app" class="row">
+    <div id="material-item-create" class="row" v-cloak>
+        <loading
+                :show="show"
+        >
+        </loading>
         {{-- Form--}}
         <form @submit.prevent="validateForm('form')"
               data-vv-scope="form">
@@ -250,7 +254,7 @@
                                                 </div>
                                                 <!-- -- -- Amphoe-->
                                                 <div class="col-md-6">
-                                                    <div class="form-group">
+                                                    <div v-if="form.cities[index].province" class="form-group">
                                                         <label class="control-label col-md-3">อำเภอ</label>
                                                         <div class="col-md-9">
                                                             <multiselect @close="getDistricts(index)"
@@ -266,12 +270,15 @@
                                                                     </div>
                                                                 </template>
                                                             </multiselect>
+                                                            <input v-validate="'required'"
+                                                                   v-model="form.cities[index].amphoe"
+                                                                   name="amphoe" hidden>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <!-- -- -- Districts-->
                                                 <div class="col-md-6">
-                                                    <div class="form-group">
+                                                    <div  v-if="form.cities[index].amphoe" class="form-group">
                                                         <label class="control-label col-md-3">ตำบล</label>
                                                         <div class="col-md-9">
                                                             <multiselect v-model="form.cities[index].district"
@@ -286,6 +293,9 @@
                                                                     </div>
                                                                 </template>
                                                             </multiselect>
+                                                            <input v-validate="'required'"
+                                                                   v-model="form.cities[index].district"
+                                                                   name="district" hidden>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -352,11 +362,6 @@
 @endsection
 @section('script')
     {{--Scirpt--}}
-    <script>
-        var indexRoute = '{!! $indexRoute !!}';
-        var materialTypes = JSON.parse('{!! $materialTypes !!}');
-        var provinces = JSON.parse('{!! $provinces !!}');
-    </script>
     <script src="{{asset('views/admin/materials/items/js/item_create.js')}}"></script>
 @endsection
 

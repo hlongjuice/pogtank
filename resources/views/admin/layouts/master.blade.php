@@ -30,8 +30,8 @@ License: You must have a valid license purchased only from themeforest(the above
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    {{--Start Css--}}
-    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+{{--Start Css--}}
+<!-- BEGIN GLOBAL MANDATORY STYLES -->
     {{--<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css"/>--}}
     <link href="{{asset('templates/admin/conquer/theme/assets/plugins/font-awesome/css/font-awesome.min.css')}} "
           rel="stylesheet" type="text/css"/>
@@ -65,6 +65,7 @@ License: You must have a valid license purchased only from themeforest(the above
     {{--Extend Css--}}
     @yield('css')
     <link href="{{asset('css/app.css')}}" rel="stylesheet"/>
+    <link href="{{asset('css/custom_spinner.css')}}" rel="stylesheet"/>
     {{--Font Awesome--}}
     <link rel="stylesheet" href="{{asset('css/font-awesome/css/fontawesome-all.min.css')}}">
 </head>
@@ -451,7 +452,8 @@ License: You must have a valid license purchased only from themeforest(the above
                    data-close-others="true">
                     <img alt="" src="{{asset('templates/admin/conquer/theme/assets/img/avatar3_small.jpg')}}"/>
                     <span class="username">
-				Nick </span>
+                        {{Auth::user()->username}}
+				 </span>
                     <i class="fa fa-angle-down"></i>
                 </a>
                 <ul class="dropdown-menu">
@@ -475,11 +477,22 @@ License: You must have a valid license purchased only from themeforest(the above
                     <li class="divider">
                     </li>
                     <li>
-                        <form method="POST" action="{{route('logout')}}">
-                            {{csrf_field()}}
-                            <button class="btn btn-navbar" type="submit"><i class="fa fa-key"></i> Log Out</button>
+                        <a
+                           onclick="event.preventDefault();
+                            document.getElementById('logout-form').submit();"
+                        >
+                            Logout</a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            {{ csrf_field() }}
                         </form>
                     </li>
+                    {{--<form method="POST" action="{{route('logout')}}">--}}
+                        {{--<li>--}}
+                            {{--{{csrf_field()}}--}}
+                            {{--<button class="btn btn-navbar" type="submit"><i class="fa fa-key"></i> Log Out</button>--}}
+                        {{--</li>--}}
+                    {{--</form>--}}
+
                 </ul>
             </li>
             <!-- END USER LOGIN DROPDOWN -->
@@ -658,12 +671,32 @@ License: You must have a valid license purchased only from themeforest(the above
 <script src="{{asset('templates/admin/conquer/theme/assets/scripts/form-samples.js')}}"></script>
 <script src="{{asset('templates/admin/conquer/theme/assets/plugins/bootstrap-toastr/toastr.min.js')}}"></script>
 
+{{--All Vue Js--}}
+{{--<script src="{{asset('views/admin/js/app.js')}}"></script>--}}
+
 
 <script>
     jQuery(document).ready(function () {
         App.init();
 //        TableEditable.init();
         FormSamples.init();
+        toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-center",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
     });
 </script>
 @yield('script')

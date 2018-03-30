@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class MaterialItemLocalPrice extends Model
 {
-    use SoftDeletes;
+//    use SoftDeletes;
     protected $table='material_local_price';
     protected $guarded=[];
     private $publishedStatus='';
@@ -19,7 +19,7 @@ class MaterialItemLocalPrice extends Model
         $this->publishedStatus=GlobalVariableController::$publishedStatus;
     }
 
-    //Local Price Version
+    //All Local Price approvedPrices and waitingPrices
     public function priceDetails(){
         return $this->hasMany('App\Models\Admin\Material\MaterialItemLocalPriceVersion',
             'local_price_id');
@@ -33,8 +33,8 @@ class MaterialItemLocalPrice extends Model
             ->orderBy('updated_at','DESC');
     }
     //Waiting Prices
-    public function waitingPrices(){
-        return $this->hasMany('App\Models\Admin\Material\MaterialItemLocalPriceVersion',
+    public function waitingPrice(){
+        return $this->hasOne('App\Models\Admin\Material\MaterialItemLocalPriceVersion',
             'local_price_id')
             ->with('province.amphoes','amphoe.districts','district')
             ->where('published_id',$this->publishedStatus['waiting'])
@@ -44,4 +44,11 @@ class MaterialItemLocalPrice extends Model
     public function published(){
         return $this->belongsTo('App\Models\Admin\PublishedStatus','published_id');
     }
+
+    //material
+    public function material(){
+        return $this->belongsTo('App\Models\Admin\Material\MaterialItem','material_id');
+    }
+
+
 }

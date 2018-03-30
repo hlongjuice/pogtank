@@ -1,3 +1,5 @@
+import MaterialType from '../../../../../assets/js/services/material/material_type_service'
+import WebUrl from '../../../../../assets/js/services/webUrl';
 //Custom Error Message
 const dict = {
     custom: {
@@ -6,15 +8,19 @@ const dict = {
         codePrefix: {required: 'รหัสหมวดหมู่'}
     }
 };
+let webUrl=new WebUrl();
+let indexRoute= webUrl.getRoute('/admin/materials/types/submitted');
+let materialTypes = new MaterialType();
 let vm = new Vue({
-    el: '#app',
+    el: '#material-type-create',
     //Created
     created: function () {
         this.$validator.localize('en', dict);
     },
     //Data
     data: {
-        parentTypes: parentTypeModel,
+        showLoading: '',
+        parentTypes: [],
         form: {
             typeName: '',
             parentType: {
@@ -27,6 +33,17 @@ let vm = new Vue({
         }
     },
     //End Data
+    mounted: function () {
+        this.showLoading = true;
+        materialTypes.getMaterialParentTypes()
+            .then(result => {
+                vm.parentTypes = result;
+                this.showLoading = false;
+            }).catch(err => {
+            console.log(err);
+            this.showLoading = false;
+        })
+    },
     //Method
     methods: {
         validateForm: function (scope, ev) {
@@ -35,7 +52,7 @@ let vm = new Vue({
                     if (result) {
                         axios.post('/admin/materials/types', vm.form)
                             .then(result => {
-                                window.location=indexRoute;
+                                window.location = indexRoute;
                             }).catch(err => {
                             alert("ไม่สามารถเพิ่มข้อมูลได้ลองใหม่อีกครั้ง");
                             console.log(err);
@@ -51,6 +68,6 @@ let vm = new Vue({
             this.form.parentTypeID = this.form.parentType.id;
         }
     },
-    created:function(){
+    created: function () {
     }
 });

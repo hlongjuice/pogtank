@@ -1,26 +1,35 @@
 @extends('admin.layouts.master')
 @section('breadcrumb')
-    {{Breadcrumbs::render('materialItemsCreate')}}
+    {{Breadcrumbs::render('materialItemEdit',$material)}}
 @endsection
 @section('content')
     {{--Include Modal--}}
-    @include('admin.materials.items.edit_add_modal')
-    <div id="app" class="row">
+    <div id="material-item-edit" class="row" v-cloak>
+        {{--Add Modal--}}
+        @include('admin.materials.items.edit_add_modal')
+        {{--Edit Modal--}}
+        @include('admin.materials.items.edit_edit_modal')
+        <loading :show="showLoading"></loading>
         {{-- Form--}}
-        <form method="POST" action="{{route('admin.materials.items.store')}}" @submit="validateForm('form',$event)"
+        <form @submit.prevent="validateForm('form',$event)"
               data-vv-scope="form">
-            {{--Save Button--}}
-            <div class="col-xs-12">
-                <button type="submit" class="visible-xs col-xs-6 pull-right btn btn-success margin-bottom-20">บันทึก
-                </button>
-            </div>
+            {{ method_field('PUT') }}
             {{csrf_field()}}
+            {{--Close Button--}}
+            <div class="col-xs-6 pull-right">
+                <a href="{{route('admin.materials.items.index')}}"
+                   class="visible-xs btn btn-danger margin-right-10 margin-bottom-20">ปิด
+                </a>
+            </div>
             {{--Portlets--}}
             <div class="col-xs-12">
                 <div class="tabbable tabbable-custom">
                     <!-- -- Submit Button-->
                     <div class="hidden-xs form-submit-button-tab">
-                        <button name="button" type="submit" class="btn btn-success">บันทึก</button>
+                        <a href="{{route('admin.materials.items.index')}}" name="button" type="submit"
+                           class="btn btn-danger">
+                            <i class="far fa-times"></i> ปิด
+                        </a>
                     </div>
                     <!--Tabs Header-->
                     <ul class="nav nav-tabs">
@@ -33,18 +42,12 @@
                             <a href="#localPrice" data-toggle="tab">ราคาประจำท้องถิ่น</a>
                         </li>
                         <li>
-                            <a href="#lastUpdatedLocalPrice" data-toggle="tab">
+                            <a href="#lastUpdated" data-toggle="tab">
                                 รายการแก้ไขรออนุมัติ
-                                @if($material->localPrices()->count()>0)
-                                    @if($material->waitingGlobalPrice()->count()>0
-                                    && $material->localPrices()->waitingPrices()->count()>0)
-                                        <span class="badge badge-danger badge-notify">
-                                        {{$material->waitingGlobalPrice()->count()
-                                        + $material->localPrices()->waitingPrices()->count()}}
-                                            รายการ
+                                <span class="badge badge-danger badge-notify">
+                                        @{{waitingItemNumber}}
+                                    รายการ
                                     </span>
-                                    @endif
-                                @endif
                             </a>
                         </li>
                     </ul>
@@ -53,49 +56,54 @@
                         <!-- --Approved Global Price and  Details Tab-->
                         <div class="tab-pane active" id="item-details">
                             <div class="portlet">
+                                {{-- -- --Global Details--}}
                                 <div class="portlet-title">
                                     <div class="caption">
                                         <i class="fa fa-reorder"></i>
                                     </div>
-                                    <div class="tools">
-                                        <a href="javascript:;" class="collapse"></a>
-                                        <a href="#portlet-config" data-toggle="modal" class="config"></a>
-                                        <a href="javascript:;" class="reload"></a>
-                                        <a href="javascript:;" class="remove"></a>
+                                    <div class=tools">
+                                        {{--<a href="javascript:;" class="collapse"></a>--}}
                                     </div>
                                 </div>
                                 <div class="portlet-body form">
-                                    <div class="form-horizontal">
+                                    <div v-if="approvedGlobalDetails" class="form-horizontal">
                                         <div class="form-body">
-                                            <h3 class="form-section">
-                                                รายละเอียดวัสดุ/อุปกรณ์
-                                                @if($material->approvedGlobalPrice!=null)
-                                                    <span class="small text-info">
-                                                        อัพเดทล่าสุด : {{$material->approvedGlobalPrice->updated_at->format('d/m/Y')}}
+                                            <div class="row">
+                                                <div class="col-xs-9">
+                                                    <h3 class="form-section">
+                                                        รายละเอียดวัสดุ/อุปกรณ์
+                                                        <span class="small text-info">
+                                                        อัพเดทล่าสุด : @{{approvedGlobalDetails.updated_at}}
                                                     </span>
-                                                @endif
-                                                <small class="margin-top-10 pull-right">
-                                                    <span class="text-{{$material->published->color}}">
-                                                        สถาณะ: {{$material->published->name}}
+                                                        <small v-if="material.published"
+                                                               class="margin-top-10 pull-right">
+                                                    <span :class="'text-'+ material.published.color">
+                                                        สถาณะ:@{{material.published.name}}
                                                     </span>
-                                                </small>
-                                            </h3>
+                                                        </small>
+                                                    </h3>
+                                                </div>
+                                                {{-- --Global Details Edit Save Button--}}
+                                                <div class="col-xs-3 text-right">
+                                                    <a @click="updateGlobalDetails" class="btn btn-success">บันทึก</a>
+                                                </div>
+                                            </div>
                                             <div class="row">
                                                 <!-- -- -- Material Name-->
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label :class="{'text-danger':errors.has('form.materiaName')}"
+                                                        <label :class="{'text-danger':errors.has('approvedGlobalDetails.name')}"
                                                                class="control-label col-md-3">ชื่อ</label>
                                                         <div class="col-md-9">
-                                                            <input :class="{'input-error':errors.has('form.materialName')}"
+                                                            <input :class="{'input-error':errors.has('approvedGlobalDetails.name')}"
                                                                    v-validate="'required'"
                                                                    data-vv-as="รายชื่อ"
                                                                    data-vv-name="materialName"
                                                                    type="text" class="form-control"
                                                                    name="materialName"
-                                                                   v-model="form.materialName"
+                                                                   v-model="approvedGlobalDetails.name"
                                                                    placeholder="">
-                                                            <span v-show="errors.has('form.materialName')"
+                                                            <span v-show="errors.has('approvedGlobalDetails.name')"
                                                                   class="text-error text-danger">กรุณากรอกข้อมูล</span>
                                                         </div>
                                                     </div>
@@ -103,16 +111,17 @@
                                                 <!-- -- -- Material Types-->
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label :class="{'text-danger':errors.has('form.materialTypeID')}"
+                                                        <label :class="{'text-danger':errors.has('approvedGlobalDetails.type_id')}"
                                                                class="control-label col-md-3">หมวดหมู่</label>
                                                         <div class="col-md-9">
-                                                            <div :class="{'input-error':errors.has('form.materialTypeID')}">
+                                                            <div :class="{'input-error':errors.has('approvedGlobalDetails.type_id')}">
                                                                 <multiselect
                                                                         name="materialType"
-                                                                        v-model="form.materialType"
+                                                                        v-model="approvedGlobalDetails.type"
                                                                         placeholder="เลือกหมวดหมู่" label="name"
                                                                         track-by="id"
-                                                                        :options="materialTypes" :option-height="104"
+                                                                        :options="materialTypes"
+                                                                        :option-height="104"
                                                                         :show-labels="false"
                                                                         :allow-empty="false"
                                                                 >
@@ -123,10 +132,10 @@
                                                                     </template>
                                                                 </multiselect>
                                                                 <input v-validate="'required'"
-                                                                       v-model="form.materialTypeID"
+                                                                       v-model="approvedGlobalDetails.type_id"
                                                                        name="materialTypeID" hidden>
                                                             </div>
-                                                            <span v-show="errors.has('form.materialTypeID')"
+                                                            <span v-show="errors.has('approvedGlobalDetails.type_id')"
                                                                   class="text-error text-danger">กรุณากรอกข้อมูล</span>
                                                         </div>
                                                     </div>
@@ -135,18 +144,18 @@
                                                 {{-- -- -- Unit--}}
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label :class="{'text-danger':errors.has('form.materialTypeID')}"
+                                                        <label :class="{'text-danger':errors.has('materialUnit')}"
                                                                class="control-label col-md-3">หน่วย</label>
                                                         <div class="col-md-9">
                                                             <input
                                                                     v-validate="'required'"
-                                                                    :class="{'input-error':errors.has('form.materialUnit')}"
+                                                                    :class="{'input-error':errors.has('approvedGlobalDetails.unit')}"
                                                                     name="materialUnit"
-                                                                    v-model="form.materialUnit"
+                                                                    v-model="approvedGlobalDetails.unit"
                                                                     type="text" class="form-control"
                                                                     :class="{'input-error':errors.has('materialUnit')}"
                                                                     placeholder="">
-                                                            <span v-show="errors.has('form.materialTypeID')"
+                                                            <span v-show="errors.has('materialUnit')"
                                                                   class="text-error text-danger">กรุณากรอกข้อมูล</span>
                                                         </div>
                                                     </div>
@@ -156,10 +165,8 @@
                                                     <div class="form-group">
                                                         <label class="control-label col-md-3">แหล่งที่มา</label>
                                                         <div class="col-md-9">
-                                                            <input name="materialVendor"
-                                                                   v-model="form.materialVendor"
-                                                                   type="text" class="form-control"
-                                                                   placeholder="">
+                                                            <input class="form-control"
+                                                                   v-model="approvedGlobalDetails.vendor">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -176,7 +183,7 @@
                                                                     v-validate="'required'"
                                                                     name="globalCost" :precision=2
                                                                     class="form-control" separator=","
-                                                                    v-model="form.globalCost"></vue-numeric>
+                                                                    v-model="approvedGlobalDetails.global_cost"></vue-numeric>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -187,7 +194,7 @@
                                                         <div class="col-md-9">
                                                             <vue-numeric name="invoiceCost" :precision=2
                                                                          class="form-control" separator=","
-                                                                         v-model="form.invoicePrice"></vue-numeric>
+                                                                         v-model="approvedGlobalDetails.global_price"></vue-numeric>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -202,7 +209,7 @@
                                                         <div class="col-md-9">
                                                             <vue-numeric name="invoiceCost" :precision=2
                                                                          class="form-control" separator=","
-                                                                         v-model="form.invoiceCost"></vue-numeric>
+                                                                         v-model="approvedGlobalDetails.invoice_cost"></vue-numeric>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -213,12 +220,16 @@
                                                         <div class="col-md-9">
                                                             <vue-numeric name="invoicePrice" :precision=2
                                                                          class="form-control" separator=","
-                                                                         v-model="form.invoicePrice"></vue-numeric>
+                                                                         v-model="approvedGlobalDetails.invoice_price"></vue-numeric>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
+                                    {{-- -- -- IF not apprvoed--}}
+                                    <div v-else class="text-center">
+                                        <h4>รอการอนุมัติ</h4>
                                     </div>
                                 </div>
                             </div>
@@ -228,7 +239,7 @@
                         <div class="tab-pane" id="localPrice">
                             {{-- --  -- Add New Local Price--}}
                             <div class="col-xs-12 col-md-4">
-                                <button class="margin-bottom-15 btn btn-primary" @click="showAddPriceModal"
+                                <button class="margin-bottom-15 btn btn-primary" @click="showAddLocalPriceModal"
                                         type="button">เพิ่มรายการ
                                 </button>
                             </div>
@@ -246,112 +257,112 @@
                                         <!-- -- -- -- --Approved Local Price Table Header -->
                                         <thead>
                                         <tr>
-                                            <td>จังหวัด</td>
-                                            <td>อำเภอ</td>
-                                            <td>ตำบล</td>
-                                            <td>ราคาทุน</td>
-                                            <td>ราคาขาย</td>
-                                            <td>ค่าแรง</td>
+                                            <th>จังหวัด</th>
+                                            <th>อำเภอ</th>
+                                            <th>ตำบล</th>
+                                            <th>ค่าแรง</th>
+                                            <th>ราคาทุน</th>
+                                            <th>ราคาขาย</th>
                                             <th>Edit</th>
-                                            <th>Delete</th>
+                                            @if(Auth::user()->hasRole('admin'))
+                                                <th>Delete</th>
+                                            @endif
                                         </tr>
                                         </thead>
-                                        <!-- -- -- -- --Apprpved Local Price Table Body -->
+                                        <!-- -- -- -- --Approved Local Price Table Body -->
                                         <tbody>
-                                        {{--{{dd($material)}}--}}
-                                        @foreach($material->localPrices as $localPrice)
-                                            <tr>
-                                                <td>{{$localPrice->approvedPrice->province->name}}</td>
-                                                <td>{{$localPrice->approvedPrice->amphoe->name}}</td>
-                                                <td>{{$localPrice->approvedPrice->district->name}}</td>
-                                                <td>{{$localPrice->approvedPrice->cost}}</td>
-                                                <td>{{$localPrice->approvedPrice->price}}</td>
-                                                <td>{{$localPrice->approvedPrice->wage}}</td>
+                                        <tr v-for="(localPrice,index) in approvedLocalPrices.data" :key="index">
+                                            <td>@{{localPrice.approved_price.province.name}}</td>
+                                            <td>@{{localPrice.approved_price.amphoe.name}}</td>
+                                            <td>@{{localPrice.approved_price.district.name}}</td>
+                                            <td>@{{localPrice.approved_price.wage}}</td>
+                                            <td>@{{localPrice.approved_price.cost}}</td>
+                                            <td>@{{localPrice.approved_price.price}}</td>
+                                            <td>
+                                                {{--Edit Button--}}
+                                                <a @click="showEditLocalPriceModal(approvedLocalPrices.data[index],'approved')"
+                                                   class="btn btn-info">Edit</a>
+                                            </td>
+                                            @if(Auth::user()->hasRole('admin'))
                                                 <td>
-                                                    <a class="btn btn-info"
-                                                       href="{{route('admin.materials.items.edit',$localPrice->id)}}">Edit </a>
+
+                                                    {{--Delete Button--}}
+                                                    <a @click="deleteLocalPrice(localPrice)"
+                                                       class="btn btn-danger">Delete</a>
                                                 </td>
-                                                <td>
-                                                    <form onsubmit="return confirm('ยืนยันการลบ')" method="POST"
-                                                          action="{{route('admin.materials.items.destroy',$localPrice->id)}}">
-                                                        {{ csrf_field() }}
-                                                        {{ method_field('DELETE') }}
-                                                        <button class="btn btn-danger" type="submit">
-                                                            Delete
-                                                        </button>
-                                                    </form>
-                                                </td>
-                                            </tr>
-                                        @endforeach
+                                            @endif
+                                        </tr>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                         </div>
                         {{-- -- Waiting For Approval Tabs --}}
-                        <div class="tab-pane" id="lastUpdatedLocalPrice">
+                        <div class="tab-pane" id="lastUpdated">
                             {{-- -- -- Waiting Global Price--}}
-                            <div class="portlet">
+                            <div v-if="waitingGlobalDetails != null" class="portlet">
                                 <div class="portlet-title">
                                     <div class="caption">
-                                        <i class="fa fa-edit"></i>รายละเอียดสินค้า
+                                        <i class="fa fa-edit"></i>รายละเอียดหลัก
                                     </div>
                                 </div>
                                 <div class="portlet-body">
                                     <!-- -- -- --Waiting Global Price Table -->
-                                    <table class="table table-striped table-hover table-bordered"
-                                           id="sample_editable_1">
-                                        <!-- -- Table Header -->
-                                        <thead>
-                                        <tr>
-                                            <td>ชื่อ</td>
-                                            <td>หมวดหมู่</td>
-                                            <td>หน่วย</td>
-                                            <td>แหล่งที่มา</td>
-                                            <td>ราคาทุนกลาง</td>
-                                            <td>ราคาขายกลาง</td>
-                                            <th>ราคาทุนใบเสนอราคา</th>
-                                            <th>ราคาขายใบเสนอราคา</th>
-                                            <th>Edit</th>
-                                            <th>Delete</th>
-                                        </tr>
-                                        </thead>
-                                        <!-- -- -- -- --Table Waiting Global Price Table Body -->
-                                        <tbody>
-                                        @if($material->waitingGlobalPrice!=null)
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-hover table-bordered">
+                                            <!-- -- Table Header -->
+                                            <thead>
                                             <tr>
-                                                <td>{{$material->waitingGlobalPrice->name}}</td>
-                                                <td>{{$material->waitingGlobalPrice->type->name}}</td>
-                                                <td>{{$material->waitingGlobalPrice->unit}}</td>
+                                                <th>ชื่อ</th>
+                                                <th>หมวดหมู่</th>
+                                                <th>หน่วย</th>
+                                                <th>แหล่งที่มา</th>
+                                                <th>ราคาทุนกลาง</th>
+                                                <th>ราคาขายกลาง</th>
+                                                <th>ราคาทุนใบเสนอราคา</th>
+                                                <th>ราคาขายใบเสนอราคา</th>
+                                                <th>แก้ไข</th>
+                                            </tr>
+                                            </thead>
+                                            <!-- -- -- -- --Table Waiting Global Price Table Body -->
+                                            <tbody>
+                                            <tr>
+                                                <td>@{{waitingGlobalDetails.name}}</td>
                                                 <td>
-                                                    @if($material->waitingGlobalPrice->vendor)
-                                                        {{$material->waitingGlobalPrice->vendor->name}}
-                                                    @else
-                                                        -
+                                                    <span v-if="waitingGlobalDetails.type">
+                                                          @{{waitingGlobalDetails.type.name}}
+                                                    </span>
+                                                </td>
+                                                <td>@{{waitingGlobalDetails.unit}}</td>
+                                                <td>
+                                                    <span v-if="waitingGlobalDetails.vendor">
+                                                        @{{waitingGlobalDetails.vendor}}
+                                                    </span>
+                                                    <span v-else> - </span>
+                                                </td>
+                                                <td>@{{waitingGlobalDetails.global_cost}}</td>
+                                                <td>@{{waitingGlobalDetails.global_price}}</td>
+                                                <td>@{{waitingGlobalDetails.invoice_cost}}</td>
+                                                <td>@{{waitingGlobalDetails.invoice_price}}</td>
+                                                <td>
+                                                    {{--Approved--}}
+                                                    @if(Auth::user()->hasRole('admin'))
+                                                        <a @click="updateGlobalDetailsStatus(waitingGlobalDetails)"
+                                                           class="btn btn-success">อนุมัติ</a>
                                                     @endif
-                                                </td>
-                                                <td>{{$material->waitingGlobalPrice->global_cost}}</td>
-                                                <td>{{$material->waitingGlobalPrice->global_price}}</td>
-                                                <td>{{$material->waitingGlobalPrice->invoice_cost}}</td>
-                                                <td>{{$material->waitingGlobalPrice->invoice_price}}</td>
-                                                <td>
-                                                    <a class="btn btn-info"
-                                                       href="{{route('admin.materials.items.edit',$material->waitingGlobalPrice->id)}}">Edit </a>
-                                                </td>
-                                                <td>
-                                                    <form onsubmit="return confirm('ยืนยันการลบ')" method="POST"
-                                                          action="{{route('admin.materials.items.destroy',$material->waitingGlobalPrice->id)}}">
-                                                        {{ csrf_field() }}
-                                                        {{ method_field('DELETE') }}
-                                                        <button class="btn btn-danger" type="submit">
-                                                            Delete
-                                                        </button>
-                                                    </form>
+                                                    {{--Reject--}}
+                                                    {{--Delete--}}
+                                                    <a v-if="approvedGlobalDetails != null"
+                                                       @click="deleteWaitingGlobalDetails(waitingGlobalDetails)"
+                                                       class="btn btn-danger">
+                                                        <i class="far fa-trash-alt"></i>
+                                                        <span class="hidden-xs">ปฏิเสธ</span>
+                                                    </a>
                                                 </td>
                                             </tr>
-                                        @endif
-                                        </tbody>
-                                    </table>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                             {{-- -- -- Waiting  Local Price--}}
@@ -362,53 +373,61 @@
                                     </div>
                                 </div>
                                 <div class="portlet-body">
-                                    <!-- -- -- --Wating Local Price Table -->
-                                    <table class="table table-striped table-hover table-bordered"
-                                           id="sample_editable_1">
-                                        <!-- -- -- -- --Table Header -->
-                                        <thead>
-                                        <tr>
-                                            <td>จังหวัด</td>
-                                            <td>อำเภอ</td>
-                                            <td>ตำบล</td>
-                                            <td>ราคาทุน</td>
-                                            <td>ราคาขาย</td>
-                                            <td>ค่าแรง</td>
-                                            <th>Edit</th>
-                                            <th>Delete</th>
-                                        </tr>
-                                        </thead>
-                                        <!-- -- -- -- --Waiting Local Price Table Body -->
-                                        <tbody>
-                                        {{--{{dd($material)}}--}}
-                                        @foreach($material->localPrices as $localPrice)
-                                            @if($localPrice->waitingPrice)
-                                                <tr>
-                                                    <td>{{$localPrice->approvedPrice->province->name}}</td>
-                                                    <td>{{$localPrice->approvedPrice->amphoe->name}}</td>
-                                                    <td>{{$localPrice->approvedPrice->district->name}}</td>
-                                                    <td>{{$localPrice->approvedPrice->cost}}</td>
-                                                    <td>{{$localPrice->approvedPrice->price}}</td>
-                                                    <td>{{$localPrice->approvedPrice->wage}}</td>
-                                                    <td>
-                                                        <a class="btn btn-info"
-                                                           href="{{route('admin.materials.items.edit',$localPrice->id)}}">Edit </a>
-                                                    </td>
-                                                    <td>
-                                                        <form onsubmit="return confirm('ยืนยันการลบ')" method="POST"
-                                                              action="{{route('admin.materials.items.destroy',$localPrice->id)}}">
-                                                            {{ csrf_field() }}
-                                                            {{ method_field('DELETE') }}
-                                                            <button class="btn btn-danger" type="submit">
-                                                                Delete
-                                                            </button>
-                                                        </form>
-                                                    </td>
-                                                </tr>
-                                            @endif
-                                        @endforeach
-                                        </tbody>
-                                    </table>
+                                    <!-- -- -- --Waiting Local Price Table -->
+                                    @if(Auth::user()->hasRole('admin'))
+                                        <div class="row">
+                                            <div class="col-xs-6">
+                                                <a @click="updateLocalPriceStatus" class=" btn btn-success">
+                                                    อนุมัติ
+                                                </a>
+                                            </div>
+                                            <div class="col-xs-6 pull-right text-right margin-bottom-5">
+                                                <a @click="deleteMultipleWaitingLocalPrices" class="btn btn-danger">Delete</a>
+                                            </div>
+                                        </div>
+                                    @endif
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-hover table-bordered"
+                                               id="waiting-local-price">
+                                            <!-- -- -- -- --Table Header -->
+                                            <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th>จังหวัด</th>
+                                                <th>อำเภอ</th>
+                                                <th>ตำบล</th>
+                                                <th>ค่าแรง</th>
+                                                <th>ราคาทุน</th>
+                                                <th>ราคาขาย</th>
+                                                <th>ลบ</th>
+                                            </tr>
+                                            </thead>
+                                            <!-- -- -- -- --Waiting Local Price Table Body -->
+                                            <tbody v-if="1">
+                                            <tr v-for="(localItem,index) in waitingLocalPrices.data" :key="index">
+                                                <td><input v-model="checkedWaitingLocalPrices"
+                                                           :value="localItem.waiting_price"
+                                                           type="checkbox"></td>
+                                                <td>@{{localItem.waiting_price.province.name}}</td>
+                                                <td>@{{localItem.waiting_price.amphoe.name}}</td>
+                                                <td>@{{localItem.waiting_price.district.name}}</td>
+                                                <td>@{{localItem.waiting_price.wage}}</td>
+                                                <td>@{{localItem.waiting_price.cost}}</td>
+                                                <td>@{{localItem.waiting_price.price}}</td>
+                                                <td>
+                                                    {{--Delete--}}
+                                                    <a @click="deleteWaitingLocalPrice(localItem)"
+                                                       class="btn btn-danger">
+                                                        <i class="far fa-trash-alt"></i>
+                                                        <span class="hidden-xs"> Delete</span>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                        <pagination :data="waitingLocalPrices"
+                                                    v-on:pagination-change-page="getWaitingLocalPriceResults"></pagination>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -424,20 +443,7 @@
         $('#sample_editable_1').dataTable({
             "paging": false
         });
-        var materialTypes = JSON.parse('{!! $materialTypes !!}');
-        var provinces = JSON.parse('{!! $provinces !!}');
-        var material = JSON.parse('{!! $material !!}');
-        var indexRoute = '{!! $indexRoute !!}';
-        var globalPrice = '';
-        var localPrices = [];
-        if (material.published.name_eng == 'waiting') {
-            globalPrice = material.waiting_global_price;
-        } else if (material.published.name_eng == 'approved') {
-            globalPrice = material.approved_global_price;
-        }
-        console.log(material);
     </script>
     <script src="{{asset('views/admin/materials/items/js/item_edit.js')}}"></script>
-    <script src="{{asset('views/admin/materials/items/js/item_edit_add_modal.js')}}"></script>
 @endsection
 
