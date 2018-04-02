@@ -1807,6 +1807,20 @@ var ProductService = function () {
                 });
             });
         }
+        //Get All Product With Page
+
+    }, {
+        key: 'getAllProductsWithPages',
+        value: function getAllProductsWithPages() {
+            var url = this.url + '/admin/product/get_all_products_with_pages';
+            return new Promise(function (resolve, reject) {
+                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get(url).then(function (result) {
+                    resolve(result.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
         //getSelectedProductPage
 
     }, {

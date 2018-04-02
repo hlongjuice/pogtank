@@ -1,6 +1,8 @@
 import City from '../../../../../assets/js/services/city';
 import MaterialType from '../../../../../assets/js/services/material/material_type_service';
+import WebUrlService from '../../../../../assets/js/services/webUrl';
 
+let webUrlService = new WebUrlService();
 const dict = {
     custom: {
         materialName: {required: 'ชื่อสินค้า'},
@@ -40,8 +42,10 @@ let vm = new Vue({
             materialTypeID: '',
             globalCost: 0,
             globalPrice: 0,
+            globalWage:0,
             invoiceCost: 0,
             invoicePrice: 0,
+            invoiceWage:0
         },
         displayStatus: []
     },
@@ -83,8 +87,9 @@ let vm = new Vue({
                     if (result) {
                         axios.post('/admin/materials/items', vm.form)
                             .then((result) => {
-                                alert('เพิ่มเสร็จแล้ว');
+                                // alert('เพิ่มเสร็จแล้ว');
                                 // window.location=indexRoute+'/added';
+                               window.location= webUrlService.getRoute('/admin/materials/items/submitted/added');
                                 console.log(result);
                             }).catch(err => {
                             alert('ไม่สามารถเพิ่มข้อมูลได้ลองใหม่อีกครั้ง');

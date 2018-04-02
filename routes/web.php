@@ -36,6 +36,8 @@ Route::prefix('admin')->middleware('auth')
             Route::post('/add_new_product', 'Admin\Product\ProductController@addNewProduct');
             // -- --Get Products
             Route::get('/get_all_products', 'Admin\Product\ProductController@getAllProducts');
+            // -- --Get All Product with Page
+            Route::get('/get_all_products_with_pages','Admin\Product\ProductController@getAllProductsWithPages');
         });
         //-- -- Project Order
         Route::prefix('project_order')->group(function () {
@@ -78,6 +80,8 @@ Route::prefix('admin')->middleware('auth')
                 Route::post('add_root_job','Admin\Project\Porlor4JobController@addRootJob');
                 // -- -- -- -- Add Child Job
                 Route::post('add_child_job/{parent_id}','Admin\Project\Porlor4JobController@addChildJob');
+                // -- -- -- -- Add Child Job Item
+                Route::post('add_child_job_item','Admin\Project\Porlor4JobController@addChildJobItems');
                 // -- -- -- -- Add Child Job With Details
                 Route::post('add_child_job_with_details/{parent_id}','Admin\Project\Porlor4JobController@addChildJobWithDetails');
             });

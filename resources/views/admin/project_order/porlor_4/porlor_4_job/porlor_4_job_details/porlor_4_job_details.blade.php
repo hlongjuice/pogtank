@@ -3,11 +3,13 @@
         :click-to-close="false"
         v-cloak
         @before-open="beforeOpenJobDetailsModal($event)"
+        @opened="openedJobDetailsModal"
         @before-close="beforeCloseJobDetailsModal"
         width="99%"
         height="auto"
         :scrollable="true"
 >
+    <loading :show='showLoadingJobDetails'></loading>
     <div id="porlor-4-job-index" class="row" v-cloak>
         @include('admin.project_order.porlor_4.porlor_4_job.porlor_4_job_details.porlor_4_add_child_job.porlor_4_add_child_job')
         @include('admin.project_order.porlor_4.porlor_4_job.porlor_4_job_details.porlor_4_add_child_job_item.porlor_4_add_child_job_item')
@@ -102,9 +104,9 @@
                                         {{-- -- Table Content--}}
                                         <tbody>
                                         <template v-for="job in child_job.jobs">
-                                            <tr>
+                                            <tr class="text-right">
                                                 <td class="text-center">@{{ job.job_order_number }}</td>
-                                                <td>
+                                                <td class="text-left">
                                                     @{{ job.name }}
                                                     {{--<span class="pull-right">--}}
                                                         {{--<a v-if="job.descendants.length == 0"--}}
@@ -125,12 +127,12 @@
                                             </tr>
                                             {{--If เป็นกลุ่มของรายการ--}}
                                             <template></template>
-                                            {{--รายการสรุปผลรวมของกลุ่มย่อย ลงท้ายด้วย .2 --}}
+                                            {{--รายการสรุปผลรวมของกลุ่มย่อย--}}
                                             <template v-if="job.quantity_factor > 0">
                                                 {{-- .1 คิดต่อ 1 หน่วย--}}
-                                                <tr>
+                                                <tr class="text-right">
                                                     <td class="text-center">@{{ job.job_order_number }}.1</td>
-                                                    <td> @{{ job.name_per_unit }}</td>
+                                                    <td class="text-left"> @{{ job.name_per_unit }}</td>
                                                     <td></td>
                                                     <td></td>
                                                     <td></td>
@@ -140,42 +142,60 @@
                                                     <td></td>
                                                     <td></td>
                                                 </tr>
+                                                {{--รายการวัสดุ/งาน ต่อ 1 หน่วย .1--}}
+                                                <template v-if="job.items.length > 0">
+                                                    <tr class="text-right" v-for="(item,index) of job.items">
+                                                        <td class="text-center">@{{ job.job_order_number}}.1.@{{ index+1 }}</td>
+                                                        <td class="text-left"> @{{ item.details.approved_global_details.name }}</td>
+                                                        <td >@{{ item.quantity }}</td>
+                                                        <td class="text-center">@{{ item.unit }}</td>
+                                                        <td>@{{ item.local_price }}</td>
+                                                        <td>@{{ item.total_price }}</td>
+                                                        <td>@{{ item.local_wage }}</td>
+                                                        <td>@{{ item.total_wage }}</td>
+                                                        <td></td>
+                                                        <td></td>
+                                                    </tr>
+                                                </template>
                                                 {{-- รวมราคา ต่อ 1 หน่วย--}}
-                                                <tr class="text-center">
+                                                <tr class="text-right">
                                                     <td class="text-center"></td>
-                                                    <td>รวมราคา @{{ job.name_per_unit }}</td>
+                                                    <td class="text-left">รวมราคา @{{ job.name_per_unit }}</td>
                                                     <td></td>
                                                     <td></td>
                                                     <td></td>
+                                                    <td>@{{ job.sum_total_price }}</td>
                                                     <td></td>
-                                                    <td></td>
-                                                    <td></td>
+                                                    <td>@{{ job.sum_total_wage }}</td>
                                                     <td></td>
                                                     <td></td>
                                                 </tr>
                                                 {{-- สรุปราคา ต่อ 1 หน่วย--}}
-                                                <tr class="text-center">
+                                                {{--คือผลรวมที่ปัดเศษลงแล้ว--}}
+                                                <tr class="text-right">
                                                     <td class="text-center"></td>
-                                                    <td> สรุปราคา @{{ job.name_per_unit }}</td>
+                                                    <td class="text-center"> สรุปราคา @{{ job.name_per_unit }}</td>
                                                     <td></td>
                                                     <td></td>
                                                     <td></td>
+                                                    <td>@{{ job.round_down_sum_total_price }}</td>
                                                     <td></td>
-                                                    <td></td>
-                                                    <td></td>
+                                                    <td>@{{ job.round_down_sum_total_wage }}</td>
                                                     <td></td>
                                                     <td></td>
                                                 </tr>
-                                                {{-- สรุปราคา ต่อ จำนวนหน่วยที่ระบุ--}}
-                                                <tr>
-                                                    <td class="text-center">@{{ job.job_order_number }}.2</td>
-                                                    <td> @{{ job.name }}</td>
+                                                {{-- สรุปราคา ต่อ จำนวนหน่วยที่ระบุ ลงท้ายด้วย .2 --}}
+                                                <tr class="text-right">
+                                                    <td class="text-left">@{{ job.job_order_number }}.2</td>
+                                                    <td class="text-center"> @{{ job.name }}</td>
                                                     <td>@{{ job.quantity_factor }}</td>
-                                                    <td>@{{ job.unit }}</td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
+                                                    <td class="text-center">@{{ job.unit }}</td>
+                                                    <td>@{{ job.round_down_sum_total_price }}</td>
+                                                    {{--ผลรวมค่าวัสดุหลังปัดเศษ x จำนวน--}}
+                                                    <td>@{{ job.total_leaf_job_local_price }}</td>
+                                                    <td>@{{ job.round_down_sum_total_wage }}</td>
+                                                    {{--ผลรวมค่าแรงหลังปัดเศษ x จำนวน--}}
+                                                    <td>@{{ job.total_leaf_job_local_wage }}</td>
                                                     <td></td>
                                                     <td></td>
                                                 </tr>

@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin\Project;
 
 use App\Models\Admin\Project\Porlor4;
 use App\Models\Admin\Project\Porlor4Job;
+use App\Models\Admin\Project\Porlor4JobItem;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use DB;
 
 class Porlor4JobController extends Controller
 {
@@ -57,9 +59,23 @@ class Porlor4JobController extends Controller
     }
 
     //Add Child Job Items
-    public function addChildJobItems(){
+    public function addChildJobItems(Request $request, $porlor_4_id)
+    {
+        $result = DB::transaction(function () use ($request, $porlor_4_id) {
+            Porlor4JobItem::create([
+                'porlor_4_job_id' => $request->input('child_job')['id'], //id ของจ๊อบที่เป็นกลุ่มย่อยที่เป็น leaf เลยใช่ child job id
+                'quantity' => $request->input('quantity'),
+                'material_id' => $request->input('material_item')['id'],
+                'local_price' => $request->input('local_price'),
+                'local_wage' => $request->input('local_wage'),
+                'unit' => $request->input('unit')
+            ]);
+        });
+        return response()->json($result);
+
 
     }
+
     //Add Child Job With Details
     public function addChildJobWithDetails()
     {
@@ -78,17 +94,36 @@ class Porlor4JobController extends Controller
     //แบ่งกลุ่มงานย่อยตาม หน้า ปร.4
     public function getAllChildJobs($porlor_4_id, $root_job_id)
     {
-        $jobs = Porlor4Job::with('descendants')
+        $jobs = Porlor4Job::with(['descendants', 'items.details.approvedGlobalDetails'])
             ->withDepth()->descendantsOf($root_job_id);
         $groupJobs = $jobs->groupBy('page_number');
         $total_page = $jobs->max('page_number');
         $result = collect([]);
         //แยกรายการตามหัวข้อ
-        foreach ($groupJobs as $key => $values) {
+        foreach ($groupJobs as $key => $child_jobs) {
+            //วนลูป child_jobs เพื่อจะเข้าถึง items ในแต่ละ job
+            foreach ($child_jobs as $child_job) {
+                //วนลูป items เพื่อคำนวนรายการค่าใช้จ่ายต่อรายการ
+                foreach ($child_job->items as $item) {
+                    //ผลรวมค่าวัสดุ
+                    $item->total_price = $item->quantity * $item->local_price;
+                    //ผลรวมค่าแรง
+                    $item->total_wage = $item->quantity * $item->local_wage;
+                }
+                //ผลรวมทั้งหมดก่อนปัด
+                $child_job->sum_total_price = $child_job->items->sum('total_price');
+                $child_job->sum_total_wage = $child_job->items->sum('total_wage');
+                //ผลรวมทั้งหมดหลังปัดเศษ โดยปัดที่หลักร้อยลง เช่น 2197 เป็น 2100 ปัดหลักร้อยลงเป็นเลข 00
+                $child_job->round_down_sum_total_price = floor($child_job->sum_total_price/100)*100;
+                $child_job->round_down_sum_total_wage = floor($child_job->sum_total_wage/100)*100;
+                //ผลรวมราคาหลังปัดเศษลง x จำนวน quantity_factor (สรุปกลุ่มงาน .2)
+                $child_job->total_leaf_job_local_price = $child_job->round_down_sum_total_price * $child_job->quantity_factor;
+                $child_job->total_leaf_job_local_wage = $child_job->round_down_sum_total_wage * $child_job->quantity_factor;
+            }
 
             $job = [
                 'page' => $key,
-                'jobs' => $values,
+                'jobs' => $child_jobs,
                 'total_page' => $total_page
             ];
             $result->push($job);

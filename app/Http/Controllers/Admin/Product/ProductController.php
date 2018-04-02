@@ -26,7 +26,13 @@ class ProductController extends Controller
     }
     //Get Products
     public function getAllProducts(){
-        $products=Product::orderBy('updated_at','DESC')->get();
+        $products=Product::orderBy('updated_at','DESC')
+            ->get();
+        return response()->json($products);
+    }
+    //Get All Product with Page
+    public function getAllProductsWithPages(){
+        $products=Product::orderBy('updated_at','DESC')->paginate(50);
         return response()->json($products);
     }
 }

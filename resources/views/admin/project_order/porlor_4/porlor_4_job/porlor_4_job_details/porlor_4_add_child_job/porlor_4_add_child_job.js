@@ -9,17 +9,16 @@ export const Porlor4AddChildJob ={
                     name:'',
                     parent:{},
                     quantity_factor:0,
-                    unit:'',
-                    page_number:''
+                    unit:''
                 },
                 parents:[]
             },
         }
     },
     methods:{
-        beforeOpenAddChildJobModal(event){
+        beforeOpenAddChildJobModal(){
             //Reset Data
-            this.addChildJobResetData(event.params.page_number);
+            this.addChildJobResetData();
             porlor4JobService.getParentJobs(this.porlor4.id,this.root_job.id)
                 .then(result=>{
                     this.add_child_job.parents=result;
@@ -30,7 +29,7 @@ export const Porlor4AddChildJob ={
                 })
         },
         //Reset Data
-        addChildJobResetData(page_number){
+        addChildJobResetData(){
             this.add_child_job={
                 form:{
                     job_order_number:'',
@@ -41,8 +40,7 @@ export const Porlor4AddChildJob ={
                         name:'รายการหลัก'
                     },
                     quantity_factor:0,
-                    unit:'',
-                    page_number:page_number
+                    unit:''
                 },
                 test:'test',
                 parents:[]

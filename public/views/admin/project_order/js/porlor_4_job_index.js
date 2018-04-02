@@ -1494,24 +1494,34 @@ var porlor4JobService = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_proj
 var Porlor4JobDetails = {
     data: function data() {
         return {
-            showLoadingJobDetails: '',
+            showLoadingJobDetails: false,
             root_job: '',
             child_jobs: []
         };
     },
     methods: {
         beforeOpenJobDetailsModal: function beforeOpenJobDetailsModal(event) {
-            var _this = this;
-
             //Get Parent Jobs
             this.root_job = event.params.root_job;
             console.log('Root Job ID :', this.root_job.id);
             console.log('Porlor 4 Job Details');
             this.child_jobs = [];
-            //Get All Child Jobs
+        },
+
+        //Opened Job Details Modal
+        openedJobDetailsModal: function openedJobDetailsModal() {
+            this.getAllChildJobAndItems();
+        },
+
+        //Get All Child Job and Item
+        getAllChildJobAndItems: function getAllChildJobAndItems() {
+            var _this = this;
+
+            this.showLoadingJobDetails = true;
             porlor4JobService.getAllChildJobs(this.porlor4.id, this.root_job.id) //this.porlor4.id มาจาก ไฟล์ porlor_4_job ไฟล์แรก
             .then(function (result) {
                 _this.child_jobs = result;
+                _this.showLoadingJobDetails = false;
                 console.log('Child Jobs :', _this.child_jobs);
             }).catch(function (err) {
                 console.log(err.response.status);
@@ -1532,6 +1542,15 @@ var Porlor4JobDetails = {
         //Close Modal
         closePorlor4JobDetailsModal: function closePorlor4JobDetailsModal() {
             this.$modal.hide('porlor-4-job-details-modal');
+        },
+
+        //closedAddChildJobItemModal
+        beforeCloseAddChildJobItemModal: function beforeCloseAddChildJobItemModal(event) {
+            console.log('Close Add Child Job Item Modal Event :', event);
+            var status = event.params.add_status;
+            if (status) {
+                this.getAllChildJobAndItems();
+            }
         }
     }
 };
@@ -1555,19 +1574,18 @@ var Porlor4AddChildJob = {
                     name: '',
                     parent: {},
                     quantity_factor: 0,
-                    unit: '',
-                    page_number: ''
+                    unit: ''
                 },
                 parents: []
             }
         };
     },
     methods: {
-        beforeOpenAddChildJobModal: function beforeOpenAddChildJobModal(event) {
+        beforeOpenAddChildJobModal: function beforeOpenAddChildJobModal() {
             var _this = this;
 
             //Reset Data
-            this.addChildJobResetData(event.params.page_number);
+            this.addChildJobResetData();
             porlor4JobService.getParentJobs(this.porlor4.id, this.root_job.id).then(function (result) {
                 _this.add_child_job.parents = result;
                 console.log('Parents Job Result :', result);
@@ -1577,7 +1595,7 @@ var Porlor4AddChildJob = {
         },
 
         //Reset Data
-        addChildJobResetData: function addChildJobResetData(page_number) {
+        addChildJobResetData: function addChildJobResetData() {
             this.add_child_job = {
                 form: {
                     job_order_number: '',
@@ -1588,8 +1606,7 @@ var Porlor4AddChildJob = {
                         name: 'รายการหลัก'
                     },
                     quantity_factor: 0,
-                    unit: '',
-                    page_number: page_number
+                    unit: ''
                 },
                 test: 'test',
                 parents: []
@@ -1693,6 +1710,7 @@ module.exports = InterceptorManager;
 
 
 
+
 var porlor4JobService = new __WEBPACK_IMPORTED_MODULE_2__assets_js_services_project_order_porlor_4_job_service__["a" /* default */]();
 var materialItemService = new __WEBPACK_IMPORTED_MODULE_1__assets_js_services_material_material_item_service__["a" /* default */]();
 var materialTypeService = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_material_material_type_service__["a" /* default */]();
@@ -1700,15 +1718,20 @@ var Porlor4AddChildJobItem = {
     data: function data() {
         return {
             add_child_job_item: {
+                add_status: false,
                 isLoading: false,
                 leaf_jobs: [],
                 material_types: [],
                 material_items: [],
                 form: {
-                    parent: '',
+                    child_job: '',
                     material_type: '',
                     material_item: '',
-                    material_name: ''
+                    material_name: '',
+                    local_price: '',
+                    local_wage: '',
+                    quantity: 0,
+                    unit: ''
                 }
             }
         };
@@ -1716,15 +1739,24 @@ var Porlor4AddChildJobItem = {
 
     methods: {
         beforeOpenAddChildJobItemModal: function beforeOpenAddChildJobItemModal(event) {
+            this.addChildJobItemResetData();
+        },
+        openedAddChildJobItemModal: function openedAddChildJobItemModal() {
             var _this = this;
 
-            this.addChildJobItemResetData();
-            console.log('Add Child Job Item Event :', event);
+            this.add_child_job_item.isLoading = true;
             Promise.all([
             //Get Material Types
             materialTypeService.getMaterialTypeTree().then(function (result) {
+                var allType = {
+                    name_eng: 'all',
+                    name: 'ทั้งหมด',
+                    id: 0
+                };
                 _this.add_child_job_item.material_types = result;
-                console.log('Material Types : ', _this.materialTypes);
+                //Add selected All type at first of type list
+                _this.add_child_job_item.material_types.unshift(allType);
+                console.log('Material Types : ', _this.add_child_job_item.material_types);
             }).catch(function (err) {
                 alert(err);
             }),
@@ -1732,34 +1764,73 @@ var Porlor4AddChildJobItem = {
             porlor4JobService.getAllLeafJobs(this.porlor4.id, this.root_job.id).then(function (result) {
                 _this.add_child_job_item.leaf_jobs = result;
                 console.log('Leaf Jobs :', _this.add_child_job_item.leaf_jobs);
-            })]).then().catch();
+            }),
+            //Get Material Items
+            materialItemService.getItemsOfType(this.add_child_job_item.form.material_type.id).then(function (result) {
+                _this.add_child_job_item.material_items = result;
+            }).catch(function (err) {
+                alert(err);
+            })]).then(function () {
+                _this.add_child_job_item.isLoading = false;
+            }).catch();
         },
         addChildJobItemResetData: function addChildJobItemResetData() {
             this.add_child_job_item = {
+                add_status: false,
                 isLoading: false,
                 leaf_jobs: [],
                 material_types: [],
                 material_items: [],
                 form: {
-                    parent: '',
-                    material_type: '',
+                    child_job: '',
+                    material_type: {
+                        name_eng: 'all',
+                        name: 'ทั้งหมด',
+                        id: 0
+                    },
                     material_item: '',
-                    material_name: ''
+                    material_name: '',
+                    quantity: 0,
+                    local_price: '',
+                    local_wage: '',
+                    unit: ''
+
                 }
             };
         },
+        addChildJobItem: function addChildJobItem(form, event) {
+            var _this2 = this;
+
+            this.$validator.validateAll(form).then(function (result) {
+                if (result) {
+                    _this2.add_child_job_item.isLoading = true;
+                    porlor4JobService.addChildJobItem(_this2.porlor4.id, _this2.add_child_job_item.form).then(function (result) {
+                        _this2.add_child_job_item.isLoading = false;
+                        _this2.add_child_job_item.add_status = true;
+                        _this2.closeAddChildJobItemModal();
+                    }).catch(function (err) {
+                        alert(err);
+                        _this2.add_child_job_item.isLoading = false;
+                    });
+                } else {
+                    alert('กรุณาระบุข้อมูล');
+                }
+            });
+        },
         closeAddChildJobItemModal: function closeAddChildJobItemModal() {
-            this.$modal.hide('porlor-4-add-child-job-item-modal');
+            this.$modal.hide('porlor-4-add-child-job-item-modal', {
+                add_status: this.add_child_job_item.add_status
+            });
         },
         getMaterialTypes: function getMaterialTypes() {},
 
         //Get Items OF Type
         getMaterialItemsOfType: function getMaterialItemsOfType() {
-            var _this2 = this;
+            var _this3 = this;
 
             materialItemService.getItemsOfType(this.add_child_job_item.form.material_type.id).then(function (result) {
                 console.log('Material Item :', result);
-                _this2.add_child_job_item.material_items = result;
+                _this3.add_child_job_item.material_items = result;
             }).catch(function (err) {
                 alert(err);
             });
@@ -1767,13 +1838,13 @@ var Porlor4AddChildJobItem = {
 
         //Search Item Of Type By name
         searchMaterialItemsOfType: function searchMaterialItemsOfType(search_name) {
-            var _this3 = this;
+            var _this4 = this;
 
-            this.add_child_job_item.isLoading = true;
+            // this.add_child_job_item.isLoading = true;
             materialItemService.searchItemsOfTypeByName(this.add_child_job_item.form.material_type.id, search_name).then(function (result) {
                 console.log('Search Material Items :', result);
-                _this3.add_child_job_item.material_items = result;
-                _this3.add_child_job_item.isLoading = false;
+                _this4.add_child_job_item.material_items = result;
+                // this.add_child_job_item.isLoading = false;
             }).catch(function (err) {
                 alert(err);
             });
@@ -1786,6 +1857,17 @@ var Porlor4AddChildJobItem = {
             if (item.approved_global_details) {
                 return item.approved_global_details.name;
             }
+        },
+        myEventBus: function myEventBus() {}
+    },
+    watch: {
+        //หน้าใช้งานใน porlor 4 ราคาต่างๆเป็นราคา ประจำตำบล แต่ข้อมูลที่ดึงมาจาก DB จะดึงราคาส่วนกลางมาแสดง
+        //หากราคาส่วนกลางไม่ตรงกับราคาประจำตำบลนั้นๆ ผู้ใช้สามารถแก้ไขและปรับปรุงได้
+        'add_child_job_item.form.material_item': function add_child_job_itemFormMaterial_item(item) {
+            console.log('Add Child Job Item Selected Item :', item);
+            this.add_child_job_item.form.local_price = item.approved_global_details.global_price;
+            this.add_child_job_item.form.local_wage = item.approved_global_details.global_wage;
+            this.add_child_job_item.form.unit = item.approved_global_details.unit;
         }
     }
 };
@@ -2393,6 +2475,20 @@ var Porlor4JobService = function () {
             return new Promise(function (resolve, reject) {
                 axios.post(url, dataInputs).then(function (result) {
                     resolve(result);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
+        //Add Child Job Item
+
+    }, {
+        key: 'addChildJobItem',
+        value: function addChildJobItem(porlor_4_id, dataInputs) {
+            var url = this.url + '/admin/project_order/porlor_4_id/' + porlor_4_id + '/add_child_job_item';
+            return new Promise(function (resolve, reject) {
+                axios.post(url, dataInputs).then(function (result) {
+                    resolve(result.data);
                 }).catch(function (err) {
                     reject(err);
                 });

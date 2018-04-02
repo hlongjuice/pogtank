@@ -166,6 +166,17 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <!-- -- -- Global Wage-->
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">ค่าแรง</label>
+                                                        <div class="col-md-9">
+                                                            <vue-numeric name="globalWage" :precision=2
+                                                                         class="form-control" separator=","
+                                                                         v-model="form.globalWage"></vue-numeric>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
 
                                             <h4 class="form-section">ราคาจากใบเสนอราคา</h4>
@@ -189,6 +200,17 @@
                                                             <vue-numeric name="invoicePrice" :precision=2
                                                                          class="form-control" separator=","
                                                                          v-model="form.invoicePrice"></vue-numeric>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {{-- -- -- Invoice Wage--}}
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3">ค่าแรง</label>
+                                                        <div class="col-md-9">
+                                                            <vue-numeric name="invoiceWage" :precision=2
+                                                                         class="form-control" separator=","
+                                                                         v-model="form.invoiceWage"></vue-numeric>
                                                         </div>
                                                     </div>
                                                 </div>

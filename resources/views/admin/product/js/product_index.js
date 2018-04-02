@@ -15,8 +15,9 @@ new Vue({
         //Initial
         initialData() {
             Promise.all([
-                productService.getAllProducts()
+                productService.getAllProductsWithPages()
                     .then(result => {
+                        console.log('Products :',result);
                         this.products = result;
                     }).catch(err => {
                     alert(err)

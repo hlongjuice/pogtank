@@ -1044,9 +1044,12 @@ module.exports = __webpack_require__(195);
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_city__ = __webpack_require__(30);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_js_services_material_material_type_service__ = __webpack_require__(29);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__assets_js_services_webUrl__ = __webpack_require__(3);
 
 
 
+
+var webUrlService = new __WEBPACK_IMPORTED_MODULE_2__assets_js_services_webUrl__["a" /* default */]();
 var dict = {
     custom: {
         materialName: { required: 'ชื่อสินค้า' },
@@ -1086,8 +1089,10 @@ var vm = new Vue({
             materialTypeID: '',
             globalCost: 0,
             globalPrice: 0,
+            globalWage: 0,
             invoiceCost: 0,
-            invoicePrice: 0
+            invoicePrice: 0,
+            invoiceWage: 0
         },
         displayStatus: []
     },
@@ -1122,8 +1127,9 @@ var vm = new Vue({
                 var errMassage = 'กรุณาระบุ ';
                 if (result) {
                     axios.post('/admin/materials/items', vm.form).then(function (result) {
-                        alert('เพิ่มเสร็จแล้ว');
+                        // alert('เพิ่มเสร็จแล้ว');
                         // window.location=indexRoute+'/added';
+                        window.location = webUrlService.getRoute('/admin/materials/items/submitted/added');
                         console.log(result);
                     }).catch(function (err) {
                         alert('ไม่สามารถเพิ่มข้อมูลได้ลองใหม่อีกครั้ง');

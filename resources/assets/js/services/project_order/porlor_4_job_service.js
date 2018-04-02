@@ -26,6 +26,16 @@ class Porlor4JobService {
                 }).catch(err=>{reject(err)})
         })
     }
+    //Add Child Job Item
+    addChildJobItem(porlor_4_id,dataInputs){
+        let url =this.url+'/admin/project_order/porlor_4_id/'+porlor_4_id+'/add_child_job_item';
+        return new Promise((resolve,reject)=>{
+            axios.post(url,dataInputs)
+                .then(result=>{
+                    resolve(result.data)
+                }).catch(err=>{reject(err)})
+        })
+    }
     //Get All Root Jobs
     getAllRootJobs(porlor_4_id){
         let url=this.url+'/admin/project_order/porlor_4_id/'+porlor_4_id+'/get_all_root_jobs';

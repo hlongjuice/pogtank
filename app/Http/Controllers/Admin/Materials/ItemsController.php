@@ -175,8 +175,10 @@ class ItemsController extends Controller
             'unit' => $request->input('materialUnit'),
             'global_cost' => $request->input('globalCost'),
             'global_price' => $request->input('globalPrice'),
+            'global_wage'=>$request->input('globalWage'),
             'invoice_cost' => $request->input('invoiceCost'),
-            'invoice_price' => $request->input('invoicePrice')
+            'invoice_price' => $request->input('invoicePrice'),
+            'invoice_wage'=>$request->input('invoiceWage')
         ];
         //Add Item Global Price and  Details First version
         $newItem->globalDetails()->create($itemInputs);
@@ -315,8 +317,10 @@ class ItemsController extends Controller
                 'unit' => $request->input('unit'),
                 'global_cost' => $request->input('global_cost'),
                 'global_price' => $request->input('global_price'),
+                'global_wage'=>$request->input('global_wage'),
                 'invoice_cost' => $request->input('invoice_cost'),
-                'invoice_price' => $request->input('invoice_price')
+                'invoice_price' => $request->input('invoice_price'),
+                'invoice_wage'=>$request->input('invoice_wage')
             ]);
             //ดึงค่าเก่าเพื่อมาใช้ในการเปรียบเทียบ
             $oldItem = MaterialItemVersion::where('id', $request->input('id'))->first();
@@ -554,17 +558,24 @@ class ItemsController extends Controller
     // Get Item of Type
     public function getItemsOfType($type_id)
     {
-        //Query id ของ type_id ที่เลือก และ ลูกๆทั้งหมด เพราะถ้าต้นหาทาง type แม่
-        //จะได้ Item ของลูกไปด้วย
-        $typeDescenDantsAndSelfID= MaterialType::descendantsAndSelf($type_id)
-            ->toFlatTree()
-            ->pluck('id');
-        $items = MaterialItem::with('approvedGlobalDetails')
-            ->whereIn('type_id', $typeDescenDantsAndSelfID)
-            ->take(50)
-            ->get();
-        foreach ($items as $item){
-            $item->name='Test';
+        //ถ้า id == 0 คือ เลือกแบบ all Types
+        $typeDescenDantsAndSelfID=null;
+        $items=null;
+
+        if($type_id == 0){
+            $items = MaterialItem::with('approvedGlobalDetails')
+                ->take(50)
+                ->get();
+        }else{
+            //Query id ของ type_id ที่เลือก และ ลูกๆทั้งหมด เพราะถ้าต้นหาทาง type แม่
+            //จะได้ Item ของลูกไปด้วย
+            $typeDescenDantsAndSelfID= MaterialType::descendantsAndSelf($type_id)
+                ->toFlatTree()
+                ->pluck('id');
+            $items = MaterialItem::with('approvedGlobalDetails')
+                ->whereIn('type_id', $typeDescenDantsAndSelfID)
+                ->take(50)
+                ->get();
         }
         return response()->json($items);
     }
@@ -572,17 +583,29 @@ class ItemsController extends Controller
 //Search Item of Type By Name
     public function searchItemsOfTypeByName(Request $request, $type_id)
     {
-        //Query id ของ type_id ที่เลือก และ ลูกๆทั้งหมด เพราะถ้าต้นหาทาง type แม่
-        //จะได้ Item ของลูกไปด้วย
-        $typeDescenDantsAndSelfID= MaterialType::descendantsAndSelf($type_id)
-            ->toFlatTree()
-            ->pluck('id');
-        $items = MaterialItem::with('approvedGlobalDetails')
-            ->whereIn('type_id', $typeDescenDantsAndSelfID)
-            ->whereHas('approvedGlobalDetails', function ($query) use ($request) {
-                $query->where('name', 'like', '%' . $request->input('material_name') . '%');
-            })
-            ->get();
+        //ถ้า id == 0 คือ เลือกแบบ all Types
+        $typeDescenDantsAndSelfID=null;
+        $items=null;
+        if($type_id == 0){
+            $items = MaterialItem::with('approvedGlobalDetails')
+                ->whereHas('approvedGlobalDetails', function ($query) use ($request) {
+                    $query->where('name', 'like', '%' . $request->input('material_name') . '%');
+                })
+                ->get();
+        }else{
+            //Query id ของ type_id ที่เลือก และ ลูกๆทั้งหมด เพราะถ้าต้นหาทาง type แม่
+            //จะได้ Item ของลูกไปด้วย
+            $typeDescenDantsAndSelfID= MaterialType::descendantsAndSelf($type_id)
+                ->toFlatTree()
+                ->pluck('id');
+            $items = MaterialItem::with('approvedGlobalDetails')
+                ->whereIn('type_id', $typeDescenDantsAndSelfID)
+                ->whereHas('approvedGlobalDetails', function ($query) use ($request) {
+                    $query->where('name', 'like', '%' . $request->input('material_name') . '%');
+                })
+                ->get();
+        }
+
         return response()->json($items);
     }
 

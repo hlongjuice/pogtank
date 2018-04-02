@@ -1206,7 +1206,8 @@ new Vue({
         initialData: function initialData() {
             var _this = this;
 
-            Promise.all([productService.getAllProducts().then(function (result) {
+            Promise.all([productService.getAllProductsWithPages().then(function (result) {
+                console.log('Products :', result);
                 _this.products = result;
             }).catch(function (err) {
                 alert(err);
@@ -1690,6 +1691,20 @@ var ProductService = function () {
             var url = this.url + '/admin/product/get_all_products';
             return new Promise(function (resolve, reject) {
                 axios.get(url).then(function (result) {
+                    resolve(result.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
+        //Get All Product With Page
+
+    }, {
+        key: 'getAllProductsWithPages',
+        value: function getAllProductsWithPages() {
+            var url = this.url + '/admin/product/get_all_products_with_pages';
+            return new Promise(function (resolve, reject) {
+                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get(url).then(function (result) {
                     resolve(result.data);
                 }).catch(function (err) {
                     reject(err);

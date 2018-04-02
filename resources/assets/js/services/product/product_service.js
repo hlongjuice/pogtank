@@ -15,6 +15,16 @@ class ProductService{
                }).catch(err=>{reject(err)})
         });
     }
+    //Get All Product With Page
+    getAllProductsWithPages(){
+        let url = this.url+'/admin/product/get_all_products_with_pages';
+        return new Promise((resolve,reject)=>{
+            axois.get(url)
+                .then(result=>{
+                    resolve(result.data)
+                }).catch(err=>{reject(err)})
+        })
+    }
     //getSelectedProductPage
     getSelectedProductPage(page){
         let url = this.url+'/admin/product/get_all_products?page='+page;
