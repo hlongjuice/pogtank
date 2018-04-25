@@ -16,6 +16,8 @@ import loading from 'vue-full-loading';
 import Datepicker from 'vuejs-datepicker';
 import VueMoment from 'vue-moment';
 import {Auth} from './services/auth';
+import Vue2Filters from 'vue2-filters';
+import VuejsDialog from 'vuejs-dialog';
 
 //Global Method
 Vue.mixin(Auth);
@@ -25,12 +27,15 @@ window.ErrorBag = ErrorBag;
 Vue.use(VeeValidate);
 Vue.use(VModal);
 Vue.use(VueMoment);
-
+Vue.use(Vue2Filters);
+Vue.use(VuejsDialog,{
+    html: true,
+    okText: 'ยืนยัน',
+    cancelText: 'ยกเลิก',
+});
 // Component
 Vue.component('pagination', require('laravel-vue-pagination'));
 Vue.component('vue-numeric', VueNumeric);
 Vue.component('multiselect', Multiselect);
-Vue.component('example-component', require('./components/ExampleComponent.vue'));
-Vue.component('materials-items-create', require('./components/materials/items/CreateComponent.vue'));
 Vue.component('loading', loading);
 Vue.component('datepicker', Datepicker);

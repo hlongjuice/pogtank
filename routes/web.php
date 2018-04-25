@@ -70,6 +70,8 @@ Route::prefix('admin')->middleware('auth')
                 Route::get('get_all_root_jobs','Admin\Project\Porlor4JobController@getAllRootJobs');
                 // -- -- --- -- Get All Child Jobs
                 Route::get('get_all_child_jobs/{root_job_id}','Admin\Project\Porlor4JobController@getAllChildJobs');
+                // -- -- -- -- Get All Child Jobs WithOut Items
+                Route::get('get_all_child_jobs_without_items/{root_job_id}','Admin\Project\Porlor4JobController@getAllChildJobsWithOutItems');
                 // -- -- -- -- Get All Leaf Jobs
                 Route::get('get_all_leaf_jobs/{root_job_id}','Admin\Project\Porlor4JobController@getAllLeafJobs');
                 // -- -- --- -- Get Parents Job
@@ -84,6 +86,12 @@ Route::prefix('admin')->middleware('auth')
                 Route::post('add_child_job_item','Admin\Project\Porlor4JobController@addChildJobItems');
                 // -- -- -- -- Add Child Job With Details
                 Route::post('add_child_job_with_details/{parent_id}','Admin\Project\Porlor4JobController@addChildJobWithDetails');
+                // -- -- -- -- Edit Child Job
+                Route::put('edit_child_job/{parent_id}','Admin\Project\Porlor4JobController@editChildJob');
+                // -- -- --- --Delete Item
+                Route::delete('delete_item/{item_id}','Admin\Project\Porlor4JobController@deleteItem');
+                // -- -- -- --Delete Job
+                Route::delete('delete_child_job/{job_id}','Admin\Project\Porlor4JobController@deleteChildJob');
             });
         });
 
@@ -195,6 +203,15 @@ Route::prefix('admin')->middleware('auth')
                 Route::get('get_items_of_type/{type_id}','Admin\Materials\ItemsController@getItemsOfType');
                 // -- -- --Search Item of Types By Name
                 Route::post('search_items_of_type_by_name/{type_id}','Admin\Materials\ItemsController@searchItemsOfTypeByName');
+            });
+            //-- --New Material Items Route
+            Route::prefix('new_items')->group(function(){
+                //Add New Other Item
+                Route::post('add_new_other_item','Admin\Materials\NewItemsController@addNewOtherItem');
+                //Get First 50 Items
+                Route::get('get_items','Admin\Materials\NewItemsController@getItems');
+                //Search Items By Name
+                Route::post('search_items_by_name','Admin\Materials\NewItemsController@searchItemsByName');
             });
             //-- --Provinces
             Route::prefix('city')->group(function () {

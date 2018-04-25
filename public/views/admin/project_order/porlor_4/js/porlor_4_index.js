@@ -60,97 +60,26 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 212);
+/******/ 	return __webpack_require__(__webpack_require__.s = 209);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 160:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__webUrl__ = __webpack_require__(3);
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-
-var webUrl = new __WEBPACK_IMPORTED_MODULE_0__webUrl__["a" /* default */]();
-
-var Porlor4Service = function () {
-    function Porlor4Service() {
-        _classCallCheck(this, Porlor4Service);
-
-        this.url = webUrl.getUrl();
-    }
-    //Add New Part
-
-
-    _createClass(Porlor4Service, [{
-        key: 'addNewPart',
-        value: function addNewPart(order_id, dataInput) {
-            var url = this.url + '/admin/project_order/' + order_id + '/porlor_4/add_part';
-            return new Promise(function (resolve, reject) {
-                axios.post(url, dataInput).then(function (result) {
-                    resolve(result.data);
-                }).catch(function (err) {
-                    reject(err);
-                });
-            });
-        }
-        //Get All Porlor 4
-
-    }, {
-        key: 'getAllParts',
-        value: function getAllParts(order_id) {
-            var url = this.url + '/admin/project_order/' + order_id + '/porlor_4/get_all_parts';
-            return new Promise(function (resolve, reject) {
-                axios.get(url).then(function (result) {
-                    resolve(result.data);
-                }).catch(function (err) {
-                    reject(err);
-                });
-            });
-        }
-        //Get Project Details
-
-    }, {
-        key: 'getProjectDetails',
-        value: function getProjectDetails(order_id) {
-            var url = this.url + '/admin/project_order/' + order_id + '/porlor_4/get_project_details';
-            return new Promise(function (resolve, reject) {
-                axios.get(url).then(function (result) {
-                    console.log('Get Project Details Service');
-                    resolve(result.data);
-                }).catch(function (err) {
-                    reject(err);
-                });
-            });
-        }
-    }]);
-
-    return Porlor4Service;
-}();
-
-/* harmony default export */ __webpack_exports__["a"] = (Porlor4Service);
-
-/***/ }),
-
-/***/ 212:
+/***/ 209:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(213);
+module.exports = __webpack_require__(210);
 
 
 /***/ }),
 
-/***/ 213:
+/***/ 210:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_service__ = __webpack_require__(160);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__add_part_modal__ = __webpack_require__(214);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_service__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__add_part_modal__ = __webpack_require__(211);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__assets_js_services_webUrl__ = __webpack_require__(3);
 
 
@@ -239,13 +168,13 @@ new Vue({
 
 /***/ }),
 
-/***/ 214:
+/***/ 211:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AddNewPartModal; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_part_service__ = __webpack_require__(33);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_js_services_project_order_porlor_4_service__ = __webpack_require__(160);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_part_service__ = __webpack_require__(35);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_js_services_project_order_porlor_4_service__ = __webpack_require__(34);
 
 
 var porlor4Service = new __WEBPACK_IMPORTED_MODULE_1__assets_js_services_project_order_porlor_4_service__["a" /* default */]();
@@ -341,7 +270,78 @@ var WebUrl = function () {
 
 /***/ }),
 
-/***/ 33:
+/***/ 34:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__webUrl__ = __webpack_require__(3);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+
+var webUrl = new __WEBPACK_IMPORTED_MODULE_0__webUrl__["a" /* default */]();
+
+var Porlor4Service = function () {
+    function Porlor4Service() {
+        _classCallCheck(this, Porlor4Service);
+
+        this.url = webUrl.getUrl();
+    }
+    //Add New Part
+
+
+    _createClass(Porlor4Service, [{
+        key: 'addNewPart',
+        value: function addNewPart(order_id, dataInput) {
+            var url = this.url + '/admin/project_order/' + order_id + '/porlor_4/add_part';
+            return new Promise(function (resolve, reject) {
+                axios.post(url, dataInput).then(function (result) {
+                    resolve(result.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
+        //Get All Porlor 4
+
+    }, {
+        key: 'getAllParts',
+        value: function getAllParts(order_id) {
+            var url = this.url + '/admin/project_order/' + order_id + '/porlor_4/get_all_parts';
+            return new Promise(function (resolve, reject) {
+                axios.get(url).then(function (result) {
+                    resolve(result.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
+        //Get Project Details
+
+    }, {
+        key: 'getProjectDetails',
+        value: function getProjectDetails(order_id) {
+            var url = this.url + '/admin/project_order/' + order_id + '/porlor_4/get_project_details';
+            return new Promise(function (resolve, reject) {
+                axios.get(url).then(function (result) {
+                    console.log('Get Project Details Service');
+                    resolve(result.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
+    }]);
+
+    return Porlor4Service;
+}();
+
+/* harmony default export */ __webpack_exports__["a"] = (Porlor4Service);
+
+/***/ }),
+
+/***/ 35:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

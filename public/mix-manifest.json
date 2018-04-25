@@ -2,6 +2,7 @@
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
     "/css/custom_spinner.css": "/css/custom_spinner.css",
+    "/views/admin/project_order/js/porlor_4_job_index.js": "/views/admin/project_order/js/porlor_4_job_index.js",
     "/views/admin/materials/items/js/item_edit.js": "/views/admin/materials/items/js/item_edit.js",
     "/views/admin/project_order/js/project_order_create.js": "/views/admin/project_order/js/project_order_create.js",
     "/views/admin/materials/items/js/item_create.js": "/views/admin/materials/items/js/item_create.js",
@@ -11,7 +12,6 @@
     "/views/admin/materials/types/js/type_edit.js": "/views/admin/materials/types/js/type_edit.js",
     "/views/admin/materials/types/js/type_create.js": "/views/admin/materials/types/js/type_create.js",
     "/views/admin/materials/items/js/item_edit_add_modal.js": "/views/admin/materials/items/js/item_edit_add_modal.js",
-    "/views/admin/project_order/js/porlor_4_job_index.js": "/views/admin/project_order/js/porlor_4_job_index.js",
     "/views/admin/project_order/porlor_4/js/porlor_4_index.js": "/views/admin/project_order/porlor_4/js/porlor_4_index.js",
     "/views/admin/porlor_4_part/js/porlor_4_part_index.js": "/views/admin/porlor_4_part/js/porlor_4_part_index.js"
 }

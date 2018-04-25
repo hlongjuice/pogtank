@@ -1,13 +1,15 @@
 <modal
-        name="porlor-4-add-child-job-modal"
+        name="porlor-4-edit-child-job-modal"
         :click-to-close="false"
         v-cloak
-        @before-open="beforeOpenAddChildJobModal($event)"
-        @before-close="beforeCloseAddChildJobModal"
+        @before-open="beforeOpenEditChildJobModal($event)"
+        @opened="openedEditChildJobModal"
+        @before-close="beforeCloseEditChildJobModal"
         width="90%"
         height="auto"
         :scrollable="true"
 >
+    <loading :show='edit_child_job.showLoading'></loading>
     <div class="row">
         <!-- FORM-->
         <form
@@ -20,9 +22,9 @@
                     {{-- Close Button--}}
                     <div class="panel-heading">
                         <div class="panel-title text-center">
-                            <h4>เพิ่มกลุ่มงาน</h4>
+                            <h4>แก้ไขกลุ่มงาน</h4>
                         </div>
-                        <button class="btn btn-danger" @click="closeAddChildJobModal">Close</button>
+                        <button type="button" class="btn btn-danger" @click="closeEditChildJobModal">Close</button>
                         <button type="submit" class="col-xs-3 pull-right btn btn-success margin-bottom-20">
                             บันทึก
                         </button>
@@ -31,29 +33,45 @@
                         <div class="portlet">
                             <div class="portlet-title">
                                 <div class="caption">
-                                    <i class="fa fa-reorder"></i>แบบ ปร.4 แผ่นที่ @{{ add_child_job.form.page_number
-                                    }}/@{{ add_child_job.total_page_number }}
+                                    <i class="fa fa-reorder"></i>งาน
                                 </div>
                             </div>
                             <div class="portlet-body form">
+
                                 <div class="form-body">
                                     {{--Level--}}
                                     <div class="row">
+                                        {{-- ***Hidden Page Number--}}
+                                        <div class="hidden col-md-3">
+                                            <div class="form-group">
+                                                <label class="control-label">
+                                                    แบบ ปร.4 แผ่นที่
+                                                    {{--<span class="small text-secondary">(เช่น 1)</span>--}}
+                                                </label>
+                                                <div :class="{'input-error':errors.has('form.edit_child_job_page_number')}">
+                                                    <input v-validate="'required'"
+                                                           type="text"
+                                                           name="edit_child_job_page_number"
+                                                           class="form-control"
+                                                           v-model="edit_child_job.form.page_number">
+                                                </div>
+                                                <span v-show="errors.has('form.edit_child_job_page_number')"
+                                                      class="text-error text-danger">กรุณากรอกข้อมูล</span>
+                                            </div>
+                                        </div>
                                         {{-- -- Job Level--}}
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label class="control-label">กลุ่มรายการ
-                                                    <span class="small text-secondary">("รายการหลัก" คือรายการที่มีลำดับเป็น 1,2,3,4,...)</span>
-                                                </label>
-                                                <div :class="{'input-error':errors.has('form.add_child_job_parent')}">
+                                                <label class="control-label">กลุ่มรายการ</label>
+                                                <div :class="{'input-error':errors.has('form.edit_child_job_parent')}">
                                                     <multiselect
-                                                            v-model="add_child_job.form.parent"
+                                                            v-model="edit_child_job.form.parent"
                                                             placeholder="" label="name" track-by="id"
-                                                            :options="add_child_job.parents" :option-height="104"
+                                                            :options="edit_child_job.parents" :option-height="104"
                                                             :show-labels="false"
                                                             :allow-empty="false"
                                                             :max-height="180"
-                                                            :custom-label="addChildJob_childJobCustomLabel"
+                                                            :custom-label="editChildJob_childJobCustomLabel"
                                                     >
                                                         <template slot="option" slot-scope="props">
                                                             <div class="option__desc">
@@ -62,10 +80,10 @@
                                                         </template>
                                                     </multiselect>
                                                     <input v-validate="'required'"
-                                                           name="add_child_job_parent" hidden
-                                                           v-model="add_child_job.form.parent">
+                                                           name="edit_child_job_parent" hidden
+                                                           v-model="edit_child_job.form.parent">
                                                 </div>
-                                                <span v-show="errors.has('form.add_child_job_parent')"
+                                                <span v-show="errors.has('form.edit_child_job_parent')"
                                                       class="text-error text-danger">กรุณากรอกข้อมูล</span>
                                             </div>
                                         </div>
@@ -76,17 +94,17 @@
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label class="control-label">
-                                                    ลำดับงาน
+                                                    ลำดับที่
                                                     <span class="small text-secondary">(เช่น 1,1.1,1.2)</span>
                                                 </label>
-                                                <div :class="{'input-error':errors.has('form.add_child_job_order_number')}">
+                                                <div :class="{'input-error':errors.has('form.edit_child_job_order_number')}">
                                                     <input v-validate="'required'"
                                                            type="text"
-                                                           name="add_child_job_order_number"
+                                                           name="edit_child_job_order_number"
                                                            class="form-control"
-                                                           v-model="add_child_job.form.job_order_number">
+                                                           v-model="edit_child_job.form.job_order_number">
                                                 </div>
-                                                <span v-show="errors.has('form.add_child_job_order_number')"
+                                                <span v-show="errors.has('form.edit_child_job_order_number')"
                                                       class="text-error text-danger">กรุณากรอกข้อมูล</span>
                                             </div>
                                         </div>
@@ -94,13 +112,13 @@
                                         <div class="col-md-9">
                                             <div class="form-group">
                                                 <label class="control-label">ชื่องาน</label>
-                                                <div :class="{'input-error':errors.has('form.add_child_job_name')}">
+                                                <div :class="{'input-error':errors.has('form.edit_child_job_name')}">
                                                     <input v-validate="'required'"
-                                                           name="add_child_job_name"
+                                                           name="edit_child_job_name"
                                                            class="form-control"
-                                                           v-model="add_child_job.form.name">
+                                                           v-model="edit_child_job.form.name">
                                                 </div>
-                                                <span v-show="errors.has('form.add_child_job_name')"
+                                                <span v-show="errors.has('form.edit_child_job_name')"
                                                       class="text-error text-danger">กรุณากรอกข้อมูล</span>
                                             </div>
                                         </div>
@@ -109,7 +127,7 @@
                                     <div class="row">
                                         <div class="col-md-3">
                                             <label>
-                                                <input v-model="add_child_job.form.group_item_per_unit" type="checkbox">
+                                                <input v-model="edit_child_job.form.group_item_per_unit" type="checkbox">
                                                 * กลุ่มงานระบุรายการวัสดุแยกต่อ 1 หน่วย
                                             </label>
                                         </div>
@@ -117,14 +135,14 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label class="control-label">จำนวนทั้งหมด</label>
-                                                <div :class="{'input-error':errors.has('form.add_child_job_quantity_factory')}">
-                                                    <input :disabled="!add_child_job.form.group_item_per_unit"
+                                                <div :class="{'input-error':errors.has('form.edit_child_job_quantity_factory')}">
+                                                    <input :disabled="!edit_child_job.form.group_item_per_unit"
                                                            v-validate="'required'"
-                                                           name="add_child_job_quantity_factor"
+                                                           name="edit_child_job_quantity_factor"
                                                            class="form-control"
-                                                           v-model="add_child_job.form.quantity_factor">
+                                                           v-model="edit_child_job.form.quantity_factor">
                                                 </div>
-                                                <span v-show="errors.has('form.add_child_job_quantity_factory')"
+                                                <span v-show="errors.has('form.edit_child_job_quantity_factory')"
                                                       class="text-error text-danger">กรุณากรอกข้อมูล</span>
                                             </div>
                                         </div>
@@ -132,22 +150,16 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label class="control-label">หน่วย</label>
-                                                <div :class="{'input-error':errors.has('form.add_child_job_unit')}">
-                                                    <input :disabled="!add_child_job.form.group_item_per_unit"
+                                                <div :class="{'input-error':errors.has('form.edit_child_job_unit')}">
+                                                    <input :disabled="!edit_child_job.form.group_item_per_unit"
                                                            v-validate="'required'"
-                                                           name="add_child_job_unit"
+                                                           name="edit_child_job_unit"
                                                            class="form-control"
-                                                           v-model="add_child_job.form.unit">
+                                                           v-model="edit_child_job.form.unit">
                                                 </div>
-                                                <span v-show="errors.has('form.add_child_job_unit')"
+                                                <span v-show="errors.has('form.edit_child_job_unit')"
                                                       class="text-error text-danger">กรุณากรอกข้อมูล</span>
                                             </div>
-                                        </div>
-                                    </div>
-                                    {{--Job Details--}}
-                                    <div class="row">
-                                        <div class="col-xs-12">
-                                            {{--<p class="text-danger">* เลือกกลุ่มงานระบุรายการวัสดุ แยกต่อ 1 หน่วย </p>--}}
                                         </div>
                                     </div>
                                 </div>

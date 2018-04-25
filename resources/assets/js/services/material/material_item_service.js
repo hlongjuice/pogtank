@@ -1,10 +1,50 @@
 import WebUrl from '../webUrl';
 import axois from 'axios';
 let webUrl = new WebUrl();
+//ใน class นี้มากจาก 2 controller
+//1. ItemsController
+//2. NewItemsController
 class MaterialItem {
     constructor(){
         this.url = webUrl.getUrl();
     }
+    //***** จาก New Items Controller
+    //Add New Item From Porlor 4 Form
+    //เพิ่ม item ใหม่ในหมวดหมู่ อื่นๆ โดยเฉพาะ
+    addNewOtherItem(formInputs){
+        let url = this.url+'/admin/materials/new_items/add_new_other_item';
+        return new Promise((resolve,reject)=>{
+            axios.post(url,formInputs)
+                .then(result=>{
+                    resolve(result.data)
+                }).catch(err=>reject(err))
+        })
+    }
+    //Get First 50 items
+    getItems(){
+        let url = this.url+'/admin/materials/new_items/get_items';
+        return new Promise((resolve,reject)=>{
+            axois.get(url)
+                .then(result=>{
+                    resolve(result.data)
+                }).catch(err=>{reject(err)})
+        })
+    }
+    searchItemsByName(material_name){
+        let inputs = {
+            material_name:material_name
+        };
+        let url= this.url+'/admin/materials/new_items/search_items_by_name';
+        return new Promise((resolve,reject)=>{
+            axois.post(url,inputs)
+                .then(result=>{
+                    resolve(result.data)
+                }).catch(err=>reject(err))
+        })
+    }
+    //***** End From New Item Controller
+
+    //***** จาก ItemsController
     //Add Local Prices
     addLocalPrices(formInputs){
         let url=this.url+'/admin/materials/items/add_local_prices';

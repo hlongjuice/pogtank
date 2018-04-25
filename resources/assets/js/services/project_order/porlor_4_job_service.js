@@ -58,6 +58,10 @@ class Porlor4JobService {
                 }).catch(err=>{reject(err)})
         })
     }
+    //Get All Child Job Without Items
+    getAllChildJobsWithOutItems(porlor_4_id,root_job_id){
+
+    }
     //Get All Leaf Jobs
     getAllLeafJobs(porlor_4_id,root_job_id){
         let url =this.url+"/admin/project_order/porlor_4_id/"+porlor_4_id+'/get_all_leaf_jobs/'+root_job_id;
@@ -90,6 +94,26 @@ class Porlor4JobService {
                 }).catch(err=>{
                     reject(err)
             })
+        })
+    }
+    //Delete Item
+    deleteItem(porlor_4_id,item_id){
+        let url = this.url+'/admin/project_order/porlor_4_id/'+porlor_4_id+'/delete_item/'+item_id;
+        return new Promise((resolve,reject)=>{
+            axios.delete(url)
+                .then(result=>{
+                    resolve(result.data)
+                }).catch(err=>{reject(err)})
+        })
+    }
+    //Delete Child Job
+    deleteChildJob(porlor_4_id,child_job_id){
+        let url=this.url+'/admin/project_order/porlor_4_id/'+porlor_4_id+'/delete_child_job/'+child_job_id;
+        return new Promise((resolve,reject)=>{
+            axios.delete(url)
+                .then(result=>{
+                    resolve(result.data)
+                }).catch(err=>{reject(err)})
         })
     }
 

@@ -13,6 +13,18 @@
   z-index: 9999 !important;
 }
 
+//Confirm Dialog
+.dg-backdrop, .dg-container{
+  z-index:9999 !important;
+}
+.dg-btn--cancel{
+  background-color:map_get($colors,danger) !important;
+}
+.dg-btn--ok{
+  border-color: transparent !important;
+  color: map_get($colors,light) !important;
+  background-color:map_get($colors,success) !important;
+}
 //Portlet
 .portlet-primary {
   .portlet-title,.tools {
@@ -33,7 +45,13 @@
 }
 .table-header-green{
   th{
-    background-color:#DAE3C0;
+    background-color:map_get($colors,table-green);
+    border:1px solid map_get($colors,dark-light) !important;
+  }
+}
+.table-result-green{
+  td{
+    background-color:map_get($colors,table-result-green) !important;
     border:1px solid map_get($colors,dark-light) !important;
   }
 }
@@ -57,6 +75,9 @@
 }
 .text-secondary {
   color:map_get($colors,secondary);
+}
+.text-large{
+
 }
 
 //Form

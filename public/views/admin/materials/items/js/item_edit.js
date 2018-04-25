@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 196);
+/******/ 	return __webpack_require__(__webpack_require__.s = 193);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -1029,24 +1029,24 @@ module.exports = (
 
 /***/ }),
 
-/***/ 196:
+/***/ 193:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(197);
+module.exports = __webpack_require__(194);
 
 
 /***/ }),
 
-/***/ 197:
+/***/ 194:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_material_material_item_service__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_material_material_item_service__ = __webpack_require__(30);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_js_services_material_material_type_service__ = __webpack_require__(29);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__assets_js_services_city__ = __webpack_require__(30);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__item_edit_add_modal__ = __webpack_require__(37);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__item_edit_edit_modal__ = __webpack_require__(198);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__assets_js_services_city__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__item_edit_add_modal__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__item_edit_edit_modal__ = __webpack_require__(195);
 
 
 
@@ -1404,12 +1404,12 @@ console.log('Master', vm);
 
 /***/ }),
 
-/***/ 198:
+/***/ 195:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EditModal; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_material_material_item_service__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_material_material_item_service__ = __webpack_require__(30);
 
 var materialItemService = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_material_material_item_service__["a" /* default */]();
 var EditModal = {
@@ -2130,80 +2130,6 @@ var WebUrl = function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__webUrl__ = __webpack_require__(3);
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-
-
-var webUrl = new __WEBPACK_IMPORTED_MODULE_1__webUrl__["a" /* default */]();
-
-var City = function () {
-    function City() {
-        _classCallCheck(this, City);
-
-        this.webUrl = webUrl.getUrl();
-    }
-    //Static Method
-
-
-    _createClass(City, [{
-        key: 'getProvinces',
-        value: function getProvinces() {
-            var _this = this;
-
-            return new Promise(function (resolve, reject) {
-                __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get(_this.webUrl + '/admin/materials/city/provinces').then(function (result) {
-                    resolve(result.data);
-                    console.log('Province :', result);
-                }).catch(function (err) {
-                    reject(err);
-                });
-            });
-        }
-    }, {
-        key: 'getDistricts',
-        value: function getDistricts(amphoeID) {
-            console.log('Amphoe ID', amphoeID);
-            var url = this.webUrl + '/admin/materials/items/districts/' + amphoeID;
-            console.log('Get District URL:', url);
-            return new Promise(function (resolve, reject) {
-                __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get(url).then(function (result) {
-                    resolve(result.data);
-                }).catch(function (err) {
-                    reject(err);
-                });
-            });
-        }
-    }], [{
-        key: 'allProvince',
-        value: function allProvince() {
-            var url = this.url + '/admin/materials/city/provinces';
-            return new Promise(function (resolve, reject) {
-                __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get(url).then(function (result) {
-                    resolve(result.data);
-                    console.log(result);
-                }).catch(function (err) {
-                    reject(err);
-                });
-            });
-        }
-    }]);
-
-    return City;
-}();
-
-/* harmony default export */ __webpack_exports__["a"] = (City);
-
-/***/ }),
-
-/***/ 31:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__webUrl__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_axios__);
@@ -2214,6 +2140,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 
 var webUrl = new __WEBPACK_IMPORTED_MODULE_0__webUrl__["a" /* default */]();
+//ใน class นี้มากจาก 2 controller
+//1. ItemsController
+//2. NewItemsController
 
 var MaterialItem = function () {
     function MaterialItem() {
@@ -2221,10 +2150,58 @@ var MaterialItem = function () {
 
         this.url = webUrl.getUrl();
     }
-    //Add Local Prices
+    //***** จาก New Items Controller
+    //Add New Item From Porlor 4 Form
+    //เพิ่ม item ใหม่ในหมวดหมู่ อื่นๆ โดยเฉพาะ
 
 
     _createClass(MaterialItem, [{
+        key: 'addNewOtherItem',
+        value: function addNewOtherItem(formInputs) {
+            var url = this.url + '/admin/materials/new_items/add_new_other_item';
+            return new Promise(function (resolve, reject) {
+                axios.post(url, formInputs).then(function (result) {
+                    resolve(result.data);
+                }).catch(function (err) {
+                    return reject(err);
+                });
+            });
+        }
+        //Get First 50 items
+
+    }, {
+        key: 'getItems',
+        value: function getItems() {
+            var url = this.url + '/admin/materials/new_items/get_items';
+            return new Promise(function (resolve, reject) {
+                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get(url).then(function (result) {
+                    resolve(result.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
+    }, {
+        key: 'searchItemsByName',
+        value: function searchItemsByName(material_name) {
+            var inputs = {
+                material_name: material_name
+            };
+            var url = this.url + '/admin/materials/new_items/search_items_by_name';
+            return new Promise(function (resolve, reject) {
+                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post(url, inputs).then(function (result) {
+                    resolve(result.data);
+                }).catch(function (err) {
+                    return reject(err);
+                });
+            });
+        }
+        //***** End From New Item Controller
+
+        //***** จาก ItemsController
+        //Add Local Prices
+
+    }, {
         key: 'addLocalPrices',
         value: function addLocalPrices(formInputs) {
             var url = this.url + '/admin/materials/items/add_local_prices';
@@ -2376,13 +2353,87 @@ var MaterialItem = function () {
 
 /***/ }),
 
-/***/ 37:
+/***/ 31:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__webUrl__ = __webpack_require__(3);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+
+
+var webUrl = new __WEBPACK_IMPORTED_MODULE_1__webUrl__["a" /* default */]();
+
+var City = function () {
+    function City() {
+        _classCallCheck(this, City);
+
+        this.webUrl = webUrl.getUrl();
+    }
+    //Static Method
+
+
+    _createClass(City, [{
+        key: 'getProvinces',
+        value: function getProvinces() {
+            var _this = this;
+
+            return new Promise(function (resolve, reject) {
+                __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get(_this.webUrl + '/admin/materials/city/provinces').then(function (result) {
+                    resolve(result.data);
+                    console.log('Province :', result);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
+    }, {
+        key: 'getDistricts',
+        value: function getDistricts(amphoeID) {
+            console.log('Amphoe ID', amphoeID);
+            var url = this.webUrl + '/admin/materials/items/districts/' + amphoeID;
+            console.log('Get District URL:', url);
+            return new Promise(function (resolve, reject) {
+                __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get(url).then(function (result) {
+                    resolve(result.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
+    }], [{
+        key: 'allProvince',
+        value: function allProvince() {
+            var url = this.url + '/admin/materials/city/provinces';
+            return new Promise(function (resolve, reject) {
+                __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get(url).then(function (result) {
+                    resolve(result.data);
+                    console.log(result);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
+    }]);
+
+    return City;
+}();
+
+/* harmony default export */ __webpack_exports__["a"] = (City);
+
+/***/ }),
+
+/***/ 38:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AddModal", function() { return AddModal; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_material_material_item_service__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_material_material_item_service__ = __webpack_require__(30);
 
 var dict = {
     custom: {

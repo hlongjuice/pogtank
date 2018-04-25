@@ -4,6 +4,7 @@ import {Porlor4JobAddRoot} from './porlor_4_job_add_root/porlor_4_job_add_root';
 import {Porlor4JobDetails} from "./porlor_4_job_details/porlor_4_job_details";
 import {Porlor4AddChildJob} from "./porlor_4_job_details/porlor_4_add_child_job/porlor_4_add_child_job";
 import {Porlor4AddChildJobItem} from "./porlor_4_job_details/porlor_4_add_child_job_item/porlor_4_add_child_job_item";
+import {Porlor4EditChildJob} from "./porlor_4_job_details/porlor_4_edit_child_job/porlor_4_edit_child_job";
 
 let porlor4 = porlor4FromBlade; // get from index blade template
 let porlor4Service = new Porlor4Service();
@@ -16,7 +17,8 @@ new Vue({
         Porlor4JobAddRoot,
         Porlor4JobDetails,
         Porlor4AddChildJob,
-        Porlor4AddChildJobItem
+        Porlor4AddChildJobItem,
+        Porlor4EditChildJob
     ],
     data: {
         porlor4:porlor4,

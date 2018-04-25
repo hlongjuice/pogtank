@@ -6,7 +6,7 @@
         @opened="openedAddChildJobItemModal"
         @before-close="beforeCloseAddChildJobItemModal"
         width="90%"
-        height="90%"
+        height="auto"
         :scrollable="true"
 >
     <loading
@@ -14,118 +14,156 @@
     >
     </loading>
     <div class="row">
-        <div class="col-xs-12">
+        <!-- FORM-->
+        <form
+                @submit.prevent="addChildJobItem('form',$event)"
+                data-vv-scope="form"
+                class="horizontal-form">
+            {{csrf_field()}}
+            <div class="col-xs-12">
 
-            <div class="panel panel-default">
-                {{-- Close Button--}}
-                <div class="panel-heading">
-                    <button class="btn btn-danger" @click="closeAddChildJobItemModal">Close</button>
-                </div>
-                <div class="panel-body">
-                    <!-- FORM-->
-                    <form
-                            @submit.prevent="addChildJobItem('form',$event)"
-                            data-vv-scope="form"
-                            class="horizontal-form">
-                        {{csrf_field()}}
-                        <div class="col-xs-12">
-                            <button type="submit" class="col-xs-3 pull-right btn btn-success margin-bottom-20">
-                                บันทึก
-                            </button>
+                <div class="panel panel-default">
+                    {{-- Close Button--}}
+                    <div class="panel-heading">
+                        <div class="panel-title text-center">
+                            <h4>เพิ่มรายการวัสดุ</h4>
                         </div>
+                        <button type="button" class="btn btn-danger" @click="closeAddChildJobItemModal">Close
+                        </button>
+                        <button type="submit" class="col-md-3 pull-right btn btn-success">
+                            บันทึก
+                        </button>
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-xs-12">
+                            <div class="row">
+                                <h3 v-if="add_child_job_item.form.child_job.name_per_unit!=''">
+                                    @{{ add_child_job_item.form.child_job.name_per_unit }}
+                                </h3>
+                                <h3 v-else>
+                                    @{{ add_child_job_item.form.child_job.name }}
+                                </h3>
+                                <hr>
+                            </div>
+                        </div>
+                        {{--Job Parent กลุ่มรายการ--}}
                         <div class="portlet">
                             <div class="portlet-title">
-                                <div class="caption">
-                                    <i class="fa fa-reorder"></i>รายการวัสดุ/งาน
-                                </div>
+                                <div class="caption"></div>
                             </div>
-                            <div class="portlet-body form">
-
-                                <div class="form-body">
-                                    {{--Level--}}
-                                    <div class="row">
-                                        {{-- -- Job Level--}}
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label class="control-label">กลุ่มรายการ</label>
-                                                <div :class="{'input-error':errors.has('form.add_child_job_item_child_job')}">
-                                                    <multiselect
-                                                            v-model="add_child_job_item.form.child_job"
-                                                            placeholder="พิมพ์เพื่อค้นหา" label="name"
-                                                            track-by="id"
-                                                            :options="add_child_job_item.leaf_jobs"
-                                                            :option-height="104"
-                                                            :show-labels="false"
-                                                            :allow-empty="false"
-                                                            :max-height="180"
-                                                            :custom-label="childJobCustomLabel"
-                                                    >
-                                                        <template slot="option" slot-scope="props">
-                                                            <div class="option__desc">
-                                                                <span class="option__title">@{{ props.option.job_order_number }} @{{ props.option.name }}</span>
-                                                            </div>
-                                                        </template>
-                                                        <span class="text-secondary"
-                                                              slot="noResult">ไม่พบข้อมูลที่ค้นหา</span>
-                                                    </multiselect>
-                                                    <input v-validate="'required'"
-                                                           name="add_child_job_item_child_job" hidden
-                                                           v-model="add_child_job_item.form.child_job">
-                                                </div>
-                                                <span v-show="errors.has('form.add_child_job_item_child_job')"
-                                                      class="text-error text-danger">กรุณาระบุข้อมูล</span>
+                            <div class="portlet-body">
+                                {{-- -- Job Level--}}
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label">กลุ่มรายการ</label>
+                                            <div :class="{'input-error':errors.has('form.add_child_job_item_child_job')}">
+                                                <multiselect
+                                                        v-model="add_child_job_item.form.child_job"
+                                                        placeholder="พิมพ์เพื่อค้นหา" label="name"
+                                                        track-by="id"
+                                                        :options="add_child_job_item.leaf_jobs"
+                                                        :option-height="104"
+                                                        :show-labels="false"
+                                                        :allow-empty="false"
+                                                        :max-height="180"
+                                                        :custom-label="childJobCustomLabel"
+                                                >
+                                                    <template slot="option" slot-scope="props">
+                                                        <div class="option__desc">
+                                                            <span class="option__title">@{{ props.option.job_order_number }} @{{ props.option.name }}</span>
+                                                        </div>
+                                                    </template>
+                                                    <span class="text-secondary"
+                                                          slot="noResult">ไม่พบข้อมูลที่ค้นหา</span>
+                                                </multiselect>
+                                                <input v-validate="'required'"
+                                                       name="add_child_job_item_child_job" hidden
+                                                       v-model="add_child_job_item.form.child_job">
                                             </div>
+                                            <span v-show="errors.has('form.add_child_job_item_child_job')"
+                                                  class="text-error text-danger">กรุณาระบุข้อมูล</span>
                                         </div>
                                     </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-md-8">
+                            <h4 class="text-danger">** ราคาที่แสดง เป็นราคากลางจากระบบ
+                                ผู้ใช้สามารถปรับแก้ไขได้</h4>
+                        </div>
+
+                        <div class="col-md-4">
+                            <a @click="addChildJobItem_AddMoreInputs"
+                               class="pull-right btn btn-primary margin-bottom-10">
+                                + เพิ่มรายการ</a>
+                        </div>
+                        {{--Items Loop--}}
+                        <template v-for="(item,index) of add_child_job_item.form.items">
+                            <div class="portlet">
+                                <div class="portlet-title">
+                                    <div class="caption">รายการที่ : @{{ index+1 }}</div>
+                                    <div class="actions">
+                                        <a v-if="add_child_job_item.form.items.length > 1"
+                                           @click="addChildJobItemDeleteInput(index)" class="btn btn-danger btn-sm">
+                                            <i class="far fa-times"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="portlet-body">
                                     {{--Order Number and Material Type Material Item--}}
                                     <div class="row">
+                                        {{--ยกเลิกการแยกประเภท items ตาม type มาเป็นเลือก 200 items ล่าสุดแทน--}}
                                         {{--Material Types--}}
-                                        <div class="col-xs-12 col-md-4">
-                                            <div class="form-group">
-                                                <label class="control-label">หมวดหมู่วัสดุ/งาน</label>
-                                                <div :class="{'input-error':errors.has('form.add_child_job_item_material_type')}">
-                                                    <multiselect
-                                                            @close="getMaterialItemsOfType"
-                                                            v-model="add_child_job_item.form.material_type"
-                                                            placeholder="พิมพ์เพื่อค้นหา" label="name"
-                                                            track-by="id"
-                                                            :options="add_child_job_item.material_types"
-                                                            :option-height="104"
-                                                            :show-labels="false"
-                                                            :allow-empty="false"
-                                                            :max-height="180"
-                                                    >
-                                                        <template slot="option" slot-scope="props">
-                                                            <div class="option__desc">
-                                                                <span class="option__title">@{{ props.option.name }}</span>
-                                                            </div>
-                                                        </template>
-                                                        <span class="text-secondary"
-                                                              slot="noResult">ไม่พบข้อมูลที่ค้นหา</span>
-                                                    </multiselect>
-                                                    <input v-validate="'required'"
-                                                           name="add_child_job_item_material_type" hidden
-                                                           v-model="add_child_job_item.form.material_type">
-                                                </div>
-                                                <span v-show="errors.has('form.add_child_job_item_material_type')"
-                                                      class="text-error text-danger">กรุณาระบุข้อมูล</span>
-                                            </div>
-                                        </div>
+                                        {{--<div class="col-xs-12 col-md-4">--}}
+                                        {{--<div class="form-group">--}}
+                                        {{--<label class="control-label">หมวดหมู่วัสดุ/งาน</label>--}}
+                                        {{--<div :class="{'input-error':errors.has('form.add_child_job_item_material_type_'+index)}">--}}
+                                        {{--<multiselect--}}
+                                        {{--@close="getMaterialItemsOfType(index)"--}}
+                                        {{--v-model="item.material_type"--}}
+                                        {{--placeholder="พิมพ์เพื่อค้นหา" label="name"--}}
+                                        {{--track-by="id"--}}
+                                        {{--:options="item.material_types"--}}
+                                        {{--:option-height="104"--}}
+                                        {{--:show-labels="false"--}}
+                                        {{--:allow-empty="false"--}}
+                                        {{--:max-height="250"--}}
+                                        {{-->--}}
+                                        {{--<template slot="option" slot-scope="props">--}}
+                                        {{--<div class="option__desc">--}}
+                                        {{--<span class="option__title">@{{ props.option.name }}</span>--}}
+                                        {{--</div>--}}
+                                        {{--</template>--}}
+                                        {{--<span class="text-secondary"--}}
+                                        {{--slot="noResult">ไม่พบข้อมูลที่ค้นหา</span>--}}
+                                        {{--</multiselect>--}}
+                                        {{--<input v-validate="'required'"--}}
+                                        {{--:data-vv-name="'add_child_job_item_material_type_'+index"--}}
+                                        {{--hidden--}}
+                                        {{--v-model="item.material_type">--}}
+                                        {{--</div>--}}
+                                        {{--<span v-show="errors.has('form.add_child_job_item_material_type_'+index)"--}}
+                                        {{--class="text-error text-danger">กรุณาระบุข้อมูล</span>--}}
+                                        {{--</div>--}}
+                                        {{--</div>--}}
                                         {{--Material Item--}}
                                         <div class="col-xs-12 col-md-4">
-                                            <div v-if="add_child_job_item.form.material_type"
-                                                 class="form-group">
+                                            <div class="form-group">
                                                 <label class="control-label">วัสดุ/งาน</label>
-                                                <div :class="{'input-error':errors.has('form.add_child_job_item_material_item')}">
+                                                <div :class="{'input-error':errors.has('form.add_child_job_item_material_item_'+index)}">
                                                     <multiselect
-                                                            @search-change="searchMaterialItemsOfType"
-                                                            v-model="add_child_job_item.form.material_item"
+                                                            @search-change="addChildJobItem_SearchItemsByName(item,$event)"
+                                                            :id="index"
+                                                            @close="addChildJobItemGetItemDetails(index,item.material_item.approved_global_details)"
+                                                            v-model="item.material_item"
                                                             placeholder="พิมพ์เพื่อค้นหา" track-by="id"
-                                                            :options="add_child_job_item.material_items"
+                                                            :options="item.material_items"
                                                             :option-height="104"
                                                             :show-labels="false"
                                                             :allow-empty="false"
-                                                            :max-height="180"
+                                                            :max-height="250"
                                                             :custom-label="materialItemCustomLabel"
                                                             {{--:loading="add_child_job_item.isLoading"--}}
                                                     >
@@ -134,57 +172,30 @@
                                                                 <span class="option__title">@{{ props.option.approved_global_details.name }}</span>
                                                             </div>
                                                         </template>
-                                                        <span class="text-secondary"
-                                                              slot="noResult">ไม่พบข้อมูลที่ค้นหา</span>
+                                                        <div class="row"
+                                                             slot="noResult">
+                                                            <div class="col-xs-12">
+                                                                <p>ยังไม่มีรายการในระบบ</p>
+                                                            </div>
+                                                            <div class="col-xs-12">
+                                                                <span>@{{add_child_job_item.new_material_item.name}} </span>
+                                                                <a @click="addChildJobItem_AddNewMaterialItem(item,index)"
+                                                                   class="pull-right btn btn-primary">เพิ่มรายใหม่</a>
+                                                            </div>
+                                                        </div>
                                                     </multiselect>
-                                                    <input v-validate="'required'"
-                                                           name="add_child_job_item_material_item" hidden
-                                                           v-model="add_child_job_item.form.material_item">
+                                                    <input
+                                                            :data-vv-name="'add_child_job_item_material_item_'+index"
+                                                            hidden
+                                                            v-model="item.material_item">
                                                 </div>
-                                                <span v-show="errors.has('form.add_child_job_item_material_item')"
+                                                <span v-show="errors.has('form.add_child_job_item_material_item_'+index)"
                                                       class="text-error text-danger">กรุณาระบุข้อมูล</span>
-                                            </div>
-                                        </div>
-
-                                        {{--Quantity Factor and Unit--}}
-                                        <div v-if="add_child_job.form.parent.id >0" class="row">
-                                            {{--Quantity Factor--}}
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label class="control-label">จำนวน</label>
-                                                    <div :class="{'input-error':errors.has('form.add_child_job_quantity_factory')}">
-                                                        <input v-validate="'required'"
-                                                               name="add_child_job_quantity_factor"
-                                                               class="form-control"
-                                                               v-model="add_child_job.form.quantity_factor">
-                                                    </div>
-                                                    <span v-show="errors.has('form.add_child_job_quantity_factory')"
-                                                          class="text-error text-danger">กรุณาระบุข้อมูล</span>
-                                                </div>
-                                            </div>
-                                            {{--Unit--}}
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label class="control-label">หน่วย</label>
-                                                    <div :class="{'input-error':errors.has('form.add_child_job_unit')}">
-                                                        <input v-validate="'required'"
-                                                               name="add_child_job_unit"
-                                                               class="form-control"
-                                                               v-model="add_child_job.form.unit">
-                                                    </div>
-                                                    <span v-show="errors.has('form.add_child_job_unit')"
-                                                          class="text-error text-danger">กรุณาระบุข้อมูล</span>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                     {{-- Price and Wage and Quantity --}}
-                                    <div v-if="add_child_job_item.form.material_item" class="row">
-                                        <div class="col-xs-12">
-                                            <h4 class="text-danger">** ราคาที่แสดงเป็นราคากลางจากระบบ
-                                                ผู้ใช้สามารถปรับแก้ไขได้</h4>
-                                            <hr>
-                                        </div>
+                                    <div v-if="item.material_item" class="row">
                                         <!-- -- Price -->
                                         <div class="col-xs-12 col-md-4">
                                             <div class="form-group">
@@ -194,7 +205,7 @@
                                                 <vue-numeric
                                                         name="globalCost" :precision=2
                                                         class="form-control" separator=","
-                                                        v-model="add_child_job_item.form.local_price"></vue-numeric>
+                                                        v-model="item.local_price"></vue-numeric>
                                             </div>
                                         </div>
                                         <!-- -- Wage -->
@@ -206,7 +217,7 @@
                                                 <vue-numeric
                                                         name="globalCost" :precision=2
                                                         class="form-control" separator=","
-                                                        v-model="add_child_job_item.form.local_wage"></vue-numeric>
+                                                        v-model="item.local_wage"></vue-numeric>
                                             </div>
                                         </div>
                                         <!-- -- Quantity and Unit -->
@@ -217,14 +228,14 @@
                                                         <label class="control-label">
                                                             จำนวน
                                                         </label>
-                                                        <div :class="{'input-error':errors.has('form.add_child_job_item_quantity')}">
+                                                        <div :class="{'input-error':errors.has('form.add_child_job_item_quantity_'+index)}">
                                                             <input v-validate="'required'"
                                                                    type="number"
-                                                                   name="add_child_job_item_quantity"
+                                                                   :data-vv-name="'add_child_job_item_quantity_'+index"
                                                                    class="form-control"
-                                                                   v-model="add_child_job_item.form.quantity">
+                                                                   v-model="item.quantity">
                                                         </div>
-                                                        <span v-show="errors.has('form.add_child_job_item_quantity')"
+                                                        <span v-show="errors.has('form.add_child_job_item_quantity_'+index)"
                                                               class="text-error text-danger">กรุณาระบุข้อมูล</span>
                                                     </div>
                                                 </div>
@@ -233,14 +244,14 @@
                                                         <label class="control-label">
                                                             หน่วย
                                                         </label>
-                                                        <div :class="{'input-error':errors.has('form.add_child_job_item_unit')}">
+                                                        <div :class="{'input-error':errors.has('form.add_child_job_item_unit_'+index)}">
                                                             <input v-validate="'required'"
                                                                    type="text"
-                                                                   name="add_child_job_item_unit"
+                                                                   :data-vv-name="'add_child_job_item_unit_'+index"
                                                                    class="form-control"
-                                                                   v-model="add_child_job_item.form.unit">
+                                                                   v-model="item.unit">
                                                         </div>
-                                                        <span v-show="errors.has('form.add_child_job_item_unit')"
+                                                        <span v-show="errors.has('form.add_child_job_item_unit_'+index)"
                                                               class="text-error text-danger">กรุณาระบุข้อมูล</span>
                                                     </div>
                                                 </div>
@@ -249,13 +260,11 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </form>
-                    <!-- END FORM-->
+                        </template>
+                    </div>
                 </div>
             </div>
-
-        </div>
+        </form>
     </div>
 
 </modal>
