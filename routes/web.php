@@ -70,12 +70,14 @@ Route::prefix('admin')->middleware('auth')
                 Route::get('get_all_root_jobs','Admin\Project\Porlor4JobController@getAllRootJobs');
                 // -- -- --- -- Get All Child Jobs
                 Route::get('get_all_child_jobs/{root_job_id}','Admin\Project\Porlor4JobController@getAllChildJobs');
+                // -- -- -- -- Get All Child Jobs
+                Route::get('get_all_child_jobs_v2/{root_job_id}','Admin\Project\Porlor4JobController@getAllChildJobsV2');
                 // -- -- -- -- Get All Child Jobs WithOut Items
                 Route::get('get_all_child_jobs_without_items/{root_job_id}','Admin\Project\Porlor4JobController@getAllChildJobsWithOutItems');
                 // -- -- -- -- Get All Leaf Jobs
                 Route::get('get_all_leaf_jobs/{root_job_id}','Admin\Project\Porlor4JobController@getAllLeafJobs');
                 // -- -- --- -- Get Parents Job
-                Route::get('/get_parent_jobs/{parent_root_id}','Admin\Project\Porlor4JobController@getParentJobs');
+                Route::get('get_parent_jobs/{parent_root_id}','Admin\Project\Porlor4JobController@getParentJobs');
                 // -- -- -- -- Get Part Details
                 Route::get('get_part_details','Admin\Project\Porlor4JobController@getPartDetails');
                 // -- -- -- -- Add Root Job
@@ -84,6 +86,8 @@ Route::prefix('admin')->middleware('auth')
                 Route::post('add_child_job/{parent_id}','Admin\Project\Porlor4JobController@addChildJob');
                 // -- -- -- -- Add Child Job Item
                 Route::post('add_child_job_item','Admin\Project\Porlor4JobController@addChildJobItems');
+                // -- -- -- -- Add Child Job Item V2
+                Route::post('add_child_job_item_v2','Admin\Project\Porlor4JobController@addChildJobItemsV2');
                 // -- -- -- -- Add Child Job With Details
                 Route::post('add_child_job_with_details/{parent_id}','Admin\Project\Porlor4JobController@addChildJobWithDetails');
                 // -- -- -- -- Edit Child Job

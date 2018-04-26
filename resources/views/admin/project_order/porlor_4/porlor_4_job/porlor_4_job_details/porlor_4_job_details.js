@@ -39,7 +39,11 @@ export const Porlor4JobDetails = {
                     console.log('Child Jobs :', this.child_jobs);
                 }).catch(err => {
                 console.log(err.response.status);
-            })
+            });
+            porlor4JobService.getAllChildJobsV2(this.porlor4.id,this.root_job.id)
+                .then(result=>{
+                    console.log('All Child Job V2 :',result)
+                })
         },
         showAddChildJobModal(page_number,total_page_number) {
             this.detailScrollable = false;

@@ -1248,13 +1248,13 @@ module.exports = __webpack_require__(213);
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_job_service__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_job_service__ = __webpack_require__(31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_js_services_project_order_porlor_4_service__ = __webpack_require__(34);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__porlor_4_job_add_root_porlor_4_job_add_root__ = __webpack_require__(214);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__porlor_4_job_details_porlor_4_job_details__ = __webpack_require__(215);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__porlor_4_job_details_porlor_4_add_child_job_porlor_4_add_child_job__ = __webpack_require__(216);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__porlor_4_job_details_porlor_4_add_child_job_item_porlor_4_add_child_job_item__ = __webpack_require__(217);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__porlor_4_job_details_porlor_4_edit_child_job_porlor_4_edit_child_job__ = __webpack_require__(226);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__porlor_4_job_details_porlor_4_edit_child_job_porlor_4_edit_child_job__ = __webpack_require__(218);
 
 
 
@@ -1373,7 +1373,7 @@ new Vue({
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Porlor4JobAddRoot; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_job_service__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_job_service__ = __webpack_require__(31);
 
 
 var porlor4JobService = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_job_service__["a" /* default */]();
@@ -1419,7 +1419,7 @@ var Porlor4JobAddRoot = {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Porlor4JobDetails; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_job_service__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_job_service__ = __webpack_require__(31);
 
 
 var porlor4JobService = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_job_service__["a" /* default */]();
@@ -1464,6 +1464,9 @@ var Porlor4JobDetails = {
                 console.log('Child Jobs :', _this.child_jobs);
             }).catch(function (err) {
                 console.log(err.response.status);
+            });
+            porlor4JobService.getAllChildJobsV2(this.porlor4.id, this.root_job.id).then(function (result) {
+                console.log('All Child Job V2 :', result);
             });
         },
         showAddChildJobModal: function showAddChildJobModal(page_number, total_page_number) {
@@ -1603,7 +1606,7 @@ var Porlor4JobDetails = {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Porlor4AddChildJob; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_job_service__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_job_service__ = __webpack_require__(31);
 
 var porlor4JobService = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_job_service__["a" /* default */]();
 var Porlor4AddChildJob = {
@@ -1699,7 +1702,7 @@ var Porlor4AddChildJob = {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Porlor4AddChildJobItem; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_material_material_type_service__ = __webpack_require__(29);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_js_services_material_material_item_service__ = __webpack_require__(30);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__assets_js_services_project_order_porlor_4_job_service__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__assets_js_services_project_order_porlor_4_job_service__ = __webpack_require__(31);
 
 
 
@@ -1719,6 +1722,7 @@ var Porlor4AddChildJobItem = {
                     name: ''
                 },
                 form: {
+                    is_item: 1,
                     page_number: '',
                     child_job: '',
                     items: [{
@@ -1745,12 +1749,16 @@ var Porlor4AddChildJobItem = {
             var _this = this;
 
             this.add_child_job_item.isLoading = true;
-            Promise.all([
-            //Get All Leaf Jobs
-            porlor4JobService.getAllLeafJobs(this.porlor4.id, this.root_job.id).then(function (result) {
+            Promise.all([porlor4JobService.getAllChildJobsWithOutItems(this.porlor4.id, this.root_job.id).then(function (result) {
                 _this.add_child_job_item.leaf_jobs = result;
                 console.log('Leaf Jobs :', _this.add_child_job_item.leaf_jobs);
-            }),
+            }).catch(function (err) {}),
+            //Get All Leaf Jobs
+            // porlor4JobService.getAllLeafJobs(this.porlor4.id, this.root_job.id)
+            //     .then(result => {
+            //         this.add_child_job_item.leaf_jobs = result;
+            //         console.log('Leaf Jobs :', this.add_child_job_item.leaf_jobs);
+            //     }),
             //เลือก items 200 รายการแรก ทาง types ทั้งหมด
             //Get Material Items
             materialItemService.getItems().then(function (result) {
@@ -1801,6 +1809,7 @@ var Porlor4AddChildJobItem = {
                     name: ''
                 },
                 form: {
+                    is_item: 1,
                     page_number: page_number,
                     child_job: child_job,
                     items: [{
@@ -1826,7 +1835,8 @@ var Porlor4AddChildJobItem = {
             this.$validator.validateAll(form).then(function (result) {
                 if (result) {
                     _this2.add_child_job_item.isLoading = true;
-                    porlor4JobService.addChildJobItem(_this2.porlor4.id, _this2.add_child_job_item.form).then(function (result) {
+                    porlor4JobService.addChildJobItemV2(_this2.porlor4.id, _this2.add_child_job_item.form).then(function (result) {
+                        console.log('Add New Item Success');
                         _this2.add_child_job_item.isLoading = false;
                         _this2.add_child_job_item.add_status = true;
                         _this2.closeAddChildJobItemModal();
@@ -1993,72 +2003,12 @@ var Porlor4AddChildJobItem = {
 
 /***/ }),
 
-/***/ 22:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var utils = __webpack_require__(0);
-
-function InterceptorManager() {
-  this.handlers = [];
-}
-
-/**
- * Add a new interceptor to the stack
- *
- * @param {Function} fulfilled The function to handle `then` for a `Promise`
- * @param {Function} rejected The function to handle `reject` for a `Promise`
- *
- * @return {Number} An ID used to remove interceptor later
- */
-InterceptorManager.prototype.use = function use(fulfilled, rejected) {
-  this.handlers.push({
-    fulfilled: fulfilled,
-    rejected: rejected
-  });
-  return this.handlers.length - 1;
-};
-
-/**
- * Remove an interceptor from the stack
- *
- * @param {Number} id The ID that was returned by `use`
- */
-InterceptorManager.prototype.eject = function eject(id) {
-  if (this.handlers[id]) {
-    this.handlers[id] = null;
-  }
-};
-
-/**
- * Iterate over all the registered interceptors
- *
- * This method is particularly useful for skipping over any
- * interceptors that may have become `null` calling `eject`.
- *
- * @param {Function} fn The function to call for each interceptor
- */
-InterceptorManager.prototype.forEach = function forEach(fn) {
-  utils.forEach(this.handlers, function forEachHandler(h) {
-    if (h !== null) {
-      fn(h);
-    }
-  });
-};
-
-module.exports = InterceptorManager;
-
-
-/***/ }),
-
-/***/ 226:
+/***/ 218:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Porlor4EditChildJob; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_job_service__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_job_service__ = __webpack_require__(31);
 
 
 var porlor4JobService = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_job_service__["a" /* default */]();
@@ -2132,6 +2082,66 @@ var Porlor4EditChildJob = {
         }
     }
 };
+
+/***/ }),
+
+/***/ 22:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var utils = __webpack_require__(0);
+
+function InterceptorManager() {
+  this.handlers = [];
+}
+
+/**
+ * Add a new interceptor to the stack
+ *
+ * @param {Function} fulfilled The function to handle `then` for a `Promise`
+ * @param {Function} rejected The function to handle `reject` for a `Promise`
+ *
+ * @return {Number} An ID used to remove interceptor later
+ */
+InterceptorManager.prototype.use = function use(fulfilled, rejected) {
+  this.handlers.push({
+    fulfilled: fulfilled,
+    rejected: rejected
+  });
+  return this.handlers.length - 1;
+};
+
+/**
+ * Remove an interceptor from the stack
+ *
+ * @param {Number} id The ID that was returned by `use`
+ */
+InterceptorManager.prototype.eject = function eject(id) {
+  if (this.handlers[id]) {
+    this.handlers[id] = null;
+  }
+};
+
+/**
+ * Iterate over all the registered interceptors
+ *
+ * This method is particularly useful for skipping over any
+ * interceptors that may have become `null` calling `eject`.
+ *
+ * @param {Function} fn The function to call for each interceptor
+ */
+InterceptorManager.prototype.forEach = function forEach(fn) {
+  utils.forEach(this.handlers, function forEachHandler(h) {
+    if (h !== null) {
+      fn(h);
+    }
+  });
+};
+
+module.exports = InterceptorManager;
+
 
 /***/ }),
 
@@ -2745,7 +2755,7 @@ var MaterialItem = function () {
 
 /***/ }),
 
-/***/ 33:
+/***/ 31:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2806,6 +2816,20 @@ var Porlor4JobService = function () {
                 });
             });
         }
+        //Add Child Job Item V2
+
+    }, {
+        key: 'addChildJobItemV2',
+        value: function addChildJobItemV2(porlor_4_id, dataInputs) {
+            var url = this.url + '/admin/project_order/porlor_4_id/' + porlor_4_id + '/add_child_job_item_v2';
+            return new Promise(function (resolve, reject) {
+                axios.post(url, dataInputs).then(function (result) {
+                    resolve(result.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
         //Get All Root Jobs
 
     }, {
@@ -2834,11 +2858,35 @@ var Porlor4JobService = function () {
                 });
             });
         }
+        //Get All Child Job V2
+
+    }, {
+        key: 'getAllChildJobsV2',
+        value: function getAllChildJobsV2(porlor_4_id, root_job_id) {
+            var url = this.url + "/admin/project_order/porlor_4_id/" + porlor_4_id + "/get_all_child_jobs_v2/" + root_job_id;
+            return new Promise(function (resolve, reject) {
+                axios.get(url).then(function (result) {
+                    resolve(result.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
+
         //Get All Child Job Without Items
 
     }, {
         key: 'getAllChildJobsWithOutItems',
-        value: function getAllChildJobsWithOutItems(porlor_4_id, root_job_id) {}
+        value: function getAllChildJobsWithOutItems(porlor_4_id, root_job_id) {
+            var url = this.url + '/admin/project_order/porlor_4_id/' + porlor_4_id + "/get_all_child_jobs_without_items/" + root_job_id;
+            return new Promise(function (resolve, reject) {
+                axios.get(url).then(function (result) {
+                    resolve(result.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
         //Get All Leaf Jobs
 
     }, {

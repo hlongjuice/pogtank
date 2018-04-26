@@ -110,6 +110,61 @@ class Porlor4JobController extends Controller
 
 
     }
+    //Add Child Job Items V2
+    public function addChildJobItemsV2(Request $request, $porlor_4_id)
+    {
+        $result = DB::transaction(function () use ($request, $porlor_4_id) {
+            $jobParent =Porlor4Job::where('id', $request->input('child_job')['id'])->first();
+            $projectDetails = $request->input('project_details');
+            $approvedStatus = GlobalVariableController::$publishedStatus['approved'];
+            $jobInputs= collect([]);
+            $itemInputs = collect([]);
+            //วนลูปเก็บรายละเอียด items แต่ละอัน
+            foreach($request->input('items') as $item){
+                //เลือกจัดการเฉพาะ item ที่มีการเลือก material_item
+                if($item['material_item'] != ''){
+                    //Update Material Item Local Price
+                    $newLocalPrice = MaterialItemLocalPrice::firstOrCreate([
+                        'material_id'=>$item['material_item']['id']
+                    ]);
+                    $newLocalPrice->priceDetails()->create([
+                        'published_id' => $approvedStatus,
+                        'local_price_id' => $newLocalPrice->id,
+                        'province_id' => $projectDetails['province']['id'],
+                        'amphoe_id' => $projectDetails['amphoe']['id'],
+                        'district_id' => $projectDetails['district']['id'],
+                        'cost' => 0,
+                        'price' => $item['local_price'],
+                        'wage' => $item['local_wage']
+                    ]);
+                    //End Update Local Price
+                    //Input for Porlor 4 job
+                    $newJob= $jobParent->children()->create([
+                        'job_order_number' => 0,
+                        'porlor_4_id' => $porlor_4_id,
+                        'name' => $item['material_item']['approved_global_details']['name'],
+                        'page_number' => $request->input('page_number'),
+                        'quantity_factor' => 0,
+                        'unit' => 0,
+                        'name_per_unit' => '',
+                        'group_item_per_unit'=>0,
+                        'is_item'=>$request->input('is_item')
+                    ]);
+                    //Input สำหรับ porlor 4 job Items
+                    $itemInput =$newJob->item()->create([
+                        'quantity' => $item['quantity'],
+                        'material_id' => $item['material_item']['id'],
+                        'local_price' => $item['local_price'],
+                        'local_wage' => $item['local_wage'],
+                        'unit' => $item['unit']
+                    ]);
+                }
+            }
+        });
+        return response()->json($result);
+
+
+    }
 
     //Add Child Job With Details
     public function addChildJobWithDetails()
@@ -222,13 +277,21 @@ class Porlor4JobController extends Controller
 
     //Get All Child Jobs without Items
     public function getAllChildJobsWithOutItems($porlor_4_id, $job_root_id){
-        $parents = Porlor4Job::descendantsOf($job_root_id)->toFlatTree();
+        $parents = Porlor4Job::descendantsOf($job_root_id)
+            ->where('is_item',0)
+            ->toFlatTree();
         return response()->json($parents);
     }
 
     public function getAllChildJobsV2($porlor_4_id,$root_job_id){
         $jobs = Porlor4Job::with(['descendants','ancestors', 'items.details.approvedGlobalDetails'])
-            ->withDepth()->descendantsOf($root_job_id);
+            ->withDepth()->descendantsOf($root_job_id)->toTree();
+
+    
+
+        $result=traverse($jobs);
+
+        return response()->json($result);
         $groupJobs = $jobs->groupBy('page_number');
         $total_page = $jobs->max('page_number');
         $result = collect([]);
@@ -314,8 +377,9 @@ class Porlor4JobController extends Controller
             'id' => 0,
             'name' => 'รายการหลัก'
         ]);
-        $parents = Porlor4Job::descendantsOf($job_root_id)->toFlatTree();
-//        dd($parents->toJson());
+        $parents = Porlor4Job::descendantsOf($job_root_id)
+            ->where('is_item',0)
+            ->toFlatTree();
         $parents = $parents->prepend($main);
         return response()->json($parents);
     }

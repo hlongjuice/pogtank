@@ -19,7 +19,7 @@ mix.sass('resources/assets/sass/custom_spinner.scss', 'public/css/');
 
 
 mix.browserSync({
-    browser: "google chrome",
+    // browser: "google chrome",
     proxy: 'localhost/pogtank/public'
 });
 //mix.js('resources/assets/js/my-app.js','public/js');

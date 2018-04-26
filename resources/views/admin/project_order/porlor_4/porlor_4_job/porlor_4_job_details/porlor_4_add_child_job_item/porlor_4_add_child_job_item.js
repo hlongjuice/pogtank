@@ -17,6 +17,7 @@ export const Porlor4AddChildJobItem = {
                     name: ''
                 },
                 form: {
+                    is_item:1,
                     page_number:'',
                     child_job: '',
                     items: [{
@@ -41,12 +42,19 @@ export const Porlor4AddChildJobItem = {
         openedAddChildJobItemModal() {
             this.add_child_job_item.isLoading = true;
             Promise.all([
-                //Get All Leaf Jobs
-                porlor4JobService.getAllLeafJobs(this.porlor4.id, this.root_job.id)
-                    .then(result => {
+                porlor4JobService.getAllChildJobsWithOutItems(this.porlor4.id,this.root_job.id)
+                    .then(result=>{
                         this.add_child_job_item.leaf_jobs = result;
                         console.log('Leaf Jobs :', this.add_child_job_item.leaf_jobs);
-                    }),
+                    }).catch(err=>{
+
+                }),
+                //Get All Leaf Jobs
+                // porlor4JobService.getAllLeafJobs(this.porlor4.id, this.root_job.id)
+                //     .then(result => {
+                //         this.add_child_job_item.leaf_jobs = result;
+                //         console.log('Leaf Jobs :', this.add_child_job_item.leaf_jobs);
+                //     }),
                 //เลือก items 200 รายการแรก ทาง types ทั้งหมด
                 //Get Material Items
                 materialItemService.getItems()
@@ -98,6 +106,7 @@ export const Porlor4AddChildJobItem = {
                     name: ''
                 },
                 form: {
+                    is_item :1 ,
                     page_number:page_number,
                     child_job: child_job,
                     items: [{
@@ -122,8 +131,9 @@ export const Porlor4AddChildJobItem = {
                 .then(result => {
                     if (result) {
                         this.add_child_job_item.isLoading = true;
-                        porlor4JobService.addChildJobItem(this.porlor4.id, this.add_child_job_item.form)
+                        porlor4JobService.addChildJobItemV2(this.porlor4.id, this.add_child_job_item.form)
                             .then(result => {
+                                console.log('Add New Item Success');
                                 this.add_child_job_item.isLoading = false;
                                 this.add_child_job_item.add_status = true;
                                 this.closeAddChildJobItemModal();
