@@ -8,6 +8,7 @@ use App\Models\Admin\Project\Porlor4;
 use App\Models\Admin\Project\Porlor4Job;
 use App\Models\Admin\Project\Porlor4JobItem;
 use Carbon\Carbon;
+use function foo\func;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DB;
@@ -41,7 +42,7 @@ class Porlor4JobController extends Controller
         if ($request->input('group_item_per_unit')) {
             $quantityFactor = $request->input('quantity_factor');
             $unit = $request->input('unit');
-            $namePerUnit = $request->input('name') . '(คิดต่อ 1'. ' ' . $unit . ' )';
+            $namePerUnit = $request->input('name') . '(คิดต่อ 1' . ' ' . $unit . ' )';
         }
         //ถ้าเป็นรายการหลัก parent จะเป็นหมวดหมู่ใหญ่สุด
         if ($request->input('parent')['id'] == 0) {
@@ -57,7 +58,7 @@ class Porlor4JobController extends Controller
             'quantity_factor' => $quantityFactor,
             'unit' => $unit,
             'name_per_unit' => $namePerUnit,
-            'group_item_per_unit'=>$request->input('group_item_per_unit')
+            'group_item_per_unit' => $request->input('group_item_per_unit')
         ]);
         return response()->json($result);
     }
@@ -70,12 +71,12 @@ class Porlor4JobController extends Controller
             $approvedStatus = GlobalVariableController::$publishedStatus['approved'];
             $itemInputs = collect([]);
             //วนลูปเก็บรายละเอียด items แต่ละอัน
-            foreach($request->input('items') as $item){
+            foreach ($request->input('items') as $item) {
                 //เลือกจัดการเฉพาะ item ที่มีการเลือก material_item
-                if($item['material_item'] != ''){
+                if ($item['material_item'] != '') {
                     //Update Material Item Local Price
                     $newLocalPrice = MaterialItemLocalPrice::firstOrCreate([
-                       'material_id'=>$item['material_item']['id']
+                        'material_id' => $item['material_item']['id']
                     ]);
                     $newLocalPrice->priceDetails()->create([
                         'published_id' => $approvedStatus,
@@ -88,44 +89,45 @@ class Porlor4JobController extends Controller
                         'wage' => $item['local_wage']
                     ]);
                     //End Update Local Price
-                    $input =collect([
-                        'page_number'=>$request->input('page_number'),
+                    $input = collect([
+                        'page_number' => $request->input('page_number'),
                         'porlor_4_job_id' => $request->input('child_job')['id'], //id ของจ๊อบที่เป็นกลุ่มย่อยที่เป็น leaf เลยใช่ child job id
                         'quantity' => $item['quantity'],
                         'material_id' => $item['material_item']['id'],
                         'local_price' => $item['local_price'],
                         'local_wage' => $item['local_wage'],
                         'unit' => $item['unit'],
-                        'created_at'=>Carbon::now(),
-                        'updated_at'=>Carbon::now()
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now()
                     ]);
                     //นำแต่ละ item มาเก็บไว้กับ array itemInputs
                     $itemInputs->push($input);
                 }
             }
-            $result=Porlor4JobItem::insert($itemInputs->toArray());
+            $result = Porlor4JobItem::insert($itemInputs->toArray());
             return $result;
         });
         return response()->json($result);
 
 
     }
+
     //Add Child Job Items V2
     public function addChildJobItemsV2(Request $request, $porlor_4_id)
     {
         $result = DB::transaction(function () use ($request, $porlor_4_id) {
-            $jobParent =Porlor4Job::where('id', $request->input('child_job')['id'])->first();
+            $jobParent = Porlor4Job::where('id', $request->input('child_job')['id'])->first();
             $projectDetails = $request->input('project_details');
             $approvedStatus = GlobalVariableController::$publishedStatus['approved'];
-            $jobInputs= collect([]);
+            $jobInputs = collect([]);
             $itemInputs = collect([]);
             //วนลูปเก็บรายละเอียด items แต่ละอัน
-            foreach($request->input('items') as $item){
+            foreach ($request->input('items') as $item) {
                 //เลือกจัดการเฉพาะ item ที่มีการเลือก material_item
-                if($item['material_item'] != ''){
+                if ($item['material_item'] != '') {
                     //Update Material Item Local Price
                     $newLocalPrice = MaterialItemLocalPrice::firstOrCreate([
-                        'material_id'=>$item['material_item']['id']
+                        'material_id' => $item['material_item']['id']
                     ]);
                     $newLocalPrice->priceDetails()->create([
                         'published_id' => $approvedStatus,
@@ -139,7 +141,7 @@ class Porlor4JobController extends Controller
                     ]);
                     //End Update Local Price
                     //Input for Porlor 4 job
-                    $newJob= $jobParent->children()->create([
+                    $newJob = $jobParent->children()->create([
                         'job_order_number' => 0,
                         'porlor_4_id' => $porlor_4_id,
                         'name' => $item['material_item']['approved_global_details']['name'],
@@ -147,11 +149,11 @@ class Porlor4JobController extends Controller
                         'quantity_factor' => 0,
                         'unit' => 0,
                         'name_per_unit' => '',
-                        'group_item_per_unit'=>0,
-                        'is_item'=>$request->input('is_item')
+                        'group_item_per_unit' => 0,
+                        'is_item' => $request->input('is_item')
                     ]);
                     //Input สำหรับ porlor 4 job Items
-                    $itemInput =$newJob->item()->create([
+                    $itemInput = $newJob->item()->create([
                         'quantity' => $item['quantity'],
                         'material_id' => $item['material_item']['id'],
                         'local_price' => $item['local_price'],
@@ -173,7 +175,8 @@ class Porlor4JobController extends Controller
     }
 
     //Edit Child Job
-    public function editChildJob(Request $request,$porlor_4_id,$root_job_id){
+    public function editChildJob(Request $request, $porlor_4_id, $root_job_id)
+    {
         $quantityFactor = 0;
         $unit = '';
         $namePerUnit = '';
@@ -181,7 +184,7 @@ class Porlor4JobController extends Controller
         if ($request->input('group_for_item')) {
             $quantityFactor = $request->input('quantity_factor');
             $unit = $request->input('unit');
-            $namePerUnit = $request->input('name') . '(คิดต่อ 1'. ' ' . $unit . ' )';
+            $namePerUnit = $request->input('name') . '(คิดต่อ 1' . ' ' . $unit . ' )';
         }
         //ถ้าเป็นรายการหลัก parent จะเป็นหมวดหมู่ใหญ่สุด
         if ($request->input('parent')['id'] == 0) {
@@ -197,10 +200,11 @@ class Porlor4JobController extends Controller
             'quantity_factor' => $quantityFactor,
             'unit' => $unit,
             'name_per_unit' => $namePerUnit,
-            'group_item_per_unit'=>$request->input('group_item_per_unit')
+            'group_item_per_unit' => $request->input('group_item_per_unit')
         ]);
         return response()->json($result);
     }
+
     //Get All Root Jobs
     public function getAllRootJobs($id)
     {
@@ -212,7 +216,7 @@ class Porlor4JobController extends Controller
     //แบ่งกลุ่มงานย่อยตาม หน้า ปร.4
     public function getAllChildJobs($porlor_4_id, $root_job_id)
     {
-        $jobs = Porlor4Job::with(['descendants','ancestors', 'items.details.approvedGlobalDetails'])
+        $jobs = Porlor4Job::with(['descendants', 'ancestors', 'items.details.approvedGlobalDetails'])
             ->withDepth()->descendantsOf($root_job_id);
         $groupJobs = $jobs->groupBy('page_number');
         $total_page = $jobs->max('page_number');
@@ -220,9 +224,9 @@ class Porlor4JobController extends Controller
         //แยกรายการตามหัวข้อ
         foreach ($groupJobs as $key => $child_jobs) {
 
-            $page_sum_price_wage =collect([ //ตัวแปร ผลรวม ของทุกกลุ่ม ในแต่ละหน้า
-                'total_price_wage'=>0,
-                'groups'=>collect([])
+            $page_sum_price_wage = collect([ //ตัวแปร ผลรวม ของทุกกลุ่ม ในแต่ละหน้า
+                'total_price_wage' => 0,
+                'groups' => collect([])
             ]);
             //วนลูป child_jobs เพื่อจะเข้าถึง items ในแต่ละ job
             foreach ($child_jobs as $child_job) {
@@ -234,38 +238,38 @@ class Porlor4JobController extends Controller
                     $item->total_wage = $item->quantity * $item->local_wage;
                     $item->sum_total_price_wage = $item->total_price + $item->total_wage;
                     //For Check Box
-                    $item->chk_item=false;
+                    $item->chk_item = false;
                 }
                 //คำนวนเฉพาะกลุ่มที่มี item
-                if($child_job->items->count() > 0){
+                if ($child_job->items->count() > 0) {
                     //ผลรวมทั้งหมดก่อนปัด
                     $child_job->sum_total_price = $child_job->items->sum('total_price');
                     $child_job->sum_total_wage = $child_job->items->sum('total_wage');
                     $child_job->sum_total_price_wage = $child_job->sum_total_price + $child_job->sum_total_wage;
                     //ผลรวมทั้งหมดหลังปัดเศษ โดยปัดที่หลักร้อยลง เช่น 2197 เป็น 2100 ปัดหลักร้อยลงเป็นเลข 00
-                    $child_job->round_down_sum_total_price = floor($child_job->sum_total_price/100)*100;
-                    $child_job->round_down_sum_total_wage = floor($child_job->sum_total_wage/100)*100;
-                    $child_job->round_down_sum_total_price_wage = floor($child_job->sum_total_price_wage/100)*100;
+                    $child_job->round_down_sum_total_price = floor($child_job->sum_total_price / 100) * 100;
+                    $child_job->round_down_sum_total_wage = floor($child_job->sum_total_wage / 100) * 100;
+                    $child_job->round_down_sum_total_price_wage = floor($child_job->sum_total_price_wage / 100) * 100;
                     //ผลรวมราคาหลังปัดเศษลง x จำนวน quantity_factor (สรุปกลุ่มงาน .2)
                     $child_job->leaf_job_total_price = $child_job->round_down_sum_total_price * $child_job->quantity_factor;
                     $child_job->leaf_job_total_wage = $child_job->round_down_sum_total_wage * $child_job->quantity_factor;
                     $child_job->leaf_job_sum_total_price_wage = $child_job->leaf_job_total_price + $child_job->leaf_job_total_wage;
                     //เก็บผลรวมแยกตามกลุ่ม
                     $page_sum_price_wage['groups']->push([
-                        'job_order_number'=>$child_job->job_order_number,
-                        'total_leaf_job_sum_price_wage'=>$child_job->leaf_job_sum_total_price_wage
+                        'job_order_number' => $child_job->job_order_number,
+                        'total_leaf_job_sum_price_wage' => $child_job->leaf_job_sum_total_price_wage
                     ]);
                 }
-                $child_job->chk_job=false;
+                $child_job->chk_job = false;
             }
             //บันทึกผลรวมของทุกกลุ่มที่อยู่ในหน้าเดียวกัน
-            $page_sum_price_wage['total_price_wage']=$child_jobs->sum('leaf_job_sum_total_price_wage');
+            $page_sum_price_wage['total_price_wage'] = $child_jobs->sum('leaf_job_sum_total_price_wage');
 
             $job = [
                 'page' => $key,
                 'jobs' => $child_jobs,
                 'total_page' => $total_page,
-                'page_sum_price_wage'=>$page_sum_price_wage
+                'page_sum_price_wage' => $page_sum_price_wage
             ];
             $result->push($job);
         }
@@ -276,30 +280,48 @@ class Porlor4JobController extends Controller
     }
 
     //Get All Child Jobs without Items
-    public function getAllChildJobsWithOutItems($porlor_4_id, $job_root_id){
+    public function getAllChildJobsWithOutItems($porlor_4_id, $job_root_id)
+    {
         $parents = Porlor4Job::descendantsOf($job_root_id)
-            ->where('is_item',0)
+            ->where('is_item', 0)
             ->toFlatTree();
         return response()->json($parents);
     }
 
-    public function getAllChildJobsV2($porlor_4_id,$root_job_id){
-        $jobs = Porlor4Job::with(['descendants','ancestors', 'items.details.approvedGlobalDetails'])
+    public function getAllChildJobsV2($porlor_4_id, $root_job_id)
+    {
+        $result = collect([]);
+        $sumPrice =0;
+        $jobs = Porlor4Job::with(['descendants', 'ancestors', 'item.details.approvedGlobalDetails'])
             ->withDepth()->descendantsOf($root_job_id)->toTree();
+        $calculatePrice = function ($jobs) use (&$calculatePrice, $result) {
+            foreach ($jobs as $job) {
+               if($job->is_item){
 
-    
+               }
+               $calculatePrice($job->children);
+            }
 
-        $result=traverse($jobs);
+        };
+        $calculatePrice($jobs);
+        $totalResult=collect([
+           'data'=>$jobs,
+           'result'=>$result
+        ]);
 
-        return response()->json($result);
+        return response()->json($totalResult);
+
+
+
+
         $groupJobs = $jobs->groupBy('page_number');
         $total_page = $jobs->max('page_number');
         $result = collect([]);
         //แยกรายการตามหัวข้อ
         foreach ($groupJobs as $key => $child_jobs) {
-            $page_sum_price_wage =collect([ //ตัวแปร ผลรวม ของทุกกลุ่ม ในแต่ละหน้า
-                'total_price_wage'=>0,
-                'groups'=>collect([])
+            $page_sum_price_wage = collect([ //ตัวแปร ผลรวม ของทุกกลุ่ม ในแต่ละหน้า
+                'total_price_wage' => 0,
+                'groups' => collect([])
             ]);
             //วนลูป child_jobs เพื่อจะเข้าถึง items ในแต่ละ job
             foreach ($child_jobs as $child_job) {
@@ -311,38 +333,38 @@ class Porlor4JobController extends Controller
                     $item->total_wage = $item->quantity * $item->local_wage;
                     $item->sum_total_price_wage = $item->total_price + $item->total_wage;
                     //For Check Box
-                    $item->chk_item=false;
+                    $item->chk_item = false;
                 }
                 //คำนวนเฉพาะกลุ่มที่มี item
-                if($child_job->items->count() > 0){
+                if ($child_job->items->count() > 0) {
                     //ผลรวมทั้งหมดก่อนปัด
                     $child_job->sum_total_price = $child_job->items->sum('total_price');
                     $child_job->sum_total_wage = $child_job->items->sum('total_wage');
                     $child_job->sum_total_price_wage = $child_job->sum_total_price + $child_job->sum_total_wage;
                     //ผลรวมทั้งหมดหลังปัดเศษ โดยปัดที่หลักร้อยลง เช่น 2197 เป็น 2100 ปัดหลักร้อยลงเป็นเลข 00
-                    $child_job->round_down_sum_total_price = floor($child_job->sum_total_price/100)*100;
-                    $child_job->round_down_sum_total_wage = floor($child_job->sum_total_wage/100)*100;
-                    $child_job->round_down_sum_total_price_wage = floor($child_job->sum_total_price_wage/100)*100;
+                    $child_job->round_down_sum_total_price = floor($child_job->sum_total_price / 100) * 100;
+                    $child_job->round_down_sum_total_wage = floor($child_job->sum_total_wage / 100) * 100;
+                    $child_job->round_down_sum_total_price_wage = floor($child_job->sum_total_price_wage / 100) * 100;
                     //ผลรวมราคาหลังปัดเศษลง x จำนวน quantity_factor (สรุปกลุ่มงาน .2)
                     $child_job->leaf_job_total_price = $child_job->round_down_sum_total_price * $child_job->quantity_factor;
                     $child_job->leaf_job_total_wage = $child_job->round_down_sum_total_wage * $child_job->quantity_factor;
                     $child_job->leaf_job_sum_total_price_wage = $child_job->leaf_job_total_price + $child_job->leaf_job_total_wage;
                     //เก็บผลรวมแยกตามกลุ่ม
                     $page_sum_price_wage['groups']->push([
-                        'job_order_number'=>$child_job->job_order_number,
-                        'total_leaf_job_sum_price_wage'=>$child_job->leaf_job_sum_total_price_wage
+                        'job_order_number' => $child_job->job_order_number,
+                        'total_leaf_job_sum_price_wage' => $child_job->leaf_job_sum_total_price_wage
                     ]);
                 }
-                $child_job->chk_job=false;
+                $child_job->chk_job = false;
             }
             //บันทึกผลรวมของทุกกลุ่มที่อยู่ในหน้าเดียวกัน
-            $page_sum_price_wage['total_price_wage']=$child_jobs->sum('leaf_job_sum_total_price_wage');
+            $page_sum_price_wage['total_price_wage'] = $child_jobs->sum('leaf_job_sum_total_price_wage');
 
             $job = [
                 'page' => $key,
                 'jobs' => $child_jobs,
                 'total_page' => $total_page,
-                'page_sum_price_wage'=>$page_sum_price_wage
+                'page_sum_price_wage' => $page_sum_price_wage
             ];
             $result->push($job);
         }
@@ -378,23 +400,27 @@ class Porlor4JobController extends Controller
             'name' => 'รายการหลัก'
         ]);
         $parents = Porlor4Job::descendantsOf($job_root_id)
-            ->where('is_item',0)
+            ->where('is_item', 0)
             ->toFlatTree();
         $parents = $parents->prepend($main);
         return response()->json($parents);
     }
+
     //Delete Item
-    public function deleteItem($porlor_4_id,$item_id){
+    public function deleteItem($porlor_4_id, $item_id)
+    {
         $result = Porlor4JobItem::destroy($item_id);
         return response()->json($result);
     }
+
     //Delete Child Job
-    public function deleteChildJob($porlor_4_id,$child_job_id){
+    public function deleteChildJob($porlor_4_id, $child_job_id)
+    {
         $root = Porlor4Job::with('items')->descendantsAndSelf($child_job_id)->toTree()->first();
         //ถ้า มี root มี items ลบ items ของ root
         $root->items()->delete();
         //วบลูปลบ items ของ ลูกๆทั้งหมด
-        foreach ($root->children as $child){
+        foreach ($root->children as $child) {
             $child->items()->delete();
         }
         //ลบ root โดยจะลบ descendant ทั้งหมดของ root ไปด้วย
