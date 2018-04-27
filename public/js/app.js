@@ -25265,6 +25265,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_11_vue
   cancelText: 'ยกเลิก'
 });
 // Component
+
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('pagination', __webpack_require__(188));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('vue-numeric', __WEBPACK_IMPORTED_MODULE_4_vue_numeric___default.a);
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('multiselect', __WEBPACK_IMPORTED_MODULE_3_vue_multiselect___default.a);
@@ -57664,7 +57665,7 @@ var Component = __webpack_require__(179)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\xampp\\htdocs\\pogtank\\node_modules\\vue-full-loading\\src\\Loading.vue"
+Component.options.__file = "/Applications/XAMPP/xamppfiles/htdocs/pogtank/node_modules/vue-full-loading/src/Loading.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Loading.vue: functional components are not supported with templates, they should use render functions.")}
 

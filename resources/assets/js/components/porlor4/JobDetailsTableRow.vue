@@ -33,6 +33,6 @@
             v-for="(job,index) in jobs"
             :jobs="job.children"
             :job="job"
->
+    >
     </job-tree-nested>
 </template>

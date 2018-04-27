@@ -113,251 +113,65 @@
                             </a>
                         </div>
                     </div>
-
-                    {{-- *** Loop by Page  ต่อ 1 หน้า--}}
-                    <template v-for="(child_job,index) in child_jobs">
-                        {{-- Polor 4 Page--}}
-                        <div class="portlet">
-                            <div class="portlet-title">
-                                <div class="caption">
-                                    แบบ ปร.4 แผ่นที่ @{{ child_job.page }} / @{{ child_job.total_page }}
-                                    <i class="fa fa-edit"></i>
-                                </div>
-                                <div class="tools">
-                                    <a href="javascript:;" class="collapse"></a>
-                                </div>
+                    {{-- Polor 4 Page--}}
+                    <div class="portlet">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                แบบ ปร.4 แผ่นที่
+                                <i class="fa fa-edit"></i>
                             </div>
-                            <div class="portlet-body">
-                                <div class="table-toolbar">
-                                    <div class="row">
-                                        {{-- Add New Button--}}
-                                        <div class="col-xs-12">
-                                            <a @click="showAddChildJobModal(child_job.page,child_job.total_page)" class="btn btn-success">
-                                                เพิ่มกลุ่มงาน <i class="fa fa-plus"></i>
-                                            </a>
-                                            <a @click="showAddChildJobItemModal('',child_job.page)" class="btn btn-info">
-                                            เพิ่มรายการวัสดุอุปกรณ์ <i class="fa fa-plus"></i>
-                                            </a>
-                                            {{--Delete Page if empty--}}
-                                            <a @click="jobDetails_deletePage(index)" v-if="child_job.jobs.length === 0"
-                                               class="pull-right btn btn-danger">
-                                                <i class="far fa-times"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                {{-- Types Table--}}
-                                <div class="table-responsive">
-                                    <table class="table table-striped table-hover table-bordered">
-                                        {{-- -- Table Header--}}
-                                        <thead>
-                                        <tr class="table-header-green">
-                                            <th class="text-center" rowspan="2">ลบ</th>
-                                            <th class="text-center" rowspan="2">แก้ไข</th>
-                                            <th width="5%" class="text-center" rowspan="2">ลำดับที่</th>
-                                            <th width="30%" class="text-center" rowspan="2">รายการ</th>
-                                            <th class="text-center" rowspan="2">จำนวน</th>
-                                            <th class="text-center" rowspan="2">หน่วย</th>
-                                            <th class="text-center" colspan="2">ค่าวัสดุ</th>
-                                            <th class="text-center" colspan="2">ค่าแรงงาน</th>
-                                            <th width="10%" class="text-center" rowspan="2">รวมค่าวัสดุและค่าแรงงาน</th>
-                                            <th width="10%" class="text-center" rowspan="2">หมายเหตุ</th>
-                                        </tr>
-                                        <tr class="table-header-green">
-                                            <th class="text-center">ราคา/หน่วย</th>
-                                            <th class="text-center">จำนวนเงิน</th>
-                                            <th class="text-center">ราคา/หน่วย</th>
-                                            <th class="text-center">จำนวนเงิน</th>
-                                        </tr>
-                                        </thead>
-                                        {{-- -- Table Content แยกตามกลุ่มงานใน 1 หน้า--}}
-                                        <tbody>
-                                        <template v-for="(job,index) in child_job.jobs">
-                                            <tr class="text-right">
-                                                <td class="text-center">
-                                                    <a @click="jobDetails_deleteChildJob(job)"
-                                                       class="btn btn-danger btn-xs">
-                                                        <i class="far fa-times"></i>
-                                                    </a>
-                                                </td>
-                                                <td class="text-center">
-                                                    <a @click="showEditChildJobModal(job)" class="btn btn-info btn-xs">
-                                                        <i class="far fa-edit"></i>
-                                                    </a>
-                                                </td>
-                                                <td class="text-center">@{{ job.job_order_number }}</td>
-                                                <td class="text-left">
-                                                    @{{ job.name }}
-                                                    <span v-if="job.descendants.length < 1">
-                                                        <a @click="showAddChildJobItemModal(job,child_job.page)" class="pull-right btn btn-info btn-xs">
-                                                        เพิ่มรายการวัสดุ <i class="fa fa-plus"></i>
-                                                        </a>
-                                                    </span>
-                                                </td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-
-                                            {{--กลุ่มรายการแยกต่อ 1 หน่วย--}}
-                                            <template v-if="job.group_item_per_unit">
-                                                {{-- .1 คิดต่อ 1 หน่วย--}}
-                                                <tr class="text-right">
-                                                    <td class="text-center">
-                                                    </td>
-                                                    <td></td>
-                                                    <td class="text-center">@{{ job.job_order_number }}.1</td>
-                                                    <td class="text-left"> @{{ job.name_per_unit }}</td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                </tr>
-                                                {{--รายการวัสดุ/งาน ต่อ 1 หน่วย .1--}}
-                                                <template v-if="job.items.length > 0">
-                                                    <tr class="text-right" v-for="(item,index) of job.items">
-                                                        <td class="text-center">
-                                                            <a @click="jobDetails_deleteItem(item,job.job_order_number,index)"
-                                                               class="btn btn-danger btn-xs">
-                                                                <i class="far fa-times"></i>
-                                                            </a>
-                                                        </td>
-                                                        <td class="text-center">
-                                                            <a class="btn btn-info btn-xs">
-                                                                <i class="far fa-edit"></i>
-                                                            </a>
-                                                        </td>
-                                                        <td class="text-center">@{{ job.job_order_number}}.1.@{{ index+1
-                                                            }}
-                                                        </td>
-                                                        <td class="text-left"> @{{
-                                                            item.details.approved_global_details.name }}
-                                                        </td>
-                                                        <td>@{{ item.quantity }}</td>
-                                                        <td class="text-center">@{{ item.unit }}</td>
-                                                        <td>@{{ item.local_price | currency('') }}</td>
-                                                        <td>@{{ item.total_price | currency('') }}</td>
-                                                        <td>@{{ item.local_wage | currency('') }}</td>
-                                                        <td>@{{ item.total_wage | currency('') }}</td>
-                                                        <td>@{{ item.sum_total_price_wage | currency('') }}</td>
-                                                        <td></td>
-                                                    </tr>
-                                                </template>
-                                                {{-- รวมราคา ต่อ 1 หน่วย--}}
-                                                <tr class="text-right">
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td class="text-center"></td>
-                                                    <td class="text-center bold">รวมราคา @{{ job.name_per_unit }}</td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td>@{{ job.sum_total_price | currency('') }}</td>
-                                                    <td></td>
-                                                    <td>@{{ job.sum_total_wage | currency('') }}</td>
-                                                    <td>@{{ job.sum_total_price_wage | currency('') }}</td>
-                                                    <td></td>
-                                                </tr>
-                                                {{-- สรุปราคา ต่อ 1 หน่วย--}}
-                                                {{--คือผลรวมที่ปัดเศษลงแล้ว--}}
-                                                <tr class="text-right">
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td class="text-center"></td>
-                                                    <td class="text-center bold"> สรุปราคา @{{ job.name_per_unit }}</td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td>@{{ job.round_down_sum_total_price | currency('') }}</td>
-                                                    <td></td>
-                                                    <td>@{{ job.round_down_sum_total_wage | currency('') }}</td>
-                                                    <td>@{{ job.round_down_sum_total_price_wage | currency('') }}</td>
-                                                    <td></td>
-                                                </tr>
-                                                {{-- สรุปราคา ต่อ จำนวนหน่วยที่ระบุ ลงท้ายด้วย .2 --}}
-                                                <tr class="text-right">
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td class="text-left">@{{ job.job_order_number }}.2</td>
-                                                    <td class="text-center"> @{{ job.name }}</td>
-                                                    <td>@{{ job.quantity_factor }}</td>
-                                                    <td class="text-center">@{{ job.unit }}</td>
-                                                    {{--ผลรวมค่าวัสดุหลังปัดเศษ x จำนวน--}}
-                                                    <td>@{{ job.round_down_sum_total_price | currency('') }}</td>
-                                                    <td>@{{ job.leaf_job_total_price | currency('') }}</td>
-                                                    {{--ผลรวมค่าแรงหลังปัดเศษ x จำนวน--}}
-                                                    <td>@{{ job.round_down_sum_total_wage | currency('') }}</td>
-                                                    <td>@{{ job.leaf_job_total_wage | currency('')}}</td>
-                                                    {{--ผลรวมของผลรวม price และ wage--}}
-                                                    <td>@{{ job.leaf_job_sum_total_price_wage | currency('') }}</td>
-                                                    <td></td>
-                                                </tr>
-                                                {{-- ผลรวมราคา ต่อกลุ่มรายการ--}}
-                                                <tr class="table-result-green text-right bold">
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td class="text-left"></td>
-                                                    <td class="text-center"> รวมราคารายการที่ @{{ job.job_order_number
-                                                        }}
-                                                    </td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td>@{{job.leaf_job_total_price | currency('')}}</td>
-                                                    <td></td>
-                                                    <td>@{{job.leaf_job_total_wage | currency('')}}</td>
-                                                    <td>@{{ job.leaf_job_sum_total_price_wage | currency('') }}</td>
-                                                    <td></td>
-                                                </tr>
-                                            </template>
-                                            {{--กลุ่มรายการทั่วไป--}}
-                                            <template v-else>
-                                                <template v-if="job.items.length > 0">
-                                                    <tr class="text-right" v-for="(item,index) of job.items">
-                                                        <td class="text-center">
-                                                            <a @click="jobDetails_deleteItem(item,job.job_order_number,index)"
-                                                               class="btn btn-danger btn-xs">
-                                                                <i class="far fa-times"></i>
-                                                            </a>
-                                                        </td>
-                                                        <td class="text-center">
-                                                            <a class="btn btn-info btn-xs">
-                                                                <i class="far fa-edit"></i>
-                                                            </a>
-                                                        </td>
-                                                        <td class="text-center">@{{ job.job_order_number}}.@{{ index+1
-                                                            }}
-                                                        </td>
-                                                        <td class="text-left"> @{{
-                                                            item.details.approved_global_details.name }}
-                                                        </td>
-                                                        <td>@{{ item.quantity }}</td>
-                                                        <td class="text-center">@{{ item.unit }}</td>
-                                                        <td>@{{ item.local_price | currency('') }}</td>
-                                                        <td>@{{ item.total_price | currency('') }}</td>
-                                                        <td>@{{ item.local_wage | currency('') }}</td>
-                                                        <td>@{{ item.total_wage | currency('') }}</td>
-                                                        <td>@{{ item.sum_total_price_wage | currency('') }}</td>
-                                                        <td></td>
-                                                    </tr>
-                                                </template>
-                                            </template>
-                                        </template>
-                                        </tbody>
-                                    </table>
-                                </div>
+                            <div class="tools">
+                                <a href="javascript:;" class="collapse"></a>
                             </div>
                         </div>
-                    </template>
+                        <div class="portlet-body">
+                            <div class="table-toolbar">
+                                <div class="row">
+                                </div>
+                            </div>
+                            {{-- Types Table--}}
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover table-bordered">
+                                    {{-- -- Table Header--}}
+                                    <thead>
+                                    <tr class="table-header-green">
+                                        <th class="text-center" rowspan="2">ลบ</th>
+                                        <th class="text-center" rowspan="2">แก้ไข</th>
+                                        <th width="5%" class="text-center" rowspan="2">ลำดับที่</th>
+                                        <th width="30%" class="text-center" rowspan="2">รายการ</th>
+                                        <th class="text-center" rowspan="2">จำนวน</th>
+                                        <th class="text-center" rowspan="2">หน่วย</th>
+                                        <th class="text-center" colspan="2">ค่าวัสดุ</th>
+                                        <th class="text-center" colspan="2">ค่าแรงงาน</th>
+                                        <th width="10%" class="text-center" rowspan="2">รวมค่าวัสดุและค่าแรงงาน</th>
+                                        <th width="10%" class="text-center" rowspan="2">หมายเหตุ</th>
+                                    </tr>
+                                    <tr class="table-header-green">
+                                        <th class="text-center">ราคา/หน่วย</th>
+                                        <th class="text-center">จำนวนเงิน</th>
+                                        <th class="text-center">ราคา/หน่วย</th>
+                                        <th class="text-center">จำนวนเงิน</th>
+                                    </tr>
+                                    </thead>
+                                    {{-- -- Table Content แยกตามกลุ่มงานใน 1 หน้า--}}
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                                <table class="table table-striped table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>a</th>
+                                        <th>b</th>
+                                        <th>c</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody is="job-tree-nested" :jobs="child_jobs_v2.data">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 

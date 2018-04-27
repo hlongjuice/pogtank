@@ -34,6 +34,7 @@ Vue.use(VuejsDialog,{
     cancelText: 'ยกเลิก',
 });
 // Component
+
 Vue.component('pagination', require('laravel-vue-pagination'));
 Vue.component('vue-numeric', VueNumeric);
 Vue.component('multiselect', Multiselect);

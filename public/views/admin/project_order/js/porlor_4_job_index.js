@@ -1423,12 +1423,19 @@ var Porlor4JobAddRoot = {
 
 
 var porlor4JobService = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_job_service__["a" /* default */]();
+Vue.component('job-tree-nested', {
+    name: 'job-tree-nested',
+    template: '' + '<tr>' + '<td>s</td>' + '<td></td>' + '<td></td>' + '</tr>' + '<tr is="job-tree-nested" v-for="(job,index) in jobs" :jobs="job.children" :job="job"></tr>',
+
+    props: ['jobs', 'job', 'index']
+});
 var Porlor4JobDetails = {
     data: function data() {
         return {
             showLoadingJobDetails: false,
             root_job: '',
             child_jobs: [],
+            child_jobs_v2: '',
             detailScrollable: true,
             job_details: {
                 pages: []
@@ -1466,7 +1473,9 @@ var Porlor4JobDetails = {
                 console.log(err.response.status);
             });
             porlor4JobService.getAllChildJobsV2(this.porlor4.id, this.root_job.id).then(function (result) {
-                console.log('All Child Job V2 :', result);
+                // this.child_jobs = result;
+                _this.child_jobs_v2 = result;
+                console.log('All Child Job V2 :', _this.child_jobs_v2);
             });
         },
         showAddChildJobModal: function showAddChildJobModal(page_number, total_page_number) {
