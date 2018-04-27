@@ -291,87 +291,57 @@ class Porlor4JobController extends Controller
     public function getAllChildJobsV2($porlor_4_id, $root_job_id)
     {
         $result = collect([]);
-        $sumPrice =0;
+        $sumPrice = 0;
         $jobs = Porlor4Job::with(['descendants', 'ancestors', 'item.details.approvedGlobalDetails'])
             ->withDepth()->descendantsOf($root_job_id)->toTree();
-        $calculatePrice = function ($jobs) use (&$calculatePrice, $result) {
+        $jobsFlat = collect([]);
+        //Recursion ด้วย anonymous function
+        //&$jobs , &$parent คือ การ send by reference ค่าจะเปลี่ยนให้เองใน function
+        $calculatePrice = function (&$jobs, &$parent = '') use (&$calculatePrice, $result, $jobsFlat) {
             foreach ($jobs as $job) {
-               if($job->is_item){
+                //is_item คือ หากเป็นรายการวัสดุจะมีการคำนวณราคา
+                if ($job->is_item) {
+                    //เป็นการบวกกันใน lv ลูก แต่อัพเดทค่าไปยัง sumPrice ของแม่
+                    $job->item->total_price = $job->item->local_price * $job->item->quantity;
+                    $parent->sum_total_price += $job->item->total_price;
+                }
 
-               }
-               $calculatePrice($job->children);
+                $jobsFlat->push($job);
+                $calculatePrice($job->children, $job);
+
+                //การทำงานหลังจาก function recursive เสร็จแล้ว $job ตรงส่วนนี้ คือ $parent ของส่วนด้านบน
+                //depth > 1 คือ ทำเมื่อไม่ใช่งานแรก
+                if ($job->is_item == 0 && $job->depth > 1) {
+                    //ถ้าเป็นกลุ่มรายการสินค้าที่แยกคิดต่อหน่วย ก่อนรวม
+                    if ($job->group_item_per_unit) {
+                        //ถ้าราคารวมมากกว่า 100 ปัดราคาหลักสิบลง เป็น 00
+                        if (floor($job->sum_total_price / 100) * 100 > 100) {
+                            $job->round_down_sum_total_price = floor($job->sum_total_price / 100) * 100;
+
+                        }
+                        //ถ้าน้อยกว่า 100 ปัด หลักหน่วยลง เป็น 0
+                        else {
+                            $job->round_down_sum_total_price = floor($job->sum_total_price / 10) * 10;
+                        }
+                        $job->group_item_per_unit_total_price = $job->round_down_sum_total_price * $job->quantity_factor;
+                        $parent->sum_total_price += $job->group_item_per_unit_total_price;
+
+                    } else {
+                        $parent->sum_total_price += $job->sum_total_price;
+                    }
+
+                }
             }
 
         };
         $calculatePrice($jobs);
-        $totalResult=collect([
-           'data'=>$jobs,
-           'result'=>$result
+        $totalResult = collect([
+            'data' => $jobs,
+            'result' => $result,
+            'flat' => $jobsFlat
         ]);
 
         return response()->json($totalResult);
-
-
-
-
-        $groupJobs = $jobs->groupBy('page_number');
-        $total_page = $jobs->max('page_number');
-        $result = collect([]);
-        //แยกรายการตามหัวข้อ
-        foreach ($groupJobs as $key => $child_jobs) {
-            $page_sum_price_wage = collect([ //ตัวแปร ผลรวม ของทุกกลุ่ม ในแต่ละหน้า
-                'total_price_wage' => 0,
-                'groups' => collect([])
-            ]);
-            //วนลูป child_jobs เพื่อจะเข้าถึง items ในแต่ละ job
-            foreach ($child_jobs as $child_job) {
-                //วนลูป items เพื่อคำนวนรายการค่าใช้จ่ายต่อรายการ
-                foreach ($child_job->items as $item) {
-                    //ผลรวมค่าวัสดุ
-                    $item->total_price = $item->quantity * $item->local_price;
-                    //ผลรวมค่าแรง
-                    $item->total_wage = $item->quantity * $item->local_wage;
-                    $item->sum_total_price_wage = $item->total_price + $item->total_wage;
-                    //For Check Box
-                    $item->chk_item = false;
-                }
-                //คำนวนเฉพาะกลุ่มที่มี item
-                if ($child_job->items->count() > 0) {
-                    //ผลรวมทั้งหมดก่อนปัด
-                    $child_job->sum_total_price = $child_job->items->sum('total_price');
-                    $child_job->sum_total_wage = $child_job->items->sum('total_wage');
-                    $child_job->sum_total_price_wage = $child_job->sum_total_price + $child_job->sum_total_wage;
-                    //ผลรวมทั้งหมดหลังปัดเศษ โดยปัดที่หลักร้อยลง เช่น 2197 เป็น 2100 ปัดหลักร้อยลงเป็นเลข 00
-                    $child_job->round_down_sum_total_price = floor($child_job->sum_total_price / 100) * 100;
-                    $child_job->round_down_sum_total_wage = floor($child_job->sum_total_wage / 100) * 100;
-                    $child_job->round_down_sum_total_price_wage = floor($child_job->sum_total_price_wage / 100) * 100;
-                    //ผลรวมราคาหลังปัดเศษลง x จำนวน quantity_factor (สรุปกลุ่มงาน .2)
-                    $child_job->leaf_job_total_price = $child_job->round_down_sum_total_price * $child_job->quantity_factor;
-                    $child_job->leaf_job_total_wage = $child_job->round_down_sum_total_wage * $child_job->quantity_factor;
-                    $child_job->leaf_job_sum_total_price_wage = $child_job->leaf_job_total_price + $child_job->leaf_job_total_wage;
-                    //เก็บผลรวมแยกตามกลุ่ม
-                    $page_sum_price_wage['groups']->push([
-                        'job_order_number' => $child_job->job_order_number,
-                        'total_leaf_job_sum_price_wage' => $child_job->leaf_job_sum_total_price_wage
-                    ]);
-                }
-                $child_job->chk_job = false;
-            }
-            //บันทึกผลรวมของทุกกลุ่มที่อยู่ในหน้าเดียวกัน
-            $page_sum_price_wage['total_price_wage'] = $child_jobs->sum('leaf_job_sum_total_price_wage');
-
-            $job = [
-                'page' => $key,
-                'jobs' => $child_jobs,
-                'total_page' => $total_page,
-                'page_sum_price_wage' => $page_sum_price_wage
-            ];
-            $result->push($job);
-        }
-//        $result->put('total_page',$result->max('page'));
-        //เรียงจากน้อยไปมาก
-        $result = $result->sortBy('page')->values();
-        return response()->json($result);
     }
 
     //Get Leaf Job
