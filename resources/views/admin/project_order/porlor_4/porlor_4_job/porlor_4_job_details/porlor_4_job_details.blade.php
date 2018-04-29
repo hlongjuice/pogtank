@@ -127,6 +127,20 @@
                         <div class="portlet-body">
                             <div class="table-toolbar">
                                 <div class="row">
+                                    {{-- Add New Button--}}
+                                    <div class="col-xs-12">
+                                        <a @click="showAddChildJobModal(child_job.page,child_job.total_page)" class="btn btn-success">
+                                            เพิ่มกลุ่มงาน <i class="fa fa-plus"></i>
+                                        </a>
+                                        <a @click="showAddChildJobItemModal('',child_job.page)" class="btn btn-info">
+                                            เพิ่มรายการวัสดุอุปกรณ์ <i class="fa fa-plus"></i>
+                                        </a>
+                                        {{--Delete Page if empty--}}
+                                        <a @click="jobDetails_deletePage(index)" v-if="child_job.jobs.length === 0"
+                                           class="pull-right btn btn-danger">
+                                            <i class="far fa-times"></i>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                             {{-- Types Table--}}
@@ -155,18 +169,38 @@
                                     </thead>
                                     {{-- -- Table Content แยกตามกลุ่มงานใน 1 หน้า--}}
                                     <tbody>
-
-                                    </tbody>
-                                </table>
-                                <table class="table table-striped table-bordered">
-                                    <thead>
-                                    <tr>
-                                        <th>a</th>
-                                        <th>b</th>
-                                        <th>c</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody is="job-tree-nested" :jobs="child_jobs_v2.data">
+                                    <template v-for="job in child_jobs_v2.flat">
+                                        <tr class="text-right">
+                                            <td class="text-center">
+                                                <a @click="jobDetails_deleteChildJob(job)"
+                                                   class="btn btn-danger btn-xs">
+                                                    <i class="far fa-times"></i>
+                                                </a>
+                                            </td>
+                                            <td class="text-center">
+                                                <a @click="showEditChildJobModal(job)" class="btn btn-info btn-xs">
+                                                    <i class="far fa-edit"></i>
+                                                </a>
+                                            </td>
+                                            <td class="text-center">@{{job.order_number}}</td>
+                                            <td class="text-left">
+                                                @{{ job.name }}
+                                                <span v-if="job.is_item == 0">
+                                                    <a @click="showAddChildJobItemModal(job,child_job.page)" class="pull-right btn btn-info btn-xs">
+                                                    เพิ่มรายการวัสดุ <i class="fa fa-plus"></i>
+                                                    </a>
+                                                </span>
+                                            </td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </template>
                                     </tbody>
                                 </table>
                             </div>

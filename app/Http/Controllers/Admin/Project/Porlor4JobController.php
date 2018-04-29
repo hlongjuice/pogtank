@@ -294,19 +294,60 @@ class Porlor4JobController extends Controller
         $sumPrice = 0;
         $jobs = Porlor4Job::with(['descendants', 'ancestors', 'item.details.approvedGlobalDetails'])
             ->withDepth()->descendantsOf($root_job_id)->toTree();
-        $jobsFlat = collect([]);
+        $jobsFlatTree = collect([]);
+        $groupJobsByPage = collect([]);
         //Recursion ด้วย anonymous function
         //&$jobs , &$parent คือ การ send by reference ค่าจะเปลี่ยนให้เองใน function
-        $calculatePrice = function (&$jobs, &$parent = '') use (&$calculatePrice, $result, $jobsFlat) {
+        $calculatePrice = function (&$jobs, &$parent = '') use (&$calculatePrice, $result) {
+            //Recursive with for
+            /*
+            for($i=0;$i<$jobs->count();$i++){
+                //is_item คือ หากเป็นรายการวัสดุจะมีการคำนวณราคา
+                if ($jobs[$i]->is_item) {
+                    //เช็คจำนวน item ทั้งหมดในกลุ่ม
+                    //เป็นการบวกกันใน lv ลูก แต่อัพเดทค่าไปยัง sumPrice ของแม่
+                    $jobs[$i]->item->total_price = $jobs[$i]->item->local_price * $jobs[$i]->item->quantity;
+                    $parent->sum_total_price += $jobs[$i]->item->total_price;
+                }
+                $calculatePrice($jobs[$i]->children, $jobs[$i]);
+
+                //การทำงานหลังจาก function recursive เสร็จแล้ว $job ตรงส่วนนี้ คือ $parent ของส่วนด้านบน
+                //depth > 1 คือ ทำเมื่อไม่ใช่งานแรก
+                if ($jobs[$i]->is_item == 0 && $jobs[$i]->depth > 1) {
+                    //ถ้าเป็นกลุ่มรายการสินค้าที่แยกคิดต่อหน่วย ก่อนรวม
+                    if ($jobs[$i]->group_item_per_unit) {
+                        //ถ้าราคารวมมากกว่า 100 ปัดราคาหลักสิบลง เป็น 00
+                        if (floor($jobs[$i]->sum_total_price / 100) * 100 > 100) {
+                            $jobs[$i]->round_down_sum_total_price = floor($jobs[$i]->sum_total_price / 100) * 100;
+
+                        }
+                        //ถ้าน้อยกว่า 100 ปัด หลักหน่วยลง เป็น 0
+                        else {
+                            $jobs[$i]->round_down_sum_total_price = floor($jobs[$i]->sum_total_price / 10) * 10;
+                        }
+                        $jobs[$i]->group_item_per_unit_total_price = $jobs[$i]->round_down_sum_total_price * $jobs[$i]->quantity_factor;
+                        $parent->sum_total_price += $jobs[$i]->group_item_per_unit_total_price;
+
+                    } else {
+                        $parent->sum_total_price += $jobs[$i]->sum_total_price;
+                    }
+
+                }
+            }
+            */
+            //With Foreach
             foreach ($jobs as $job) {
+                //เก็บจำนวนลูกทั้งหมดเพื่อใช้ไปเปรียบเทียบตอนจับกลุ่มด้วยหมายเลขหน้า
+                $job->total_children_number = $job->children->count();
                 //is_item คือ หากเป็นรายการวัสดุจะมีการคำนวณราคา
                 if ($job->is_item) {
+                    //ถ้าหากเป็น item ให้ปรับสถานะกลุ่มแม่ เป็น 1 เพื่อบอกว่าเป็นกลุ่มของ item
+                    $parent->has_items = 1;
+                    //เช็คจำนวน item ทั้งหมดในกลุ่ม
                     //เป็นการบวกกันใน lv ลูก แต่อัพเดทค่าไปยัง sumPrice ของแม่
                     $job->item->total_price = $job->item->local_price * $job->item->quantity;
                     $parent->sum_total_price += $job->item->total_price;
                 }
-
-                $jobsFlat->push($job);
                 $calculatePrice($job->children, $job);
 
                 //การทำงานหลังจาก function recursive เสร็จแล้ว $job ตรงส่วนนี้ คือ $parent ของส่วนด้านบน
@@ -334,11 +375,30 @@ class Porlor4JobController extends Controller
             }
 
         };
+
+        //Recursive function เพื่อแปลงข้อมูลให้อยู่ใน Flat array คือทุก lv อยู่ในระดับเดียวกัน
+        $toFlatTree = function($jobs,$order_number ='') use(&$toFlatTree,$jobsFlatTree){
+            foreach ($jobs as $key=>$job){
+                if($job->depth==1){
+                    $job->order_number=$key+1;
+                }else{
+                    $job->order_number=$order_number.'.'.($key+1);
+                }
+                $jobsFlatTree->push($job);
+                $toFlatTree($job->children,$job->order_number);
+            }
+        };
+
         $calculatePrice($jobs);
+        $toFlatTree($jobs);
+
+        //แบ่งกลุ่มตามหมายเลขหน้า
+        $groupJobsByPage = $jobsFlatTree->groupBy('page_number')->values();
         $totalResult = collect([
             'data' => $jobs,
             'result' => $result,
-            'flat' => $jobsFlat
+            'flat' => $jobsFlatTree,
+            'groupJobsByPage'=>$groupJobsByPage
         ]);
 
         return response()->json($totalResult);

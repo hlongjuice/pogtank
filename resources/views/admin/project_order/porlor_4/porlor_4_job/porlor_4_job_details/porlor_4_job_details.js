@@ -1,18 +1,6 @@
 import Porlor4JobService from '../../../../../../assets/js/services/project_order/porlor_4_job_service';
 
 let porlor4JobService = new Porlor4JobService();
-Vue.component('job-tree-nested', {
-    name:'job-tree-nested',
-    template: '' +
-    '<tr>' +
-    '<td>s</td>' +
-    '<td></td>' +
-    '<td></td>' +
-    '</tr>' +
-    '<tr is="job-tree-nested" v-for="(job,index) in jobs" :jobs="job.children" :job="job"></tr>'
-    ,
-    props: ['jobs', 'job','index']
-});
 export const Porlor4JobDetails = {
     data: function () {
         return {
@@ -56,7 +44,7 @@ export const Porlor4JobDetails = {
             porlor4JobService.getAllChildJobsV2(this.porlor4.id, this.root_job.id)
                 .then(result => {
                     // this.child_jobs = result;
-                    this.child_jobs_v2 = result;
+                    this.child_jobs = result;
                     console.log('All Child Job V2 :', this.child_jobs_v2)
                 })
         },
