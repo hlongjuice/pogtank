@@ -124,87 +124,124 @@
                                 <a href="javascript:;" class="collapse"></a>
                             </div>
                         </div>
-                        <div class="portlet-body">
-                            <div class="table-toolbar">
-                                <div class="row">
-                                    {{-- Add New Button--}}
-                                    <div class="col-xs-12">
-                                        <a @click="showAddChildJobModal(child_job.page,child_job.total_page)" class="btn btn-success">
-                                            เพิ่มกลุ่มงาน <i class="fa fa-plus"></i>
-                                        </a>
-                                        <a @click="showAddChildJobItemModal('',child_job.page)" class="btn btn-info">
-                                            เพิ่มรายการวัสดุอุปกรณ์ <i class="fa fa-plus"></i>
-                                        </a>
-                                        {{--Delete Page if empty--}}
-                                        <a @click="jobDetails_deletePage(index)" v-if="child_job.jobs.length === 0"
-                                           class="pull-right btn btn-danger">
-                                            <i class="far fa-times"></i>
-                                        </a>
+                        <template v-for="(child_job,index) in child_jobs.groupJobsByPage">
+                            <div class="portlet-body">
+                                <div class="table-toolbar">
+                                    <div class="row">
+                                        {{-- Add New Button--}}
+                                        <div class="col-xs-12">
+                                            <a @click="showAddChildJobModal(child_job.page,child_job.total_page)"
+                                               class="btn btn-success">
+                                                เพิ่มกลุ่มงาน <i class="fa fa-plus"></i>
+                                            </a>
+                                            <a @click="showAddChildJobItemModal('',child_job.page)"
+                                               class="btn btn-info">
+                                                เพิ่มรายการวัสดุอุปกรณ์ <i class="fa fa-plus"></i>
+                                            </a>
+                                            {{--Delete Page if empty--}}
+                                            <a @click="jobDetails_deletePage(index)" v-if="child_job.jobs.length === 0"
+                                               class="pull-right btn btn-danger">
+                                                <i class="far fa-times"></i>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            {{-- Types Table--}}
-                            <div class="table-responsive">
-                                <table class="table table-striped table-hover table-bordered">
-                                    {{-- -- Table Header--}}
-                                    <thead>
-                                    <tr class="table-header-green">
-                                        <th class="text-center" rowspan="2">ลบ</th>
-                                        <th class="text-center" rowspan="2">แก้ไข</th>
-                                        <th width="5%" class="text-center" rowspan="2">ลำดับที่</th>
-                                        <th width="30%" class="text-center" rowspan="2">รายการ</th>
-                                        <th class="text-center" rowspan="2">จำนวน</th>
-                                        <th class="text-center" rowspan="2">หน่วย</th>
-                                        <th class="text-center" colspan="2">ค่าวัสดุ</th>
-                                        <th class="text-center" colspan="2">ค่าแรงงาน</th>
-                                        <th width="10%" class="text-center" rowspan="2">รวมค่าวัสดุและค่าแรงงาน</th>
-                                        <th width="10%" class="text-center" rowspan="2">หมายเหตุ</th>
-                                    </tr>
-                                    <tr class="table-header-green">
-                                        <th class="text-center">ราคา/หน่วย</th>
-                                        <th class="text-center">จำนวนเงิน</th>
-                                        <th class="text-center">ราคา/หน่วย</th>
-                                        <th class="text-center">จำนวนเงิน</th>
-                                    </tr>
-                                    </thead>
-                                    {{-- -- Table Content แยกตามกลุ่มงานใน 1 หน้า--}}
-                                    <tbody>
-                                    <template v-for="job in child_jobs_v2.flat">
-                                        <tr class="text-right">
-                                            <td class="text-center">
-                                                <a @click="jobDetails_deleteChildJob(job)"
-                                                   class="btn btn-danger btn-xs">
-                                                    <i class="far fa-times"></i>
-                                                </a>
-                                            </td>
-                                            <td class="text-center">
-                                                <a @click="showEditChildJobModal(job)" class="btn btn-info btn-xs">
-                                                    <i class="far fa-edit"></i>
-                                                </a>
-                                            </td>
-                                            <td class="text-center">@{{job.order_number}}</td>
-                                            <td class="text-left">
-                                                @{{ job.name }}
-                                                <span v-if="job.is_item == 0">
-                                                    <a @click="showAddChildJobItemModal(job,child_job.page)" class="pull-right btn btn-info btn-xs">
+                                {{-- Types Table--}}
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-hover table-bordered">
+                                        {{-- -- Table Header--}}
+                                        <thead>
+                                        <tr class="table-header-green">
+                                            <th class="text-center" rowspan="2">ลบ</th>
+                                            <th class="text-center" rowspan="2">แก้ไข</th>
+                                            <th width="5%" class="text-center" rowspan="2">ลำดับที่</th>
+                                            <th width="30%" class="text-center" rowspan="2">รายการ</th>
+                                            <th class="text-center" rowspan="2">จำนวน</th>
+                                            <th class="text-center" rowspan="2">หน่วย</th>
+                                            <th class="text-center" colspan="2">ค่าวัสดุ</th>
+                                            <th class="text-center" colspan="2">ค่าแรงงาน</th>
+                                            <th width="10%" class="text-center" rowspan="2">รวมค่าวัสดุและค่าแรงงาน</th>
+                                            <th width="10%" class="text-center" rowspan="2">หมายเหตุ</th>
+                                        </tr>
+                                        <tr class="table-header-green">
+                                            <th class="text-center">ราคา/หน่วย</th>
+                                            <th class="text-center">จำนวนเงิน</th>
+                                            <th class="text-center">ราคา/หน่วย</th>
+                                            <th class="text-center">จำนวนเงิน</th>
+                                        </tr>
+                                        </thead>
+                                        {{-- -- Table Content แยกตามกลุ่มงานใน 1 หน้า--}}
+                                        <tbody>
+                                        <template v-for="job in child_job.jobs">
+                                            <tr class="text-right">
+                                                <td class="text-center">
+                                                    <a @click="jobDetails_deleteChildJob(job)"
+                                                       class="btn btn-danger btn-xs">
+                                                        <i class="far fa-times"></i>
+                                                    </a>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a @click="showEditChildJobModal(job)" class="btn btn-info btn-xs">
+                                                        <i class="far fa-edit"></i>
+                                                    </a>
+                                                </td>
+                                                <td class="text-center">@{{job.order_number}}</td>
+                                                <td class="text-left">
+                                                    @{{ job.name }}
+                                                    <span v-if="job.is_item == 0">
+                                                    <a @click="showAddChildJobItemModal(job,child_job.page)"
+                                                       class="pull-right btn btn-info btn-xs">
                                                     เพิ่มรายการวัสดุ <i class="fa fa-plus"></i>
                                                     </a>
                                                 </span>
-                                            </td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                    </template>
-                                    </tbody>
-                                </table>
+                                                </td>
+                                                <template v-if="job.item">
+                                                    <td>@{{job.item.quantity}}</td>
+                                                    <td class="text-center">@{{ job.item.unit }}</td>
+                                                    <td>@{{ job.item.local_price }}</td>
+                                                    <td>@{{ job.item.total_price }}</td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </template>
+                                                <template v-else>
+                                                    <td>
+                                                    </td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </template>
+                                            </tr>
+                                            <template v-if="job.is_last_job">
+                                                {{-- รวมราคา ต่อ 1 หน่วย--}}
+                                                <tr class="table-result-green text-right bold">
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td class="text-center"></td>
+                                                    <td class="text-center bold">รวมราคา @{{ job.parent_order_number
+                                                        }}
+                                                    </td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td>@{{ job.parent_sum_total_price | currency('') }}</td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                            </template>
+                                        </template>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
-                        </div>
+                        </template>
                     </div>
                 </div>
             </div>

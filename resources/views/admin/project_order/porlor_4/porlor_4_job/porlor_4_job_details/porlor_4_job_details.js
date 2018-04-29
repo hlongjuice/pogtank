@@ -33,19 +33,12 @@ export const Porlor4JobDetails = {
         //Get All Child Job and Item
         getAllChildJobAndItems() {
             this.showLoadingJobDetails = true;
-            porlor4JobService.getAllChildJobs(this.porlor4.id, this.root_job.id)//this.porlor4.id มาจาก ไฟล์ porlor_4_job ไฟล์แรก
-                .then(result => {
-                    this.child_jobs = result;
-                    this.showLoadingJobDetails = false;
-                    console.log('Child Jobs :', this.child_jobs);
-                }).catch(err => {
-                console.log(err.response.status);
-            });
             porlor4JobService.getAllChildJobsV2(this.porlor4.id, this.root_job.id)
                 .then(result => {
                     // this.child_jobs = result;
                     this.child_jobs = result;
-                    console.log('All Child Job V2 :', this.child_jobs_v2)
+                    console.log('All Child Job V2 :', this.child_jobs);
+                    this.showLoadingJobDetails=false;
                 })
         },
         showAddChildJobModal(page_number, total_page_number) {

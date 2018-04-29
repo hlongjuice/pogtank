@@ -44,12 +44,12 @@ fieldset[disabled] .multiselect{pointer-events:none}.multiselect__spinner{positi
 }
 
 .table-header-green th {
-  background-color: #DAE3C0;
+  background-color: #CDD5B4;
   border: 1px solid #a8a8a8 !important;
 }
 
 .table-result-green td {
-  background-color: #A2BA66 !important;
+  background-color: #DAE3C0 !important;
   border: 1px solid #a8a8a8 !important;
 }
 
