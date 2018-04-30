@@ -70,9 +70,9 @@ export const Porlor4AddChildJob ={
         addChildJob_childJobCustomLabel(item){
             let label ='';
             if(item.job_order_number == null){
-                item.job_order_number = '';
+                item.order_number = '';
             }
-            label=item.job_order_number+' '+ item.name;
+            label=item.order_number+' '+ item.name;
             return label;
         },
         closeAddChildJobModal(){

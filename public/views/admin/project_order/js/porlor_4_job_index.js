@@ -1676,9 +1676,9 @@ var Porlor4AddChildJob = {
         addChildJob_childJobCustomLabel: function addChildJob_childJobCustomLabel(item) {
             var label = '';
             if (item.job_order_number == null) {
-                item.job_order_number = '';
+                item.order_number = '';
             }
-            label = item.job_order_number + ' ' + item.name;
+            label = item.order_number + ' ' + item.name;
             return label;
         },
         closeAddChildJobModal: function closeAddChildJobModal() {
@@ -1977,7 +1977,7 @@ var Porlor4AddChildJobItem = {
             });
         },
         childJobCustomLabel: function childJobCustomLabel(item) {
-            return item.job_order_number + ' ' + item.name;
+            return item.order_number + ' ' + item.name;
         },
         materialItemCustomLabel: function materialItemCustomLabel(item) {
             if (item.approved_global_details) {

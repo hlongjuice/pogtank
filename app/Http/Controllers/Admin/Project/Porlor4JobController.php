@@ -326,6 +326,7 @@ class Porlor4JobController extends Controller
                     $job->item->sum_total_price_wage = $job->item->total_price + $job->item->total_wage;
                     $parent->sum_total_price += $job->item->total_price;
                     $parent->sum_total_wage +=$job->item->total_wage;
+                    $parent->sum_total_price_wage =$parent->sum_total_price + $parent->sum_total_wage;
                     if ($parent != '') {
                         //ถ้าเป้น item สุดท้ายในกลุ่ม
                         if ($job->number == $parent->total_children_number) {
@@ -355,6 +356,7 @@ class Porlor4JobController extends Controller
                 //ตั้งแต่บรรทันนี้คือ การขยับไปยัง Array ตัวถัดไป ใน level เดียวกันหลังจากผ่าน recursive ด้านบนแล้ว
                 //และ Recursive ก็จะค่อยๆย้อนการทำงานกลับไปยัง level บนๆไปเรื่อยๆจนถึงการวน foreach สุดท้ายที่ level สูงสุด
 
+                //******** คำนวนผลรวมรายการกลุ่มแยกต่อหน่วย และ นำผลรวมจากกลุ่มเล็กส่งไปกลุ่มแม่ ******************
                 //ขั้นตอนด้านล่างเป็นการนำเอาผลรวมของกลุ่มลูกส่งไปยังกลุ่มแม่ที่ level สูงกว่า
                 //การทำงานหลังจาก function recursive เสร็จแล้ว $job ตรงส่วนนี้ คือ $parent ของส่วนด้านบน
                 //depth > 1 คือ ทำเมื่อไม่ใช่งานแรก
@@ -398,12 +400,12 @@ class Porlor4JobController extends Controller
                         //ส่งไป ผลบวกยัง parent
                         $parent->sum_total_price += $job->group_item_per_unit_total_price;
                         $parent->sum_total_wage +=$job->group_item_per_unit_total_wage;
-                        $parent->sum_total_price_wage +=$job->group_item_per_unit_sum_total_price_wage;
+                        $parent->sum_total_price_wage =$parent->sum_total_price + $parent->sum_total_wage;
 
                     } else { // กรณีเป็นกลุ่มธรรมดา
                         $parent->sum_total_price += $job->sum_total_price;
                         $parent->sum_total_wage +=$job->sum_total_wage;
-                        $parent->sum_total_price_wage +=$parent->sum_total_price + $parent->sum_total_wage;
+                        $parent->sum_total_price_wage =$parent->sum_total_price + $parent->sum_total_wage;
                     }
 
                 }
@@ -429,10 +431,11 @@ class Porlor4JobController extends Controller
         $groupPages = $jobsFlatTree->groupBy('page_number');
         //คำนวนผลรวมภายใน 1 หน้า
         foreach ($groupPages as $page => $allJobs) {
-
-            $allJobs->last(function ($item){
-                $item->is_last_job_in_page = 1;
-            });
+            $lastJobInPage = $allJobs->last();
+            $lastJobInPage->is_last_job_in_page =1;
+            if($lastJobInPage->parent_order_number ==null){
+                $lastJobInPage->parent_order_number = 'Yo!!';
+            }
             $job = [
                 'page' => $page,
                 'jobs' => $allJobs,

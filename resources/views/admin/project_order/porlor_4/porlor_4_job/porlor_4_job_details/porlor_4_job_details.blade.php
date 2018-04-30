@@ -114,20 +114,21 @@
                         </div>
                     </div>
                     {{-- Polor 4 Page--}}
-                    <div class="portlet">
-                        <div class="portlet-title">
-                            <div class="caption">
-                                แบบ ปร.4 แผ่นที่
-                                <i class="fa fa-edit"></i>
+                    <template v-for="(child_job,index) in child_jobs.groupJobsByPage">
+                        <div class="portlet">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    แบบ ปร.4 แผ่นที่ @{{ child_job.page }} / @{{ child_job.total_page }}
+                                    <i class="fa fa-edit"></i>
+                                </div>
+                                <div class="tools">
+                                    <a href="javascript:;" class="collapse"></a>
+                                </div>
                             </div>
-                            <div class="tools">
-                                <a href="javascript:;" class="collapse"></a>
-                            </div>
-                        </div>
-                        <template v-for="(child_job,index) in child_jobs.groupJobsByPage">
                             <div class="portlet-body">
                                 <div class="table-toolbar">
-                                    <div class="row">
+                                    {{--แสดงเมนูที่หน้าล่าสุดเท่านั้น--}}
+                                    <div v-if="child_job.page == child_job.total_page" class="row">
                                         {{-- Add New Button--}}
                                         <div class="col-xs-12">
                                             <a @click="showAddChildJobModal(child_job.page,child_job.total_page)"
@@ -148,7 +149,7 @@
                                 </div>
                                 {{-- Types Table--}}
                                 <div class="table-responsive">
-                                    <table class="table table-striped table-hover table-bordered">
+                                    <table class="table table-hover table-bordered">
                                         {{-- -- Table Header--}}
                                         <thead>
                                         <tr class="table-header-green">
@@ -172,7 +173,6 @@
                                         </thead>
                                         {{-- -- Table Content แยกตามกลุ่มงานใน 1 หน้า--}}
                                         <tbody>
-
                                         <template v-for="job in child_job.jobs">
                                             <tr class="text-right">
                                                 <td class="text-center">
@@ -196,6 +196,7 @@
                                                     </a>
                                                 </span>
                                                 </td>
+                                                {{--แสดงเฉพาะ Job ที่เป็น Item--}}
                                                 <template v-if="job.item">
                                                     <td>@{{job.item.quantity}}</td>
                                                     <td class="text-center">@{{ job.item.unit }}</td>
@@ -206,6 +207,7 @@
                                                     <td>@{{ job.item.sum_total_price_wage }}</td>
                                                     <td></td>
                                                 </template>
+                                                {{--แสดงเฉพาะ Job ที่เป็นงาน--}}
                                                 <template v-else>
                                                     <td>
                                                     </td>
@@ -218,7 +220,7 @@
                                                     <td></td>
                                                 </template>
                                             </tr>
-                                           {{--หายเป็นรายการสุดท้ายของกลุ่ม จะมีการแสดงผลรวม--}}
+                                            {{--หายเป็นรายการสุดท้ายของกลุ่ม จะมีการแสดงผลรวม--}}
                                             <template v-if="job.is_last_job == 1">
                                                 {{--รายการวัสดุ/งาน ต่อ 1 หน่วย .1--}}
                                                 <template v-if="job.parent_group_item_per_unit == 1">
@@ -254,7 +256,9 @@
                                                         <td></td>
                                                         <td></td>
                                                         <td class="text-center"></td>
-                                                        <td class="text-center bold">รวมราคา @{{ job.parent_name_per_unit }}</td>
+                                                        <td class="text-center bold">รวมราคา @{{
+                                                            job.parent_name_per_unit }}
+                                                        </td>
                                                         <td></td>
                                                         <td></td>
                                                         <td></td>
@@ -270,33 +274,49 @@
                                                         <td></td>
                                                         <td></td>
                                                         <td class="text-center"></td>
-                                                        <td class="text-center bold"> สรุปราคา @{{ job.parent_name_per_unit }}</td>
+                                                        <td class="text-center bold"> สรุปราคา @{{
+                                                            job.parent_name_per_unit }}
+                                                        </td>
                                                         <td></td>
                                                         <td></td>
                                                         <td></td>
-                                                        <td>@{{ job.parent_round_down_sum_total_price | currency('') }}</td>
+                                                        <td>@{{ job.parent_round_down_sum_total_price | currency('')
+                                                            }}
+                                                        </td>
                                                         <td></td>
-                                                        <td>@{{ job.parent_round_down_sum_total_wage | currency('') }}</td>
-                                                        <td>@{{ job.parent_round_down_sum_total_price_wage | currency('') }}</td>
+                                                        <td>@{{ job.parent_round_down_sum_total_wage | currency('') }}
+                                                        </td>
+                                                        <td>@{{ job.parent_round_down_sum_total_price_wage |
+                                                            currency('') }}
+                                                        </td>
                                                         <td></td>
                                                     </tr>
                                                     {{-- สรุปราคา ต่อ จำนวนหน่วยที่ระบุ ลงท้ายด้วย .2 --}}
                                                     <tr class="text-right">
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td class="text-left">@{{ job.parent_order_number }}.2</td>
-                                                    <td class="text-left"> @{{ job.parent_name }}</td>
-                                                    <td>@{{ job.parent_quantity_factor }}</td>
-                                                    <td class="text-center">@{{ job.parent_unit }}</td>
-                                                    {{--ผลรวมค่าวัสดุหลังปัดเศษ x จำนวน--}}
-                                                    <td>@{{ job.parent_round_down_sum_total_price | currency('') }}</td>
-                                                    <td>@{{ job.parent_group_item_per_unit_total_price | currency('') }}</td>
-                                                    {{--ผลรวมค่าแรงหลังปัดเศษ x จำนวน--}}
-                                                    <td>@{{ job.parent_round_down_sum_total_wage | currency('') }}</td>
-                                                    <td>@{{ job.parent_group_item_per_unit_total_wage | currency('')}}</td>
-                                                    {{--ผลรวมของผลรวม price และ wage--}}
-                                                    <td>@{{ job.parent_group_item_per_unit_sum_total_price_wage | currency('') }}</td>
-                                                    <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td class="text-left">@{{ job.parent_order_number }}.2</td>
+                                                        <td class="text-left"> @{{ job.parent_name }}</td>
+                                                        <td>@{{ job.parent_quantity_factor }}</td>
+                                                        <td class="text-center">@{{ job.parent_unit }}</td>
+                                                        {{--ผลรวมค่าวัสดุหลังปัดเศษ x จำนวน--}}
+                                                        <td>@{{ job.parent_round_down_sum_total_price | currency('')
+                                                            }}
+                                                        </td>
+                                                        <td>@{{ job.parent_group_item_per_unit_total_price |
+                                                            currency('') }}
+                                                        </td>
+                                                        {{--ผลรวมค่าแรงหลังปัดเศษ x จำนวน--}}
+                                                        <td>@{{ job.parent_round_down_sum_total_wage | currency('') }}
+                                                        </td>
+                                                        <td>@{{ job.parent_group_item_per_unit_total_wage |
+                                                            currency('')}}
+                                                        </td>
+                                                        {{--ผลรวมของผลรวม price และ wage--}}
+                                                        <td>@{{ job.parent_group_item_per_unit_sum_total_price_wage |
+                                                            currency('') }}
+                                                        </td>
+                                                        <td></td>
                                                     </tr>
                                                     {{--ผลรวมกลุ่ม--}}
                                                     <tr class="table-result-green text-right bold">
@@ -309,10 +329,16 @@
                                                         <td></td>
                                                         <td></td>
                                                         <td></td>
-                                                        <td>@{{ job.parent_group_item_per_unit_total_price | currency('') }}</td>
+                                                        <td>@{{ job.parent_group_item_per_unit_total_price |
+                                                            currency('') }}
+                                                        </td>
                                                         <td></td>
-                                                        <td>@{{ job.parent_group_item_per_unit_total_wage | currency('') }}</td>
-                                                        <td>@{{ job.parent_group_item_per_unit_sum_total_price_wage | currency('') }}</td>
+                                                        <td>@{{ job.parent_group_item_per_unit_total_wage | currency('')
+                                                            }}
+                                                        </td>
+                                                        <td>@{{ job.parent_group_item_per_unit_sum_total_price_wage |
+                                                            currency('') }}
+                                                        </td>
                                                         <td></td>
                                                     </tr>
                                                 </template>
@@ -336,13 +362,31 @@
                                                     </tr>
                                                 </template>
                                             </template>
+                                            {{--ผลรวมของหน้า--}}
+                                            <template v-if="job.is_last_job_in_page==1">
+                                                <tr class="text-right">
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td class="text-center"></td>
+                                                    <td class="text-right">ยอดยกไป (รายการที่ 1 - @{{ job.parent_order_number }} )
+                                                    </td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td>@{{ job.parent_sum_total_price | currency('') }}</td>
+                                                    <td></td>
+                                                    <td>@{{ job.parent_sum_total_wage | currency('') }}</td>
+                                                    <td>@{{ job.parent_sum_total_price_wage | currency('') }}</td>
+                                                    <td></td>
+                                                </tr>
+                                            </template>
                                         </template>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
-                        </template>
-                    </div>
+                        </div>
+                    </template>
                 </div>
             </div>
 
