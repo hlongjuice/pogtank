@@ -25,17 +25,25 @@ new Vue({
                 porlor4Service.getProjectDetails(this.order_id)
                     .then(result=>{
                         this.project_details=result;
-                    }).catch(err=>{alert(err)}),
+                    }).catch(err=>{
+
+                    }),
                 //Order Parts
                 porlor4Service.getAllParts(this.order_id)
                     .then(result=>{
                         console.log('Project Porlor 4 Part :',result);
                         this.project_porlor_4_parts=result;
-                    }).catch(err=>{alert(err)})
+                    }).catch(err=>{
+                    })
             ]).then(()=>{
                 this.showLoading=false;
             }).catch(err=>{
-                alert(err)
+                this.$dialog.confirm('การโหลดข้อมูลผิดพลาด ลองใหม่อีกครั้ง')
+                    .then(()=>{
+                        location.reload();
+                    }).catch(()=>{
+
+                })
             })
         },
         //Refresh Data

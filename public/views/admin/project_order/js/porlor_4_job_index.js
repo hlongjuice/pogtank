@@ -1301,14 +1301,14 @@ new Vue({
                 _this.jobs = result;
                 _this.showLoading = false;
             }).catch(function (err) {
-                alert(err);
+                console.log('Error Job Index Get All Root Jobs :', error);
             }),
             //Get Part Details
             porlor4JobService.getPartDetails(this.porlor4.id).then(function (result) {
                 console.log('Init Get Part Result :', result);
                 _this.partDetails = result;
             }).catch(function (err) {
-                alert(err);
+                console.log("Error Job index Get Part Details :", err);
                 _this.showLoading = false;
             }),
             //Get Project Details
@@ -1316,7 +1316,7 @@ new Vue({
                 console.log('Project Details is : ', result);
                 _this.project_details = result;
             }).catch(function (err) {
-                alert(err);
+                console.log('Errors Job Index Get Project Details :', error);
             })]).then(function () {
                 _this.showLoading = false;
             }).catch(function () {

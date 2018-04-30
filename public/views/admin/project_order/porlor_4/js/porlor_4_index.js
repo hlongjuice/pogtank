@@ -109,19 +109,17 @@ new Vue({
             //Project Details
             porlor4Service.getProjectDetails(this.order_id).then(function (result) {
                 _this.project_details = result;
-            }).catch(function (err) {
-                alert(err);
-            }),
+            }).catch(function (err) {}),
             //Order Parts
             porlor4Service.getAllParts(this.order_id).then(function (result) {
                 console.log('Project Porlor 4 Part :', result);
                 _this.project_porlor_4_parts = result;
-            }).catch(function (err) {
-                alert(err);
-            })]).then(function () {
+            }).catch(function (err) {})]).then(function () {
                 _this.showLoading = false;
             }).catch(function (err) {
-                alert(err);
+                _this.$dialog.confirm('การโหลดข้อมูลผิดพลาด ลองใหม่อีกครั้ง').then(function () {
+                    location.reload();
+                }).catch(function () {});
             });
         },
 

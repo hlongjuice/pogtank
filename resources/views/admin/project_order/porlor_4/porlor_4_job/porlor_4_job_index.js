@@ -48,14 +48,16 @@ new Vue({
                         console.log('Init Get Jobs Method Result :',result);
                         this.jobs=result;
                         this.showLoading=false;
-                    }).catch(err=>{alert(err)}),
+                    }).catch(err=>{
+                        console.log('Error Job Index Get All Root Jobs :',error)
+                    }),
                 //Get Part Details
                 porlor4JobService.getPartDetails(this.porlor4.id)
                     .then(result=>{
                         console.log('Init Get Part Result :',result);
                         this.partDetails=result;
                     }).catch(err=>{
-                        alert(err);
+                        console.log("Error Job index Get Part Details :",err);
                         this.showLoading=false;
                     }),
                 //Get Project Details
@@ -64,7 +66,7 @@ new Vue({
                         console.log('Project Details is : ',result);
                         this.project_details=result;
                     }).catch(err=>{
-                        alert(err);
+                      console.log('Errors Job Index Get Project Details :',error)
                 })
             ]).then(()=>{
                 this.showLoading=false;
