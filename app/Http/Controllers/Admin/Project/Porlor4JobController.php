@@ -328,6 +328,7 @@ class Porlor4JobController extends Controller
                     $parent->sum_total_wage +=$job->item->total_wage;
                     $parent->sum_total_price_wage =$parent->sum_total_price + $parent->sum_total_wage;
                     if ($parent != '') {
+
                         //ถ้าเป้น item สุดท้ายในกลุ่ม
                         if ($job->number == $parent->total_children_number) {
                             $job->is_last_job = 1;
@@ -451,6 +452,26 @@ class Porlor4JobController extends Controller
         ]);
 
         return response()->json($totalResult);
+    }
+
+    public function sumByPage($job,$parent){
+        //**** แยกคำนวนตามหมายเลขหน้า เลขหน้าต้องเรียงจากน้อยไปมาก
+        if($parent->current_child_page == null){
+            $page = collect([
+                'page'=>$job->page_number,
+                'sum_total_price'=>$job->item->total_price,
+                'sum_total_wage'=>$job->item->total_wage,
+                'sum_total_price_wage'=>$job->item->sum_total_price_wage
+            ]);
+            $parent->child_page
+                        }
+        if($job->page_number == $parent->current_child_page){
+            $parent->page_sum_total_price +=$job->item->total_price;
+            $parent->page_sum_total_wage +=$job->item->total_wage;
+        }else{
+
+        }
+        //******
     }
 
     //Get Leaf Job
