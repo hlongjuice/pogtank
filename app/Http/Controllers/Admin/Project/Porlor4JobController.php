@@ -437,6 +437,7 @@ class Porlor4JobController extends Controller
             if($lastJobInPage->parent_order_number ==null){
                 $lastJobInPage->parent_order_number = 'Yo!!';
             }
+
             $job = [
                 'page' => $page,
                 'jobs' => $allJobs,
@@ -455,23 +456,7 @@ class Porlor4JobController extends Controller
     }
 
     public function sumByPage($job,$parent){
-        //**** แยกคำนวนตามหมายเลขหน้า เลขหน้าต้องเรียงจากน้อยไปมาก
-        if($parent->current_child_page == null){
-            $page = collect([
-                'page'=>$job->page_number,
-                'sum_total_price'=>$job->item->total_price,
-                'sum_total_wage'=>$job->item->total_wage,
-                'sum_total_price_wage'=>$job->item->sum_total_price_wage
-            ]);
-            $parent->child_page
-                        }
-        if($job->page_number == $parent->current_child_page){
-            $parent->page_sum_total_price +=$job->item->total_price;
-            $parent->page_sum_total_wage +=$job->item->total_wage;
-        }else{
 
-        }
-        //******
     }
 
     //Get Leaf Job
