@@ -174,6 +174,7 @@
                                         {{-- -- Table Content แยกตามกลุ่มงานใน 1 หน้า--}}
                                         <tbody>
                                         <template v-for="job in child_job.jobs">
+                                            {{-- รายการ job --}}
                                             <template  v-if="job.row_group_result != 1">
                                                 <tr class="text-right">
                                                     <td class="text-center">
@@ -223,7 +224,7 @@
                                                 </tr>
                                             </template>
 
-                                            {{--ผลรวมกลุ่ม--}}
+                                            {{--รายการผลรวมกลุ่ม--}}
                                             <template v-else>
                                                 <tr v-if="job.group_depth <= 2" class="table-result-green text-right bold">
                                                     <td></td>

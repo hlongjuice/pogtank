@@ -437,7 +437,8 @@ class Porlor4JobController extends Controller
                                 'group_sum_total_wage'=>$parent->group_item_per_unit_sum_total_wage,
                                 'group_sum_total_price_wage'=>$parent->group_item_per_unit_sum_total_price_wage,
                                 'group_order_number'=>$parent->order_number,
-                                'group_depth'=>$parent->depth
+                                'group_depth'=>$parent->depth,
+                                'depth'=>-1
                             ]);
                         }else{//กลุ่มปกติ
                             $sumGroup = collect([
@@ -447,7 +448,8 @@ class Porlor4JobController extends Controller
                                 'group_sum_total_wage'=>$parent->sum_total_wage,
                                 'group_sum_total_price_wage'=>$parent->sum_total_price_wage,
                                 'group_order_number'=>$parent->order_number,
-                                'group_depth'=>$parent->depth
+                                'group_depth'=>$parent->depth,
+                                'depth'=>-1 // -1 is special depth for result row
                             ]);
                         }
                        $jobsFlatTree->push($sumGroup);
@@ -466,23 +468,37 @@ class Porlor4JobController extends Controller
         //คำนวนผลรวมภายใน 1 หน้า
         foreach ($groupPages as $page => $allJobs) {
             $page_sum = collect([]);
-//            $lastJobInPage = $allJobs->last();
-//            $lastJobInPage->is_last_job_in_page =1;
-//            if($lastJobInPage->parent_order_number ==null){
-//                $lastJobInPage->parent_order_number = 'Yo!!';
-//            }
-//            foreach($allJobs as $allJob){
-//                if($allJob->depth == 2){
-//
-//                }
-//            }
+            $lastJobInPage=collect([]);
+//            $lastRowInpage = $allJobs->last();
+            $lastRowInPage['is_last_job_in_page'] =1;
+            $lastRowInpage['page_sum_total_price']=0;
+            $lastRowInpage['page_sum_total_wage']=0;
+            $lastRowInpage['page_sum_total_price_wage']=0;
+            $lastRowInpage
 
-            $job = [
+            foreach($allJobs as $key=>$job){
+                //ถ้าเป้น item เอาเฉพาะ item lv 2 มาคิด
+               if($job['depth']==2){
+                   if($job->is_item){
+                       $lastRowInpage['page_sum_total_price']+=$job['item']['total_price'];
+                       $lastRowInpage['page_sum_total_wage']+=$job['item']['total_wage'];
+                       $lastRowInpage['page_sum_total_price_wage']+=$job['item']['sum_total_price_wage'];
+                   }
+               }
+               //ถ้าเป็นกลุ่มเอาผมรวมของกลุ่ม level 2 มาคิด
+                if($job['group_depth']==2 && $job['row_group_result']){
+                    $lastRowInpage['page_sum_total_price']+=$job['group_sum_total_price'];
+                    $lastRowInpage['page_sum_total_wage']+=$job['group_sum_total_wage'];
+                    $lastRowInpage['page_sum_total_price_wage']+=$job['group_sum_total_price_wage'];
+                }
+            }
+            $allJobs->push($lastRowInpage);
+            $pageJob = [
                 'page' => $page,
                 'jobs' => $allJobs,
                 'total_page' => $total_page,
             ];
-            $groupJobsByPage->push($job);
+            $groupJobsByPage->push($pageJob);
         }
         $totalResult = collect([
             'data' => $jobs,
@@ -490,10 +506,8 @@ class Porlor4JobController extends Controller
             'flat' => $jobsFlatTree,
             'groupJobsByPage' => $groupJobsByPage
         ]);
-
         return response()->json($totalResult);
     }
-
     public function sumByPage($job,$parent){
 
     }
