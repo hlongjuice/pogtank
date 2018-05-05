@@ -474,7 +474,6 @@ class Porlor4JobController extends Controller
             $lastRowInpage['page_sum_total_price']=0;
             $lastRowInpage['page_sum_total_wage']=0;
             $lastRowInpage['page_sum_total_price_wage']=0;
-            $lastRowInpage
 
             foreach($allJobs as $key=>$job){
                 //ถ้าเป้น item เอาเฉพาะ item lv 2 มาคิด
@@ -492,7 +491,7 @@ class Porlor4JobController extends Controller
                     $lastRowInpage['page_sum_total_price_wage']+=$job['group_sum_total_price_wage'];
                 }
             }
-            $allJobs->push($lastRowInpage);
+            $allJobs->push($lastRowInPage);
             $pageJob = [
                 'page' => $page,
                 'jobs' => $allJobs,

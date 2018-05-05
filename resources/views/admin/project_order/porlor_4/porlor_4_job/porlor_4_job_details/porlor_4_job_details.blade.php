@@ -331,7 +331,7 @@
                                                 </template>
                                             </template>
                                             {{--ผลรวมของหน้า--}}
-                                            <template v-if="job.is_last_job_in_page==1">
+                                            <template v-if="job.is_last_row_in_page==1">
                                                 <tr class="text-right">
                                                     <td></td>
                                                     <td></td>
