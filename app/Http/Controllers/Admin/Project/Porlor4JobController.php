@@ -468,27 +468,28 @@ class Porlor4JobController extends Controller
         //คำนวนผลรวมภายใน 1 หน้า
         foreach ($groupPages as $page => $allJobs) {
             $page_sum = collect([]);
-            $lastJobInPage=collect([]);
-//            $lastRowInpage = $allJobs->last();
-            $lastRowInPage['is_last_job_in_page'] =1;
-            $lastRowInpage['page_sum_total_price']=0;
-            $lastRowInpage['page_sum_total_wage']=0;
-            $lastRowInpage['page_sum_total_price_wage']=0;
+            $lastRowInPage=collect([]);
+            $lastRowInPage['row_page_result'] =1;
+            $lastRowInPage['page_sum_total_price']=0;
+            $lastRowInPage['page_sum_total_wage']=0;
+            $lastRowInPage['page_sum_total_price_wage']=0;
 
             foreach($allJobs as $key=>$job){
                 //ถ้าเป้น item เอาเฉพาะ item lv 2 มาคิด
                if($job['depth']==2){
                    if($job->is_item){
-                       $lastRowInpage['page_sum_total_price']+=$job['item']['total_price'];
-                       $lastRowInpage['page_sum_total_wage']+=$job['item']['total_wage'];
-                       $lastRowInpage['page_sum_total_price_wage']+=$job['item']['sum_total_price_wage'];
+                       $lastRowInPage['page_sum_total_price']+=$job['item']['total_price'];
+                       $lastRowInPage['page_sum_total_wage']+=$job['item']['total_wage'];
+                       $lastRowInPage['page_sum_total_price_wage']+=$job['item']['sum_total_price_wage'];
+                       $lastRowInPage['last_job_order_number'] = $job['order_number'];
                    }
                }
                //ถ้าเป็นกลุ่มเอาผมรวมของกลุ่ม level 2 มาคิด
                 if($job['group_depth']==2 && $job['row_group_result']){
-                    $lastRowInpage['page_sum_total_price']+=$job['group_sum_total_price'];
-                    $lastRowInpage['page_sum_total_wage']+=$job['group_sum_total_wage'];
-                    $lastRowInpage['page_sum_total_price_wage']+=$job['group_sum_total_price_wage'];
+                    $lastRowInPage['page_sum_total_price']+=$job['group_sum_total_price'];
+                    $lastRowInPage['page_sum_total_wage']+=$job['group_sum_total_wage'];
+                    $lastRowInPage['page_sum_total_price_wage']+=$job['group_sum_total_price_wage'];
+                    $lastRowInPage['last_job_order_number'] = $job['group_order_number'];
                 }
             }
             $allJobs->push($lastRowInPage);
