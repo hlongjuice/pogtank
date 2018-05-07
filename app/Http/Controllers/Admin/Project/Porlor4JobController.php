@@ -327,6 +327,7 @@ class Porlor4JobController extends Controller
                     $parent->sum_total_price += $job->item->total_price;
                     $parent->sum_total_wage +=$job->item->total_wage;
                     $parent->sum_total_price_wage =$parent->sum_total_price + $parent->sum_total_wage;
+                    //**น่าจะไม่ได้ใช้แล้ว รอ ลบ
                     if ($parent != '') {
                         //ถ้าเป้น item สุดท้ายในกลุ่ม
                         if ($job->number == $parent->total_children_number) {
@@ -341,6 +342,7 @@ class Porlor4JobController extends Controller
                             $job->parent_name_per_unit = $parent->name_per_unit;
                         }
                     }
+                    //**รอลบ
                 }
                 //สมติข้อมูลเป็นดังนี้
                 //1->1.1->1.1.1->1.1.2->
@@ -468,11 +470,17 @@ class Porlor4JobController extends Controller
         //คำนวนผลรวมภายใน 1 หน้า
         foreach ($groupPages as $page => $allJobs) {
             $page_sum = collect([]);
+
+            $bringForward= collect([]);//ยอดยกมา
             $lastRowInPage=collect([]);
             $lastRowInPage['row_page_result'] =1;
             $lastRowInPage['page_sum_total_price']=0;
             $lastRowInPage['page_sum_total_wage']=0;
             $lastRowInPage['page_sum_total_price_wage']=0;
+            $lastRowInPage['total_page']= $total_page;
+            $lastRowInPage['page']=$page;
+
+
 
             foreach($allJobs as $key=>$job){
                 //ถ้าเป้น item เอาเฉพาะ item lv 2 มาคิด
@@ -491,6 +499,21 @@ class Porlor4JobController extends Controller
                     $lastRowInPage['page_sum_total_price_wage']+=$job['group_sum_total_price_wage'];
                     $lastRowInPage['last_job_order_number'] = $job['group_order_number'];
                 }
+            }
+            //ถ้าไม่ใช้หน้าแรก
+            if($page > 1){
+                $previousPageLastJob =$groupPages[$page-1]->last();
+                $bringForward['bring_forward']=1;
+                $bringForward['last_job_order_number']=$previousPageLastJob['last_job_order_number'];
+                $bringForward['page_sum_total_price']=$previousPageLastJob['page_sum_total_price'];
+                $bringForward['page_sum_total_wage']=$previousPageLastJob['page_sum_total_wage'];
+                $bringForward['page_sum_total_price_wage']=$previousPageLastJob['page_sum_total_price_wage'];
+
+                //ถ้าไม่ใช่หน้าแรก ให้บวกกับ ยอดยกมาด้วย
+                $lastRowInPage['page_sum_total_price']+= $bringForward['page_sum_total_price'];
+                $lastRowInPage['page_sum_total_wage']+= $bringForward['page_sum_total_wage'];
+                $lastRowInPage['page_sum_total_price_wage']+= $bringForward['page_sum_total_price_wage'];
+                $allJobs->splice(0,0,$bringForward);
             }
             $allJobs->push($lastRowInPage);
             $pageJob = [
@@ -537,11 +560,30 @@ class Porlor4JobController extends Controller
             'id' => 0,
             'name' => 'รายการหลัก'
         ]);
-        $parents = Porlor4Job::descendantsOf($job_root_id)
-            ->where('is_item', 0)
-            ->toFlatTree();
-        $parents = $parents->prepend($main);
-        return response()->json($parents);
+//        $parents = Porlor4Job::descendantsOf($job_root_id)
+//            ->where('is_item', 0)
+//            ->toFlatTree();
+        $parents = Porlor4Job::withDepth()
+            ->descendantsOf($job_root_id)
+            ->where('is_item',0)
+            ->toTree();
+        $parentFlatTree= collect([]);
+        //แปลงเป็น flat พร้อม gen หมายเลช order
+        $toFlatTree= function($jobs,$order_number='') use (&$toFlatTree,$parentFlatTree){
+            foreach ($jobs as $key=>$job){
+                //ใส่หมายเลชลำดับ
+                if ($job->depth == 1) {
+                    $job->order_number = $key + 1;
+                } else {
+                    $job->order_number = $order_number . '.' . ($key + 1);
+                }
+                $parentFlatTree->push($job);
+                $toFlatTree($job->children,$job->order_number);
+            }
+        };
+        $toFlatTree($parents);
+        $parentFlatTree = $parentFlatTree->prepend($main);
+        return response()->json($parentFlatTree);
     }
 
     //Delete Item

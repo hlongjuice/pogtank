@@ -53,6 +53,11 @@ fieldset[disabled] .multiselect{pointer-events:none}.multiselect__spinner{positi
   border: 1px solid #a8a8a8 !important;
 }
 
+.table-total-result-green td {
+  background-color: #CDD5B4;
+  border: 1px solid #a8a8a8 !important;
+}
+
 .label-status {
   font-size: 1.2em;
 }

@@ -174,9 +174,10 @@
                                         {{-- -- Table Content แยกตามกลุ่มงานใน 1 หน้า--}}
                                         <tbody>
                                         <template v-for="job in child_job.jobs">
-                                            {{--3 รายการผลรวมต่อหน้า--}}
+                                            {{--4 รายการผลรวมต่อหน้า--}}
                                             <template v-if="job.row_page_result == 1">
-                                                <tr class="text-right">
+                                                {{--ยอดยกไป--}}
+                                                <tr v-if="job.page < job.total_page" class="text-right">
                                                     <td></td>
                                                     <td></td>
                                                     <td class="text-center"></td>
@@ -191,8 +192,23 @@
                                                     <td>@{{ job.page_sum_total_price_wage | currency('') }}</td>
                                                     <td></td>
                                                 </tr>
+                                                {{--ผลรวมทั้งหมด--}}
+                                                <tr v-else class="table-total-result-green text-right bold">
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td class="text-center"></td>
+                                                    <td class="text-center bold">รวมราคารายการที่ 1 - @{{ job.last_job_order_number }}</td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td>@{{ job.page_sum_total_price | currency('') }}</td>
+                                                    <td></td>
+                                                    <td>@{{ job.page_sum_total_wage | currency('') }}</td>
+                                                    <td>@{{ job.page_sum_total_price_wage | currency('') }}</td>
+                                                    <td></td>
+                                                </tr>
                                             </template>
-                                            {{--2 รายการผลรวมกลุ่ม--}}
+                                            {{--3 รายการผลรวมกลุ่ม--}}
                                             <template v-else-if="job.row_group_result == 1">
                                                 <tr v-if="job.group_depth <= 2" class="table-result-green text-right bold">
                                                     <td></td>
@@ -225,6 +241,24 @@
                                                 </tr>
 
                                             </template>
+                                            {{--2 ยอดยกมา--}}
+                                            <template v-else-if="job.bring_forward == 1">
+                                                <tr class="text-right">
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td class="text-center"></td>
+                                                    <td class="text-right">ยอดยกมา (รายการที่ 1 - @{{ job.last_job_order_number}} )
+                                                    </td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td>@{{ job.page_sum_total_price | currency('') }}</td>
+                                                    <td></td>
+                                                    <td>@{{ job.page_sum_total_wage | currency('') }}</td>
+                                                    <td>@{{ job.page_sum_total_price_wage | currency('') }}</td>
+                                                    <td></td>
+                                                </tr>
+                                            </template>
                                             {{--1 รายการ job --}}
                                             <template  v-else>
                                                 <tr class="text-right">
@@ -253,11 +287,11 @@
                                                     <template v-if="job.item">
                                                         <td>@{{job.item.quantity}}</td>
                                                         <td class="text-center">@{{ job.item.unit }}</td>
-                                                        <td>@{{ job.item.local_price }}</td>
-                                                        <td>@{{ job.item.total_price }}</td>
-                                                        <td>@{{ job.item.local_wage }}</td>
-                                                        <td>@{{ job.item.total_wage }}</td>
-                                                        <td>@{{ job.item.sum_total_price_wage }}</td>
+                                                        <td>@{{ job.item.local_price | currency('') }}</td>
+                                                        <td>@{{ job.item.total_price | currency('')}}</td>
+                                                        <td>@{{ job.item.local_wage | currency('')}}</td>
+                                                        <td>@{{ job.item.total_wage | currency('')}}</td>
+                                                        <td>@{{ job.item.sum_total_price_wage | currency('')}}</td>
                                                         <td></td>
                                                     </template>
                                                     {{--แสดงเฉพาะ Job ที่เป็นงาน--}}

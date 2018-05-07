@@ -55,6 +55,12 @@
     border:1px solid map_get($colors,dark-light) !important;
   }
 }
+.table-total-result-green{
+  td{
+    background-color:map_get($colors,table-green);
+    border:1px solid map_get($colors,dark-light) !important;
+  }
+}
 
 //Text
 // -- Label
