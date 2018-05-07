@@ -60,7 +60,7 @@
                                             </div>
                                         </div>
                                         {{-- -- Job Level--}}
-                                        <div class="col-md-12">
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 <label class="control-label">กลุ่มรายการ</label>
                                                 <div :class="{'input-error':errors.has('form.edit_child_job_parent')}">
@@ -87,29 +87,8 @@
                                                       class="text-error text-danger">กรุณากรอกข้อมูล</span>
                                             </div>
                                         </div>
-                                    </div>
-                                    {{--Order Number and Job Name--}}
-                                    <div class="row">
-                                        <!-- -- Order Number -->
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <label class="control-label">
-                                                    ลำดับที่
-                                                    <span class="small text-secondary">(เช่น 1,1.1,1.2)</span>
-                                                </label>
-                                                <div :class="{'input-error':errors.has('form.edit_child_job_order_number')}">
-                                                    <input v-validate="'required'"
-                                                           type="text"
-                                                           name="edit_child_job_order_number"
-                                                           class="form-control"
-                                                           v-model="edit_child_job.form.job_order_number">
-                                                </div>
-                                                <span v-show="errors.has('form.edit_child_job_order_number')"
-                                                      class="text-error text-danger">กรุณากรอกข้อมูล</span>
-                                            </div>
-                                        </div>
                                         <!-- -- Job Name -->
-                                        <div class="col-md-9">
+                                        <div class="col-md-8">
                                             <div class="form-group">
                                                 <label class="control-label">ชื่องาน</label>
                                                 <div :class="{'input-error':errors.has('form.edit_child_job_name')}">
@@ -132,7 +111,7 @@
                                             </label>
                                         </div>
                                         {{--Quantity Factor--}}
-                                        <div class="col-md-4">
+                                        <div class="col-md-offset-1 col-md-4">
                                             <div class="form-group">
                                                 <label class="control-label">จำนวนทั้งหมด</label>
                                                 <div :class="{'input-error':errors.has('form.edit_child_job_quantity_factory')}">

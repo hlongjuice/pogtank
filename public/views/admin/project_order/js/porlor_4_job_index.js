@@ -1675,9 +1675,6 @@ var Porlor4AddChildJob = {
         },
         addChildJob_childJobCustomLabel: function addChildJob_childJobCustomLabel(item) {
             var label = '';
-            if (item.job_order_number == null) {
-                item.order_number = '';
-            }
             label = item.order_number + ' ' + item.name;
             return label;
         },

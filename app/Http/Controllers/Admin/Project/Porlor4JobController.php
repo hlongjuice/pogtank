@@ -51,7 +51,6 @@ class Porlor4JobController extends Controller
             $parent = Porlor4Job::where('id', $request->input('parent')['id'])->first();
         }
         $result = $parent->children()->create([
-            'job_order_number' => $request->input('job_order_number'),
             'porlor_4_id' => $porlor_4_id,
             'name' => $request->input('name'),
             'page_number' => $request->input('page_number'),
@@ -116,11 +115,26 @@ class Porlor4JobController extends Controller
     public function addChildJobItemsV2(Request $request, $porlor_4_id)
     {
         $result = DB::transaction(function () use ($request, $porlor_4_id) {
+
+
             $jobParent = Porlor4Job::where('id', $request->input('child_job')['id'])->first();
+
             $projectDetails = $request->input('project_details');
             $approvedStatus = GlobalVariableController::$publishedStatus['approved'];
+            $page_number = $request->input('page_number');
             $jobInputs = collect([]);
             $itemInputs = collect([]);
+            //Check Page Number
+            //เช็คจำนวนลูกๆ
+
+            if($jobParent->children()->count() > 0 ){
+                //หากมีลูกๆให้ เลือกหน้าที่สูงที่สุดในกลุ่มลูกๆ
+                $latestPage = $jobParent->children()->max('page_number');
+                //เช็ค input ว่างานใหม่ page_number น้อยกว่า หน้าสูงสุดไหม ถ้าใช่ ให้งานใหม่อยู่ในหน้าสูงสุด ถ้าไม่ก็ให้เท่ากับ page_number จาก input
+                if($page_number < $latestPage){
+                    $page_number = $latestPage;
+                }
+            }
             //วนลูปเก็บรายละเอียด items แต่ละอัน
             foreach ($request->input('items') as $item) {
                 //เลือกจัดการเฉพาะ item ที่มีการเลือก material_item
@@ -142,10 +156,9 @@ class Porlor4JobController extends Controller
                     //End Update Local Price
                     //Input for Porlor 4 job
                     $newJob = $jobParent->children()->create([
-                        'job_order_number' => 0,
                         'porlor_4_id' => $porlor_4_id,
                         'name' => $item['material_item']['approved_global_details']['name'],
-                        'page_number' => $request->input('page_number'),
+                        'page_number' => $page_number,
                         'quantity_factor' => 0,
                         'unit' => 0,
                         'name_per_unit' => '',
@@ -193,7 +206,6 @@ class Porlor4JobController extends Controller
             $parent = Porlor4Job::where('id', $request->input('parent')['id'])->first();
         }
         $result = $parent->children()->create([
-            'job_order_number' => $request->input('job_order_number'),
             'porlor_4_id' => $porlor_4_id,
             'name' => $request->input('name'),
             'page_number' => $request->input('page_number'),
@@ -256,7 +268,7 @@ class Porlor4JobController extends Controller
                     $child_job->leaf_job_sum_total_price_wage = $child_job->leaf_job_total_price + $child_job->leaf_job_total_wage;
                     //เก็บผลรวมแยกตามกลุ่ม
                     $page_sum_price_wage['groups']->push([
-                        'job_order_number' => $child_job->job_order_number,
+//                        'job_order_number' => $child_job->job_order_number,
                         'total_leaf_job_sum_price_wage' => $child_job->leaf_job_sum_total_price_wage
                     ]);
                 }
@@ -282,10 +294,26 @@ class Porlor4JobController extends Controller
     //Get All Child Jobs without Items
     public function getAllChildJobsWithOutItems($porlor_4_id, $job_root_id)
     {
-        $parents = Porlor4Job::descendantsOf($job_root_id)
-            ->where('is_item', 0)
-            ->toFlatTree();
-        return response()->json($parents);
+        $parents = Porlor4Job::withDepth()
+            ->descendantsOf($job_root_id)
+            ->where('is_item',0)
+            ->toTree();
+        $parentFlatTree= collect([]);
+        //แปลงเป็น flat พร้อม gen หมายเลช order
+        $toFlatTree= function($jobs,$order_number='') use (&$toFlatTree,$parentFlatTree){
+            foreach ($jobs as $key=>$job){
+                //ใส่หมายเลชลำดับ
+                if ($job->depth == 1) {
+                    $job->order_number = $key + 1;
+                } else {
+                    $job->order_number = $order_number . '.' . ($key + 1);
+                }
+                $parentFlatTree->push($job);
+                $toFlatTree($job->children,$job->order_number);
+            }
+        };
+        $toFlatTree($parents);
+        return response()->json($parentFlatTree);
     }
 
     //ใส่ข้อมูลผลรวมของกลุ่มต่างๆไว้ที่ item ตัวสุดท้ายของกลุ่มนั้น เพราะตอนนำไปใช้งาน ส่ง nested ที่แปลงเป็น flat เรีนบร้อยแล้ว
@@ -558,7 +586,8 @@ class Porlor4JobController extends Controller
     {
         $main = collect([
             'id' => 0,
-            'name' => 'รายการหลัก'
+            'name' => 'รายการหลัก',
+            'order_number'=>''
         ]);
 //        $parents = Porlor4Job::descendantsOf($job_root_id)
 //            ->where('is_item', 0)

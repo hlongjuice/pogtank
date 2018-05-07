@@ -5,7 +5,7 @@
         @before-open="beforeOpenJobDetailsModal($event)"
         @opened="openedJobDetailsModal"
         @before-close="beforeCloseJobDetailsModal"
-        width="99%"
+        width="97.5%"
         height="auto"
         :scrollable="detailScrollable"
 >

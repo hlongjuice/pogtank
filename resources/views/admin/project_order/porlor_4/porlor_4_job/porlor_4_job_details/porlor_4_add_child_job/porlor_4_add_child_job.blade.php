@@ -40,7 +40,7 @@
                                     {{--Level--}}
                                     <div class="row">
                                         {{-- -- Job Level--}}
-                                        <div class="col-md-12">
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 <label class="control-label">กลุ่มรายการ
                                                     <span class="small text-secondary">("รายการหลัก" คือรายการที่มีลำดับเป็น 1,2,3,4,...)</span>
@@ -69,29 +69,8 @@
                                                       class="text-error text-danger">กรุณากรอกข้อมูล</span>
                                             </div>
                                         </div>
-                                    </div>
-                                    {{--Order Number and Job Name--}}
-                                    <div class="row">
-                                        <!-- -- Order Number -->
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <label class="control-label">
-                                                    ลำดับงาน
-                                                    <span class="small text-secondary">(เช่น 1,1.1,1.2)</span>
-                                                </label>
-                                                <div :class="{'input-error':errors.has('form.add_child_job_order_number')}">
-                                                    <input v-validate="'required'"
-                                                           type="text"
-                                                           name="add_child_job_order_number"
-                                                           class="form-control"
-                                                           v-model="add_child_job.form.job_order_number">
-                                                </div>
-                                                <span v-show="errors.has('form.add_child_job_order_number')"
-                                                      class="text-error text-danger">กรุณากรอกข้อมูล</span>
-                                            </div>
-                                        </div>
                                         <!-- -- Job Name -->
-                                        <div class="col-md-9">
+                                        <div class="col-md-8">
                                             <div class="form-group">
                                                 <label class="control-label">ชื่องาน</label>
                                                 <div :class="{'input-error':errors.has('form.add_child_job_name')}">
@@ -105,6 +84,9 @@
                                             </div>
                                         </div>
                                     </div>
+                                    {{--Order Number and Job Name--}}
+                                    <div class="row">
+                                    </div>
                                     {{--Checker Quantity Factor and Unit--}}
                                     <div class="row">
                                         <div class="col-md-3">
@@ -114,7 +96,7 @@
                                             </label>
                                         </div>
                                         {{--Quantity Factor--}}
-                                        <div class="col-md-4">
+                                        <div class="col-md-offset-1 col-md-4">
                                             <div class="form-group">
                                                 <label class="control-label">จำนวนทั้งหมด</label>
                                                 <div :class="{'input-error':errors.has('form.add_child_job_quantity_factory')}">
