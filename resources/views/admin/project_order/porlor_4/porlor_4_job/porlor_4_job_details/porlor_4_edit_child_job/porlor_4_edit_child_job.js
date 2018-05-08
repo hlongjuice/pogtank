@@ -63,9 +63,6 @@ export const Porlor4EditChildJob = {
         },
         editChildJob_childJobCustomLabel(item) {
             let label = '';
-            if (item.job_order_number == null) {
-                item.job_order_number = '';
-            }
             label = item.job_order_number + ' ' + item.name;
             return label;
         }

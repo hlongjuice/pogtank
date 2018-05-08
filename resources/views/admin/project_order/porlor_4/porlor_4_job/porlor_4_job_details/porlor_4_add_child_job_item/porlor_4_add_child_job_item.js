@@ -277,7 +277,7 @@ export const Porlor4AddChildJobItem = {
             })
         },
         childJobCustomLabel(item) {
-            return item.order_number + ' ' + item.name;
+            return item.job_order_number + ' ' + item.name;
         },
         materialItemCustomLabel(item) {
             if (item.approved_global_details) {

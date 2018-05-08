@@ -71,7 +71,7 @@
                                                 >
                                                     <template slot="option" slot-scope="props">
                                                         <div class="option__desc">
-                                                            <span class="option__title">@{{ props.option.order_number }} @{{ props.option.name }}</span>
+                                                            <span class="option__title">@{{ props.option.job_order_number }} @{{ props.option.name }}</span>
                                                         </div>
                                                     </template>
                                                     <span class="text-secondary"

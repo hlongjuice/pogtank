@@ -114,7 +114,7 @@
                         </div>
                     </div>
                     {{-- Polor 4 Page--}}
-                    <template v-for="(child_job,index) in child_jobs.groupJobsByPage">
+                    <template v-for="(child_job,index) in child_jobs">
                         <div class="portlet">
                             <div class="portlet-title">
                                 <div class="caption">
@@ -273,7 +273,7 @@
                                                             <i class="far fa-edit"></i>
                                                         </a>
                                                     </td>
-                                                    <td class="text-center">@{{job.order_number}}</td>
+                                                    <td class="text-center">@{{job.job_order_number}}</td>
                                                     <td class="text-left">
                                                         @{{ job.name }}
                                                         <span v-if="job.is_item == 0">
