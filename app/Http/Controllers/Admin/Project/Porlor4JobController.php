@@ -673,4 +673,26 @@ class Porlor4JobController extends Controller
         };
         $updateOrderNumber($nextSiblings);
     }
+
+    //Update Child Job
+    public function updateChildJob(Request $request, $porlor_4_id){
+        $quantityFactor = 0;
+        $unit = '';
+        $namePerUnit = '';
+        //หากมีการระบุเป็น group_for_item ให้ทำการระบุ unit และ namePerUnit
+        if ($request->input('group_item_per_unit')) {
+            $quantityFactor = $request->input('quantity_factor');
+            $unit = $request->input('unit');
+            $namePerUnit = $request->input('name') . '(คิดต่อ 1' . ' ' . $unit . ' )';
+        }
+        $result = Porlor4Job::where('id',$request->input('id'))
+            ->update([
+            'name' => $request->input('name'),
+            'quantity_factor' => $quantityFactor,
+            'unit' => $unit,
+            'name_per_unit' => $namePerUnit,
+            'group_item_per_unit' => $request->input('group_item_per_unit')
+        ]);
+        return response()->json($result);
+    }
 }

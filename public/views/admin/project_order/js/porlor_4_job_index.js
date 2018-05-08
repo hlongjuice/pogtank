@@ -1746,42 +1746,12 @@ var Porlor4AddChildJobItem = {
                 _this.add_child_job_item.leaf_jobs = result;
                 console.log('Leaf Jobs :', _this.add_child_job_item.leaf_jobs);
             }).catch(function (err) {}),
-            //Get All Leaf Jobs
-            // porlor4JobService.getAllLeafJobs(this.porlor4.id, this.root_job.id)
-            //     .then(result => {
-            //         this.add_child_job_item.leaf_jobs = result;
-            //         console.log('Leaf Jobs :', this.add_child_job_item.leaf_jobs);
-            //     }),
-            //เลือก items 200 รายการแรก ทาง types ทั้งหมด
             //Get Material Items
             materialItemService.getItems().then(function (result) {
                 _this.add_child_job_item.form.items[0].material_items = result;
             }).catch(function (err) {
                 alert(err);
-            })
-            //ด้านล่างเป็นการแยกประเภท items จาก types
-            //Get Material Types
-            // materialTypeService.getMaterialTypeTree()
-            //     .then(result => {
-            //         let allType = {
-            //             name_eng: 'all',
-            //             name: 'ทั้งหมด',
-            //             id: 0
-            //         };
-            //         this.add_child_job_item.form.items[0].material_types = result;
-            //         //Add selected All type at first of type list
-            //         this.add_child_job_item.form.items[0].material_types.unshift(allType);
-            //         this.add_child_job_item.form.items[0].material_type =  this.add_child_job_item.form.items[0].material_types[0];
-            //         //Get Material Items
-            //         materialItemService.getItemsOfType(this.add_child_job_item.form.items[0].material_type.id)
-            //             .then(result => {
-            //                 this.add_child_job_item.form.items[0].material_items = result;
-            //             }).catch(err => {
-            //             alert(err);
-            //         })
-            //     })
-            //     .catch(err => {alert(err);})
-            ]).then(function () {
+            })]).then(function () {
                 _this.add_child_job_item.isLoading = false;
             }).catch(function () {
                 _this.add_child_job_item.isLoading = false;
@@ -1879,34 +1849,6 @@ var Porlor4AddChildJobItem = {
                 alert(err);
                 _this3.add_child_job_item.isLoading = false;
             });
-
-            //Get Material Types
-            // materialTypeService.getMaterialTypeTree()
-            //     .then(result => {
-            //         let allType = {
-            //             name_eng: 'all',
-            //             name: 'ทั้งหมด',
-            //             id: 0
-            //         };
-            //         new_item.material_types = result;
-            //         //Add selected All type at first of type list
-            //         new_item.material_types.unshift(allType);
-            //         new_item.material_type = new_item.material_types[0];
-            //         //Get Material Items
-            //         materialItemService.getItemsOfType(this.add_child_job_item.form.items[0].material_type.id)
-            //             .then(result => {
-            //                 new_item.material_items = result;
-            //                 this.add_child_job_item.isLoading = false;
-            //                 this.add_child_job_item.form.items.push(new_item);
-            //             }).catch(err => {
-            //             alert(err);
-            //             this.add_child_job_item.isLoading = false;
-            //         })
-            //     })
-            //     .catch(err => {
-            //         alert(err)
-            //         this.add_child_job_item.isLoading = false;
-            //     })
         },
         addChildJobItem_AddNewMaterialItem: function addChildJobItem_AddNewMaterialItem(item, index) {
             var _this4 = this;
@@ -2058,6 +2000,24 @@ var Porlor4EditChildJob = {
             }).catch(function (err) {
                 alert(err);
             });
+        },
+        editChildJob_updateData: function editChildJob_updateData(form, event) {
+            var _this2 = this;
+
+            console.log('Update Data');
+            this.$validator.validateAll(form).then(function (result) {
+                if (result) {
+                    _this2.edit_child_job.isLoading = true;
+                    porlor4JobService.updateChildJob(_this2.porlor4.id, _this2.edit_child_job.form).then(function (result) {
+                        console.log('Update Child Job Success');
+                        _this2.edit_child_job.isLoading = false;
+                        _this2.edit_child_job.edit_status = true;
+                        _this2.closeEditChildJobModal();
+                    }).catch();
+                } else {
+                    alert('กรุณาระบุข้อมูล');
+                }
+            }).catch(function (err) {});
         },
         closeEditChildJobModal: function closeEditChildJobModal() {
             console.log('Close Edit Child Job Modal');
@@ -2941,6 +2901,20 @@ var Porlor4JobService = function () {
             var url = this.url + '/admin/project_order/porlor_4_id/' + porlor_4_id + '/delete_child_job/' + child_job_id;
             return new Promise(function (resolve, reject) {
                 axios.delete(url).then(function (result) {
+                    resolve(result.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
+        //Update Child Job
+
+    }, {
+        key: 'updateChildJob',
+        value: function updateChildJob(porlor_4_id, form_input) {
+            var url = this.url + '/admin/project_order/porlor_4_id/' + porlor_4_id + '/update_child_job';
+            return new Promise(function (resolve, reject) {
+                axios.put(url, form_input).then(function (result) {
                     resolve(result.data);
                 }).catch(function (err) {
                     reject(err);

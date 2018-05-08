@@ -49,13 +49,6 @@ export const Porlor4AddChildJobItem = {
                     }).catch(err=>{
 
                 }),
-                //Get All Leaf Jobs
-                // porlor4JobService.getAllLeafJobs(this.porlor4.id, this.root_job.id)
-                //     .then(result => {
-                //         this.add_child_job_item.leaf_jobs = result;
-                //         console.log('Leaf Jobs :', this.add_child_job_item.leaf_jobs);
-                //     }),
-                //เลือก items 200 รายการแรก ทาง types ทั้งหมด
                 //Get Material Items
                 materialItemService.getItems()
                     .then(result => {
@@ -63,28 +56,6 @@ export const Porlor4AddChildJobItem = {
                     }).catch(err => {
                     alert(err);
                 })
-                //ด้านล่างเป็นการแยกประเภท items จาก types
-                //Get Material Types
-                // materialTypeService.getMaterialTypeTree()
-                //     .then(result => {
-                //         let allType = {
-                //             name_eng: 'all',
-                //             name: 'ทั้งหมด',
-                //             id: 0
-                //         };
-                //         this.add_child_job_item.form.items[0].material_types = result;
-                //         //Add selected All type at first of type list
-                //         this.add_child_job_item.form.items[0].material_types.unshift(allType);
-                //         this.add_child_job_item.form.items[0].material_type =  this.add_child_job_item.form.items[0].material_types[0];
-                //         //Get Material Items
-                //         materialItemService.getItemsOfType(this.add_child_job_item.form.items[0].material_type.id)
-                //             .then(result => {
-                //                 this.add_child_job_item.form.items[0].material_items = result;
-                //             }).catch(err => {
-                //             alert(err);
-                //         })
-                //     })
-                //     .catch(err => {alert(err);})
             ]).then(() => {
                 this.add_child_job_item.isLoading = false;
             }).catch(() => {
@@ -182,34 +153,6 @@ export const Porlor4AddChildJobItem = {
                 alert(err);
                 this.add_child_job_item.isLoading = false
             })
-
-            //Get Material Types
-            // materialTypeService.getMaterialTypeTree()
-            //     .then(result => {
-            //         let allType = {
-            //             name_eng: 'all',
-            //             name: 'ทั้งหมด',
-            //             id: 0
-            //         };
-            //         new_item.material_types = result;
-            //         //Add selected All type at first of type list
-            //         new_item.material_types.unshift(allType);
-            //         new_item.material_type = new_item.material_types[0];
-            //         //Get Material Items
-            //         materialItemService.getItemsOfType(this.add_child_job_item.form.items[0].material_type.id)
-            //             .then(result => {
-            //                 new_item.material_items = result;
-            //                 this.add_child_job_item.isLoading = false;
-            //                 this.add_child_job_item.form.items.push(new_item);
-            //             }).catch(err => {
-            //             alert(err);
-            //             this.add_child_job_item.isLoading = false;
-            //         })
-            //     })
-            //     .catch(err => {
-            //         alert(err)
-            //         this.add_child_job_item.isLoading = false;
-            //     })
         },
         addChildJobItem_AddNewMaterialItem(item, index) {
             let inputs = {

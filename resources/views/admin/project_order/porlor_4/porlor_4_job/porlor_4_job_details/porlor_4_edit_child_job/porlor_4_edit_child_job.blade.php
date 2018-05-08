@@ -13,7 +13,7 @@
     <div class="row">
         <!-- FORM-->
         <form
-                @submit.prevent="addChildJob('form',$event)"
+                @submit.prevent="editChildJob_updateData('form',$event)"
                 data-vv-scope="form"
                 class="horizontal-form">
             {{csrf_field()}}
@@ -60,35 +60,35 @@
                                             </div>
                                         </div>
                                         {{-- -- Job Level--}}
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label class="control-label">กลุ่มรายการ</label>
-                                                <div :class="{'input-error':errors.has('form.edit_child_job_parent')}">
-                                                    <multiselect
-                                                            v-model="edit_child_job.form.parent"
-                                                            placeholder="" label="name" track-by="id"
-                                                            :options="edit_child_job.parents" :option-height="104"
-                                                            :show-labels="false"
-                                                            :allow-empty="false"
-                                                            :max-height="180"
-                                                            :custom-label="editChildJob_childJobCustomLabel"
-                                                    >
-                                                        <template slot="option" slot-scope="props">
-                                                            <div class="option__desc">
-                                                                <span class="option__title">@{{ props.option.job_order_number }} @{{ props.option.name }}</span>
-                                                            </div>
-                                                        </template>
-                                                    </multiselect>
-                                                    <input v-validate="'required'"
-                                                           name="edit_child_job_parent" hidden
-                                                           v-model="edit_child_job.form.parent">
-                                                </div>
-                                                <span v-show="errors.has('form.edit_child_job_parent')"
-                                                      class="text-error text-danger">กรุณากรอกข้อมูล</span>
-                                            </div>
-                                        </div>
+                                        {{--<div class="col-md-4">--}}
+                                            {{--<div class="form-group">--}}
+                                                {{--<label class="control-label">กลุ่มรายการ</label>--}}
+                                                {{--<div :class="{'input-error':errors.has('form.edit_child_job_parent')}">--}}
+                                                    {{--<multiselect--}}
+                                                            {{--v-model="edit_child_job.form.parent"--}}
+                                                            {{--placeholder="" label="name" track-by="id"--}}
+                                                            {{--:options="edit_child_job.parents" :option-height="104"--}}
+                                                            {{--:show-labels="false"--}}
+                                                            {{--:allow-empty="false"--}}
+                                                            {{--:max-height="180"--}}
+                                                            {{--:custom-label="editChildJob_childJobCustomLabel"--}}
+                                                    {{-->--}}
+                                                        {{--<template slot="option" slot-scope="props">--}}
+                                                            {{--<div class="option__desc">--}}
+                                                                {{--<span class="option__title">@{{ props.option.job_order_number }} @{{ props.option.name }}</span>--}}
+                                                            {{--</div>--}}
+                                                        {{--</template>--}}
+                                                    {{--</multiselect>--}}
+                                                    {{--<input v-validate="'required'"--}}
+                                                           {{--name="edit_child_job_parent" hidden--}}
+                                                           {{--v-model="edit_child_job.form.parent">--}}
+                                                {{--</div>--}}
+                                                {{--<span v-show="errors.has('form.edit_child_job_parent')"--}}
+                                                      {{--class="text-error text-danger">กรุณากรอกข้อมูล</span>--}}
+                                            {{--</div>--}}
+                                        {{--</div>--}}
                                         <!-- -- Job Name -->
-                                        <div class="col-md-8">
+                                        <div class="col-md-12">
                                             <div class="form-group">
                                                 <label class="control-label">ชื่องาน</label>
                                                 <div :class="{'input-error':errors.has('form.edit_child_job_name')}">

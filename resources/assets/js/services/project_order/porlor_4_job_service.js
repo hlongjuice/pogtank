@@ -143,5 +143,15 @@ class Porlor4JobService {
                 }).catch(err=>{reject(err)})
         })
     }
+    //Update Child Job
+    updateChildJob(porlor_4_id,form_input){
+        let url = this.url+'/admin/project_order/porlor_4_id/'+porlor_4_id+'/update_child_job';
+        return new Promise((resolve,reject)=>{
+            axios.put(url,form_input)
+                .then(result=>{
+                    resolve(result.data)
+                }).catch(err=>{reject(err)})
+        })
+    }
 
 }export default Porlor4JobService;

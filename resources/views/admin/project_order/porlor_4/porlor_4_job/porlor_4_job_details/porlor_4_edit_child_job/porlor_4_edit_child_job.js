@@ -55,6 +55,27 @@ export const Porlor4EditChildJob = {
                 alert(err);
             });
         },
+
+        editChildJob_updateData(form, event){
+            console.log('Update Data');
+            this.$validator.validateAll(form)
+                .then(result=>{
+                    if(result){
+                        this.edit_child_job.isLoading = true;
+                        porlor4JobService.updateChildJob(this.porlor4.id,this.edit_child_job.form)
+                            .then(result=>{
+                                console.log('Update Child Job Success');
+                                this.edit_child_job.isLoading = false;
+                                this.edit_child_job.edit_status = true;
+                                this.closeEditChildJobModal();
+                            })
+                            .catch()
+                    }else{
+                        alert('กรุณาระบุข้อมูล')
+                    }
+                }).catch(err=>{})
+        }
+        ,
         closeEditChildJobModal() {
             console.log('Close Edit Child Job Modal');
             this.$modal.hide('porlor-4-edit-child-job-modal',{

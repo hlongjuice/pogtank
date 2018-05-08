@@ -96,6 +96,8 @@ Route::prefix('admin')->middleware('auth')
                 Route::delete('delete_item/{item_id}','Admin\Project\Porlor4JobController@deleteItem');
                 // -- -- -- --Delete Job
                 Route::delete('delete_child_job/{job_id}','Admin\Project\Porlor4JobController@deleteChildJob');
+                // -- -- -- --Update Job
+                Route::put('update_child_job','Admin\Project\Porlor4JobController@updateChildJob');
             });
         });
 
