@@ -24,6 +24,7 @@ export const Porlor4EditChildJob = {
     },
     methods: {
         beforeOpenEditChildJobModal(data) {
+            //พัก job ที่เลือกจากหน้า details ไว้ใน edit_child_job.child_job
             this.edit_child_job.child_job = data.params.job;
             console.log('Before OPen Edit Child Job Data :', data);
         },
