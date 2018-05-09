@@ -15,8 +15,6 @@
         @include('admin.project_order.porlor_4.porlor_4_job.porlor_4_job_details.porlor_4_add_child_job_item.porlor_4_add_child_job_item')
         {{--Edit Child Job Modal--}}
         @include('admin.project_order.porlor_4.porlor_4_job.porlor_4_job_details.porlor_4_edit_child_job.porlor_4_edit_child_job')
-        {{--Edit Child Job Item Modal--}}
-        @include('admin.project_order.porlor_4.porlor_4_job.porlor_4_job_details.porlor_4_edit_child_job_item.porlor_4_edit_child_job_item')
         <div class="col-md-12">
             <!-- BEGIN EXAMPLE TABLE PORTLET-->
             <div class="panel panel-default">
@@ -264,21 +262,13 @@
                                             {{--1 รายการ job --}}
                                             <template  v-else>
                                                 <tr class="text-right">
-                                                    {{--Delete Job--}}
                                                     <td class="text-center">
                                                         <a @click="jobDetails_deleteChildJob(job)"
                                                            class="btn btn-danger btn-xs">
                                                             <i class="far fa-times"></i>
                                                         </a>
                                                     </td>
-                                                    {{--Edit Job Item--}}
-                                                    <td v-if="job.is_item==1" class="text-center">
-                                                        <a @click="showEditChildJobItemModal(job)" class="btn btn-info btn-xs">
-                                                            <i class="far fa-edit"></i>
-                                                        </a>
-                                                    </td>
-                                                    {{--Edit Job--}}
-                                                    <td v-else class="text-center">
+                                                    <td class="text-center">
                                                         <a @click="showEditChildJobModal(job)" class="btn btn-info btn-xs">
                                                             <i class="far fa-edit"></i>
                                                         </a>

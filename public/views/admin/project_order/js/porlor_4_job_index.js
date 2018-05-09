@@ -1255,8 +1255,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__porlor_4_job_details_porlor_4_add_child_job_porlor_4_add_child_job__ = __webpack_require__(216);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__porlor_4_job_details_porlor_4_add_child_job_item_porlor_4_add_child_job_item__ = __webpack_require__(217);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__porlor_4_job_details_porlor_4_edit_child_job_porlor_4_edit_child_job__ = __webpack_require__(218);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__porlor_4_job_details_porlor_4_edit_child_job_item_porlor_4_edit_child_job_item__ = __webpack_require__(219);
-
 
 
 
@@ -1272,7 +1270,7 @@ var porlor4JobService = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_proj
 console.log('Porlor 4 ID :', porlor4.id);
 new Vue({
     el: '#porlor-4-job-index',
-    mixins: [__WEBPACK_IMPORTED_MODULE_2__porlor_4_job_add_root_porlor_4_job_add_root__["a" /* Porlor4JobAddRoot */], __WEBPACK_IMPORTED_MODULE_3__porlor_4_job_details_porlor_4_job_details__["a" /* Porlor4JobDetails */], __WEBPACK_IMPORTED_MODULE_4__porlor_4_job_details_porlor_4_add_child_job_porlor_4_add_child_job__["a" /* Porlor4AddChildJob */], __WEBPACK_IMPORTED_MODULE_5__porlor_4_job_details_porlor_4_add_child_job_item_porlor_4_add_child_job_item__["a" /* Porlor4AddChildJobItem */], __WEBPACK_IMPORTED_MODULE_6__porlor_4_job_details_porlor_4_edit_child_job_porlor_4_edit_child_job__["a" /* Porlor4EditChildJob */], __WEBPACK_IMPORTED_MODULE_7__porlor_4_job_details_porlor_4_edit_child_job_item_porlor_4_edit_child_job_item__["a" /* Porlor4EditChildJobItem */]],
+    mixins: [__WEBPACK_IMPORTED_MODULE_2__porlor_4_job_add_root_porlor_4_job_add_root__["a" /* Porlor4JobAddRoot */], __WEBPACK_IMPORTED_MODULE_3__porlor_4_job_details_porlor_4_job_details__["a" /* Porlor4JobDetails */], __WEBPACK_IMPORTED_MODULE_4__porlor_4_job_details_porlor_4_add_child_job_porlor_4_add_child_job__["a" /* Porlor4AddChildJob */], __WEBPACK_IMPORTED_MODULE_5__porlor_4_job_details_porlor_4_add_child_job_item_porlor_4_add_child_job_item__["a" /* Porlor4AddChildJobItem */], __WEBPACK_IMPORTED_MODULE_6__porlor_4_job_details_porlor_4_edit_child_job_porlor_4_edit_child_job__["a" /* Porlor4EditChildJob */]],
     data: {
         porlor4: porlor4,
         //Modal Status
@@ -1482,20 +1480,10 @@ var Porlor4JobDetails = {
                 page_number: page_number
             });
         },
-
-        //Show Edit Child Job Modal
         showEditChildJobModal: function showEditChildJobModal(job) {
             this.detailScrollable = false;
             this.$modal.show('porlor-4-edit-child-job-modal', {
                 job: job
-            });
-        },
-
-        //Show Edit Child Job Item Modal
-        showEditChildJobItemModal: function showEditChildJobItemModal(job_item) {
-            this.detailScrollable = false;
-            this.$modal.show('porlor-4-edit-child-job-item-modal', {
-                job_item: job_item
             });
         },
 
@@ -1525,16 +1513,6 @@ var Porlor4JobDetails = {
 
         //Before Close Edit Child Job
         beforeCloseEditChildJobModal: function beforeCloseEditChildJobModal(event) {
-            console.log('Before Close Edit Child Job Modal', event);
-            this.detailScrollable = true;
-            var status = event.params.edit_status;
-            if (status) {
-                this.getAllChildJobAndItems();
-            }
-        },
-
-        //Before Close Edit Child Job Item
-        beforeCloseEditChildJobItemModal: function beforeCloseEditChildJobItemModal(event) {
             console.log('Before Close Edit Child Job Modal', event);
             this.detailScrollable = true;
             var status = event.params.edit_status;
@@ -1992,7 +1970,6 @@ var Porlor4EditChildJob = {
     },
     methods: {
         beforeOpenEditChildJobModal: function beforeOpenEditChildJobModal(data) {
-            //พัก job ที่เลือกจากหน้า details ไว้ใน edit_child_job.child_job
             this.edit_child_job.child_job = data.params.job;
             console.log('Before OPen Edit Child Job Data :', data);
         },
@@ -2052,161 +2029,6 @@ var Porlor4EditChildJob = {
             var label = '';
             label = item.job_order_number + ' ' + item.name;
             return label;
-        }
-    }
-};
-
-/***/ }),
-
-/***/ 219:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Porlor4EditChildJobItem; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_job_service__ = __webpack_require__(31);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_js_services_material_material_item_service__ = __webpack_require__(30);
-
-
-
-var materialItemService = new __WEBPACK_IMPORTED_MODULE_1__assets_js_services_material_material_item_service__["a" /* default */]();
-var porlor4JobService = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_job_service__["a" /* default */]();
-var Porlor4EditChildJobItem = {
-    data: function data() {
-        return {
-            edit_child_job_item: {
-                job_item: '',
-                add_status: false,
-                isLoading: false,
-                new_material_item: {
-                    name: ''
-                },
-                form: {
-                    project_details: '',
-                    job_id: '',
-                    item_id: '',
-                    is_item: 1,
-                    page_number: '',
-                    child_job: '',
-                    material_items: [],
-                    material_type: '',
-                    material_item: '',
-                    material_name: '',
-                    local_price: '',
-                    local_wage: '',
-                    quantity: 0,
-                    unit: ''
-                }
-            }
-        };
-    },
-    methods: {
-        beforeOpenEditChildJobItemModal: function beforeOpenEditChildJobItemModal(event) {
-            console.log('Edit Child Job ITem Job ITem : ', event.params.job_item);
-            console.log('Item ID', this.edit_child_job_item.form.item_id);
-            // this.edit_child_job_item.job_item = event.params.job_item;
-            this.edit_child_job_item.form.job_id = event.params.job_item.id;
-            this.edit_child_job_item.form.item_id = event.params.job_item.item.id;
-            this.edit_child_job_item.form.material_item = event.params.job_item.item.details;
-            this.edit_child_job_item.form.local_price = event.params.job_item.item.local_price;
-            this.edit_child_job_item.form.local_wage = event.params.job_item.item.local_wage;
-            this.edit_child_job_item.form.unit = event.params.job_item.item.unit;
-            this.edit_child_job_item.form.quantity = event.params.job_item.item.quantity;
-            this.edit_child_job_item.form.project_details = this.project_details;
-        },
-        openedEditChildJobItemModal: function openedEditChildJobItemModal() {
-            var _this = this;
-
-            this.edit_child_job_item.isLoading = true;
-            Promise.all([
-            //Get Material Items
-            materialItemService.getItems().then(function (result) {
-                _this.edit_child_job_item.form.material_items = result;
-                // this.edit_child_job_item.form.material_item =
-            }).catch(function (err) {
-                alert(err);
-            })]).then(function () {
-                _this.edit_child_job_item.isLoading = false;
-            }).catch(function () {
-                _this.edit_child_job_item.isLoading = false;
-            });
-        },
-        editChildJobItem_updateItem: function editChildJobItem_updateItem(form, event) {
-            var _this2 = this;
-
-            console.log('Update Item Form', form, event);
-            //this.project_details จาก ไฟล์ root mixin (porlor_4_index.js)
-            console.log('Item Form Inputs :', this.edit_child_job_item.form);
-            this.$validator.validateAll(form).then(function (result) {
-                if (result) {
-                    _this2.edit_child_job_item.isLoading = true;
-                    porlor4JobService.updateChildJobItem(_this2.porlor4.id, _this2.edit_child_job_item.form).then(function (result) {
-                        console.log('Update Child Job Item Success');
-                        _this2.edit_child_job_item.isLoading = false;
-                        _this2.edit_child_job_item.add_status = true;
-                        _this2.closeEditChildJobItemModal();
-                    }).catch(function (err) {
-                        alert(err);
-                        _this2.edit_child_job_item.isLoading = false;
-                    });
-                } else {
-                    alert('กรุณาระบุข้อมูล');
-                }
-            });
-        },
-        editChildJobItem_getItemDetails: function editChildJobItem_getItemDetails(item) {
-            console.log('Get Item Details ', item, parent);
-            if (item) {
-                this.edit_child_job_item.form.local_price = item.global_price;
-                this.edit_child_job_item.form.local_wage = item.global_wage;
-                this.edit_child_job_item.form.unit = item.unit;
-            }
-        },
-        editChildJobItem_addNewMaterialItem: function editChildJobItem_addNewMaterialItem() {
-            var _this3 = this;
-
-            var inputs = {
-                material_item: {
-                    name: this.edit_child_job_item.new_material_item.name
-                }
-            };
-            console.log('Add New Item Inputs', inputs);
-            materialItemService.addNewOtherItem(inputs).then(function (new_item) {
-                console.log('Add New Item Success : ', new_item);
-                _this3.edit_child_job_item.form.material_item = new_item;
-                materialItemService.searchItemsByName(_this3.edit_child_job_item.new_material_item.name).then(function (items) {
-                    console.log('get New Item Success : ', new_item);
-                    _this3.edit_child_job_item.form.material_items = items;
-                }).catch(function (err) {
-                    alert(err);
-                });
-            }).catch(function (err) {
-                alert(err);
-            });
-        },
-        editChildJobItem_searchItemsByName: function editChildJobItem_searchItemsByName(search_name) {
-            var _this4 = this;
-
-            console.log('Search Items By Name :', search_name);
-            this.edit_child_job_item.new_material_item.name = search_name;
-            materialItemService.searchItemsByName(search_name).then(function (result) {
-                console.log('Search Result :', result);
-                _this4.edit_child_job_item.material_items = result;
-            }).catch(function (err) {
-                alert(err);
-            });
-        },
-        closeEditChildJobItemModal: function closeEditChildJobItemModal() {
-            this.$modal.hide('porlor-4-edit-child-job-item-modal', {
-                edit_status: this.edit_child_job_item.add_status
-            });
-        },
-        editChildJobItem_customLabel: function editChildJobItem_customLabel(item) {
-            return item.job_order_number + ' ' + item.name;
-        },
-        editChildJobItem_materialItemCustomLabel: function editChildJobItem_materialItemCustomLabel(item) {
-            if (item.approved_global_details) {
-                return item.approved_global_details.name;
-            }
         }
     }
 };
@@ -3091,20 +2913,6 @@ var Porlor4JobService = function () {
         key: 'updateChildJob',
         value: function updateChildJob(porlor_4_id, form_input) {
             var url = this.url + '/admin/project_order/porlor_4_id/' + porlor_4_id + '/update_child_job';
-            return new Promise(function (resolve, reject) {
-                axios.put(url, form_input).then(function (result) {
-                    resolve(result.data);
-                }).catch(function (err) {
-                    reject(err);
-                });
-            });
-        }
-        //Update Child Job Item
-
-    }, {
-        key: 'updateChildJobItem',
-        value: function updateChildJobItem(porlor_4_id, form_input) {
-            var url = this.url + '/admin/project_order/porlor_4_id/' + porlor_4_id + '/update_child_job_item';
             return new Promise(function (resolve, reject) {
                 axios.put(url, form_input).then(function (result) {
                     resolve(result.data);

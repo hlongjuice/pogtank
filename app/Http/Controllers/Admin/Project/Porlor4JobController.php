@@ -695,44 +695,4 @@ class Porlor4JobController extends Controller
         ]);
         return response()->json($result);
     }
-    //Update Child Job Item
-    public function updateChildJobItem(Request $request,$porlor_4_id){
-        $result=DB::transaction(function() use($request,$porlor_4_id){
-
-            $projectDetails = $request->input('project_details');
-            $approvedStatus = GlobalVariableController::$publishedStatus['approved'];
-
-            if ($request->input('material_item') != '') {
-                //Update Material Item Local Price
-                $newLocalPrice = MaterialItemLocalPrice::firstOrCreate([
-                    'material_id' =>$request->input('material_item')['id']
-                ]);
-                $newLocalPrice->priceDetails()->create([
-                    'published_id' => $approvedStatus,
-                    'local_price_id' => $newLocalPrice->id,
-                    'province_id' => $projectDetails['province']['id'],
-                    'amphoe_id' => $projectDetails['amphoe']['id'],
-                    'district_id' => $projectDetails['district']['id'],
-                    'cost' => 0,
-                    'price' => $request->input('local_price'),
-                    'wage' => $request->input('local_wage')
-                ]);
-                //End Update Local Price
-                //Input for Porlor 4 job
-                Porlor4Job::where('id',$request->input('job_id'))
-                ->update([
-                    'name' => $request->input('material_item')['approved_global_details']['name'],
-                ]);
-                //Input สำหรับ porlor 4 job Items
-                Porlor4JobItem::where('id',$request->input('item_id'))
-                ->update([
-                    'quantity' => $request->input('quantity'),
-                    'material_id' => $request->input('material_item')['id'],
-                    'local_price' => $request->input('local_price'),
-                    'local_wage' => $request->input('local_wage'),
-                    'unit' => $request->input('unit')
-                ]);
-            }
-        });
-    }
 }
