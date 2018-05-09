@@ -56,11 +56,19 @@ export const Porlor4JobDetails = {
                 page_number: page_number
             })
         },
+        //Show Edit Child Job Modal
         showEditChildJobModal(job) {
             this.detailScrollable = false;
             this.$modal.show('porlor-4-edit-child-job-modal', {
                 job: job
             })
+        },
+        //Show Edit Child Job Item Modal
+        showEditChildJobItemModal(job_item){
+          this.detailScrollable= false;
+          this.$modal.show('porlor-4-edit-child-job-item-modal',{
+              job_item:job_item
+          })
         },
         //Close Modal
         closePorlor4JobDetailsModal() {
@@ -85,6 +93,15 @@ export const Porlor4JobDetails = {
         },
         //Before Close Edit Child Job
         beforeCloseEditChildJobModal(event) {
+            console.log('Before Close Edit Child Job Modal', event);
+            this.detailScrollable = true;
+            let status = event.params.edit_status;
+            if (status) {
+                this.getAllChildJobAndItems()
+            }
+        },
+        //Before Close Edit Child Job Item
+        beforeCloseEditChildJobItemModal(event) {
             console.log('Before Close Edit Child Job Modal', event);
             this.detailScrollable = true;
             let status = event.params.edit_status;
