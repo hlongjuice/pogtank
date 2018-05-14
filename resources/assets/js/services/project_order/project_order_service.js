@@ -1,5 +1,5 @@
 import WebUrl from '../webUrl';
-import axois from 'axios';
+// import axios from 'axios';
 let webUrl = new WebUrl();
 class ProjectOrderService{
     constructor(){
@@ -7,19 +7,23 @@ class ProjectOrderService{
     }
     //Get All Project Order
     getAllProjectOrders(){
-        let url = this.url+'/admin/project_order/get_all_orders';
+        let url = this.url+'/my_test';
+        // let url = this.url+'/admin/project_order/get_all_orders';
         return new Promise((resolve,reject)=>{
-            axios.get(url)
+            axios.get('http://www.ggdemo.com/my_test')
                 .then(result=>{
+                    console.log('Result',result);
                     resolve(result.data)
-                }).catch(err=>{reject(err)})
+                }).catch(err=>{
+                    reject(err)
+                })
         })
     }
     //Add New Project Order
     addNewOrder(inputData){
         let url=this.url+'/admin/project_order/add_new_order';
         return new Promise((resolve,reject)=>{
-            axois.post(url,inputData)
+            axios.post(url,inputData)
                 .then(result=>{
                     resolve(result.data)
                 }).catch(err=>{alert(err)})
@@ -29,7 +33,7 @@ class ProjectOrderService{
     updateProjectDetails(inputData){
         let url=this.url+'/admin/project_order/update_order';
         return new Promise((resolve,reject)=>{
-            axois.put(url,inputData)
+            axios.put(url,inputData)
                 .then(result=>{
                     resolve(result.data)
                 }).catch(err=>{reject(err)})

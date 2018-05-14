@@ -15,6 +15,7 @@
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('my_test','MyTestController@getText');
 
 
 //Admin

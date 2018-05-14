@@ -5032,7 +5032,7 @@ var WebUrl = function () {
 
         // this.url='http://localhost:3000/pogtank/public';
         // this.url='http://localhost/pogtank/public';
-        this.url = 'http://ggdemo.com/public';
+        this.url = 'http://ggdemo.com';
     }
 
     _createClass(WebUrl, [{
@@ -25307,11 +25307,9 @@ try {
 window.axios = __webpack_require__(9);
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.axios.defaults.baseURL = webUrl.getUrl();
-// window.axios.defaults.baseURL='http://localhost:3000/pogtank/public';
 
 window.axios.interceptors.response.use(null, function (error) {
     if (error.response.status === 401) {
-        // window.location='http://localhost:3000/pogtank/public/login';
         window.location = webUrl.getRoute('/login');
     }
     return Promise.reject(error);
@@ -57667,7 +57665,7 @@ var Component = __webpack_require__(179)(
   /* cssModules */
   null
 )
-Component.options.__file = "/Applications/XAMPP/xamppfiles/htdocs/pogtank/node_modules/vue-full-loading/src/Loading.vue"
+Component.options.__file = "C:\\xampp\\htdocs\\pogtank\\node_modules\\vue-full-loading\\src\\Loading.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Loading.vue: functional components are not supported with templates, they should use render functions.")}
 

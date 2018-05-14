@@ -1677,7 +1677,7 @@ var WebUrl = function () {
 
         // this.url='http://localhost:3000/pogtank/public';
         // this.url='http://localhost/pogtank/public';
-        this.url = 'http://ggdemo.com/public';
+        this.url = 'http://ggdemo.com';
     }
 
     _createClass(WebUrl, [{
@@ -1866,14 +1866,12 @@ var ProductService = function () {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__webUrl__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_axios__);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 
-
+// import axios from 'axios';
 var webUrl = new __WEBPACK_IMPORTED_MODULE_0__webUrl__["a" /* default */]();
 
 var ProjectOrderService = function () {
@@ -1888,9 +1886,11 @@ var ProjectOrderService = function () {
     _createClass(ProjectOrderService, [{
         key: 'getAllProjectOrders',
         value: function getAllProjectOrders() {
-            var url = this.url + '/admin/project_order/get_all_orders';
+            var url = this.url + '/my_test';
+            // let url = this.url+'/admin/project_order/get_all_orders';
             return new Promise(function (resolve, reject) {
-                axios.get(url).then(function (result) {
+                axios.get('http://www.ggdemo.com/my_test').then(function (result) {
+                    console.log('Result', result);
                     resolve(result.data);
                 }).catch(function (err) {
                     reject(err);
@@ -1904,7 +1904,7 @@ var ProjectOrderService = function () {
         value: function addNewOrder(inputData) {
             var url = this.url + '/admin/project_order/add_new_order';
             return new Promise(function (resolve, reject) {
-                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post(url, inputData).then(function (result) {
+                axios.post(url, inputData).then(function (result) {
                     resolve(result.data);
                 }).catch(function (err) {
                     alert(err);
@@ -1918,7 +1918,7 @@ var ProjectOrderService = function () {
         value: function updateProjectDetails(inputData) {
             var url = this.url + '/admin/project_order/update_order';
             return new Promise(function (resolve, reject) {
-                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.put(url, inputData).then(function (result) {
+                axios.put(url, inputData).then(function (result) {
                     resolve(result.data);
                 }).catch(function (err) {
                     reject(err);

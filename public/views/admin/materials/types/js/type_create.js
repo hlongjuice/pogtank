@@ -1748,7 +1748,7 @@ var WebUrl = function () {
 
         // this.url='http://localhost:3000/pogtank/public';
         // this.url='http://localhost/pogtank/public';
-        this.url = 'http://ggdemo.com/public';
+        this.url = 'http://ggdemo.com';
     }
 
     _createClass(WebUrl, [{
