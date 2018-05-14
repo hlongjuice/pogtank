@@ -1677,7 +1677,7 @@ var WebUrl = function () {
 
         // this.url='http://localhost:3000/pogtank/public';
         // this.url='http://localhost/pogtank/public';
-        this.url = 'http://ggdemo.com';
+        this.url = 'http://www.ggdemo.com';
     }
 
     _createClass(WebUrl, [{
@@ -1874,6 +1874,17 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 // import axios from 'axios';
 var webUrl = new __WEBPACK_IMPORTED_MODULE_0__webUrl__["a" /* default */]();
 
+var token = document.head.querySelector('meta[name="csrf-token"]');
+console.log('Token 11', token.content);
+// axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+// let token = document.head.querySelector('meta[name="csrf-token"]');
+//
+// if (token) {
+//     axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+// } else {
+//     console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
+// }
+
 var ProjectOrderService = function () {
     function ProjectOrderService() {
         _classCallCheck(this, ProjectOrderService);
@@ -1886,10 +1897,12 @@ var ProjectOrderService = function () {
     _createClass(ProjectOrderService, [{
         key: 'getAllProjectOrders',
         value: function getAllProjectOrders() {
-            var url = this.url + '/my_test';
-            // let url = this.url+'/admin/project_order/get_all_orders';
+            // let url = this.url+'/my_job';
+            var url = this.url + '/admin/project_order/get_all_orders';
             return new Promise(function (resolve, reject) {
-                axios.get('http://www.ggdemo.com/my_test').then(function (result) {
+                // axios.get('https://jsonplaceholder.typicode.com/posts/1')
+                // axios.get('http://www.ggdemo.com/admin/project_order/get_all_orders')
+                axios.get(url).then(function (result) {
                     console.log('Result', result);
                     resolve(result.data);
                 }).catch(function (err) {
