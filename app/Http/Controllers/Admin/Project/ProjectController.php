@@ -21,7 +21,8 @@ class ProjectController extends Controller
 
     //Get All Project Order
     public function getAllProjectOrders(){
-        $projectOrder = ProjectOrder::orderBy('updated_at','DESC')
+        $projectOrder = ProjectOrder::with('province.amphoes','amphoe','district')
+            ->orderBy('updated_at','DESC')
             ->paginate(100);
         return response()->json($projectOrder);
     }
@@ -30,7 +31,7 @@ class ProjectController extends Controller
         $result=DB::transaction(function() use ($request){
             //Create new project before add new order
             $newProject=ProjectOrder::create([
-                'product_id'=>$request->input('product')['id'],
+//                'product_id'=>$request->input('product')['id'],
                 'project_name'=>$request->input('project_name'),
                 'location'=>$request->input('location'),
                 'province_id'=>$request->input('province')['id'],
@@ -47,8 +48,8 @@ class ProjectController extends Controller
     }
     //Update Project Order
     public function updateOrder(Request $request){
-        $project=ProjectOrder::where('id',$request->input('order_id'))->update([
-            'product_id'=>$request->input('product')['id'],
+        $project=ProjectOrder::where('id',$request->input('id'))->update([
+//            'product_id'=>$request->input('product')['id'],
             'project_name'=>$request->input('project_name'),
             'location'=>$request->input('location'),
             'province_id'=>$request->input('province')['id'],

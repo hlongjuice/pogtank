@@ -6,6 +6,7 @@
 @section('content')
     <div id="project-order-index" class="row" v-cloak>
         <loading :show="showLoading"></loading>
+        @include('admin.project_order.project_order_edit')
         <div class="col-md-12">
             <!-- BEGIN EXAMPLE TABLE PORTLET-->
             <div class="portlet">
@@ -62,7 +63,7 @@
                             {{--<td></td>--}}
                             <td>@{{ order.project_name }}</td>
                             <td><a @click="openPorlor4Page(order)" class="btn btn-info">ปร.4</a></td>
-                            <td></td>
+                            <td><a class="btn btn-warning" @click="openProjectOrderEditModal(order)">แก้ไข</a></td>
                             <td></td>
                         </tr>
                         </tbody>

@@ -4,7 +4,9 @@ class WebUrl{
     ){
         // this.url='http://localhost:3000/pogtank/public';
         // this.url='http://localhost/pogtank/public';
-        this.url='';
+        // this.url='';
+        this.url='http://www.ggdemo.com/public';
+
     }
     getUrl(){
         return this.url;

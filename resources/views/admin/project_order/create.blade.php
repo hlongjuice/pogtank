@@ -27,7 +27,7 @@
                             <h3 class="form-section">รายละเอียด</h3>
                             <div class="row">
                                 <!-- -- Project Name -->
-                                <div class="col-md-8">
+                                <div class="col-md-12">
                                     <div class="form-group">
                                         <label class="control-label">ชื่อโครงการ</label>
                                         <input :class="{'input-error':errors.has('form.project_name')}"
@@ -40,27 +40,27 @@
                                           class="text-error text-danger">กรุณากรอกข้อมูล</span>
                                 </div>
                                 <!-- -- -- Products-->
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="province"
-                                               class="control-label">สินค้า</label>
-                                        <multiselect
-                                                     v-model="form.product"
-                                                     placeholder="" label="name" track-by="id"
-                                                     :options="products" :option-height="104"
-                                                     :allow-empty="false"
-                                                     :show-labels="false">
-                                            <template slot="option" slot-scope="props">
-                                                <div class="option__desc">
-                                                    <span class="option__title">@{{ props.option.name }}</span>
-                                                </div>
-                                            </template>
-                                        </multiselect>
-                                        <input v-validate="'required'"
-                                               v-model="form.product"
-                                               name="product" hidden>
-                                    </div>
-                                </div>
+                                {{--<div class="col-md-4">--}}
+                                    {{--<div class="form-group">--}}
+                                        {{--<label for="province"--}}
+                                               {{--class="control-label">สินค้า</label>--}}
+                                        {{--<multiselect--}}
+                                                     {{--v-model="form.product"--}}
+                                                     {{--placeholder="" label="name" track-by="id"--}}
+                                                     {{--:options="products" :option-height="104"--}}
+                                                     {{--:allow-empty="false"--}}
+                                                     {{--:show-labels="false">--}}
+                                            {{--<template slot="option" slot-scope="props">--}}
+                                                {{--<div class="option__desc">--}}
+                                                    {{--<span class="option__title">@{{ props.option.name }}</span>--}}
+                                                {{--</div>--}}
+                                            {{--</template>--}}
+                                        {{--</multiselect>--}}
+                                        {{--<input v-validate="'required'"--}}
+                                               {{--v-model="form.product"--}}
+                                               {{--name="product" hidden>--}}
+                                    {{--</div>--}}
+                                {{--</div>--}}
                                 <div class="clearfix"></div>
                                 {{--Clear Fix--}}
                                 {{-- Form Number --}}

@@ -53,12 +53,22 @@ new Vue({
             });
         },
         //Add New Order
-        addNewOrder(){
-            console.log('Form Input :',this.form);
-            projectOrderService.addNewOrder(this.form)
-                .then(()=>{
-                    window.location=webUrlService.getRoute('/admin/project_order');
-                }).catch(err=>{alert(err)})
+        addNewOrder(scope,event){
+            this.$validator.validateAll(scope)
+                .then(result=>{
+                    if(result){
+                        console.log('Form Input :',this.form);
+                        projectOrderService.addNewOrder(this.form)
+                            .then(()=>{
+                                window.location=webUrlService.getRoute('/admin/project_order');
+                            }).catch(err=>{alert(err)})
+                    }else{
+                        alert('กรุณาระบุข้อมูลให้ครบถ้วน')
+                    }
+                })
+                .catch(err=>{
+
+                });
         },
         // -- Get Amphoe
         getAmphoes() {
