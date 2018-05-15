@@ -53,6 +53,19 @@ new Vue({
             if(data.params.is_updated){
                 this.getAllProjectOrder();
             }
+        },
+        //Delete Project
+        deleteProject(order){
+            this.$dialog.confirm('ยืนยันการลบ')
+                .then(()=>{
+                    projectOderService.deleteProject(order.id)
+                        .then(result=>{
+                            this.getAllProjectOrder();
+                        }).catch(err=>{
+                        alert(err)
+                    })
+                })
+                .catch();
         }
 
     }

@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Admin\Project;
 
 use App\Models\Admin\Project\Porlor4;
+use App\Models\Admin\Project\Porlor4Job;
 use App\Models\Admin\Project\ProjectOrder;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use phpDocumentor\Reflection\Project;
+use DB;
 
 class Porlor4Controller extends Controller
 {
@@ -50,5 +52,12 @@ class Porlor4Controller extends Controller
         $details = ProjectOrder::with(['province', 'amphoe', 'district'])
             ->where('id', $order_id)->first();
         return response()->json($details);
+    }
+    //Delete Porlor 4
+    public function deletePart($porlor_4_id){
+        $result=DB::transaction(function() use ($porlor_4_id){
+            Porlor4::where('id',$porlor_4_id)->delete();
+        });
+        return response()->json($result);
     }
 }

@@ -17,4 +17,8 @@ class Porlor4 extends Model
     public function projectDetails(){
         return $this->belongsTo('App\Models\Admin\Project\ProjectOrder','project_order_id');
     }
+    //Jobs
+    public function jobs(){
+        return $this->hasMany('App\Models\Admin\Project\Porlor4Job','porlor_4_id');
+    }
 }

@@ -52,7 +52,9 @@ Route::prefix('admin')->middleware('auth')
             // -- -- --Get All Project Order
             Route::get('/get_all_orders', 'Admin\Project\ProjectController@getAllProjectOrders');
             // -- -- --Update Project Details
-            Route::put('/update_project_details', 'Admin\Project\ProjectController@updateOrder');
+            Route::put('/update_project_details', 'Admin\Project\ProjectController@updateDetails');
+            // -- -- --Delete Project
+            Route::delete('/delete_project/{id}','Admin\Project\ProjectController@deleteProject');
             // -- --Por lor 4
             Route::prefix('{order_id}/porlor_4')->group(function(){
             //-- -- --Index

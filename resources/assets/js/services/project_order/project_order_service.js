@@ -38,4 +38,13 @@ class ProjectOrderService{
         })
     }
     //Delete Order
+    deleteProject(id){
+        let url=this.url+'/admin/project_order/delete_project/'+id;
+        return new Promise((resolve,reject)=>{
+           axios.delete(url)
+               .then(result=>{
+                   resolve(result.data)
+               }).catch(err=>{reject(err)})
+        });
+    }
 }export default ProjectOrderService;

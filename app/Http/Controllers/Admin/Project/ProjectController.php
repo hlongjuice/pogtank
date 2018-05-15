@@ -47,7 +47,7 @@ class ProjectController extends Controller
         return response()->json($result);
     }
     //Update Project Order
-    public function updateOrder(Request $request){
+    public function updateDetails(Request $request){
         $project=ProjectOrder::where('id',$request->input('id'))->update([
 //            'product_id'=>$request->input('product')['id'],
             'project_name'=>$request->input('project_name'),
@@ -62,5 +62,12 @@ class ProjectController extends Controller
             'form_number_release'=>$request->input('form_number_release'),
         ]);
         return response()->json($project);
+    }
+    //Delete Project
+    public function deleteProject($id){
+       $result=DB::transaction(function() use ($id){
+            ProjectOrder::destroy($id);
+        });
+       return response()->json($result);
     }
 }

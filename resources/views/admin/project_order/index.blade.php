@@ -64,7 +64,7 @@
                             <td>@{{ order.project_name }}</td>
                             <td><a @click="openPorlor4Page(order)" class="btn btn-info">ปร.4</a></td>
                             <td><a class="btn btn-warning" @click="openProjectOrderEditModal(order)">แก้ไข</a></td>
-                            <td></td>
+                            <td><a class="btn btn-danger" @click="deleteProject(order)">ลบ</a></td>
                         </tr>
                         </tbody>
                     </table>
