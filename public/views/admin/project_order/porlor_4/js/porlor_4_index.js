@@ -79,10 +79,10 @@ var WebUrl = function () {
     {
         _classCallCheck(this, WebUrl);
 
-        this.url = 'http://localhost:3000/pogtank/public';
+        // this.url='http://localhost:3000/pogtank/public';
         // this.url='http://localhost/pogtank/public';
         // this.url='';
-        // this.url='http://www.ggdemo.com/public';
+        this.url = 'http://www.ggdemo.com/public';
     }
 
     _createClass(WebUrl, [{
@@ -120,6 +120,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_service__ = __webpack_require__(35);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__add_part_modal__ = __webpack_require__(212);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__assets_js_services_webUrl__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__edit_part_modal__ = __webpack_require__(229);
+
+
 
 
 
@@ -127,7 +130,7 @@ var webUrl = new __WEBPACK_IMPORTED_MODULE_2__assets_js_services_webUrl__["a" /*
 var porlor4Service = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_service__["a" /* default */]();
 new Vue({
     el: '#porlor-4-index',
-    mixins: [__WEBPACK_IMPORTED_MODULE_1__add_part_modal__["a" /* AddNewPartModal */]],
+    mixins: [__WEBPACK_IMPORTED_MODULE_1__add_part_modal__["a" /* AddNewPartModal */], __WEBPACK_IMPORTED_MODULE_3__edit_part_modal__["a" /* EditPartModal */]],
     data: {
         addNewPartStatus: false,
         order_id: orderID,
@@ -179,10 +182,32 @@ new Vue({
             });
         },
 
+        //Porlor 4 Delete Part
+        porlor4_deletePart: function porlor4_deletePart(item) {
+            var _this3 = this;
+
+            this.$dialog.confirm('' + '<p>ยืนยันการลบ</p>' + '<h4 class="text-danger">' + item.part.name + '</h4>' + '<p>**การลบนี้จะลบงานย่อยทั้งหมดในหมวดหมู่ </p>').then(function () {
+                _this3.showLoading = true;
+                porlor4Service.deletePart(item.id).then(function (result) {
+                    _this3.showLoading = false;
+                    _this3.refreshData();
+                }).catch(function (err) {
+                    alert(err);
+                });
+            }).catch();
+        },
+
         //Open Jobs
         openPorlor4JobsPage: function openPorlor4JobsPage(id) {
             console.log('Porlor 4 ID :', id);
             window.location = webUrl.getRoute('/admin/project_order/porlor_4_id/' + id + '/jobs');
+        },
+
+        //Open Edit Part
+        openEditPartModal: function openEditPartModal(item) {
+            this.$modal.show('porlor-4-edit-part-modal', {
+                item: item
+            });
         },
         showAddNewPartModal: function showAddNewPartModal() {
             // this.addNewPartStatus=false,
@@ -199,6 +224,11 @@ new Vue({
         },
         closeAddNewPartModal: function closeAddNewPartModal() {
             this.$modal.hide('porlor-4-add-new-part-modal');
+        },
+        beforeCloseEditPartModal: function beforeCloseEditPartModal(data) {
+            if (data.params.is_updated) {
+                this.refreshData();
+            }
         }
     }
 });
@@ -271,6 +301,83 @@ var AddNewPartModal = {
 
 /***/ }),
 
+/***/ 229:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EditPartModal; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_part_service__ = __webpack_require__(36);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_js_services_project_order_porlor_4_service__ = __webpack_require__(35);
+
+
+var porlor4Service = new __WEBPACK_IMPORTED_MODULE_1__assets_js_services_project_order_porlor_4_service__["a" /* default */]();
+var porlor4PartService = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_part_service__["a" /* default */]();
+var EditPartModal = {
+    data: function data() {
+        return {
+            edit_part: {
+                is_updated: false,
+                is_loading: false,
+                parts: [],
+                form: {
+                    project_order_id: '',
+                    porlor_4_id: '',
+                    part: ''
+                }
+            }
+        };
+    },
+
+    methods: {
+        beforeOpenEditPartModal: function beforeOpenEditPartModal(data) {
+            console.log('Item Data :', data.params.item);
+            var item = data.params.item;
+            this.edit_part.is_updated = false;
+            this.edit_part.form.project_order_id = item.project_order_id;
+            this.edit_part.form.porlor_4_id = item.id;
+            this.edit_part.form.part = item.part;
+        },
+        openedEditPartModal: function openedEditPartModal() {
+            var _this = this;
+
+            console.log('Edit Part Form', this.edit_part.form);
+            this.edit_part.is_loading = true;
+            porlor4PartService.getAvailableParts(this.edit_part.form.project_order_id, this.edit_part.form.porlor_4_id).then(function (result) {
+                console.log('Get Available Part : ', result);
+                _this.edit_part.is_loading = false;
+                _this.edit_part.parts = result;
+            }).catch(function (err) {
+                alert(err);
+            });
+        },
+        closeEditPartModal: function closeEditPartModal() {
+            this.$modal.hide('porlor-4-edit-part-modal', {
+                is_updated: this.edit_part.is_updated
+            });
+        },
+        porlor4EditModal_updatePart: function porlor4EditModal_updatePart(scope, event) {
+            var _this2 = this;
+
+            this.$validator.validateAll(scope).then(function (result) {
+                if (result) {
+                    _this2.edit_part.is_loading = true;
+                    porlor4Service.updatePart(_this2.edit_part.form).then(function (result) {
+                        _this2.edit_part.is_updated = true;
+                        _this2.closeEditPartModal();
+                        _this2.edit_part.is_loading = false;
+                    }).catch(function (err) {
+                        alert(err);
+                    });
+                } else {
+                    alert('กรุณาระบุข้อมูล');
+                }
+            });
+        }
+    }
+};
+
+/***/ }),
+
 /***/ 35:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -304,6 +411,20 @@ var Porlor4Service = function () {
                 });
             });
         }
+        //Delete Part
+
+    }, {
+        key: 'deletePart',
+        value: function deletePart(porlor_4_id) {
+            var url = this.url + '/admin/project_order/porlor_4/delete_part/' + porlor_4_id;
+            return new Promise(function (resolve, reject) {
+                axios.delete(url).then(function (result) {
+                    resolve(result.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
         //Get All Porlor 4
 
     }, {
@@ -327,6 +448,20 @@ var Porlor4Service = function () {
             return new Promise(function (resolve, reject) {
                 axios.get(url).then(function (result) {
                     console.log('Get Project Details Service');
+                    resolve(result.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
+        //Update Part
+
+    }, {
+        key: 'updatePart',
+        value: function updatePart(dataInputs) {
+            var url = this.url + '/admin/project_order/porlor_4/update_part';
+            return new Promise(function (resolve, reject) {
+                axios.put(url, dataInputs).then(function (result) {
                     resolve(result.data);
                 }).catch(function (err) {
                     reject(err);
@@ -386,7 +521,21 @@ var Porlor4Part = function () {
                     resolve(result.data);
                     console.log('Porlor 4 Part Service :', result.data);
                 }).catch(function (err) {
-                    alert(err);
+                    reject(err);
+                });
+            });
+        }
+        //Get Available Parts
+
+    }, {
+        key: 'getAvailableParts',
+        value: function getAvailableParts(project_order_id, porlor_4_id) {
+            var url = this.url + '/admin/porlor_4_parts/get_available_parts/' + project_order_id + '/porlor_4/' + porlor_4_id;
+            return new Promise(function (resolve, reject) {
+                axios.get(url).then(function (result) {
+                    resolve(result.data);
+                }).catch(function (err) {
+                    reject(err);
                 });
             });
         }

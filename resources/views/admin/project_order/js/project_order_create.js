@@ -57,10 +57,12 @@ new Vue({
             this.$validator.validateAll(scope)
                 .then(result=>{
                     if(result){
+                        this.showLoading=true;
                         console.log('Form Input :',this.form);
                         projectOrderService.addNewOrder(this.form)
                             .then(()=>{
                                 window.location=webUrlService.getRoute('/admin/project_order');
+                                // this.showLoading=false;
                             }).catch(err=>{alert(err)})
                     }else{
                         alert('กรุณาระบุข้อมูลให้ครบถ้วน')

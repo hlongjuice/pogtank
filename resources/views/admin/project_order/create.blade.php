@@ -5,6 +5,7 @@
 @endsection
 @section('content')
     <div id="project-order-create" class="row" v-cloak>
+        <loading :show="showLoading"></loading>
         <div class="col-xs-12">
             <!-- FORM-->
             <form

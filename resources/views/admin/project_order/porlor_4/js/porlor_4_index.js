@@ -1,11 +1,16 @@
 import Porlor4Service from '../../../../../assets/js/services/project_order/porlor_4_service';
 import {AddNewPartModal} from "./add_part_modal";
 import WebUrl from '../../../../../assets/js/services/webUrl';
+import {EditPartModal} from "../edit_part_modal";
+
 let webUrl = new WebUrl();
 let porlor4Service = new Porlor4Service();
 new Vue({
     el:'#porlor-4-index',
-    mixins:[AddNewPartModal],
+    mixins:[
+        AddNewPartModal,
+        EditPartModal
+    ],
     data:{
         addNewPartStatus:false,
         order_id:orderID,
@@ -61,10 +66,33 @@ new Vue({
                     this.showLoading=false;
                 })
         },
+        //Porlor 4 Delete Part
+        porlor4_deletePart(item){
+            this.$dialog.confirm('' +
+                '<p>ยืนยันการลบ</p>' +
+                '<h4 class="text-danger">'+item.part.name+'</h4>' +
+                '<p>**การลบนี้จะลบงานย่อยทั้งหมดในหมวดหมู่ </p>'
+            )
+                .then(()=>{
+                    this.showLoading=true;
+                    porlor4Service.deletePart(item.id)
+                        .then(result=>{
+                            this.showLoading=false;
+                            this.refreshData();
+                        }).catch(err=>{alert(err)})
+                })
+                .catch();
+        },
         //Open Jobs
         openPorlor4JobsPage(id){
             console.log('Porlor 4 ID :',id);
             window.location=webUrl.getRoute('/admin/project_order/porlor_4_id/'+id+'/jobs');
+        },
+        //Open Edit Part
+        openEditPartModal(item){
+            this.$modal.show('porlor-4-edit-part-modal',{
+                item:item
+            })
         },
         showAddNewPartModal(){
             // this.addNewPartStatus=false,
@@ -80,6 +108,11 @@ new Vue({
         },
         closeAddNewPartModal(){
             this.$modal.hide('porlor-4-add-new-part-modal')
+        },
+        beforeCloseEditPartModal(data){
+            if(data.params.is_updated){
+                this.refreshData();
+            }
         }
     }
 });

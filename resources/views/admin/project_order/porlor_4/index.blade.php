@@ -7,6 +7,7 @@
     <div id="porlor-4-index" class="row" v-cloak>
         <loading :show="showLoading"></loading>
         @include('admin.project_order.porlor_4.add_part_modal')
+        @include('admin.project_order.porlor_4.edit_part_modal')
         <div class="col-md-12">
             <div class="portlet">
                 <div class="portlet-title">
@@ -105,6 +106,7 @@
                                 {{--<th>ID</th>--}}
                                 <th>ส่วน</th>
                                 <th>รายละเอียด</th>
+                                <th>แก้ไข</th>
                                 <th>Delete</th>
                             </tr>
                             </thead>
@@ -113,7 +115,8 @@
                                 <tr v-for="(item,index) in project_porlor_4_parts">
                                     <td>@{{ index+1 }}. @{{ item.part.name }}</td>
                                     <td><a class="btn btn-primary" @click="openPorlor4JobsPage(item.id)">รายละเอียด</a></td>
-                                    <td></td>
+                                    <td><a class="btn btn-warning" @click="openEditPartModal(item)">แก้ไข</a> </td>
+                                    <td><a class="btn btn-danger" @click="porlor4_deletePart(item)">ลบ</a></td>
                                 </tr>
                             </tbody>
                         </table>

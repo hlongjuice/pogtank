@@ -14,6 +14,16 @@ class Porlor4Service{
                 }).catch(err=>{reject(err)})
         })
     }
+    //Delete Part
+    deletePart(porlor_4_id){
+        let url=this.url+'/admin/project_order/porlor_4/delete_part/'+porlor_4_id;
+        return new Promise((resolve,reject)=>{
+            axios.delete(url)
+                .then(result=>{
+                    resolve(result.data)
+                }).catch(err=>{reject(err)})
+        })
+    }
     //Get All Porlor 4
     getAllParts(order_id){
         let url=this.url+'/admin/project_order/'+order_id+'/porlor_4/get_all_parts';
@@ -32,6 +42,16 @@ class Porlor4Service{
                 .then(result=>{
                     console.log('Get Project Details Service');
                     resolve(result.data);
+                }).catch(err=>{reject(err)})
+        })
+    }
+    //Update Part
+    updatePart(dataInputs){
+        let url = this.url+'/admin/project_order/porlor_4/update_part';
+        return new Promise((resolve,reject)=>{
+            axios.put(url,dataInputs)
+                .then(result=>{
+                    resolve(result.data)
                 }).catch(err=>{reject(err)})
         })
     }

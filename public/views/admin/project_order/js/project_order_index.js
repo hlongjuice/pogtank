@@ -79,10 +79,10 @@ var WebUrl = function () {
     {
         _classCallCheck(this, WebUrl);
 
-        this.url = 'http://localhost:3000/pogtank/public';
+        // this.url='http://localhost:3000/pogtank/public';
         // this.url='http://localhost/pogtank/public';
         // this.url='';
-        // this.url='http://www.ggdemo.com/public';
+        this.url = 'http://www.ggdemo.com/public';
     }
 
     _createClass(WebUrl, [{
@@ -168,6 +168,9 @@ new Vue({
             var _this2 = this;
 
             projectOderService.getAllProjectOrders().then(function (result) {
+                if (_this2.showLoading === true) {
+                    _this2.showLoading = false;
+                }
                 _this2.orders = result;
             }).catch(function (err) {
                 alert(err);
@@ -184,6 +187,7 @@ new Vue({
             var _this3 = this;
 
             this.$dialog.confirm('ยืนยันการลบ').then(function () {
+                _this3.showLoading = true;
                 projectOderService.deleteProject(order.id).then(function (result) {
                     _this3.getAllProjectOrder();
                 }).catch(function (err) {

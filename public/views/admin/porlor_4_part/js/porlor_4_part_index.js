@@ -79,10 +79,10 @@ var WebUrl = function () {
     {
         _classCallCheck(this, WebUrl);
 
-        this.url = 'http://localhost:3000/pogtank/public';
+        // this.url='http://localhost:3000/pogtank/public';
         // this.url='http://localhost/pogtank/public';
         // this.url='';
-        // this.url='http://www.ggdemo.com/public';
+        this.url = 'http://www.ggdemo.com/public';
     }
 
     _createClass(WebUrl, [{
@@ -251,7 +251,21 @@ var Porlor4Part = function () {
                     resolve(result.data);
                     console.log('Porlor 4 Part Service :', result.data);
                 }).catch(function (err) {
-                    alert(err);
+                    reject(err);
+                });
+            });
+        }
+        //Get Available Parts
+
+    }, {
+        key: 'getAvailableParts',
+        value: function getAvailableParts(project_order_id, porlor_4_id) {
+            var url = this.url + '/admin/porlor_4_parts/get_available_parts/' + project_order_id + '/porlor_4/' + porlor_4_id;
+            return new Promise(function (resolve, reject) {
+                axios.get(url).then(function (result) {
+                    resolve(result.data);
+                }).catch(function (err) {
+                    reject(err);
                 });
             });
         }

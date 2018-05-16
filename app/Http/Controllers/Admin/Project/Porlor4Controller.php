@@ -60,4 +60,15 @@ class Porlor4Controller extends Controller
         });
         return response()->json($result);
     }
+
+    //Update Part
+    public function updatePart(Request $request){
+        $result=DB::transaction(function () use($request){
+            Porlor4::where('id',$request->input('porlor_4_id'))
+                ->update([
+                   'part_id'=>$request->input('part')['id']
+                ]);
+        });
+        return response()->json($result);
+    }
 }

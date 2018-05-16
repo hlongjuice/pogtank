@@ -24,7 +24,17 @@ class Porlor4Part{
                 .then(result=>{
                     resolve(result.data)
                     console.log('Porlor 4 Part Service :',result.data)
-                }).catch(err=>{alert(err)})
+                }).catch(err=>{reject(err)})
+        })
+    }
+    //Get Available Parts
+    getAvailableParts(project_order_id,porlor_4_id){
+        let url = this.url+'/admin/porlor_4_parts/get_available_parts/'+project_order_id+'/porlor_4/'+porlor_4_id;
+        return new Promise((resolve,reject)=>{
+            axios.get(url)
+                .then(result=>{
+                    resolve(result.data)
+                }).catch(err=>{reject(err)})
         })
     }
 }

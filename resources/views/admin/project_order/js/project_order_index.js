@@ -46,6 +46,9 @@ new Vue({
         getAllProjectOrder(){
             projectOderService.getAllProjectOrders()
                 .then(result=>{
+                    if(this.showLoading===true){
+                        this.showLoading=false;
+                    }
                     this.orders=result;
                 }).catch(err=>{alert(err)})
         },
@@ -58,6 +61,7 @@ new Vue({
         deleteProject(order){
             this.$dialog.confirm('ยืนยันการลบ')
                 .then(()=>{
+                    this.showLoading=true;
                     projectOderService.deleteProject(order.id)
                         .then(result=>{
                             this.getAllProjectOrder();

@@ -66,6 +66,10 @@ Route::prefix('admin')->middleware('auth')
                 // -- -- --Get All Porlor 4 Parts
                 Route::get('/get_all_parts','Admin\Project\Porlor4Controller@getAllParts');
             });
+            // -- -- -- Update Part
+            Route::put('porlor_4/update_part','Admin\Project\Porlor4Controller@updatePart');
+            // -- -- -- Delete Part
+            Route::delete('porlor_4/delete_part/{porlor_4_id}','Admin\Project\Porlor4Controller@deletePart');
             // -- -- -- Porlor 4 Jobs
             Route::prefix('porlor_4_id/{porlor_4_id}')->group(function(){
                 // -- -- -- --Index
@@ -115,6 +119,8 @@ Route::prefix('admin')->middleware('auth')
             Route::post('/add_new_part','Admin\Project\Porlor4PartController@addNewPart');
            //Get All Parts
             Route::get('/get_all','Admin\Project\Porlor4PartController@getAll');
+            //Get Available Parts
+            Route::get('/get_available_parts/{project_order_id}/porlor_4/{porlor_4_id}','Admin\Project\Porlor4PartController@getAvailablePart');
         });
         //-- --Material
         Route::prefix('materials')->group(function () {

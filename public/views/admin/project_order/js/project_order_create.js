@@ -1043,10 +1043,10 @@ var WebUrl = function () {
     {
         _classCallCheck(this, WebUrl);
 
-        this.url = 'http://localhost:3000/pogtank/public';
+        // this.url='http://localhost:3000/pogtank/public';
         // this.url='http://localhost/pogtank/public';
         // this.url='';
-        // this.url='http://www.ggdemo.com/public';
+        this.url = 'http://www.ggdemo.com/public';
     }
 
     _createClass(WebUrl, [{
@@ -1191,9 +1191,11 @@ new Vue({
 
             this.$validator.validateAll(scope).then(function (result) {
                 if (result) {
+                    _this2.showLoading = true;
                     console.log('Form Input :', _this2.form);
                     projectOrderService.addNewOrder(_this2.form).then(function () {
                         window.location = webUrlService.getRoute('/admin/project_order');
+                        // this.showLoading=false;
                     }).catch(function (err) {
                         alert(err);
                     });

@@ -1043,10 +1043,10 @@ var WebUrl = function () {
     {
         _classCallCheck(this, WebUrl);
 
-        this.url = 'http://localhost:3000/pogtank/public';
+        // this.url='http://localhost:3000/pogtank/public';
         // this.url='http://localhost/pogtank/public';
         // this.url='';
-        // this.url='http://www.ggdemo.com/public';
+        this.url = 'http://www.ggdemo.com/public';
     }
 
     _createClass(WebUrl, [{
@@ -3158,6 +3158,20 @@ var Porlor4Service = function () {
                 });
             });
         }
+        //Delete Part
+
+    }, {
+        key: 'deletePart',
+        value: function deletePart(porlor_4_id) {
+            var url = this.url + '/admin/project_order/porlor_4/delete_part/' + porlor_4_id;
+            return new Promise(function (resolve, reject) {
+                axios.delete(url).then(function (result) {
+                    resolve(result.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
         //Get All Porlor 4
 
     }, {
@@ -3181,6 +3195,20 @@ var Porlor4Service = function () {
             return new Promise(function (resolve, reject) {
                 axios.get(url).then(function (result) {
                     console.log('Get Project Details Service');
+                    resolve(result.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
+        //Update Part
+
+    }, {
+        key: 'updatePart',
+        value: function updatePart(dataInputs) {
+            var url = this.url + '/admin/project_order/porlor_4/update_part';
+            return new Promise(function (resolve, reject) {
+                axios.put(url, dataInputs).then(function (result) {
                     resolve(result.data);
                 }).catch(function (err) {
                     reject(err);
