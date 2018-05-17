@@ -11,7 +11,6 @@ class ProjectController extends Controller
 {
     //Index
     public function index(){
-
         return view('admin.project_order.index');
     }
     //Create New Project Form
