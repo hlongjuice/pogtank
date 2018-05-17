@@ -4930,11 +4930,12 @@ var WebUrl = function () {
     {
         _classCallCheck(this, WebUrl);
 
-        this.url = 'http://localhost:3000/pogtank/public';
+        // this.url='http://localhost:3000/pogtank/public';
         // this.url='http://localhost/pogtank/public';
         // this.url=':2720';
         // this.url='http://www.ggdemo.com/public';
         // this.url='http://ggdemo.thddns.net:2720/pogtank/public'
+        this.url = '';
     }
 
     _createClass(WebUrl, [{
@@ -57667,7 +57668,7 @@ var Component = __webpack_require__(179)(
   /* cssModules */
   null
 )
-Component.options.__file = "/Applications/XAMPP/xamppfiles/htdocs/pogtank/node_modules/vue-full-loading/src/Loading.vue"
+Component.options.__file = "C:\\xampp\\htdocs\\pogtank\\node_modules\\vue-full-loading\\src\\Loading.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Loading.vue: functional components are not supported with templates, they should use render functions.")}
 

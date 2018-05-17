@@ -18,6 +18,11 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('my_test','MyTestController@getText');
 Route::get('my_job','Admin\Project\ProjectController@getAllProjectOrders');
 
+//Test Api
+Route::prefix('test_api')->group(function(){
+   Route::get('/','TestApi@getItems');
+});
+
 
 //Admin
 // -- Add new Admin
