@@ -642,6 +642,13 @@ class Porlor4JobController extends Controller
         });
         return response()->json($result);
     }
+    //Delete Root Job
+    public function deleteRootJob($porlor_4_id,$root_job_id){
+        $result= DB::transaction(function() use($root_job_id){
+           Porlor4Job::destroy($root_job_id);
+        });
+        return response()->json($result);
+    }
 
     //Regenerate Order Number หลังจาก ลบ job
     public function regenerateOrderNumberAfterDeleted($nextSiblings){
@@ -734,5 +741,15 @@ class Porlor4JobController extends Controller
                 ]);
             }
         });
+    }
+    //Update Root Job
+    public function updateRootJob(Request $request,$porlor_4_id){
+        $result=DB::transaction(function() use($request,$porlor_4_id){
+            Porlor4Job::where('id',$request->input('porlor_4_job_id'))
+                ->update([
+                    'name'=>$request->input('root_job_name')
+                ]);
+        });
+        return response()->json($result);
     }
 }

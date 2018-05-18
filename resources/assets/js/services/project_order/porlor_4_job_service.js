@@ -143,6 +143,16 @@ class Porlor4JobService {
                 }).catch(err=>{reject(err)})
         })
     }
+    //Delete Root Job
+    deleteRootJob(porlor_4_id,root_job_id){
+        let url=this.url+'/admin/project_order/porlor_4_id/'+porlor_4_id+'/delete_root_job/'+root_job_id;
+        return new Promise((resolve,reject)=>{
+            axios.delete(url)
+                .then(result=>{
+                    resolve(result.data)
+                }).catch(err=>{reject(err)})
+        })
+    }
     //Update Child Job
     updateChildJob(porlor_4_id,form_input){
         let url = this.url+'/admin/project_order/porlor_4_id/'+porlor_4_id+'/update_child_job';
@@ -156,6 +166,15 @@ class Porlor4JobService {
     //Update Child Job Item
     updateChildJobItem(porlor_4_id,form_input){
         let url = this.url+'/admin/project_order/porlor_4_id/'+porlor_4_id+'/update_child_job_item';
+        return new Promise((resolve,reject)=>{
+            axios.put(url,form_input)
+                .then(result=>{
+                    resolve(result.data)
+                }).catch(err=>{reject(err)})
+        })
+    }
+    updateRootJob(porlor_4_id,form_input){
+        let url=this.url+'/admin/project_order/porlor_4_id/'+porlor_4_id+'/update_root_job';
         return new Promise((resolve,reject)=>{
             axios.put(url,form_input)
                 .then(result=>{

@@ -452,7 +452,9 @@ License: You must have a valid license purchased only from themeforest(the above
                    data-close-others="true">
                     <img alt="" src="{{asset('templates/admin/conquer/theme/assets/img/avatar3_small.jpg')}}"/>
                     <span class="username">
+                        @if(Auth::user())
                         {{Auth::user()->username}}
+                            @endif
 				 </span>
                     <i class="fa fa-angle-down"></i>
                 </a>
@@ -507,7 +509,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <!-- BEGIN CONTAINER -->
 <div class="page-container">
 
-@include('admin.layouts.side_menu')
+{{--@include('admin.layouts.side_menu')--}}
 
 <!-- BEGIN CONTENT -->
     <div class="page-content-wrapper">

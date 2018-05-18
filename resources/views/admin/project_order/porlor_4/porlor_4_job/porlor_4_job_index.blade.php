@@ -10,6 +10,8 @@
         @include('admin.project_order.porlor_4.porlor_4_job.porlor_4_job_add_root.porlor_4_job_add_root')
         {{--Show Job Details Modal--}}
         @include('admin.project_order.porlor_4.porlor_4_job.porlor_4_job_details.porlor_4_job_details')
+        {{--Edit Root Job Modal--}}
+        @include('admin.project_order.porlor_4.porlor_4_job.porlor_4_job_edit_root_job.porlor_4_job_edit_root_job')
         <div class="col-md-12">
             <!-- BEGIN EXAMPLE TABLE PORTLET-->
             <div class="portlet">
@@ -60,6 +62,7 @@
                                     <i class="fal fa-file-alt"></i>
                                     <span class="hidden-xs"> รายละเอียด</span>
                                 </th>
+                                <th></th>
                                 <th>Delete</th>
                             </tr>
                             </thead>
@@ -71,7 +74,8 @@
                                         <i class="fal fa-file-alt"></i>
                                         <span class="hidden-xs"> รายละเอียด</span>
                                     </a></td>
-                                <td></td>
+                                <td><a class="btn btn-warning" @click="showEditRootJobModal(job)">แก้ไข</a></td>
+                                <td><a class="btn btn-danger" @click="porlor4Job_deleteRootJob(job)">ลบ</a></td>
                             </tr>
                             </tbody>
                         </table>

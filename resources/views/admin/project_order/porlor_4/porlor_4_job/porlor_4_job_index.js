@@ -6,6 +6,7 @@ import {Porlor4AddChildJob} from "./porlor_4_job_details/porlor_4_add_child_job/
 import {Porlor4AddChildJobItem} from "./porlor_4_job_details/porlor_4_add_child_job_item/porlor_4_add_child_job_item";
 import {Porlor4EditChildJob} from "./porlor_4_job_details/porlor_4_edit_child_job/porlor_4_edit_child_job";
 import {Porlor4EditChildJobItem} from "./porlor_4_job_details/porlor_4_edit_child_job_item/porlor_4_edit_child_job_item";
+import {Porlor4JobEditRootJobModal} from "./porlor_4_job_edit_root_job/polor_4_job_edit_root_job";
 
 let porlor4 = porlor4FromBlade; // get from index blade template
 let porlor4Service = new Porlor4Service();
@@ -20,7 +21,8 @@ new Vue({
         Porlor4AddChildJob,
         Porlor4AddChildJobItem,
         Porlor4EditChildJob,
-        Porlor4EditChildJobItem
+        Porlor4EditChildJobItem,
+        Porlor4JobEditRootJobModal
     ],
     data: {
         porlor4:porlor4,
@@ -101,6 +103,12 @@ new Vue({
                 this.refreshData();
             }
         },
+        //Before Close Edit Root Job Modal
+        beforeClosePorlor4JobEditRootJobModal(data){
+            if(data.params.is_updated){
+                this.refreshData();
+            }
+        },
         //Add Root Job
         showAddRootJobModal(){
             this.$modal.show('porlor-4-job-add-root-job-modal')
@@ -110,6 +118,29 @@ new Vue({
             this.$modal.show('porlor-4-job-details-modal',{
                 root_job:root_job
             });
+        },
+        //Show Edit Root Job Modal
+        showEditRootJobModal(root_job){
+            this.$modal.show('porlor-4-job-edit-root-job-modal',{
+                root_job:root_job
+            })
+        },
+        porlor4Job_deleteRootJob(root_job){
+            this.$dialog.confirm('' +
+                '<p>ยืนยันการลบ</p>' +
+                '<h4 class="text-danger">'+root_job.name+'</h4>' +
+                '<p>**การลบนี้จะลบงานย่อยทั้งหมดในหมวดหมู่ </p>')
+                .then(()=>{
+                    this.showLoading=true;
+                    porlor4JobService.deleteRootJob(this.porlor4.id,root_job.id)
+                        .then(result=>{
+                            this.refreshData();
+                            this.showLoading=false;
+                        }).catch(err=>{alert(err)})
+                })
+                .catch();
+
+
         }
 
     }

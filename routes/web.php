@@ -18,9 +18,16 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('my_test','MyTestController@getText');
 Route::get('my_job','Admin\Project\ProjectController@getAllProjectOrders');
 
+
 //Test Api
 Route::prefix('test_api')->group(function(){
-   Route::get('/','TestApi@getItems');
+   Route::get('/get_item','TestApi@getItems');
+   Route::get('/edit','TestApi@editItem')
+    ->name('test_api.edit');
+   Route::put('/update_item/{id}','TestApi@updateItems')
+    ->name('test_api.update_item');
+    Route::delete('/delete/{id}','TestApi@delete')
+        ->name('test_api.delete');
 });
 
 
@@ -109,10 +116,14 @@ Route::prefix('admin')->middleware('auth')
                 Route::delete('delete_item/{item_id}','Admin\Project\Porlor4JobController@deleteItem');
                 // -- -- -- --Delete Job
                 Route::delete('delete_child_job/{job_id}','Admin\Project\Porlor4JobController@deleteChildJob');
+                // -- -- -- --Delete Root Job
+                Route::delete('delete_root_job/{root_job_id}','Admin\Project\Porlor4JobController@deleteRootJob');
                 // -- -- -- --Update Child Job
                 Route::put('update_child_job','Admin\Project\Porlor4JobController@updateChildJob');
                 // -- -- -- --Update Child Job Item
                 Route::put('update_child_job_item','Admin\Project\Porlor4JobController@updateChildJobItem');
+                // -- -- -- --Update Root Job
+                Route::put('update_root_job','Admin\Project\Porlor4JobController@updateRootJob');
             });
         });
 
