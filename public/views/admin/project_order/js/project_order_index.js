@@ -79,11 +79,11 @@ var WebUrl = function () {
     {
         _classCallCheck(this, WebUrl);
 
-        this.url = 'http://localhost:3000/pogtank/public';
+        // this.url='http://localhost:3000/pogtank/public';
         // this.url='http://localhost/pogtank/public';
         // this.url=':2720';
         // this.url='http://www.ggdemo.com/public';
-        // this.url='http://ggdemo.thddns.net:2720/pogtank/public'
+        this.url = 'http://ggdemo.thddns.net:2720/pogtank/public';
         // this.url='';
         // this.url='/public';
     }
@@ -208,7 +208,7 @@ new Vue({
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ProjectOrderEditModal; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_city__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_city__ = __webpack_require__(32);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_js_services_project_order_project_order_service__ = __webpack_require__(36);
 
 
@@ -300,7 +300,7 @@ var ProjectOrderEditModal = {
 
 /***/ }),
 
-/***/ 31:
+/***/ 32:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

@@ -1043,11 +1043,11 @@ var WebUrl = function () {
     {
         _classCallCheck(this, WebUrl);
 
-        this.url = 'http://localhost:3000/pogtank/public';
+        // this.url='http://localhost:3000/pogtank/public';
         // this.url='http://localhost/pogtank/public';
         // this.url=':2720';
         // this.url='http://www.ggdemo.com/public';
-        // this.url='http://ggdemo.thddns.net:2720/pogtank/public'
+        this.url = 'http://ggdemo.thddns.net:2720/pogtank/public';
         // this.url='';
         // this.url='/public';
     }
@@ -1129,7 +1129,7 @@ module.exports = __webpack_require__(209);
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_product_product_service__ = __webpack_require__(33);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_js_services_city__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_js_services_city__ = __webpack_require__(32);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__assets_js_services_project_order_project_order_service__ = __webpack_require__(36);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__assets_js_services_webUrl__ = __webpack_require__(2);
 
@@ -1713,7 +1713,7 @@ module.exports = defaults;
 
 /***/ }),
 
-/***/ 31:
+/***/ 32:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

@@ -15,6 +15,7 @@
         "laravel/framework": "5.5.*",
         "laravel/scout": "4.0",
         "laravel/tinker": "1.0",
+        "rap2hpoutre/laravel-log-viewer": "^0.14.3",
         "santigarcor/laratrust": "5.0.*"
     },
     "require-dev": {
@@ -41,6 +42,7 @@
     "extra": {
         "laravel": {
             "dont-discover": [
+                "laravel/dusk"
             ]
         }
     },

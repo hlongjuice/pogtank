@@ -30,6 +30,9 @@ Route::prefix('test_api')->group(function(){
         ->name('test_api.delete');
 });
 
+//Log
+Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+
 
 //Admin
 // -- Add new Admin

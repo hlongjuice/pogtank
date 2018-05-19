@@ -139,9 +139,6 @@ new Vue({
                         }).catch(err=>{alert(err)})
                 })
                 .catch();
-
-
         }
-
     }
 });
