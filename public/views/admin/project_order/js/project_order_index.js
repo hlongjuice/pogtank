@@ -123,6 +123,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_project_order_service__ = __webpack_require__(36);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_js_services_webUrl__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__project_order_edit__ = __webpack_require__(207);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__porlor_5_porlor_5_index__ = __webpack_require__(208);
+
+
 
 
 
@@ -130,7 +133,7 @@ var webUrl = new __WEBPACK_IMPORTED_MODULE_1__assets_js_services_webUrl__["a" /*
 var projectOderService = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_project_order_service__["a" /* default */]();
 new Vue({
     el: '#project-order-index',
-    mixins: [__WEBPACK_IMPORTED_MODULE_2__project_order_edit__["a" /* ProjectOrderEditModal */]],
+    mixins: [__WEBPACK_IMPORTED_MODULE_2__project_order_edit__["a" /* ProjectOrderEditModal */], __WEBPACK_IMPORTED_MODULE_3__porlor_5_porlor_5_index__["a" /* Porlor5Index */]],
     data: {
         showLoading: '',
         orders: {}
@@ -167,6 +170,13 @@ new Vue({
                 order: order
             });
         },
+
+        //Open Porlor 5
+        openPorlor5Modal: function openPorlor5Modal(order) {
+            this.$modal.show('porlor-5-modal', {
+                order: order
+            });
+        },
         getAllProjectOrder: function getAllProjectOrder() {
             var _this2 = this;
 
@@ -184,6 +194,9 @@ new Vue({
                 this.getAllProjectOrder();
             }
         },
+
+        //Before Close Porlor 5
+        beforeClosePorlor5Modal: function beforeClosePorlor5Modal() {},
 
         //Delete Project
         deleteProject: function deleteProject(order) {
@@ -297,6 +310,84 @@ var ProjectOrderEditModal = {
         }
     }
 };
+
+/***/ }),
+
+/***/ 208:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Porlor5Index; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_5_porlor_5_service__ = __webpack_require__(209);
+
+var porlor5Service = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_5_porlor_5_service__["a" /* default */]();
+var Porlor5Index = {
+    data: function data() {
+        return {
+            porlor_5: {
+                project_order: ''
+            }
+
+        };
+    },
+
+    methods: {
+        beforeOpenPorlor5Modal: function beforeOpenPorlor5Modal(data) {
+            this.porlor_5.project_order = data.params.order;
+            porlor5Service.getPorlor5(this.porlor_5.project_order.id).then(function (result) {
+                console.log(result);
+            }).catch(function (err) {
+                alert(err);
+            });
+        },
+        closePorlor5Modal: function closePorlor5Modal() {
+            this.$modal.hide('porlor-5-modal');
+        }
+    }
+};
+
+/***/ }),
+
+/***/ 209:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__webUrl__ = __webpack_require__(2);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+
+var webUrl = new __WEBPACK_IMPORTED_MODULE_0__webUrl__["a" /* default */]();
+
+var Porlor5Service = function () {
+    function Porlor5Service() {
+        _classCallCheck(this, Porlor5Service);
+
+        this.url = webUrl.getUrl();
+    }
+
+    //Get Porlor5
+
+
+    _createClass(Porlor5Service, [{
+        key: 'getPorlor5',
+        value: function getPorlor5(project_order_id) {
+            var url = this.url + '/admin/project_order/' + project_order_id + '/porlor_5';
+            return new Promise(function (resolve, reject) {
+                axios.get(url).then(function (result) {
+                    resolve(result.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
+    }]);
+
+    return Porlor5Service;
+}();
+
+/* harmony default export */ __webpack_exports__["a"] = (Porlor5Service);
 
 /***/ }),
 

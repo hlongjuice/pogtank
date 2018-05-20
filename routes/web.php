@@ -128,6 +128,10 @@ Route::prefix('admin')->middleware('auth')
                 // -- -- -- --Update Root Job
                 Route::put('update_root_job','Admin\Project\Porlor4JobController@updateRootJob');
             });
+            // -- -- -- Porlor 5
+            Route::prefix('{project_order_id}/porlor_5')->group(function(){
+               Route::get('/','Admin\Project\Porlor5\Porlor5Controller@getPorlor5');
+            });
         });
 
         // -- -- Porlor 4 Part

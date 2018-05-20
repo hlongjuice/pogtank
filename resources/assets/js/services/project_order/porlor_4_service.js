@@ -1,6 +1,6 @@
 import WebUrl from '../webUrl';
-let webUrl=new WebUrl();
-class Porlor4Service{
+    let webUrl=new WebUrl();
+    class Porlor4Service{
     constructor(){
         this.url=webUrl.getUrl();
     }

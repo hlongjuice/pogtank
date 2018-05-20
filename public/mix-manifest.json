@@ -11,8 +11,8 @@
     "/views/admin/materials/types/js/type_edit.js": "/views/admin/materials/types/js/type_edit.js",
     "/views/admin/materials/types/js/type_create.js": "/views/admin/materials/types/js/type_create.js",
     "/views/admin/materials/items/js/item_edit_add_modal.js": "/views/admin/materials/items/js/item_edit_add_modal.js",
-    "/views/admin/project_order/porlor_4/js/porlor_4_index.js": "/views/admin/project_order/porlor_4/js/porlor_4_index.js",
     "/views/admin/project_order/js/project_order_index.js": "/views/admin/project_order/js/project_order_index.js",
+    "/views/admin/project_order/porlor_4/js/porlor_4_index.js": "/views/admin/project_order/porlor_4/js/porlor_4_index.js",
     "/views/admin/porlor_4_part/js/porlor_4_part_index.js": "/views/admin/porlor_4_part/js/porlor_4_part_index.js",
     "/views/web/test_api/index.js": "/views/web/test_api/index.js"
 }
