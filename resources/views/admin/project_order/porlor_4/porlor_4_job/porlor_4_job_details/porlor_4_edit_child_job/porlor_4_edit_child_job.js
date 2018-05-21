@@ -62,11 +62,12 @@ export const Porlor4EditChildJob = {
             this.$validator.validateAll(form)
                 .then(result=>{
                     if(result){
-                        this.edit_child_job.isLoading = true;
+                        console.log('Pass Validate');
+                        this.edit_child_job.showLoading = true;
                         porlor4JobService.updateChildJob(this.porlor4.id,this.edit_child_job.form)
                             .then(result=>{
                                 console.log('Update Child Job Success');
-                                this.edit_child_job.isLoading = false;
+                                this.edit_child_job.showLoading = false;
                                 this.edit_child_job.edit_status = true;
                                 this.closeEditChildJobModal();
                             })

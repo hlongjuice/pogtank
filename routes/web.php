@@ -24,11 +24,11 @@ Route::prefix('test_api')->group(function(){
    Route::get('/get_item','TestApi@getItems');
    Route::get('/edit','TestApi@editItem')
     ->name('test_api.edit');
-   Route::put('/update_item/{id}','TestApi@updateItems')
-    ->name('test_api.update_item');
     Route::delete('/delete/{id}','TestApi@delete')
         ->name('test_api.delete');
 });
+Route::put('test_api/update_item/{id}','TestApi@updateItems')
+    ->name('test_api.update_item');
 
 //Log
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');

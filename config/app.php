@@ -181,6 +181,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         //Laravel Log
+        //Laravel Log
         Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
 
     ],

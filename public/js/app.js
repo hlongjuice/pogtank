@@ -4934,8 +4934,8 @@ var WebUrl = function () {
         // this.url='http://localhost/pogtank/public';
         // this.url=':2720';
         // this.url='http://www.ggdemo.com/public';
-        this.url = 'http://ggdemo.thddns.net:2720/pogtank/public';
-        // this.url='';
+        // this.url='http://ggdemo.thddns.net:2720/pogtank/public'
+        this.url = '';
         // this.url='/public';
     }
 
@@ -25297,9 +25297,9 @@ var webUrl = new __WEBPACK_IMPORTED_MODULE_0__services_webUrl__["a" /* default *
  */
 
 try {
-    // window.$ = window.jQuery = require('jquery');
+  // window.$ = window.jQuery = require('jquery');
 
-    // require('bootstrap-sass');
+  // require('bootstrap-sass');
 } catch (e) {}
 
 /**
@@ -25309,15 +25309,16 @@ try {
  */
 
 window.axios = __webpack_require__(9);
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+// window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.axios.defaults.baseURL = webUrl.getUrl();
 
-window.axios.interceptors.response.use(null, function (error) {
-    if (error.response.status === 401) {
-        window.location = webUrl.getRoute('/login');
-    }
-    return Promise.reject(error);
-});
+//
+// window.axios.interceptors.response.use(null, function(error) {
+//     if (error.response.status === 401) {
+//         window.location=webUrl.getRoute('/login');
+//     }
+//     return Promise.reject(error);
+// });
 
 /**
  * Next we will register the CSRF Token as a common header with Axios so that
@@ -25325,13 +25326,13 @@ window.axios.interceptors.response.use(null, function (error) {
  * a simple convenience so we don't have to attach every token manually.
  */
 
-var token = document.head.querySelector('meta[name="csrf-token"]');
-
-if (token) {
-    window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
-} else {
-    console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
-}
+// var token = document.head.querySelector('meta[name="csrf-token"]');
+//
+// if (token) {
+//     window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+// } else {
+//     console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
+// }
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

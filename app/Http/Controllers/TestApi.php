@@ -16,10 +16,10 @@ class TestApi extends Controller
         return view('web.test_api.index');
     }
     public function updateItems($id){
-        TestItem::first()->update([
-            'name'=>55555
+        $items= TestItem::first()->update([
+            'name'=>'OOOO'
         ]);
-        return redirect()->route('test_api.edit');
+//        return redirect()->route('test_api.edit');
 //        $items =TestItem::all();
 //        return response()->json($items);
     }

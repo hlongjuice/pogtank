@@ -160,9 +160,11 @@ export const Porlor4JobDetails = {
                 '<p>ยืนยันการลบ</p><h4 class="text-danger">' + item_order_number + ' '
                 + item.details.approved_global_details.name + '</h4>'
             ).then(() => {
+                this.showLoadingJobDetails=true;
                 porlor4JobService.deleteItem(this.porlor4.id, item.id)
                     .then(result => {
                         this.getAllChildJobAndItems();
+                        this.showLoadingJobDetails=false;
                     }).catch(err => {
                     alert(err)
                 })
@@ -176,10 +178,12 @@ export const Porlor4JobDetails = {
                 + '<p>การลบนี้จะลบรายการย่อยในกลุ่มด้วยทั้งหมด</p>'
             )
                 .then(() => {
+                    this.showLoadingJobDetails=true;
                     console.log('Delete Child Job :', job);
                     porlor4JobService.deleteChildJob(this.porlor4.id, job.id)
                         .then(result => {
                             this.getAllChildJobAndItems();
+                            this.showLoadingJobDetails=false;
                         }).catch(err => {
                         alert(err)
                     })

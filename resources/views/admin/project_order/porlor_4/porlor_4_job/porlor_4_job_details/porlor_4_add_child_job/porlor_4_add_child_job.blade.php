@@ -3,11 +3,13 @@
         :click-to-close="false"
         v-cloak
         @before-open="beforeOpenAddChildJobModal($event)"
+        @opened="openedAddChildJobModal"
         @before-close="beforeCloseAddChildJobModal"
         width="90%"
         height="auto"
         :scrollable="true"
 >
+    <loading :show='add_child_job.is_loading'></loading>
     <div class="row">
         <!-- FORM-->
         <form

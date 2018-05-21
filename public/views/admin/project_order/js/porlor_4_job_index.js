@@ -1047,8 +1047,8 @@ var WebUrl = function () {
         // this.url='http://localhost/pogtank/public';
         // this.url=':2720';
         // this.url='http://www.ggdemo.com/public';
-        this.url = 'http://ggdemo.thddns.net:2720/pogtank/public';
-        // this.url='';
+        // this.url='http://ggdemo.thddns.net:2720/pogtank/public'
+        this.url = '';
         // this.url='/public';
     }
 
@@ -1562,8 +1562,10 @@ var Porlor4JobDetails = {
             var item_order_number = order_number + '.1.' + item_index;
             console.log('Delete Item : ', item);
             this.$dialog.confirm('' + '<p>ยืนยันการลบ</p><h4 class="text-danger">' + item_order_number + ' ' + item.details.approved_global_details.name + '</h4>').then(function () {
+                _this2.showLoadingJobDetails = true;
                 porlor4JobService.deleteItem(_this2.porlor4.id, item.id).then(function (result) {
                     _this2.getAllChildJobAndItems();
+                    _this2.showLoadingJobDetails = false;
                 }).catch(function (err) {
                     alert(err);
                 });
@@ -1573,9 +1575,11 @@ var Porlor4JobDetails = {
             var _this3 = this;
 
             this.$dialog.confirm('' + '<p>ยืนยันการลบ</p><h4 class="text-danger">' + job.job_order_number + ' ' + job.name + '</h4>' + '<p>การลบนี้จะลบรายการย่อยในกลุ่มด้วยทั้งหมด</p>').then(function () {
+                _this3.showLoadingJobDetails = true;
                 console.log('Delete Child Job :', job);
                 porlor4JobService.deleteChildJob(_this3.porlor4.id, job.id).then(function (result) {
                     _this3.getAllChildJobAndItems();
+                    _this3.showLoadingJobDetails = false;
                 }).catch(function (err) {
                     alert(err);
                 });
@@ -1663,6 +1667,7 @@ var Porlor4AddChildJob = {
             add_child_job: {
                 total_page_number: 0,
                 add_status: false,
+                is_loading: false,
                 form: {
                     page_number: '',
                     job_order_number: '',
@@ -1689,11 +1694,13 @@ var Porlor4AddChildJob = {
                 alert(err);
             });
         },
+        openedAddChildJobModal: function openedAddChildJobModal() {},
 
         //Reset Data
         addChildJobResetData: function addChildJobResetData(event) {
             this.add_child_job = {
                 add_status: false,
+                is_loading: false,
                 total_page_number: event.params.total_page_number,
                 form: {
                     page_number: event.params.page_number,
@@ -1710,12 +1717,14 @@ var Porlor4AddChildJob = {
         addChildJob: function addChildJob(scope, event) {
             var _this2 = this;
 
-            console.log('Add Child Job Form :', this.add_child_job.form);
             this.$validator.validateAll(scope).then(function (result) {
                 if (result) {
+                    _this2.add_child_job.is_loading = true;
+                    console.log('Add Child Job Loading Status :', _this2.add_child_job.is_loading);
                     porlor4JobService.addChildJob(_this2.porlor4.id, _this2.root_job.id, _this2.add_child_job.form).then(function (result) {
                         _this2.add_child_job.add_status = true;
                         _this2.closeAddChildJobModal();
+                        _this2.add_child_job.is_loading = false;
                         console.log(result);
                     }).catch(function (err) {
                         alert(err);
@@ -2060,10 +2069,11 @@ var Porlor4EditChildJob = {
             console.log('Update Data');
             this.$validator.validateAll(form).then(function (result) {
                 if (result) {
-                    _this2.edit_child_job.isLoading = true;
+                    console.log('Pass Validate');
+                    _this2.edit_child_job.showLoading = true;
                     porlor4JobService.updateChildJob(_this2.porlor4.id, _this2.edit_child_job.form).then(function (result) {
                         console.log('Update Child Job Success');
-                        _this2.edit_child_job.isLoading = false;
+                        _this2.edit_child_job.showLoading = false;
                         _this2.edit_child_job.edit_status = true;
                         _this2.closeEditChildJobModal();
                     }).catch();

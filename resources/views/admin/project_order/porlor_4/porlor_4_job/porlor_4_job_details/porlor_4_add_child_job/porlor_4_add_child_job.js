@@ -6,6 +6,7 @@ export const Porlor4AddChildJob ={
             add_child_job:{
                 total_page_number:0,
                 add_status:false,
+                is_loading:false,
                 form:{
                     page_number:'',
                     job_order_number:'',
@@ -32,10 +33,13 @@ export const Porlor4AddChildJob ={
 
                 })
         },
+        openedAddChildJobModal(){
+        },
         //Reset Data
         addChildJobResetData(event){
             this.add_child_job={
                 add_status:false,
+                is_loading:false,
                 total_page_number:event.params.total_page_number,
                 form:{
                     page_number:event.params.page_number,
@@ -50,15 +54,17 @@ export const Porlor4AddChildJob ={
             }
         },
         addChildJob(scope,event){
-            console.log('Add Child Job Form :',this.add_child_job.form);
             this.$validator.validateAll(scope)
                 .then(result=> {
                     if(result){
+                        this.add_child_job.is_loading=true;
+                        console.log('Add Child Job Loading Status :',this.add_child_job.is_loading);
                         porlor4JobService.addChildJob(this.porlor4.id,
                             this.root_job.id,this.add_child_job.form)
                             .then(result=>{
                                 this.add_child_job.add_status =true;
                                 this.closeAddChildJobModal();
+                                this.add_child_job.is_loading=false;
                                 console.log(result);
                             }).catch(err=>{alert(err)})
                     }else{

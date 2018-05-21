@@ -183,7 +183,8 @@
                                                     <td></td>
                                                     <td></td>
                                                     <td class="text-center"></td>
-                                                    <td class="text-right">ยอดยกไป (รายการที่ 1 - @{{ job.last_job_order_number}} )
+                                                    <td class="text-right">ยอดยกไป (รายการที่ 1 - @{{
+                                                        job.last_job_order_number}} )
                                                     </td>
                                                     <td></td>
                                                     <td></td>
@@ -199,7 +200,9 @@
                                                     <td></td>
                                                     <td></td>
                                                     <td class="text-center"></td>
-                                                    <td class="text-center bold">รวมราคารายการที่ 1 - @{{ job.last_job_order_number }}</td>
+                                                    <td class="text-center bold">รวมราคารายการที่ 1 - @{{
+                                                        job.last_job_order_number }}
+                                                    </td>
                                                     <td></td>
                                                     <td></td>
                                                     <td></td>
@@ -212,11 +215,14 @@
                                             </template>
                                             {{--3 รายการผลรวมกลุ่ม--}}
                                             <template v-else-if="job.row_group_result == 1">
-                                                <tr v-if="job.group_depth <= 2" class="table-result-green text-right bold">
+                                                <tr v-if="job.group_depth <= 2"
+                                                    class="table-result-green text-right bold">
                                                     <td></td>
                                                     <td></td>
                                                     <td class="text-center"></td>
-                                                    <td class="text-center bold">รวมราคารายการที่ @{{ job.group_order_number }}</td>
+                                                    <td class="text-center bold">รวมราคารายการที่ @{{
+                                                        job.group_order_number }}
+                                                    </td>
                                                     <td></td>
                                                     <td></td>
                                                     <td></td>
@@ -249,7 +255,8 @@
                                                     <td></td>
                                                     <td></td>
                                                     <td class="text-center"></td>
-                                                    <td class="text-right">ยอดยกมา (รายการที่ 1 - @{{ job.last_job_order_number}} )
+                                                    <td class="text-right">ยอดยกมา (รายการที่ 1 - @{{
+                                                        job.last_job_order_number}} )
                                                     </td>
                                                     <td></td>
                                                     <td></td>
@@ -262,50 +269,41 @@
                                                 </tr>
                                             </template>
                                             {{--1 รายการ job --}}
-                                            <template  v-else>
-                                                <tr class="text-right">
-                                                    {{--Delete Job--}}
-                                                    <td class="text-center">
-                                                        <a @click="jobDetails_deleteChildJob(job)"
-                                                           class="btn btn-danger btn-xs">
-                                                            <i class="far fa-times"></i>
-                                                        </a>
-                                                    </td>
-                                                    {{--Edit Job Item--}}
-                                                    <td v-if="job.is_item==1" class="text-center">
-                                                        <a @click="showEditChildJobItemModal(job)" class="btn btn-info btn-xs">
-                                                            <i class="far fa-edit"></i>
-                                                        </a>
-                                                    </td>
-                                                    {{--Edit Job--}}
-                                                    <td v-else class="text-center">
-                                                        <a @click="showEditChildJobModal(job)" class="btn btn-info btn-xs">
-                                                            <i class="far fa-edit"></i>
-                                                        </a>
-                                                    </td>
-                                                    <td class="text-center">@{{job.job_order_number}}</td>
-                                                    <td class="text-left">
-                                                        @{{ job.name }}
-                                                        <span v-if="job.is_item == 0">
+                                            <template v-else>
+                                                <template v-if="job.group_item_per_unit == 1 ">
+                                                    <tr class="text-right">
+                                                        {{--Delete Job--}}
+                                                        <td class="text-center">
+                                                            <a @click="jobDetails_deleteChildJob(job)"
+                                                               class="btn btn-danger btn-xs">
+                                                                <i class="far fa-times"></i>
+                                                            </a>
+                                                        </td>
+                                                        {{--Edit Job Item--}}
+                                                        <td v-if="job.is_item==1" class="text-center">
+                                                            <a @click="showEditChildJobItemModal(job)"
+                                                               class="btn btn-info btn-xs">
+                                                                <i class="far fa-edit"></i>
+                                                            </a>
+                                                        </td>
+                                                        {{--Edit Job--}}
+                                                        <td v-else class="text-center">
+                                                            <a @click="showEditChildJobModal(job)"
+                                                               class="btn btn-info btn-xs">
+                                                                <i class="far fa-edit"></i>
+                                                            </a>
+                                                        </td>
+                                                        <td class="text-center">@{{job.job_order_number}}</td>
+                                                        <td class="text-left">
+                                                            @{{ job.name }}
+                                                            <span v-if="job.is_item == 0">
                                                     <a @click="showAddChildJobItemModal(job,child_job.page)"
                                                        class="pull-right btn btn-info btn-xs">
                                                     เพิ่มรายการวัสดุ <i class="fa fa-plus"></i>
                                                     </a>
                                                 </span>
-                                                    </td>
-                                                    {{--แสดงเฉพาะ Job ที่เป็น Item--}}
-                                                    <template v-if="job.item">
-                                                        <td>@{{job.item.quantity}}</td>
-                                                        <td class="text-center">@{{ job.item.unit }}</td>
-                                                        <td>@{{ job.item.local_price | currency('') }}</td>
-                                                        <td>@{{ job.item.total_price | currency('')}}</td>
-                                                        <td>@{{ job.item.local_wage | currency('')}}</td>
-                                                        <td>@{{ job.item.total_wage | currency('')}}</td>
-                                                        <td>@{{ job.item.sum_total_price_wage | currency('')}}</td>
-                                                        <td></td>
-                                                    </template>
-                                                    {{--แสดงเฉพาะ Job ที่เป็นงาน--}}
-                                                    <template v-else>
+                                                        </td>
+                                                        {{--แสดงเฉพาะ Job ที่เป็นงาน--}}
                                                         <td>
                                                         </td>
                                                         <td></td>
@@ -315,8 +313,84 @@
                                                         <td></td>
                                                         <td></td>
                                                         <td></td>
-                                                    </template>
-                                                </tr>
+                                                    </tr>
+                                                    {{--เพิ่ม รายการ .1 รายการต่อ 1 หน่วย--}}
+                                                    <tr class="text-right">
+                                                        <td></td>
+                                                        <td ></td>
+                                                        <td class="text-center">@{{job.job_order_number}}.1</td>
+                                                        <td class="text-left">
+                                                            @{{ job.name_per_unit }}
+                                                        </td>
+                                                        <td>
+                                                        </td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                    </tr>
+                                                </template>
+                                                <template v-else>
+                                                    <tr class="text-right">
+                                                        {{--Delete Job--}}
+                                                        <td class="text-center">
+                                                            <a @click="jobDetails_deleteChildJob(job)"
+                                                               class="btn btn-danger btn-xs">
+                                                                <i class="far fa-times"></i>
+                                                            </a>
+                                                        </td>
+                                                        {{--Edit Job Item--}}
+                                                        <td v-if="job.is_item==1" class="text-center">
+                                                            <a @click="showEditChildJobItemModal(job)"
+                                                               class="btn btn-info btn-xs">
+                                                                <i class="far fa-edit"></i>
+                                                            </a>
+                                                        </td>
+                                                        {{--Edit Job--}}
+                                                        <td v-else class="text-center">
+                                                            <a @click="showEditChildJobModal(job)"
+                                                               class="btn btn-info btn-xs">
+                                                                <i class="far fa-edit"></i>
+                                                            </a>
+                                                        </td>
+                                                        <td class="text-center">@{{job.job_order_number}}</td>
+                                                        <td class="text-left">
+                                                            @{{ job.name }}
+                                                            <span v-if="job.is_item == 0">
+                                                    <a @click="showAddChildJobItemModal(job,child_job.page)"
+                                                       class="pull-right btn btn-info btn-xs">
+                                                    เพิ่มรายการวัสดุ <i class="fa fa-plus"></i>
+                                                    </a>
+                                                </span>
+                                                        </td>
+                                                        {{--แสดงเฉพาะ Job ที่เป็น Item--}}
+                                                        <template v-if="job.item">
+                                                            <td>@{{job.item.quantity}}</td>
+                                                            <td class="text-center">@{{ job.item.unit }}</td>
+                                                            <td>@{{ job.item.local_price | currency('') }}</td>
+                                                            <td>@{{ job.item.total_price | currency('')}}</td>
+                                                            <td>@{{ job.item.local_wage | currency('')}}</td>
+                                                            <td>@{{ job.item.total_wage | currency('')}}</td>
+                                                            <td>@{{ job.item.sum_total_price_wage | currency('')}}</td>
+                                                            <td></td>
+                                                        </template>
+                                                        {{--แสดงเฉพาะ Job ที่เป็นงาน--}}
+                                                        <template v-else>
+                                                            <td>
+                                                            </td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                        </template>
+                                                    </tr>
+                                                </template>
                                             </template>
                                             {{--รายการวัสดุ/งาน ต่อ 1 หน่วย .1--}}
                                             <template v-if="job.parent_group_item_per_unit == 1">
