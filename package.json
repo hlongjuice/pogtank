@@ -11,7 +11,7 @@
         "es6": "./node_modules/.bin/babel public/js/my-app.js  -o public/dist/test.js"
     },
     "devDependencies": {
-        "axios": "0.16.2",
+        "axios": "0.18.0",
         "babel-cli": "6.26.0",
         "babel-preset-env": "1.6.1",
         "babel-register": "6.26.0",

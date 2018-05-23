@@ -517,7 +517,9 @@ var ProjectOrderService = function () {
         key: 'updateProjectDetails',
         value: function updateProjectDetails(inputData) {
             var url = this.url + '/admin/project_order/update_project_details';
+            inputData._method = 'PUT';
             return new Promise(function (resolve, reject) {
+                // axios.put(url,inputData)
                 axios.put(url, inputData).then(function (result) {
                     resolve(result.data);
                 }).catch(function (err) {

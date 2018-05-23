@@ -30,7 +30,9 @@ class ProjectOrderService{
     //Update Project Details
     updateProjectDetails(inputData){
         let url=this.url+'/admin/project_order/update_project_details';
+        inputData._method='PUT';
         return new Promise((resolve,reject)=>{
+            // axios.put(url,inputData)
             axios.put(url,inputData)
                 .then(result=>{
                     resolve(result.data)
