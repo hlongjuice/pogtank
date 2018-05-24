@@ -123,12 +123,16 @@ class Porlor4JobController extends Controller
 
 
             $jobParent = Porlor4Job::withDepth()->where('id', $request->input('child_job')['id'])->first();
-
+            $isItemPerUnit = null;
             $projectDetails = $request->input('project_details');
             $approvedStatus = GlobalVariableController::$publishedStatus['approved'];
             $page_number = $this->setPageNumber($jobParent, $request->input('page_number'));
             $jobInputs = collect([]);
             $itemInputs = collect([]);
+            //ถ้า parent เป็น Group item per unit ให้ลูกเป็น itemPerUnit
+            if($jobParent->group_item_per_unit == 1){
+                $isItemPerUnit =1;
+            }
 
             //วนลูปเก็บรายละเอียด items แต่ละอัน
             foreach ($request->input('items') as $item) {
@@ -160,7 +164,8 @@ class Porlor4JobController extends Controller
                         'unit' => 0,
                         'name_per_unit' => '',
                         'group_item_per_unit' => 0,
-                        'is_item' => $request->input('is_item')
+                        'is_item' => $request->input('is_item'),
+                        'is_item_per_unit'=>$isItemPerUnit
                     ]);
                     //Input สำหรับ porlor 4 job Items
                     $itemInput = $newJob->item()->create([
@@ -371,6 +376,7 @@ class Porlor4JobController extends Controller
                         if ($parent->group_item_per_unit) {
                             $sumGroup = collect([
                                 'row_group_result' => 1,
+                                'group_item_per_unit'=>1,
                                 'page_number' => $job->page_number,
                                 'group_sum_total_price' => $parent->group_item_per_unit_sum_total_price,
                                 'group_sum_total_wage' => $parent->group_item_per_unit_sum_total_wage,
@@ -382,6 +388,7 @@ class Porlor4JobController extends Controller
                         } else {//กลุ่มปกติ
                             $sumGroup = collect([
                                 'row_group_result' => 1,
+                                'group_item_per_unit'=>0,
                                 'page_number' => $job->page_number,
                                 'group_sum_total_price' => $parent->sum_total_price,
                                 'group_sum_total_wage' => $parent->sum_total_wage,
@@ -422,15 +429,16 @@ class Porlor4JobController extends Controller
             foreach ($allJobs as $key => $job) {
                 //ถ้าเป้น item เอาเฉพาะ item lv 2 มาคิด
                 if ($job['depth'] == 2) {
-                    if ($job->is_item) {
+                    if ($job->is_item && $job->is_item_per_unit != 1)  {
                         $lastRowInPage['page_sum_total_price'] += $job['item']['total_price'];
                         $lastRowInPage['page_sum_total_wage'] += $job['item']['total_wage'];
                         $lastRowInPage['page_sum_total_price_wage'] += $job['item']['sum_total_price_wage'];
                         $lastRowInPage['last_job_order_number'] = $job['job_order_number'];
                     }
                 }
-                //ถ้าเป็นกลุ่มเอาผมรวมของกลุ่ม level 2 มาคิด
-                if ($job['group_depth'] == 2  && $job['row_group_result'] ==1) {
+                //ถ้าเป็นกลุ่มเอาผมรวมของกลุ่ม level 2 มาคิด หรือ level ๅ ที่เป็นแถวผลรวมของ Group Unit Per Item
+                if (($job['group_depth'] == 2  && $job['row_group_result'] ==1) ||
+                    ($job['group_item_per_unit'] == 1 && $job['group_depth']==1 && $job['row_group_result'] ==1)) {
                     $lastRowInPage['page_sum_total_price'] += $job['group_sum_total_price'];
                     $lastRowInPage['page_sum_total_wage'] += $job['group_sum_total_wage'];
                     $lastRowInPage['page_sum_total_price_wage'] += $job['group_sum_total_price_wage'];
@@ -726,8 +734,13 @@ class Porlor4JobController extends Controller
             ]);
             if ($oldGroupItemPerUnitStat != $request->input('group_item_per_unit')) {
                 foreach ($parent->children as $child) {
+                    $isItemPerUnit = null;
+                    if($parent->group_item_per_unit ==1){
+                        $isItemPerUnit = 1;
+                    }
                     $order_number = $this->updatedGroupItemPerUnitSetOrderNumber($parent, $child->job_order_number);
                     $child->job_order_number = $order_number;
+                    $child->is_item_per_unit =$isItemPerUnit;
                     $child->save();
                 }
             }
