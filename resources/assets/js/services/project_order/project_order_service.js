@@ -3,6 +3,13 @@ let webUrl = new WebUrl();
 class ProjectOrderService{
     constructor(){
         this.url=webUrl.getUrl();
+        this._delete_method={
+            _method:'DELETE'
+        };
+        this._put_method={
+            _method:'PUT'
+        }
+
     }
     //Get All Project Order
     getAllProjectOrders(){
@@ -32,8 +39,7 @@ class ProjectOrderService{
         let url=this.url+'/admin/project_order/update_project_details';
         inputData._method='PUT';
         return new Promise((resolve,reject)=>{
-            // axios.put(url,inputData)
-            axios.put(url,inputData)
+            axios.post(url,inputData)
                 .then(result=>{
                     resolve(result.data)
                 }).catch(err=>{reject(err)})
@@ -43,7 +49,7 @@ class ProjectOrderService{
     deleteProject(id){
         let url=this.url+'/admin/project_order/delete_project/'+id;
         return new Promise((resolve,reject)=>{
-           axios.delete(url)
+           axios.post(url,this._delete_method)
                .then(result=>{
                    resolve(result.data)
                }).catch(err=>{reject(err)})

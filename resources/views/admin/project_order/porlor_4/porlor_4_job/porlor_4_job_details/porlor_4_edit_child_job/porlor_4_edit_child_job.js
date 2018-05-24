@@ -34,6 +34,10 @@ export const Porlor4EditChildJob = {
             console.log('Opened Edit Child Job Modal Child Job :', child_job);
             porlor4JobService.getParentJobs(this.porlor4.id, this.root_job.id)
                 .then(result => {
+                    let group_item_per_unit = child_job.group_item_per_unit;
+                    if(group_item_per_unit == 0){
+                        group_item_per_unit = false;
+                    }
                     console.log('Parents Job Result :', result);
                     let parent = child_job.ancestors.filter(item => {
                         return item.id === child_job.parent_id
@@ -47,7 +51,7 @@ export const Porlor4EditChildJob = {
                         parent: parent,
                         quantity_factor: child_job.quantity_factor,
                         unit: child_job.unit,
-                        group_item_per_unit: child_job.group_item_per_unit
+                        group_item_per_unit: group_item_per_unit
                     };
                     this.edit_child_job.parents = result;
                     this.edit_child_job.showLoading = false;

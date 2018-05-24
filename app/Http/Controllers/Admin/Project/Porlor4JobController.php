@@ -430,7 +430,7 @@ class Porlor4JobController extends Controller
                     }
                 }
                 //ถ้าเป็นกลุ่มเอาผมรวมของกลุ่ม level 2 มาคิด
-                if ($job['group_depth'] == 2 && $job['row_group_result']) {
+                if ($job['group_depth'] == 2  && $job['row_group_result'] ==1) {
                     $lastRowInPage['page_sum_total_price'] += $job['group_sum_total_price'];
                     $lastRowInPage['page_sum_total_wage'] += $job['group_sum_total_wage'];
                     $lastRowInPage['page_sum_total_price_wage'] += $job['group_sum_total_price_wage'];
@@ -460,6 +460,7 @@ class Porlor4JobController extends Controller
                 'page' => $page,
                 'jobs' => $allJobs,
                 'total_page' => $total_page,
+                'origin_jobs'=>$jobs
             ];
             $groupJobsByPage->push($pageJob);
         }

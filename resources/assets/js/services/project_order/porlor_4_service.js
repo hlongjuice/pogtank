@@ -3,6 +3,9 @@ import WebUrl from '../webUrl';
     class Porlor4Service{
     constructor(){
         this.url=webUrl.getUrl();
+        this._delete_method={
+            _method:'DELETE'
+        };
     }
     //Add New Part
     addNewPart(order_id,dataInput){
@@ -18,7 +21,7 @@ import WebUrl from '../webUrl';
     deletePart(porlor_4_id){
         let url=this.url+'/admin/project_order/porlor_4/delete_part/'+porlor_4_id;
         return new Promise((resolve,reject)=>{
-            axios.delete(url)
+            axios.post(url,this._delete_method)
                 .then(result=>{
                     resolve(result.data)
                 }).catch(err=>{reject(err)})
@@ -47,9 +50,10 @@ import WebUrl from '../webUrl';
     }
     //Update Part
     updatePart(dataInputs){
+        dataInputs._method = 'PUT';
         let url = this.url+'/admin/project_order/porlor_4/update_part';
         return new Promise((resolve,reject)=>{
-            axios.put(url,dataInputs)
+            axios.post(url,dataInputs)
                 .then(result=>{
                     resolve(result.data)
                 }).catch(err=>{reject(err)})

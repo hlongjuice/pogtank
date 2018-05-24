@@ -3,6 +3,9 @@ let webUrl=new WebUrl();
 class Porlor4JobService {
     constructor(){
         this.url= webUrl.getUrl();
+        this._delete_method={
+            _method:'DELETE'
+        };
     }
     //Add Root Job
     addRootJob(porlor_4_id,dataInputs){
@@ -127,7 +130,7 @@ class Porlor4JobService {
     deleteItem(porlor_4_id,item_id){
         let url = this.url+'/admin/project_order/porlor_4_id/'+porlor_4_id+'/delete_item/'+item_id;
         return new Promise((resolve,reject)=>{
-            axios.delete(url)
+            axios.post(url,this._delete_method)
                 .then(result=>{
                     resolve(result.data)
                 }).catch(err=>{reject(err)})
@@ -137,7 +140,7 @@ class Porlor4JobService {
     deleteChildJob(porlor_4_id,child_job_id){
         let url=this.url+'/admin/project_order/porlor_4_id/'+porlor_4_id+'/delete_child_job/'+child_job_id;
         return new Promise((resolve,reject)=>{
-            axios.delete(url)
+            axios.post(url,this._delete_method)
                 .then(result=>{
                     resolve(result.data)
                 }).catch(err=>{reject(err)})
@@ -147,7 +150,7 @@ class Porlor4JobService {
     deleteRootJob(porlor_4_id,root_job_id){
         let url=this.url+'/admin/project_order/porlor_4_id/'+porlor_4_id+'/delete_root_job/'+root_job_id;
         return new Promise((resolve,reject)=>{
-            axios.delete(url)
+            axios.post(url,this._delete_method)
                 .then(result=>{
                     resolve(result.data)
                 }).catch(err=>{reject(err)})
@@ -155,9 +158,10 @@ class Porlor4JobService {
     }
     //Update Child Job
     updateChildJob(porlor_4_id,form_input){
+        form_input._method= 'PUT';
         let url = this.url+'/admin/project_order/porlor_4_id/'+porlor_4_id+'/update_child_job';
         return new Promise((resolve,reject)=>{
-            axios.put(url,form_input)
+            axios.post(url,form_input)
                 .then(result=>{
                     resolve(result.data)
                 }).catch(err=>{reject(err)})
@@ -165,18 +169,20 @@ class Porlor4JobService {
     }
     //Update Child Job Item
     updateChildJobItem(porlor_4_id,form_input){
+        form_input._method='PUT';
         let url = this.url+'/admin/project_order/porlor_4_id/'+porlor_4_id+'/update_child_job_item';
         return new Promise((resolve,reject)=>{
-            axios.put(url,form_input)
+            axios.post(url,form_input)
                 .then(result=>{
                     resolve(result.data)
                 }).catch(err=>{reject(err)})
         })
     }
     updateRootJob(porlor_4_id,form_input){
+        form_input._method='PUT';
         let url=this.url+'/admin/project_order/porlor_4_id/'+porlor_4_id+'/update_root_job';
         return new Promise((resolve,reject)=>{
-            axios.put(url,form_input)
+            axios.post(url,form_input)
                 .then(result=>{
                     resolve(result.data)
                 }).catch(err=>{reject(err)})

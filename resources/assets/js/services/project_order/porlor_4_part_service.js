@@ -3,6 +3,12 @@ let webUrl = new WebUrl();
 class Porlor4Part{
     constructor(){
         this.url=webUrl.getUrl();
+        this._delete_method={
+            _method:'DELETE'
+        };
+        this._put_method={
+            _method:'PUT'
+        }
     }
     //Add New Part
     addNewPart(dataInputs){

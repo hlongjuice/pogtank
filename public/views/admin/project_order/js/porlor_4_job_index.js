@@ -2049,6 +2049,10 @@ var Porlor4EditChildJob = {
             var child_job = this.edit_child_job.child_job;
             console.log('Opened Edit Child Job Modal Child Job :', child_job);
             porlor4JobService.getParentJobs(this.porlor4.id, this.root_job.id).then(function (result) {
+                var group_item_per_unit = child_job.group_item_per_unit;
+                if (group_item_per_unit == 0) {
+                    group_item_per_unit = false;
+                }
                 console.log('Parents Job Result :', result);
                 var parent = child_job.ancestors.filter(function (item) {
                     return item.id === child_job.parent_id;
@@ -2062,7 +2066,7 @@ var Porlor4EditChildJob = {
                     parent: parent,
                     quantity_factor: child_job.quantity_factor,
                     unit: child_job.unit,
-                    group_item_per_unit: child_job.group_item_per_unit
+                    group_item_per_unit: group_item_per_unit
                 };
                 _this.edit_child_job.parents = result;
                 _this.edit_child_job.showLoading = false;
@@ -3023,6 +3027,9 @@ var Porlor4JobService = function () {
         _classCallCheck(this, Porlor4JobService);
 
         this.url = webUrl.getUrl();
+        this._delete_method = {
+            _method: 'DELETE'
+        };
     }
     //Add Root Job
 
@@ -3185,9 +3192,11 @@ var Porlor4JobService = function () {
     }, {
         key: 'deleteItem',
         value: function deleteItem(porlor_4_id, item_id) {
+            var _this = this;
+
             var url = this.url + '/admin/project_order/porlor_4_id/' + porlor_4_id + '/delete_item/' + item_id;
             return new Promise(function (resolve, reject) {
-                axios.delete(url).then(function (result) {
+                axios.post(url, _this._delete_method).then(function (result) {
                     resolve(result.data);
                 }).catch(function (err) {
                     reject(err);
@@ -3199,9 +3208,11 @@ var Porlor4JobService = function () {
     }, {
         key: 'deleteChildJob',
         value: function deleteChildJob(porlor_4_id, child_job_id) {
+            var _this2 = this;
+
             var url = this.url + '/admin/project_order/porlor_4_id/' + porlor_4_id + '/delete_child_job/' + child_job_id;
             return new Promise(function (resolve, reject) {
-                axios.delete(url).then(function (result) {
+                axios.post(url, _this2._delete_method).then(function (result) {
                     resolve(result.data);
                 }).catch(function (err) {
                     reject(err);
@@ -3213,9 +3224,11 @@ var Porlor4JobService = function () {
     }, {
         key: 'deleteRootJob',
         value: function deleteRootJob(porlor_4_id, root_job_id) {
+            var _this3 = this;
+
             var url = this.url + '/admin/project_order/porlor_4_id/' + porlor_4_id + '/delete_root_job/' + root_job_id;
             return new Promise(function (resolve, reject) {
-                axios.delete(url).then(function (result) {
+                axios.post(url, _this3._delete_method).then(function (result) {
                     resolve(result.data);
                 }).catch(function (err) {
                     reject(err);
@@ -3227,9 +3240,10 @@ var Porlor4JobService = function () {
     }, {
         key: 'updateChildJob',
         value: function updateChildJob(porlor_4_id, form_input) {
+            form_input._method = 'PUT';
             var url = this.url + '/admin/project_order/porlor_4_id/' + porlor_4_id + '/update_child_job';
             return new Promise(function (resolve, reject) {
-                axios.put(url, form_input).then(function (result) {
+                axios.post(url, form_input).then(function (result) {
                     resolve(result.data);
                 }).catch(function (err) {
                     reject(err);
@@ -3241,9 +3255,10 @@ var Porlor4JobService = function () {
     }, {
         key: 'updateChildJobItem',
         value: function updateChildJobItem(porlor_4_id, form_input) {
+            form_input._method = 'PUT';
             var url = this.url + '/admin/project_order/porlor_4_id/' + porlor_4_id + '/update_child_job_item';
             return new Promise(function (resolve, reject) {
-                axios.put(url, form_input).then(function (result) {
+                axios.post(url, form_input).then(function (result) {
                     resolve(result.data);
                 }).catch(function (err) {
                     reject(err);
@@ -3253,9 +3268,10 @@ var Porlor4JobService = function () {
     }, {
         key: 'updateRootJob',
         value: function updateRootJob(porlor_4_id, form_input) {
+            form_input._method = 'PUT';
             var url = this.url + '/admin/project_order/porlor_4_id/' + porlor_4_id + '/update_root_job';
             return new Promise(function (resolve, reject) {
-                axios.put(url, form_input).then(function (result) {
+                axios.post(url, form_input).then(function (result) {
                     resolve(result.data);
                 }).catch(function (err) {
                     reject(err);
@@ -3288,6 +3304,9 @@ var Porlor4Service = function () {
         _classCallCheck(this, Porlor4Service);
 
         this.url = webUrl.getUrl();
+        this._delete_method = {
+            _method: 'DELETE'
+        };
     }
     //Add New Part
 
@@ -3309,9 +3328,11 @@ var Porlor4Service = function () {
     }, {
         key: 'deletePart',
         value: function deletePart(porlor_4_id) {
+            var _this = this;
+
             var url = this.url + '/admin/project_order/porlor_4/delete_part/' + porlor_4_id;
             return new Promise(function (resolve, reject) {
-                axios.delete(url).then(function (result) {
+                axios.post(url, _this._delete_method).then(function (result) {
                     resolve(result.data);
                 }).catch(function (err) {
                     reject(err);
@@ -3352,9 +3373,10 @@ var Porlor4Service = function () {
     }, {
         key: 'updatePart',
         value: function updatePart(dataInputs) {
+            dataInputs._method = 'PUT';
             var url = this.url + '/admin/project_order/porlor_4/update_part';
             return new Promise(function (resolve, reject) {
-                axios.put(url, dataInputs).then(function (result) {
+                axios.post(url, dataInputs).then(function (result) {
                     resolve(result.data);
                 }).catch(function (err) {
                     reject(err);

@@ -398,6 +398,9 @@ var Porlor4Service = function () {
         _classCallCheck(this, Porlor4Service);
 
         this.url = webUrl.getUrl();
+        this._delete_method = {
+            _method: 'DELETE'
+        };
     }
     //Add New Part
 
@@ -419,9 +422,11 @@ var Porlor4Service = function () {
     }, {
         key: 'deletePart',
         value: function deletePart(porlor_4_id) {
+            var _this = this;
+
             var url = this.url + '/admin/project_order/porlor_4/delete_part/' + porlor_4_id;
             return new Promise(function (resolve, reject) {
-                axios.delete(url).then(function (result) {
+                axios.post(url, _this._delete_method).then(function (result) {
                     resolve(result.data);
                 }).catch(function (err) {
                     reject(err);
@@ -462,9 +467,10 @@ var Porlor4Service = function () {
     }, {
         key: 'updatePart',
         value: function updatePart(dataInputs) {
+            dataInputs._method = 'PUT';
             var url = this.url + '/admin/project_order/porlor_4/update_part';
             return new Promise(function (resolve, reject) {
-                axios.put(url, dataInputs).then(function (result) {
+                axios.post(url, dataInputs).then(function (result) {
                     resolve(result.data);
                 }).catch(function (err) {
                     reject(err);
@@ -497,6 +503,12 @@ var Porlor4Part = function () {
         _classCallCheck(this, Porlor4Part);
 
         this.url = webUrl.getUrl();
+        this._delete_method = {
+            _method: 'DELETE'
+        };
+        this._put_method = {
+            _method: 'PUT'
+        };
     }
     //Add New Part
 

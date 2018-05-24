@@ -227,6 +227,12 @@ var Porlor4Part = function () {
         _classCallCheck(this, Porlor4Part);
 
         this.url = webUrl.getUrl();
+        this._delete_method = {
+            _method: 'DELETE'
+        };
+        this._put_method = {
+            _method: 'PUT'
+        };
     }
     //Add New Part
 

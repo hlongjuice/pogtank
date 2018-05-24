@@ -1908,6 +1908,12 @@ var ProjectOrderService = function () {
         _classCallCheck(this, ProjectOrderService);
 
         this.url = webUrl.getUrl();
+        this._delete_method = {
+            _method: 'DELETE'
+        };
+        this._put_method = {
+            _method: 'PUT'
+        };
     }
     //Get All Project Order
 
@@ -1947,8 +1953,7 @@ var ProjectOrderService = function () {
             var url = this.url + '/admin/project_order/update_project_details';
             inputData._method = 'PUT';
             return new Promise(function (resolve, reject) {
-                // axios.put(url,inputData)
-                axios.put(url, inputData).then(function (result) {
+                axios.post(url, inputData).then(function (result) {
                     resolve(result.data);
                 }).catch(function (err) {
                     reject(err);
@@ -1960,9 +1965,11 @@ var ProjectOrderService = function () {
     }, {
         key: 'deleteProject',
         value: function deleteProject(id) {
+            var _this = this;
+
             var url = this.url + '/admin/project_order/delete_project/' + id;
             return new Promise(function (resolve, reject) {
-                axios.delete(url).then(function (result) {
+                axios.post(url, _this._delete_method).then(function (result) {
                     resolve(result.data);
                 }).catch(function (err) {
                     reject(err);
