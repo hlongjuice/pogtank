@@ -320,11 +320,15 @@ var ProjectOrderEditModal = {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Porlor5Index; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_5_porlor_5_service__ = __webpack_require__(209);
 
+
 var porlor5Service = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_5_porlor_5_service__["a" /* default */]();
 var Porlor5Index = {
     data: function data() {
         return {
-            porlor_5: {
+            porlor5: {
+                is_loading: false,
+                parts: '',
+                project: '',
                 project_order: ''
             }
 
@@ -333,9 +337,19 @@ var Porlor5Index = {
 
     methods: {
         beforeOpenPorlor5Modal: function beforeOpenPorlor5Modal(data) {
-            this.porlor_5.project_order = data.params.order;
-            porlor5Service.getPorlor5(this.porlor_5.project_order.id).then(function (result) {
+            this.porlor5.project_order = data.params.order;
+        },
+        openedPorlor5Modal: function openedPorlor5Modal() {
+            var _this = this;
+
+            this.porlor5.is_loading = true;
+            Promise.all([porlor5Service.getPorlor5(this.porlor5.project_order.id).then(function (result) {
                 console.log(result);
+                _this.porlor5.project = result;
+            }).catch(function (err) {
+                alert(err);
+            })]).then(function () {
+                _this.porlor5.is_loading = false;
             }).catch(function (err) {
                 alert(err);
             });
@@ -487,10 +501,25 @@ var ProjectOrderService = function () {
             _method: 'PUT'
         };
     }
-    //Get All Project Order
+    //Get Project Details
 
 
     _createClass(ProjectOrderService, [{
+        key: 'getProjectDetails',
+        value: function getProjectDetails(project_order_id) {
+            var url = this.url + '/admin/project_order/get_project_details/' + project_order_id;
+            return new Promise(function (resolve, reject) {
+                axios.get(url).then(function (result) {
+                    console.log('Result', result);
+                    resolve(result.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
+        //Get All Project Order
+
+    }, {
         key: 'getAllProjectOrders',
         value: function getAllProjectOrders() {
             var url = this.url + '/admin/project_order/get_all_orders';

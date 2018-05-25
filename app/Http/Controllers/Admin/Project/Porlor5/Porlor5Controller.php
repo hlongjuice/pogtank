@@ -13,7 +13,7 @@ class Porlor5Controller extends Controller
 {
     public function getPorlor5($project_order_id){
         $porlor4JobController = new Porlor4JobController();
-        $project = ProjectOrder::with('porlor4.part')->where('id',$project_order_id)->first();
+        $project = ProjectOrder::with('porlor4.part','province', 'amphoe', 'district')->where('id',$project_order_id)->first();
         foreach ($project->porlor4 as $porlor4){
             $root_jobs = $porlor4->jobs()->where('parent_id',null)->get();
             $porlor4->root_jobs= $root_jobs;

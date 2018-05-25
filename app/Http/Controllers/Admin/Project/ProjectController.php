@@ -25,6 +25,12 @@ class ProjectController extends Controller
             ->paginate(100);
         return response()->json($projectOrder);
     }
+    //Get Project Details
+    public function getProjectDetails($project_order_id){
+        $details = ProjectOrder::with(['province', 'amphoe', 'district'])
+            ->where('id', $project_order_id)->first();
+        return response()->json($details);
+    }
     //Add New Order
     public function addNewOrder(Request $request){
         $result=DB::transaction(function() use ($request){
@@ -69,4 +75,5 @@ class ProjectController extends Controller
         });
        return response()->json($result);
     }
+
 }

@@ -64,6 +64,8 @@ Route::prefix('admin')->middleware('auth')
             Route::get('/create', 'Admin\Project\ProjectController@create')->name('admin.project_order.create');
             // -- -- --Add new Order
             Route::post('/add_new_order', 'Admin\Project\ProjectController@addNewOrder');
+            // -- -- --Get Project Details
+            Route::get('/get_project_details/{project_order_id}','Admin\Project\ProjectController@getProjectDetails');
             // -- -- --Get All Project Order
             Route::get('/get_all_orders', 'Admin\Project\ProjectController@getAllProjectOrders');
             // -- -- --Update Project Details

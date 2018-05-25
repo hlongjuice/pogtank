@@ -1915,10 +1915,25 @@ var ProjectOrderService = function () {
             _method: 'PUT'
         };
     }
-    //Get All Project Order
+    //Get Project Details
 
 
     _createClass(ProjectOrderService, [{
+        key: 'getProjectDetails',
+        value: function getProjectDetails(project_order_id) {
+            var url = this.url + '/admin/project_order/get_project_details/' + project_order_id;
+            return new Promise(function (resolve, reject) {
+                axios.get(url).then(function (result) {
+                    console.log('Result', result);
+                    resolve(result.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
+        //Get All Project Order
+
+    }, {
         key: 'getAllProjectOrders',
         value: function getAllProjectOrders() {
             var url = this.url + '/admin/project_order/get_all_orders';
