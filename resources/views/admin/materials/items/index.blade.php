@@ -53,27 +53,6 @@
                                                 </a>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
-                                            <div class="btn-group pull-right">
-                                                <button class="btn dropdown-toggle" data-toggle="dropdown">Tools <i
-                                                            class="fa fa-angle-down"></i>
-                                                </button>
-                                                <ul class="dropdown-menu pull-right">
-                                                    <li>
-                                                        <a href="#">
-                                                            Print </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">
-                                                            Save as PDF </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">
-                                                            Export to Excel </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                                 <!-- -- --Approved Table -->
@@ -81,6 +60,7 @@
                                     <!-- -- -- --Table Header -->
                                     <thead>
                                     <tr>
+                                        <td><input type="checkbox"></td>
                                         <td>ชื่อวัสดุ/อุปกรณ์</td>
                                         <td>หมวดหมู่</td>
                                         <td>สถาณะ</td>
@@ -92,6 +72,7 @@
                                     <tbody>
                                     @foreach($approvedMaterials as $material)
                                         <tr>
+                                            <td><input type="checkbox"></td>
                                             <td>
                                                 {{-- -- -- -- --Edit Button--}}
                                                 <a href="{{route('admin.materials.items.edit',$material->id)}}">

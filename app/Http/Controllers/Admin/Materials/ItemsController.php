@@ -88,6 +88,7 @@ class ItemsController extends Controller
     }
 
     //Process Data all index methods
+    //ใช้สำหรับ Get Items หน้า Materials Index
     public function indexProcess()
     {
         //Get All Items that have waiting process maybe GlobalWaiting or LocalWaiting
@@ -95,11 +96,11 @@ class ItemsController extends Controller
 //            ->where('waiting_item_number', '>', 0)
             ->has('waitingGlobalDetails')
             ->orHas('waitingLocalPrices')
-            ->paginate(50);
+            ->paginate(5);
         //Items that Approved and get lasted approved Details
         $approvedMaterials = MaterialItem::with(['published', 'approvedGlobalDetails'])
             ->where('published_id', $this->publishedStatus['approved'])
-            ->paginate(50);
+            ->paginate(5);
         $data = collect([
             'waitingMaterials' => $waitingMaterials,
             'approvedMaterials' => $approvedMaterials

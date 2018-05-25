@@ -5,7 +5,7 @@
         @before-open="beforeOpenPorlor5Modal($event)"
         @opened="openedPorlor5Modal"
         @before-close="beforeClosePorlor5Modal"
-        width="90%"
+        width="99%"
         height="auto"
         :scrollable="true"
 >
