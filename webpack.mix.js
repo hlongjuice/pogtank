@@ -26,6 +26,8 @@ mix.browserSync({
 
 //Materials
 // -- Material Item
+// -- -- Index
+mix.js(srAdminDir+'materials/items/index.js',distAdminDir+'materials/items/');
 // -- -- Create
 mix.js(srAdminDir + 'materials/items/js/item_create.js', distAdminDir + 'materials/items/js/')
 // -- -- Edit

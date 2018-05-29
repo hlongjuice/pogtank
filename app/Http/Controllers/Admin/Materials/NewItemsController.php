@@ -12,6 +12,11 @@ use DB;
 
 class NewItemsController extends Controller
 {
+    private $publishedStatus = '';
+    public function __construct()
+    {
+        $this->publishedStatus = GlobalVariableController::$publishedStatus;
+    }
     //ส่วนที่ใช้งาน
     //หน้า porlor 4 เพิ่มตอนเลือกรายการ items
     public function addNewOtherItem(Request $request)
@@ -55,14 +60,22 @@ class NewItemsController extends Controller
     }
 
     //Get First 50 Items
-    public function getItems()
+    public function getApprovedItems()
     {
-        $publishedStatus = GlobalVariableController::$publishedStatus['approved'];
         $items = MaterialItem::with('approvedGlobalDetails')
-            ->where('published_id', $publishedStatus)
-            ->take(100)
+            ->where('published_id', $this->publishedStatus['approved'])
+            ->take(50)
             ->get();
         return response()->json($items);
+    }
+    //Get Waiting Items
+    public function getWaitingItems(){
+        //Items that Approved and get lasted approved Details
+        $waitingMaterials = MaterialItem::with('published', 'waitingGlobalDetails', 'approvedGlobalDetails')
+            ->has('waitingGlobalDetails')
+            ->orHas('waitingLocalPrices')
+            ->paginate(50);
+        return response()->json($waitingMaterials);
     }
 
     //Search Items By Name

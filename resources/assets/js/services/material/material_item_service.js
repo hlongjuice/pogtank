@@ -30,6 +30,16 @@ class MaterialItem {
                 }).catch(err=>{reject(err)})
         })
     }
+    //Get Waiting Approve Items
+    getWaitingItems(){
+        let url = this.url +'/admin/materials/new_items/get_waiting_items';
+        return new Promise((resolve,reject)=>{
+            axois.get(url)
+                .then(result=>{
+                    resolve(result.data)
+                }).catch(err=>{reject(err)})
+        })
+    }
     searchItemsByName(material_name){
         let inputs = {
             material_name:material_name

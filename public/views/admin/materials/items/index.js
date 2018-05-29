@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 198);
+/******/ 	return __webpack_require__(__webpack_require__.s = 191);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -1036,11 +1036,66 @@ module.exports = (
 
 /***/ }),
 
-/***/ 198:
+/***/ 191:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(39);
+module.exports = __webpack_require__(192);
 
+
+/***/ }),
+
+/***/ 192:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_webUrl__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_js_services_material_material_item_service__ = __webpack_require__(29);
+
+
+var materialItemService = new __WEBPACK_IMPORTED_MODULE_1__assets_js_services_material_material_item_service__["a" /* default */]();
+var webUrlService = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_webUrl__["a" /* default */]();
+new Vue({
+    el: 'material-item-index',
+    data: {
+        approvedItems: '',
+        waitingItems: '',
+        is_loading: false
+    },
+    mounted: function mounted() {},
+
+    methods: {
+        initialData: function initialData() {
+            var _this = this;
+
+            this.is_loading = true;
+            Promise.all([this.getItems(), this.getWaitingItems()]).then(function () {
+                _this.is_loading = false;
+            }).catch(function (err) {
+                alert(err);
+                _this.is_loading = false;
+            });
+        },
+        getApprovedItems: function getApprovedItems() {
+            var _this2 = this;
+
+            materialItemService.getItems().then(function (result) {
+                _this2.approvedItems = result;
+            }).catch(function (err) {
+                alert(err);
+            });
+        },
+        getWaitingItems: function getWaitingItems() {
+            var _this3 = this;
+
+            materialItemService.getWaitingItems().then(function (result) {
+                _this3.waitingItems = result;
+            }).catch(function (err) {
+                alert(err);
+            });
+        }
+    }
+});
 
 /***/ }),
 
@@ -1860,88 +1915,6 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 module.exports = defaults;
 
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
-
-/***/ }),
-
-/***/ 39:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AddModal", function() { return AddModal; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_material_material_item_service__ = __webpack_require__(29);
-
-var dict = {
-    custom: {
-        province: { required: 'จังหวัด' },
-        amphoe: { required: 'อำเภอ' },
-        district: { required: 'ตำบล' }
-    }
-};
-var materialItemService = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_material_material_item_service__["a" /* default */]();
-var AddModal = {
-    data: function data() {
-        return {};
-    },
-    mounted: function mounted() {
-        this.$validator.localize('en', dict);
-    },
-    methods: {
-        //Add Local Price
-        addLocalPrice: function addLocalPrice(scope, ev) {
-            var _this = this;
-
-            console.log('Form Event', ev);
-            this.$validator.validateAll(scope).then(function (result) {
-                var errMassage = 'กรุณาระบุ ';
-                if (result) {
-                    _this.form.material_id = _this.material.id;
-                    materialItemService.addLocalPrices(_this.form).then(function () {
-                        _this.addStatus = true;
-                        _this.closeAddPriceModal();
-                    }).catch(function (err) {
-                        alert(err);
-                    });
-                } else {
-                    _this.$validator.errors.items.forEach(function (error) {
-                        errMassage = errMassage + error.msg + ', ';
-                    });
-                    alert(errMassage);
-                }
-            });
-        },
-        // -- Add more Local Price Input
-        addPriceInput: function addPriceInput() {
-            var city = {
-                province: '',
-                amphoe: '',
-                district: '',
-                amphoes: [],
-                districts: [],
-                localPrice: 0,
-                localCost: 0,
-                wage: 0
-            };
-            this.form.cities.push(city);
-        },
-        beforeOpen: function beforeOpen(event) {
-            console.log('Before Open');
-        },
-        // Close Add Price Modal
-        closeAddPriceModal: function closeAddPriceModal() {
-            this.$modal.hide('add-local-price-modal');
-        },
-        showAddPriceModal: function showAddPriceModal() {
-            this.$modal.show('add-local-price-modal');
-            // this.$modal.show('add-local-price-modal', {
-            // form: this.form,
-            // provinces: vm.provinces,
-            // material_id: vm.material.id
-            // })
-        }
-
-    }
-};
 
 /***/ }),
 

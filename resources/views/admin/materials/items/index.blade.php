@@ -3,7 +3,8 @@
     {{Breadcrumbs::render('materialItems')}}
 @endsection
 @section('content')
-    <div class="row">
+    <div id="material-item-index" class="row">
+        <loading :show="is_loading"></loading>
         <div class="col-md-12">
             <div class="tabbable tabbable-custom">
                 {{--Tabs Header--}}
@@ -102,6 +103,54 @@
                                             </td>
                                         </tr>
                                     @endforeach
+                                    </tbody>
+                                </table>
+                                <table class="table table-striped table-hover table-bordered">
+                                    <!-- -- -- --Table Header -->
+                                    <thead>
+                                    <tr>
+                                        <td><input type="checkbox"></td>
+                                        <td>ชื่อวัสดุ/อุปกรณ์</td>
+                                        <td>หมวดหมู่</td>
+                                        <td>สถาณะ</td>
+                                        <th>Edit</th>
+                                        <th>Delete</th>
+                                    </tr>
+                                    </thead>
+                                    <!-- -- -- --Table Body -->
+                                    <tbody>
+                                    <template v-for="(item,index) in approvedItems">
+                                        <tr>
+                                            <td><input type="checkbox"></td>
+                                            <td>
+                                                {{-- -- -- -- --Edit Button--}}
+                                                <a @click="openMaterialItemEdit(item.id)">
+                                                    {{$material->approvedGlobalDetails->name}}
+                                                </a></td>
+                                            <td>{{$material->approvedGlobalDetails->type ? $material->approvedGlobalDetails->type->name:''}}</td>
+                                            <td class=""><p class=" text-success">{{$material->published->name}}</p>
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-info"
+                                                   href="{{route('admin.materials.items.edit',$material->id)}}">
+                                                    <i class="far fa-edit"></i>
+                                                    <span class="hidden-xs">Edit</span>
+                                                </a>
+                                            </td>
+                                            {{-- -- -- -- --Delete--}}
+                                            <td>
+                                                <form onsubmit="return confirm('ยืนยันการลบ')" method="POST"
+                                                      action="{{route('admin.materials.items.destroy',$material->id)}}">
+                                                    {{ csrf_field() }}
+                                                    {{ method_field('DELETE') }}
+                                                    <button class="btn btn-danger" type="submit">
+                                                        <i class="far fa-trash-alt"></i>
+                                                        <span class="hidden-xs">Delete</span>
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    </template>
                                     </tbody>
                                 </table>
                             </div>
@@ -205,4 +254,5 @@
             toastr.success('การลบเสร็จสมบูรณ์')
         }
     </script>
+    <script src="{{asset('views/admin/materials/items/index.js')}}"></script>
 @endsection

@@ -252,7 +252,9 @@ Route::prefix('admin')->middleware('auth')
                 //Add New Other Item
                 Route::post('add_new_other_item','Admin\Materials\NewItemsController@addNewOtherItem');
                 //Get First 50 Items
-                Route::get('get_items','Admin\Materials\NewItemsController@getItems');
+                Route::get('get_items','Admin\Materials\NewItemsController@getApprovedItems');
+                //Get First 50 Waiting Items
+                Route::get('get_waiting_items','Admin\Materials\NewItemsController@getWaitingItems');
                 //Search Items By Name
                 Route::post('search_items_by_name','Admin\Materials\NewItemsController@searchItemsByName');
             });
