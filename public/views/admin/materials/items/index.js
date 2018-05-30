@@ -1053,24 +1053,35 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_js_services_material_material_item_service__ = __webpack_require__(29);
 
 
+
 var materialItemService = new __WEBPACK_IMPORTED_MODULE_1__assets_js_services_material_material_item_service__["a" /* default */]();
 var webUrlService = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_webUrl__["a" /* default */]();
 new Vue({
-    el: 'material-item-index',
+    el: '#material-item-index',
     data: {
         approvedItems: '',
         waitingItems: '',
+        selected_items: {
+            approved_items: [],
+            waiting_items: []
+        },
+        chk_all_approved_items: false,
+        chk_all_waiting_items: false,
         is_loading: false
     },
-    mounted: function mounted() {},
+    mounted: function mounted() {
+        this.initialData();
+    },
 
     methods: {
         initialData: function initialData() {
             var _this = this;
 
             this.is_loading = true;
-            Promise.all([this.getItems(), this.getWaitingItems()]).then(function () {
-                _this.is_loading = false;
+            Promise.all([this.getApprovedItems(), this.getWaitingItems()]).then(function () {
+                setTimeout(function () {
+                    _this.is_loading = false;
+                }, 500);
             }).catch(function (err) {
                 alert(err);
                 _this.is_loading = false;
@@ -1081,6 +1092,7 @@ new Vue({
 
             materialItemService.getItems().then(function (result) {
                 _this2.approvedItems = result;
+                console.log('Get Items Results :', result);
             }).catch(function (err) {
                 alert(err);
             });
@@ -1093,6 +1105,82 @@ new Vue({
             }).catch(function (err) {
                 alert(err);
             });
+        },
+        openMaterialItemEdit: function openMaterialItemEdit(item_id) {
+            this.is_loading = true;
+            console.log('Window Location :', window.location);
+            console.log('Get Route :', webUrlService.getRoute('/edit/'));
+            window.location = webUrlService.getRoute('/admin/materials/items/edit/' + item_id);
+        },
+
+        //Select All Approved Items
+        selectAllApprovedItems: function selectAllApprovedItems() {
+            var _this4 = this;
+
+            this.selected_items.approved_items.splice(0);
+            console.log('Select All', this.chk_all_approved_items);
+            if (this.chk_all_approved_items) {
+                this.approvedItems.forEach(function (item) {
+                    _this4.selected_items.approved_items.push(item.id);
+                });
+            }
+            console.log('Select All 2 :', this.chk_all_approved_items);
+        },
+
+        //Select All Waiting Items
+        selectAllWaitingItems: function selectAllWaitingItems() {
+            var _this5 = this;
+
+            this.selected_items.waiting_items.splice(0);
+            if (this.chk_all_waiting_items) {
+                this.waitingItems.forEach(function (item) {
+                    _this5.selected_items.waiting_items.push(item.id);
+                });
+            }
+        },
+        deleteSingleApprovedItem: function deleteSingleApprovedItem(item) {
+            this.selected_items.approved_items.splice(0);
+            this.selected_items.approved_items.push(item.id);
+            this.deleteApprovedItems();
+        },
+        deleteApprovedItems: function deleteApprovedItems() {
+            var _this6 = this;
+
+            if (this.selected_items.approved_items.length === 0) {
+                alert('กรุณาเลือกรายการที่ต้องการลบ');
+            } else {
+                this.$dialog.confirm('ยืนยันการลบ').then(function () {
+                    _this6.is_loading = true;
+                    materialItemService.deleteApprovedItem(_this6.selected_items).then(function (result) {
+                        _this6.selected_items.approved_items.splice(0);
+                        _this6.initialData();
+                    }).catch(function (err) {
+                        alert(err);
+                    });
+                }).catch();
+            }
+        },
+        deleteSingleWaitingItem: function deleteSingleWaitingItem(item) {
+            this.selected_items.waiting_items.splice(0);
+            this.selected_items.waiting_items.push(item.id);
+            this.deleteWaitingItems();
+        },
+        deleteWaitingItems: function deleteWaitingItems() {
+            var _this7 = this;
+
+            if (this.selected_items.approved_items.length === 0) {
+                alert('กรุณาเลือกรายการที่ต้องการลบ');
+            } else {
+                this.$dialog.confirm('ยืนยันการลบ').then(function () {
+                    _this7.is_loading = true;
+                    materialItemService.deleteWaitingItem(_this7.selected_items).then(function (result) {
+                        _this7.selected_items.approved_items.splice(0);
+                        _this7.initialData();
+                    }).catch(function (err) {
+                        alert(err);
+                    });
+                }).catch();
+            }
         }
     }
 });
@@ -1595,6 +1683,9 @@ var MaterialItem = function () {
         _classCallCheck(this, MaterialItem);
 
         this.url = webUrl.getUrl();
+        this._delete_method = {
+            _method: 'DELETE'
+        };
     }
     //***** จาก New Items Controller
     //Add New Item From Porlor 4 Form
@@ -1759,14 +1850,46 @@ var MaterialItem = function () {
                 });
             });
         }
+        //Delete Approved Item (Root Item)
+
+    }, {
+        key: 'deleteApprovedItem',
+        value: function deleteApprovedItem(inputData) {
+            inputData._method = 'DELETE';
+            var url = this.url + '/admin/materials/new_items/delete_approved_items';
+            return new Promise(function (resolve, reject) {
+                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post(url, inputData).then(function (result) {
+                    resolve(result.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
+        //Delete Waiting Item (Root Item)
+
+    }, {
+        key: 'deleteWaitingItem',
+        value: function deleteWaitingItem(inputData) {
+            inputData._method = 'DELETE';
+            var url = this.url + '/admin/materials/new_items/delete_waiting_items';
+            return new Promise(function (resolve, reject) {
+                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post(url, inputData).then(function (result) {
+                    resolve(result.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
         //Delete Local Price
 
     }, {
         key: 'deleteLocalPrice',
         value: function deleteLocalPrice(id) {
+            var _this = this;
+
             var url = this.url + '/admin/materials/items/delete_local_price/' + id;
             return new Promise(function (resolve, reject) {
-                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.delete(url).then(function (result) {
+                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post(url, _this._delete_method).then(function (result) {
                     resolve(result.data);
                 }).catch(function (err) {
                     reject(err);
@@ -1778,9 +1901,11 @@ var MaterialItem = function () {
     }, {
         key: 'deleteWaitingLocalPrice',
         value: function deleteWaitingLocalPrice(id) {
+            var _this2 = this;
+
             var url = this.url + '/admin/materials/items/delete_waiting_local_price/' + id;
             return new Promise(function (resolve, reject) {
-                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.delete(url).then(function (result) {
+                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post(url, _this2._delete_method).then(function (result) {
                     resolve(result.data);
                 }).catch(function (err) {
                     reject(err);

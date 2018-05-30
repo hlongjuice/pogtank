@@ -7,6 +7,9 @@ let webUrl = new WebUrl();
 class MaterialItem {
     constructor(){
         this.url = webUrl.getUrl();
+        this._delete_method={
+            _method:'DELETE'
+        };
     }
     //***** จาก New Items Controller
     //Add New Item From Porlor 4 Form
@@ -135,11 +138,34 @@ class MaterialItem {
                 }).catch(err=>{reject(err)})
         })
     }
+    //Delete Approved Item (Root Item)
+    deleteApprovedItem(inputData){
+        inputData._method='DELETE';
+        let url =this.url+'/admin/materials/new_items/delete_approved_items';
+        return new Promise((resolve,reject)=>{
+            axois.post(url,inputData)
+                .then(result=>{
+                    resolve(result.data);
+                }).catch(err=>{reject(err)})
+        })
+
+    }
+    //Delete Waiting Item (Root Item)
+    deleteWaitingItem(inputData){
+        inputData._method='DELETE';
+        let url =this.url+'/admin/materials/new_items/delete_waiting_items';
+        return new Promise((resolve,reject)=>{
+            axois.post(url,inputData)
+                .then(result=>{
+                    resolve(result.data);
+                }).catch(err=>{reject(err)})
+        })
+    }
     //Delete Local Price
     deleteLocalPrice(id){
         let url =this.url+'/admin/materials/items/delete_local_price/'+id;
         return new Promise((resolve,reject)=>{
-            axois.delete(url)
+            axois.post(url,this._delete_method)
                 .then(result=>{
                     resolve(result.data);
                 }).catch(err=>{reject(err)})
@@ -149,7 +175,7 @@ class MaterialItem {
     deleteWaitingLocalPrice(id){
         let url =this.url+'/admin/materials/items/delete_waiting_local_price/'+id;
         return new Promise((resolve,reject)=>{
-            axois.delete(url)
+            axois.post(url,this._delete_method)
                 .then(result=>{
                     resolve(result.data)
                 }).catch(err=>{reject(err)})

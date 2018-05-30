@@ -251,6 +251,10 @@ Route::prefix('admin')->middleware('auth')
             Route::prefix('new_items')->group(function(){
                 //Add New Other Item
                 Route::post('add_new_other_item','Admin\Materials\NewItemsController@addNewOtherItem');
+                // Delete Approved Items
+                Route::delete('delete_approved_items','Admin\Materials\NewItemsController@deleteApprovedItems');
+                // Delete Waiting Items
+                Route::delete('delete_waiting_items','Admin\Materials\NewItemsController@deleteWaitingItems');
                 //Get First 50 Items
                 Route::get('get_items','Admin\Materials\NewItemsController@getApprovedItems');
                 //Get First 50 Waiting Items

@@ -3,7 +3,7 @@
     {{Breadcrumbs::render('materialItems')}}
 @endsection
 @section('content')
-    <div id="material-item-index" class="row">
+    <div id="material-item-index" class="row" v-cloak>
         <loading :show="is_loading"></loading>
         <div class="col-md-12">
             <div class="tabbable tabbable-custom">
@@ -54,62 +54,28 @@
                                                 </a>
                                             </div>
                                         </div>
+                                        <div class="col-md-6 text-right">
+                                            <div class="btn-group">
+                                                <a @click="deleteApprovedItems"
+                                                   class="btn btn-danger">
+                                                    ลบหลายรายการ <i class="far fa-trash-alt"></i>
+                                                </a>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <!-- -- --Approved Table -->
-                                <table class="table table-striped table-hover table-bordered" id="approved_table">
+                                <table class="table table-hover table-bordered">
                                     <!-- -- -- --Table Header -->
                                     <thead>
                                     <tr>
-                                        <td><input type="checkbox"></td>
-                                        <td>ชื่อวัสดุ/อุปกรณ์</td>
-                                        <td>หมวดหมู่</td>
-                                        <td>สถาณะ</td>
-                                        <th>Edit</th>
-                                        <th>Delete</th>
-                                    </tr>
-                                    </thead>
-                                    <!-- -- -- --Table Body -->
-                                    <tbody>
-                                    @foreach($approvedMaterials as $material)
-                                        <tr>
-                                            <td><input type="checkbox"></td>
-                                            <td>
-                                                {{-- -- -- -- --Edit Button--}}
-                                                <a href="{{route('admin.materials.items.edit',$material->id)}}">
-                                                    {{$material->approvedGlobalDetails->name}}
-                                                </a></td>
-                                            <td>{{$material->approvedGlobalDetails->type ? $material->approvedGlobalDetails->type->name:''}}</td>
-                                            <td class=""><p class=" text-success">{{$material->published->name}}</p>
-                                            </td>
-                                            <td>
-                                                <a class="btn btn-info"
-                                                   href="{{route('admin.materials.items.edit',$material->id)}}">
-                                                    <i class="far fa-edit"></i>
-                                                    <span class="hidden-xs">Edit</span>
-                                                </a>
-                                            </td>
-                                            {{-- -- -- -- --Delete--}}
-                                            <td>
-                                                <form onsubmit="return confirm('ยืนยันการลบ')" method="POST"
-                                                      action="{{route('admin.materials.items.destroy',$material->id)}}">
-                                                    {{ csrf_field() }}
-                                                    {{ method_field('DELETE') }}
-                                                    <button class="btn btn-danger" type="submit">
-                                                        <i class="far fa-trash-alt"></i>
-                                                        <span class="hidden-xs">Delete</span>
-                                                    </button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                    </tbody>
-                                </table>
-                                <table class="table table-striped table-hover table-bordered">
-                                    <!-- -- -- --Table Header -->
-                                    <thead>
-                                    <tr>
-                                        <td><input type="checkbox"></td>
+                                        <td class="text-center" width="5%">
+                                            <input @change="selectAllApprovedItems"
+                                                   type="checkbox"
+                                                   v-model="chk_all_approved_items"
+                                                   id="chk_all_approved_items"
+                                            >
+                                        </td>
                                         <td>ชื่อวัสดุ/อุปกรณ์</td>
                                         <td>หมวดหมู่</td>
                                         <td>สถาณะ</td>
@@ -121,33 +87,35 @@
                                     <tbody>
                                     <template v-for="(item,index) in approvedItems">
                                         <tr>
-                                            <td><input type="checkbox"></td>
+                                            <td class="text-center">
+                                                <input type="checkbox"
+                                                       v-model="selected_items.approved_items"
+                                                       :value="item.id"
+                                                >
+                                            </td>
                                             <td>
                                                 {{-- -- -- -- --Edit Button--}}
                                                 <a @click="openMaterialItemEdit(item.id)">
-                                                    {{$material->approvedGlobalDetails->name}}
+                                                    @{{item.approved_global_details.name}}
                                                 </a></td>
-                                            <td>{{$material->approvedGlobalDetails->type ? $material->approvedGlobalDetails->type->name:''}}</td>
-                                            <td class=""><p class=" text-success">{{$material->published->name}}</p>
+                                            <td v-if="item.approved_global_details.type">
+                                                @{{item.approved_global_details.type.name}}
+                                            </td>
+                                            <td class=""><p class=" text-success">@{{item.published.name}}</p>
                                             </td>
                                             <td>
                                                 <a class="btn btn-info"
-                                                   href="{{route('admin.materials.items.edit',$material->id)}}">
+                                                   @click="openMaterialItemEdit(item.id)">
+                                                    <span class="hidden-xs">แก้ไข</span>
                                                     <i class="far fa-edit"></i>
-                                                    <span class="hidden-xs">Edit</span>
                                                 </a>
                                             </td>
                                             {{-- -- -- -- --Delete--}}
                                             <td>
-                                                <form onsubmit="return confirm('ยืนยันการลบ')" method="POST"
-                                                      action="{{route('admin.materials.items.destroy',$material->id)}}">
-                                                    {{ csrf_field() }}
-                                                    {{ method_field('DELETE') }}
-                                                    <button class="btn btn-danger" type="submit">
-                                                        <i class="far fa-trash-alt"></i>
-                                                        <span class="hidden-xs">Delete</span>
-                                                    </button>
-                                                </form>
+                                                <a @click="deleteSingleApprovedItem(item)" class="btn btn-danger">
+                                                    <span class="hidden-xs">ลบ</span>
+                                                    <i class="far fa-trash-alt"></i>
+                                                </a>
                                             </td>
                                         </tr>
                                     </template>
@@ -231,6 +199,62 @@
                                             </tr>
                                         @endif
                                     @endforeach
+                                    </tbody>
+                                </table>
+                                <table class="table table-hover table-bordered">
+                                    <!-- -- -- --Table Header -->
+                                    <thead>
+                                    <tr>
+                                        <td class="text-center" width="5%">
+                                            <input @change="selectAllWaitingItems"
+                                                   type="checkbox"
+                                                   v-model="chk_all_waiting_items"
+                                                   id="chk_all_waiting_items"
+                                            >
+                                        </td>
+                                        <td>ชื่อวัสดุ/อุปกรณ์</td>
+                                        <td>หมวดหมู่</td>
+                                        <td>สถาณะ</td>
+                                        <th>Edit</th>
+                                        <th>Delete</th>
+                                    </tr>
+                                    </thead>
+                                    <!-- -- -- --Table Body -->
+                                    <tbody>
+                                    <template v-for="(item,index) in waitingItems">
+                                        <tr>
+                                            <td class="text-center">
+                                                <input type="checkbox"
+                                                       v-model="selected_items.waiting_items"
+                                                       :value="item.id"
+                                                >
+                                            </td>
+                                            <td>
+                                                {{-- -- -- -- --Edit Button--}}
+                                                <a @click="openMaterialItemEdit(item.id)">
+                                                    @{{item.approved_global_details.name}}
+                                                </a></td>
+                                            <td v-if="item.approved_global_details.type">
+                                                @{{item.approved_global_details.type.name}}
+                                            </td>
+                                            <td class=""><p class=" text-success">@{{item.published.name}}</p>
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-info"
+                                                   @click="openMaterialItemEdit(item.id)">
+                                                    <span class="hidden-xs">แก้ไข</span>
+                                                    <i class="far fa-edit"></i>
+                                                </a>
+                                            </td>
+                                            {{-- -- -- -- --Delete--}}
+                                            <td>
+                                                <a @click="deleteSingleApprovedItem(item)" class="btn btn-danger">
+                                                    <span class="hidden-xs">ลบ</span>
+                                                    <i class="far fa-trash-alt"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </template>
                                     </tbody>
                                 </table>
                             </div>

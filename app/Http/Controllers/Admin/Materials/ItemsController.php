@@ -96,11 +96,12 @@ class ItemsController extends Controller
 //            ->where('waiting_item_number', '>', 0)
             ->has('waitingGlobalDetails')
             ->orHas('waitingLocalPrices')
-            ->paginate(5);
+            ->paginate(100);
         //Items that Approved and get lasted approved Details
         $approvedMaterials = MaterialItem::with(['published', 'approvedGlobalDetails'])
             ->where('published_id', $this->publishedStatus['approved'])
-            ->paginate(5);
+            ->orderBy('id','DESC')
+            ->paginate(100);
         $data = collect([
             'waitingMaterials' => $waitingMaterials,
             'approvedMaterials' => $approvedMaterials

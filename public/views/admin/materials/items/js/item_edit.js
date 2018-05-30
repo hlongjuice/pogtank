@@ -1980,6 +1980,9 @@ var MaterialItem = function () {
         _classCallCheck(this, MaterialItem);
 
         this.url = webUrl.getUrl();
+        this._delete_method = {
+            _method: 'DELETE'
+        };
     }
     //***** จาก New Items Controller
     //Add New Item From Porlor 4 Form
@@ -2144,14 +2147,46 @@ var MaterialItem = function () {
                 });
             });
         }
+        //Delete Approved Item (Root Item)
+
+    }, {
+        key: 'deleteApprovedItem',
+        value: function deleteApprovedItem(inputData) {
+            inputData._method = 'DELETE';
+            var url = this.url + '/admin/materials/new_items/delete_approved_items';
+            return new Promise(function (resolve, reject) {
+                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post(url, inputData).then(function (result) {
+                    resolve(result.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
+        //Delete Waiting Item (Root Item)
+
+    }, {
+        key: 'deleteWaitingItem',
+        value: function deleteWaitingItem(inputData) {
+            inputData._method = 'DELETE';
+            var url = this.url + '/admin/materials/new_items/delete_waiting_items';
+            return new Promise(function (resolve, reject) {
+                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post(url, inputData).then(function (result) {
+                    resolve(result.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
         //Delete Local Price
 
     }, {
         key: 'deleteLocalPrice',
         value: function deleteLocalPrice(id) {
+            var _this = this;
+
             var url = this.url + '/admin/materials/items/delete_local_price/' + id;
             return new Promise(function (resolve, reject) {
-                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.delete(url).then(function (result) {
+                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post(url, _this._delete_method).then(function (result) {
                     resolve(result.data);
                 }).catch(function (err) {
                     reject(err);
@@ -2163,9 +2198,11 @@ var MaterialItem = function () {
     }, {
         key: 'deleteWaitingLocalPrice',
         value: function deleteWaitingLocalPrice(id) {
+            var _this2 = this;
+
             var url = this.url + '/admin/materials/items/delete_waiting_local_price/' + id;
             return new Promise(function (resolve, reject) {
-                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.delete(url).then(function (result) {
+                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post(url, _this2._delete_method).then(function (result) {
                     resolve(result.data);
                 }).catch(function (err) {
                     reject(err);

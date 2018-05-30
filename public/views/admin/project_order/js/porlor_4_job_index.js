@@ -2131,6 +2131,7 @@ var Porlor4EditChildJobItem = {
                 new_material_item: {
                     name: ''
                 },
+                old_item_id: '',
                 form: {
                     project_details: '',
                     job_id: '',
@@ -2154,6 +2155,7 @@ var Porlor4EditChildJobItem = {
         beforeOpenEditChildJobItemModal: function beforeOpenEditChildJobItemModal(event) {
             console.log('Edit Child Job ITem Job ITem : ', event.params.job_item);
             console.log('Item ID', this.edit_child_job_item.form.item_id);
+            this.edit_child_job_item.old_item_id = '';
             // this.edit_child_job_item.job_item = event.params.job_item;
             this.edit_child_job_item.form.job_id = event.params.job_item.id;
             this.edit_child_job_item.form.item_id = event.params.job_item.item.id;
@@ -2163,6 +2165,8 @@ var Porlor4EditChildJobItem = {
             this.edit_child_job_item.form.unit = event.params.job_item.item.unit;
             this.edit_child_job_item.form.quantity = event.params.job_item.item.quantity;
             this.edit_child_job_item.form.project_details = this.project_details;
+            this.edit_child_job_item.old_item_id = this.edit_child_job_item.form.material_item.approved_global_details.id;
+            console.log('Edit Child Job Ites Form :', this.edit_child_job_item.form);
         },
         openedEditChildJobItemModal: function openedEditChildJobItemModal() {
             var _this = this;
@@ -2205,11 +2209,14 @@ var Porlor4EditChildJobItem = {
             });
         },
         editChildJobItem_getItemDetails: function editChildJobItem_getItemDetails(item) {
-            console.log('Get Item Details ', item, parent);
+            console.log('Edit Child Job Form Item ID :', this.edit_child_job_item.form.material_item.approved_global_details.id);
+            console.log('Selected Item ', item);
             if (item) {
-                this.edit_child_job_item.form.local_price = item.global_price;
-                this.edit_child_job_item.form.local_wage = item.global_wage;
-                this.edit_child_job_item.form.unit = item.unit;
+                if (this.edit_child_job_item.old_item_id != item.id || this.edit_child_job_item.old_item_id == '') {
+                    this.edit_child_job_item.form.local_price = item.global_price;
+                    this.edit_child_job_item.form.local_wage = item.global_wage;
+                    this.edit_child_job_item.form.unit = item.unit;
+                }
             }
         },
         editChildJobItem_addNewMaterialItem: function editChildJobItem_addNewMaterialItem() {
@@ -2613,6 +2620,9 @@ var MaterialItem = function () {
         _classCallCheck(this, MaterialItem);
 
         this.url = webUrl.getUrl();
+        this._delete_method = {
+            _method: 'DELETE'
+        };
     }
     //***** จาก New Items Controller
     //Add New Item From Porlor 4 Form
@@ -2777,14 +2787,46 @@ var MaterialItem = function () {
                 });
             });
         }
+        //Delete Approved Item (Root Item)
+
+    }, {
+        key: 'deleteApprovedItem',
+        value: function deleteApprovedItem(inputData) {
+            inputData._method = 'DELETE';
+            var url = this.url + '/admin/materials/new_items/delete_approved_items';
+            return new Promise(function (resolve, reject) {
+                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post(url, inputData).then(function (result) {
+                    resolve(result.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
+        //Delete Waiting Item (Root Item)
+
+    }, {
+        key: 'deleteWaitingItem',
+        value: function deleteWaitingItem(inputData) {
+            inputData._method = 'DELETE';
+            var url = this.url + '/admin/materials/new_items/delete_waiting_items';
+            return new Promise(function (resolve, reject) {
+                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post(url, inputData).then(function (result) {
+                    resolve(result.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
         //Delete Local Price
 
     }, {
         key: 'deleteLocalPrice',
         value: function deleteLocalPrice(id) {
+            var _this = this;
+
             var url = this.url + '/admin/materials/items/delete_local_price/' + id;
             return new Promise(function (resolve, reject) {
-                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.delete(url).then(function (result) {
+                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post(url, _this._delete_method).then(function (result) {
                     resolve(result.data);
                 }).catch(function (err) {
                     reject(err);
@@ -2796,9 +2838,11 @@ var MaterialItem = function () {
     }, {
         key: 'deleteWaitingLocalPrice',
         value: function deleteWaitingLocalPrice(id) {
+            var _this2 = this;
+
             var url = this.url + '/admin/materials/items/delete_waiting_local_price/' + id;
             return new Promise(function (resolve, reject) {
-                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.delete(url).then(function (result) {
+                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post(url, _this2._delete_method).then(function (result) {
                     resolve(result.data);
                 }).catch(function (err) {
                     reject(err);

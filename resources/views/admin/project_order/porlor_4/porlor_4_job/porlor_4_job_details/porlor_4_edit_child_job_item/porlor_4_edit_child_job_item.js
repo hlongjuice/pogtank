@@ -13,6 +13,7 @@ export const Porlor4EditChildJobItem = {
                 new_material_item: {
                     name: ''
                 },
+                old_item_id:'',
                 form: {
                     project_details:'',
                     job_id:'',
@@ -36,6 +37,7 @@ export const Porlor4EditChildJobItem = {
         beforeOpenEditChildJobItemModal(event) {
             console.log('Edit Child Job ITem Job ITem : ',event.params.job_item);
             console.log('Item ID',this.edit_child_job_item.form.item_id);
+            this.edit_child_job_item.old_item_id ='';
             // this.edit_child_job_item.job_item = event.params.job_item;
             this.edit_child_job_item.form.job_id = event.params.job_item.id;
             this.edit_child_job_item.form.item_id=event.params.job_item.item.id;
@@ -45,6 +47,8 @@ export const Porlor4EditChildJobItem = {
             this.edit_child_job_item.form.unit = event.params.job_item.item.unit;
             this.edit_child_job_item.form.quantity = event.params.job_item.item.quantity;
             this.edit_child_job_item.form.project_details = this.project_details;
+            this.edit_child_job_item.old_item_id = this.edit_child_job_item.form.material_item.approved_global_details.id;
+            console.log('Edit Child Job Ites Form :',this.edit_child_job_item.form)
 
         },
         openedEditChildJobItemModal() {
@@ -88,11 +92,14 @@ export const Porlor4EditChildJobItem = {
                 })
         },
         editChildJobItem_getItemDetails(item) {
-            console.log('Get Item Details ',item, parent);
+            console.log('Edit Child Job Form Item ID :',this.edit_child_job_item.form.material_item.approved_global_details.id);
+            console.log('Selected Item ',item);
             if (item) {
-                this.edit_child_job_item.form.local_price = item.global_price;
-                this.edit_child_job_item.form.local_wage = item.global_wage;
-                this.edit_child_job_item.form.unit = item.unit;
+                if(this.edit_child_job_item.old_item_id != item.id ||this.edit_child_job_item.old_item_id =='' ){
+                    this.edit_child_job_item.form.local_price = item.global_price;
+                    this.edit_child_job_item.form.local_wage = item.global_wage;
+                    this.edit_child_job_item.form.unit = item.unit;
+                }
             }
         },
 

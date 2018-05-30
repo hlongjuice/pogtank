@@ -59,10 +59,25 @@ class NewItemsController extends Controller
         return response()->json($result);
     }
 
+    //Delete Approved Items
+    public function deleteApprovedItems(Request $request){
+        $result= DB::transaction(function() use ($request){
+            MaterialItem::destroy($request->input('approved_items'));
+        });
+        return response()->json($result);
+    }
+    //Delete Waiting Items
+    public function deleteWaitingItems(Request $request){
+        $result= DB::transaction(function() use ($request){
+            MaterialItem::destroy($request->input('waiting_items'));
+        });
+        return response()->json($result);
+    }
+
     //Get First 50 Items
     public function getApprovedItems()
     {
-        $items = MaterialItem::with('approvedGlobalDetails')
+        $items = MaterialItem::with('approvedGlobalDetails','published')
             ->where('published_id', $this->publishedStatus['approved'])
             ->take(50)
             ->get();
