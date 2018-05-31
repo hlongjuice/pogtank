@@ -35,11 +35,17 @@ new Vue({
                     this.is_loading = false;
                 });
         },
-        getApprovedItems() {
-            materialItemService.getItems()
+        getApprovedItems(page) {
+            //clear All Select Approved Items
+            this.selected_items.approved_items.splice(0);
+            this.chk_all_approved_items=false;
+            if(page==null){
+                page=1;
+            }
+            materialItemService.getApprovedItemsByPage(page)
                 .then(result => {
                     this.approvedItems = result;
-                    console.log('Get Items Results :', result)
+                    console.log('Get Items By Page Results :', result)
                 })
                 .catch(err => {
                     alert(err)
@@ -64,8 +70,8 @@ new Vue({
             this.selected_items.approved_items.splice(0);
             console.log('Select All', this.chk_all_approved_items);
             if (this.chk_all_approved_items) {
-                this.approvedItems.forEach(item => {
-                    this.selected_items.approved_items.push(item.id)
+                this.approvedItems.data.forEach(item => {
+                    this.selected_items.approved_items.push(item)
                 })
             }
             console.log('Select All 2 :', this.chk_all_approved_items)
@@ -81,19 +87,27 @@ new Vue({
         },
         deleteSingleApprovedItem(item) {
             this.selected_items.approved_items.splice(0);
-            this.selected_items.approved_items.push(item.id);
+            this.selected_items.approved_items.push(item);
             this.deleteApprovedItems();
         },
         deleteApprovedItems() {
             if (this.selected_items.approved_items.length === 0) {
                 alert('กรุณาเลือกรายการที่ต้องการลบ')
             } else {
-                this.$dialog.confirm('ยืนยันการลบ')
+                let item_names = this.selected_items.approved_items.map(item=>{
+                   return item.approved_global_details.name;
+                }).join("<br />");
+                console.log('Items Names : ',item_names);
+                this.$dialog.confirm('ยืนยันการลบรายการ <br>' +
+                    ''+item_names+
+                    '' +
+                    '')
                     .then(() => {
                         this.is_loading=true;
                         materialItemService.deleteApprovedItem(this.selected_items)
                             .then(result => {
                                 this.selected_items.approved_items.splice(0);
+                                this.chk_all_approved_items=false;
                                 this.initialData();
                             }).catch(err => {
                             alert(err)

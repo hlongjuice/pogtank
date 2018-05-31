@@ -65,7 +65,7 @@
                                     </div>
                                 </div>
                                 <!-- -- --Approved Table -->
-                                <table class="table table-hover table-bordered">
+                                <table v-if="approvedItems.data" class="table table-hover table-bordered">
                                     <!-- -- -- --Table Header -->
                                     <thead>
                                     <tr>
@@ -75,6 +75,7 @@
                                                    v-model="chk_all_approved_items"
                                                    id="chk_all_approved_items"
                                             >
+
                                         </td>
                                         <td>ชื่อวัสดุ/อุปกรณ์</td>
                                         <td>หมวดหมู่</td>
@@ -85,12 +86,13 @@
                                     </thead>
                                     <!-- -- -- --Table Body -->
                                     <tbody>
-                                    <template v-for="(item,index) in approvedItems">
-                                        <tr>
+                                    <template v-for="(item,index) in approvedItems.data">
+                                        {{--แสดง Item ที่ได้รับการ Approved แล้ว--}}
+                                        <tr v-if="item.approved_global_details">
                                             <td class="text-center">
                                                 <input type="checkbox"
                                                        v-model="selected_items.approved_items"
-                                                       :value="item.id"
+                                                       :value="item"
                                                 >
                                             </td>
                                             <td>
@@ -101,7 +103,10 @@
                                             <td v-if="item.approved_global_details.type">
                                                 @{{item.approved_global_details.type.name}}
                                             </td>
-                                            <td class=""><p class=" text-success">@{{item.published.name}}</p>
+                                            <td>
+                                                <p class=" text-success">
+                                                    @{{item.published.name}}
+                                                </p>
                                             </td>
                                             <td>
                                                 <a class="btn btn-info"
@@ -121,6 +126,8 @@
                                     </template>
                                     </tbody>
                                 </table>
+                                <pagination v-if="approvedItems" :data="approvedItems"
+                                            @pagination-change-page="getApprovedItems"></pagination>
                             </div>
                         </div>
                     </div>
@@ -199,62 +206,6 @@
                                             </tr>
                                         @endif
                                     @endforeach
-                                    </tbody>
-                                </table>
-                                <table class="table table-hover table-bordered">
-                                    <!-- -- -- --Table Header -->
-                                    <thead>
-                                    <tr>
-                                        <td class="text-center" width="5%">
-                                            <input @change="selectAllWaitingItems"
-                                                   type="checkbox"
-                                                   v-model="chk_all_waiting_items"
-                                                   id="chk_all_waiting_items"
-                                            >
-                                        </td>
-                                        <td>ชื่อวัสดุ/อุปกรณ์</td>
-                                        <td>หมวดหมู่</td>
-                                        <td>สถาณะ</td>
-                                        <th>Edit</th>
-                                        <th>Delete</th>
-                                    </tr>
-                                    </thead>
-                                    <!-- -- -- --Table Body -->
-                                    <tbody>
-                                    <template v-for="(item,index) in waitingItems">
-                                        <tr>
-                                            <td class="text-center">
-                                                <input type="checkbox"
-                                                       v-model="selected_items.waiting_items"
-                                                       :value="item.id"
-                                                >
-                                            </td>
-                                            <td>
-                                                {{-- -- -- -- --Edit Button--}}
-                                                <a @click="openMaterialItemEdit(item.id)">
-                                                    @{{item.approved_global_details.name}}
-                                                </a></td>
-                                            <td v-if="item.approved_global_details.type">
-                                                @{{item.approved_global_details.type.name}}
-                                            </td>
-                                            <td class=""><p class=" text-success">@{{item.published.name}}</p>
-                                            </td>
-                                            <td>
-                                                <a class="btn btn-info"
-                                                   @click="openMaterialItemEdit(item.id)">
-                                                    <span class="hidden-xs">แก้ไข</span>
-                                                    <i class="far fa-edit"></i>
-                                                </a>
-                                            </td>
-                                            {{-- -- -- -- --Delete--}}
-                                            <td>
-                                                <a @click="deleteSingleApprovedItem(item)" class="btn btn-danger">
-                                                    <span class="hidden-xs">ลบ</span>
-                                                    <i class="far fa-trash-alt"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    </template>
                                     </tbody>
                                 </table>
                             </div>

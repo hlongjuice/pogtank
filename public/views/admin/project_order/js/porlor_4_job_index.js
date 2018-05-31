@@ -1778,9 +1778,11 @@ var Porlor4AddChildJobItem = {
                 child_job: '',
                 add_status: false,
                 isLoading: false,
+                show_add_new_material_button: true,
                 leaf_jobs: [],
                 new_material_item: {
-                    name: ''
+                    name: '',
+                    is_loading: false
                 },
                 form: {
                     is_item: 1,
@@ -1817,6 +1819,7 @@ var Porlor4AddChildJobItem = {
             //Get Material Items
             materialItemService.getItems().then(function (result) {
                 _this.add_child_job_item.form.items[0].material_items = result;
+                console.log('Get Items Results :', result);
             }).catch(function (err) {
                 alert(err);
             })]).then(function () {
@@ -1835,6 +1838,7 @@ var Porlor4AddChildJobItem = {
             this.add_child_job_item = {
                 add_status: false,
                 isLoading: false,
+                show_add_new_material_button: true,
                 leaf_jobs: [],
                 new_material_item: {
                     name: ''
@@ -1926,12 +1930,16 @@ var Porlor4AddChildJobItem = {
                     name: this.add_child_job_item.new_material_item.name
                 }
             };
+            this.add_child_job_item.show_add_new_material_button = false;
+            this.add_child_job_item.new_material_item.is_loading = true;
             console.log('Add New Item Inputs', inputs);
             materialItemService.addNewOtherItem(inputs).then(function (new_item) {
                 console.log('Add New Item Success : ', new_item);
                 item.material_item = new_item;
                 materialItemService.searchItemsByName(_this4.add_child_job_item.new_material_item.name).then(function (items) {
                     item.material_items = items;
+                    _this4.add_child_job_item.new_material_item.is_loading = false;
+                    _this4.add_child_job_item.show_add_new_material_button = true;
                 }).catch(function (err) {
                     alert(err);
                 });
@@ -2647,6 +2655,20 @@ var MaterialItem = function () {
         key: 'getItems',
         value: function getItems() {
             var url = this.url + '/admin/materials/new_items/get_items';
+            return new Promise(function (resolve, reject) {
+                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get(url).then(function (result) {
+                    resolve(result.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
+        //Get Approved Items By Page
+
+    }, {
+        key: 'getApprovedItemsByPage',
+        value: function getApprovedItemsByPage(page) {
+            var url = this.url + '/admin/materials/new_items/get_approved_items_by_page?page=' + page;
             return new Promise(function (resolve, reject) {
                 __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get(url).then(function (result) {
                     resolve(result.data);

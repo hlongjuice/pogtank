@@ -12,9 +12,11 @@ export const Porlor4AddChildJobItem = {
                 child_job:'',
                 add_status: false,
                 isLoading: false,
+                show_add_new_material_button:true,
                 leaf_jobs: [],
                 new_material_item: {
-                    name: ''
+                    name: '',
+                    is_loading:false
                 },
                 form: {
                     is_item:1,
@@ -53,6 +55,7 @@ export const Porlor4AddChildJobItem = {
                 materialItemService.getItems()
                     .then(result => {
                         this.add_child_job_item.form.items[0].material_items = result;
+                        console.log('Get Items Results :',result);
                     }).catch(err => {
                     alert(err);
                 })
@@ -72,6 +75,7 @@ export const Porlor4AddChildJobItem = {
             this.add_child_job_item = {
                 add_status: false,
                 isLoading: false,
+                show_add_new_material_button:true,
                 leaf_jobs: [],
                 new_material_item: {
                     name: ''
@@ -160,6 +164,8 @@ export const Porlor4AddChildJobItem = {
                     name: this.add_child_job_item.new_material_item.name
                 }
             };
+            this.add_child_job_item.show_add_new_material_button=false;
+            this.add_child_job_item.new_material_item.is_loading=true;
             console.log('Add New Item Inputs', inputs);
             materialItemService.addNewOtherItem(inputs)
                 .then(new_item => {
@@ -168,6 +174,8 @@ export const Porlor4AddChildJobItem = {
                     materialItemService.searchItemsByName(this.add_child_job_item.new_material_item.name)
                         .then(items => {
                             item.material_items = items;
+                            this.add_child_job_item.new_material_item.is_loading=false;
+                            this.add_child_job_item.show_add_new_material_button=true;
                         }).catch(err => {
                         alert(err)
                     })

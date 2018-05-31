@@ -1087,12 +1087,18 @@ new Vue({
                 _this.is_loading = false;
             });
         },
-        getApprovedItems: function getApprovedItems() {
+        getApprovedItems: function getApprovedItems(page) {
             var _this2 = this;
 
-            materialItemService.getItems().then(function (result) {
+            //clear All Select Approved Items
+            this.selected_items.approved_items.splice(0);
+            this.chk_all_approved_items = false;
+            if (page == null) {
+                page = 1;
+            }
+            materialItemService.getApprovedItemsByPage(page).then(function (result) {
                 _this2.approvedItems = result;
-                console.log('Get Items Results :', result);
+                console.log('Get Items By Page Results :', result);
             }).catch(function (err) {
                 alert(err);
             });
@@ -1120,8 +1126,8 @@ new Vue({
             this.selected_items.approved_items.splice(0);
             console.log('Select All', this.chk_all_approved_items);
             if (this.chk_all_approved_items) {
-                this.approvedItems.forEach(function (item) {
-                    _this4.selected_items.approved_items.push(item.id);
+                this.approvedItems.data.forEach(function (item) {
+                    _this4.selected_items.approved_items.push(item);
                 });
             }
             console.log('Select All 2 :', this.chk_all_approved_items);
@@ -1140,7 +1146,7 @@ new Vue({
         },
         deleteSingleApprovedItem: function deleteSingleApprovedItem(item) {
             this.selected_items.approved_items.splice(0);
-            this.selected_items.approved_items.push(item.id);
+            this.selected_items.approved_items.push(item);
             this.deleteApprovedItems();
         },
         deleteApprovedItems: function deleteApprovedItems() {
@@ -1149,10 +1155,15 @@ new Vue({
             if (this.selected_items.approved_items.length === 0) {
                 alert('กรุณาเลือกรายการที่ต้องการลบ');
             } else {
-                this.$dialog.confirm('ยืนยันการลบ').then(function () {
+                var item_names = this.selected_items.approved_items.map(function (item) {
+                    return item.approved_global_details.name;
+                }).join("<br />");
+                console.log('Items Names : ', item_names);
+                this.$dialog.confirm('ยืนยันการลบรายการ <br>' + '' + item_names + '' + '').then(function () {
                     _this6.is_loading = true;
                     materialItemService.deleteApprovedItem(_this6.selected_items).then(function (result) {
                         _this6.selected_items.approved_items.splice(0);
+                        _this6.chk_all_approved_items = false;
                         _this6.initialData();
                     }).catch(function (err) {
                         alert(err);
@@ -1710,6 +1721,20 @@ var MaterialItem = function () {
         key: 'getItems',
         value: function getItems() {
             var url = this.url + '/admin/materials/new_items/get_items';
+            return new Promise(function (resolve, reject) {
+                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get(url).then(function (result) {
+                    resolve(result.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
+        //Get Approved Items By Page
+
+    }, {
+        key: 'getApprovedItemsByPage',
+        value: function getApprovedItemsByPage(page) {
+            var url = this.url + '/admin/materials/new_items/get_approved_items_by_page?page=' + page;
             return new Promise(function (resolve, reject) {
                 __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get(url).then(function (result) {
                     resolve(result.data);

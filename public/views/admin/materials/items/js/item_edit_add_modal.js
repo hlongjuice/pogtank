@@ -1575,6 +1575,20 @@ var MaterialItem = function () {
                 });
             });
         }
+        //Get Approved Items By Page
+
+    }, {
+        key: 'getApprovedItemsByPage',
+        value: function getApprovedItemsByPage(page) {
+            var url = this.url + '/admin/materials/new_items/get_approved_items_by_page?page=' + page;
+            return new Promise(function (resolve, reject) {
+                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get(url).then(function (result) {
+                    resolve(result.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
         //Get Waiting Approve Items
 
     }, {

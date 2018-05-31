@@ -257,6 +257,8 @@ Route::prefix('admin')->middleware('auth')
                 Route::delete('delete_waiting_items','Admin\Materials\NewItemsController@deleteWaitingItems');
                 //Get First 50 Items
                 Route::get('get_items','Admin\Materials\NewItemsController@getApprovedItems');
+                //Get Approved Items By Page
+                Route::get('get_approved_items_by_page','Admin\Materials\NewItemsController@getApprovedItemsByPage');
                 //Get First 50 Waiting Items
                 Route::get('get_waiting_items','Admin\Materials\NewItemsController@getWaitingItems');
                 //Search Items By Name

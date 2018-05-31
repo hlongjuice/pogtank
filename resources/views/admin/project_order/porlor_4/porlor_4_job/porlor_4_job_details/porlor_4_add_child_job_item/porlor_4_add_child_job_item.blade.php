@@ -165,11 +165,14 @@
                                                             :allow-empty="false"
                                                             :max-height="250"
                                                             :custom-label="materialItemCustomLabel"
+                                                            :loading="add_child_job_item.new_material_item.is_loading"
                                                             {{--:loading="add_child_job_item.isLoading"--}}
                                                     >
-                                                        <template slot="option" slot-scope="props">
+                                                        <template  v-if="props.option.approved_global_details" slot="option" slot-scope="props">
                                                             <div class="option__desc">
-                                                                <span class="option__title">@{{ props.option.approved_global_details.name }}</span>
+                                                                <span class="option__title">
+                                                                    @{{ props.option.approved_global_details.name }}
+                                                                </span>
                                                             </div>
                                                         </template>
                                                         <div class="row"
@@ -179,7 +182,7 @@
                                                             </div>
                                                             <div class="col-xs-12">
                                                                 <span>@{{add_child_job_item.new_material_item.name}} </span>
-                                                                <a @click="addChildJobItem_AddNewMaterialItem(item,index)"
+                                                                <a v-if="add_child_job_item.show_add_new_material_button" @click="addChildJobItem_AddNewMaterialItem(item,index)"
                                                                    class="pull-right btn btn-primary">เพิ่มรายใหม่</a>
                                                             </div>
                                                         </div>
