@@ -105,6 +105,48 @@
                                 </div>
                                 {{-- Price and Wage and Quantity --}}
                                 <div v-if="edit_child_job_item.form.material_item" class="row">
+                                    <!-- -- Quantity and Unit -->
+                                    <div class="col-xs-12 col-md-4">
+                                        <div class="row">
+                                            <div class="col-xs-8">
+                                                <div class="form-group">
+                                                    <label class="control-label">
+                                                        จำนวน
+                                                    </label>
+                                                    <div :class="{'input-error':errors.has('form.edit_child_job_item_quantity')}">
+                                                        {{--<input v-validate="'required'"--}}
+                                                               {{--type="number"--}}
+                                                               {{--step="0.001"--}}
+                                                               {{--data-vv-name="'edit_child_job_item_quantity"--}}
+                                                               {{--class="form-control"--}}
+                                                               {{--v-model="edit_child_job_item.form.quantity">--}}
+                                                        <vue-numeric
+                                                                name="globalCost" :precision=2
+                                                                class="form-control" separator=","
+                                                                v-model="edit_child_job_item.form.quantity"></vue-numeric>
+                                                    </div>
+                                                    <span v-show="errors.has('form.edit_child_job_item_quantity')"
+                                                          class="text-error text-danger">กรุณาระบุข้อมูล</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-4">
+                                                <div class="form-group">
+                                                    <label class="control-label">
+                                                        หน่วย
+                                                    </label>
+                                                    <div :class="{'input-error':errors.has('form.edit_child_job_item_unit')}">
+                                                        <input v-validate="'required'"
+                                                               type="text"
+                                                               :data-vv-name="'edit_child_job_item_unit'"
+                                                               class="form-control"
+                                                               v-model="edit_child_job_item.form.unit">
+                                                    </div>
+                                                    <span v-show="errors.has('form.edit_child_job_item_unit')"
+                                                          class="text-error text-danger">กรุณาระบุข้อมูล</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <!-- -- Price -->
                                     <div class="col-xs-12 col-md-4">
                                         <div class="form-group">
@@ -127,43 +169,6 @@
                                                     name="globalCost" :precision=2
                                                     class="form-control" separator=","
                                                     v-model="edit_child_job_item.form.local_wage"></vue-numeric>
-                                        </div>
-                                    </div>
-                                    <!-- -- Quantity and Unit -->
-                                    <div class="col-xs-12 col-md-4">
-                                        <div class="row">
-                                            <div class="col-xs-8">
-                                                <div class="form-group">
-                                                    <label class="control-label">
-                                                        จำนวน
-                                                    </label>
-                                                    <div :class="{'input-error':errors.has('form.edit_child_job_item_quantity')}">
-                                                        <input v-validate="'required'"
-                                                               type="number"
-                                                               data-vv-name="'edit_child_job_item_quantity"
-                                                               class="form-control"
-                                                               v-model="edit_child_job_item.form.quantity">
-                                                    </div>
-                                                    <span v-show="errors.has('form.edit_child_job_item_quantity')"
-                                                          class="text-error text-danger">กรุณาระบุข้อมูล</span>
-                                                </div>
-                                            </div>
-                                            <div class="col-xs-4">
-                                                <div class="form-group">
-                                                    <label class="control-label">
-                                                        หน่วย
-                                                    </label>
-                                                    <div :class="{'input-error':errors.has('form.edit_child_job_item_unit')}">
-                                                        <input v-validate="'required'"
-                                                               type="text"
-                                                               :data-vv-name="'edit_child_job_item_unit'"
-                                                               class="form-control"
-                                                               v-model="edit_child_job_item.form.unit">
-                                                    </div>
-                                                    <span v-show="errors.has('form.edit_child_job_item_unit')"
-                                                          class="text-error text-danger">กรุณาระบุข้อมูล</span>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>

@@ -130,23 +130,64 @@
                                         </thead>
                                         {{-- -- Table Content --}}
                                         <tbody>
-                                            <tr>
-                                                <td></td>
-                                                <td class="text-center">ส่วนที่ @{{ index+1 }} @{{ porlor4_part.part.name }}</td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
+                                            {{--ถ้าไม่ใช่ ส่วนแรก--}}
+                                            {{--ยอดยกมา--}}
+                                            <template v-if="index > 0">
+                                                <tr>
+                                                    <td></td>
+                                                    <td class="text-right">
+                                                        <template v-if="index == 1">
+                                                            ยอดยกมา ส่วนที่ 1
+                                                        </template>
+                                                        <template v-else>
+                                                            ยอดยกมา ส่วนที่ 1 - @{{ index }}
+                                                        </template>
+                                                    </td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td class="text-right">@{{porlor4_part.previous_sum_construction_cost | currency('')}}</td>
+                                                    <td></td>
+                                                </tr>
+                                            </template>
+                                            {{--Part Name--}}
+                                            <template>
+                                                <tr>
+                                                    <td></td>
+                                                    <td class="text-center">ส่วนที่ @{{ index+1 }} @{{ porlor4_part.part.name }}</td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                            </template>
+                                            {{--Part Jobs--}}
                                             <template v-for="(root_job,index) in porlor4_part.root_jobs">
                                                 <tr>
                                                     <td class="text-center">@{{ index+1 }}</td>
                                                     <td>@{{ root_job.name }}</td>
-                                                    <td class="text-right">@{{ root_job.sum_total_price_wage }}</td>
+                                                    <td class="text-right">@{{ root_job.job_cost | currency('') }}</td>
                                                     {{--Factor F รอสูคตรคำรวน--}}
-                                                    <td class="text-center">1</td>
+                                                    <td class="text-center">@{{ root_job.factor_f }}</td>
                                                     {{--ค่างานก่อสร้าง = ต่างานต้นทุน x factor F--}}
-                                                    <td class="text-right">@{{ root_job.sum_total_price_wage }}</td>
+                                                    <td class="text-right">@{{ root_job.construction_cost | currency('') }}</td>
+                                                    <td></td>
+                                                </tr>
+                                            </template>
+                                            {{--Sum of Contruction Cost--}}
+                                            <template>
+                                                <tr>
+                                                    <td class="text-right" colspan="4">รวม@{{ porlor4_part.part.name }}</td>
+                                                    {{--ค่างานก่อสร้าง = ต่างานต้นทุน x factor F--}}
+                                                    <td class="td-result-green text-right">@{{ porlor4_part.sum_construction_cost | currency('') }}</td>
+                                                    <td></td>
+                                                </tr>
+                                            </template>
+                                            {{--Sum of Part--}}
+                                            <template v-if="index >0">
+                                                <tr>
+                                                    <td class="text-right" colspan="4">รวมส่วนที่ 1 - @{{ index+1 }}</td>
+                                                    {{--ค่างานก่อสร้าง = ต่างานต้นทุน x factor F--}}
+                                                    <td class="td-result-green text-right">@{{ porlor4_part.total_sum_construction_cost | currency('') }}</td>
                                                     <td></td>
                                                 </tr>
                                             </template>

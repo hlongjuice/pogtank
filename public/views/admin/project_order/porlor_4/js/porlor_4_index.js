@@ -267,22 +267,27 @@ var AddNewPartModal = {
                 part: ''
             };
             this.showLoading = true;
-            porlor4PartService.getAll().then(function (result) {
-                console.log('Get All Part :', result);
-                _this.parts = result.filter(function (part) {
-                    var project_porlor_4_part = _this.project_porlor_4_parts.find(function (item) {
-                        return item.part_id === part.id;
-                    });
-                    // If already exist part return 0
-                    if (project_porlor_4_part) {
-                        return 0; // หมายถึงมีการใช้งาน part นี้แล้ว
-                    } else {
-                        return 1; // หาก project porlor 4 part เป็น null คือ part นี้ยังไม่ได้ใช้งาน
-                    }
-                });
-                console.log('This part After filter :', _this.parts);
-                // this.parts=result;
-                _this.showLoading = false;
+            // porlor4PartService.getAll()
+            //     .then(result=>{
+            //         console.log('Get All Part :',result);
+            //        this.parts=result.filter(part=>{
+            //             let project_porlor_4_part= this.project_porlor_4_parts.find(item=>{
+            //               return item.part_id === part.id;
+            //            });
+            //             // If already exist part return 0
+            //             if(project_porlor_4_part){
+            //                 return 0; // หมายถึงมีการใช้งาน part นี้แล้ว
+            //             }else{
+            //                 return 1; // หาก project porlor 4 part เป็น null คือ part นี้ยังไม่ได้ใช้งาน
+            //             }
+            //         });
+            //         console.log('This part After filter :',this.parts);
+            //         // this.parts=result;
+            //         this.showLoading=false;
+            //     }).catch(err=>{alert(err)});
+            porlor4PartService.getAvailableParts(this.project_details.id).then(function (result) {
+                _this.parts = result;
+                console.log('Available Parts are :', result);
             }).catch(function (err) {
                 alert(err);
             });
@@ -544,7 +549,9 @@ var Porlor4Part = function () {
 
     }, {
         key: 'getAvailableParts',
-        value: function getAvailableParts(project_order_id, porlor_4_id) {
+        value: function getAvailableParts(project_order_id) {
+            var porlor_4_id = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+
             var url = this.url + '/admin/porlor_4_parts/get_available_parts/' + project_order_id + '/porlor_4/' + porlor_4_id;
             return new Promise(function (resolve, reject) {
                 axios.get(url).then(function (result) {

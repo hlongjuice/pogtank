@@ -268,7 +268,9 @@ var Porlor4Part = function () {
 
     }, {
         key: 'getAvailableParts',
-        value: function getAvailableParts(project_order_id, porlor_4_id) {
+        value: function getAvailableParts(project_order_id) {
+            var porlor_4_id = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+
             var url = this.url + '/admin/porlor_4_parts/get_available_parts/' + project_order_id + '/porlor_4/' + porlor_4_id;
             return new Promise(function (resolve, reject) {
                 axios.get(url).then(function (result) {

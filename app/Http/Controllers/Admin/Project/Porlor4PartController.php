@@ -34,7 +34,7 @@ class Porlor4PartController extends Controller
 
     //เลือกเฉพาะ Part ที่ยังไม่ได้ใช้ในโปรเจค
     public function getAvailablePart($project_order_id,$porlor_4_id){
-        //เลือก part_id ของโปรเจคทุกอันยกเว้น อันที่ระบุ porlor_4_id เพื่อใช้กรอง part_id ที่ยังว่าง
+        //เลือก part_id ของโปรเจคทุกอันยกเว้น อันที่ระบุ porlor_4_id เพื่อใช้กรอง part_id ที่ยังว่าง เพื่อนำไปกรอง
         $partIDs = Porlor4::where('project_order_id',$project_order_id)
             ->where('id','!=',$porlor_4_id)
             ->get()

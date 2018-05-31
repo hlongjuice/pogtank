@@ -623,7 +623,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <!-- BEGIN FOOTER -->
 <div class="footer">
     <div class="footer-inner">
-        2013 &copy; Conquer by keenthemes.
+        {{--2013 &copy; Conquer by keenthemes.--}}
     </div>
     <div class="footer-tools">
 		<span class="go-top">

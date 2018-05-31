@@ -19,23 +19,28 @@ export const AddNewPartModal={
               part:''
             };
             this.showLoading=true;
-            porlor4PartService.getAll()
+            // porlor4PartService.getAll()
+            //     .then(result=>{
+            //         console.log('Get All Part :',result);
+            //        this.parts=result.filter(part=>{
+            //             let project_porlor_4_part= this.project_porlor_4_parts.find(item=>{
+            //               return item.part_id === part.id;
+            //            });
+            //             // If already exist part return 0
+            //             if(project_porlor_4_part){
+            //                 return 0; // หมายถึงมีการใช้งาน part นี้แล้ว
+            //             }else{
+            //                 return 1; // หาก project porlor 4 part เป็น null คือ part นี้ยังไม่ได้ใช้งาน
+            //             }
+            //         });
+            //         console.log('This part After filter :',this.parts);
+            //         // this.parts=result;
+            //         this.showLoading=false;
+            //     }).catch(err=>{alert(err)});
+            porlor4PartService.getAvailableParts(this.project_details.id)
                 .then(result=>{
-                    console.log('Get All Part :',result);
-                   this.parts=result.filter(part=>{
-                        let project_porlor_4_part= this.project_porlor_4_parts.find(item=>{
-                          return item.part_id === part.id;
-                       });
-                        // If already exist part return 0
-                        if(project_porlor_4_part){
-                            return 0; // หมายถึงมีการใช้งาน part นี้แล้ว
-                        }else{
-                            return 1; // หาก project porlor 4 part เป็น null คือ part นี้ยังไม่ได้ใช้งาน
-                        }
-                    });
-                    console.log('This part After filter :',this.parts);
-                    // this.parts=result;
-                    this.showLoading=false;
+                    this.parts=result;
+                    console.log('Available Parts are :',result)
                 }).catch(err=>{alert(err)})
         },
         //Add Part

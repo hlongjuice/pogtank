@@ -148,6 +148,7 @@
                                         {{--class="text-error text-danger">กรุณาระบุข้อมูล</span>--}}
                                         {{--</div>--}}
                                         {{--</div>--}}
+
                                         {{--Material Item--}}
                                         <div class="col-xs-12 col-md-4">
                                             <div class="form-group">
@@ -199,6 +200,49 @@
                                     </div>
                                     {{-- Price and Wage and Quantity --}}
                                     <div v-if="item.material_item" class="row">
+                                        <!-- -- Quantity and Unit -->
+                                        <div class="col-xs-12 col-md-4">
+                                            <div class="row">
+                                                <div class="col-xs-8">
+                                                    <div class="form-group">
+                                                        <label class="control-label">
+                                                            จำนวน
+                                                        </label>
+                                                        <div :class="{'input-error':errors.has('form.add_child_job_item_quantity_'+index)}">
+                                                            {{--<input v-validate="'required'"--}}
+                                                                   {{--type="number"--}}
+                                                                   {{--step="0.001"--}}
+                                                                   {{--:data-vv-name="'add_child_job_item_quantity_'+index"--}}
+                                                                   {{--class="form-control"--}}
+                                                                   {{--v-model="item.quantity"--}}
+                                                            {{-->--}}
+                                                            <vue-numeric
+                                                                    name="itemQuantity" :precision=2
+                                                                    class="form-control" separator=","
+                                                                    v-model="item.quantity"></vue-numeric>
+                                                        </div>
+                                                        <span v-show="errors.has('form.add_child_job_item_quantity_'+index)"
+                                                              class="text-error text-danger">กรุณาระบุข้อมูล</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-4">
+                                                    <div class="form-group">
+                                                        <label class="control-label">
+                                                            หน่วย
+                                                        </label>
+                                                        <div :class="{'input-error':errors.has('form.add_child_job_item_unit_'+index)}">
+                                                            <input v-validate="'required'"
+                                                                   type="text"
+                                                                   :data-vv-name="'add_child_job_item_unit_'+index"
+                                                                   class="form-control"
+                                                                   v-model="item.unit">
+                                                        </div>
+                                                        <span v-show="errors.has('form.add_child_job_item_unit_'+index)"
+                                                              class="text-error text-danger">กรุณาระบุข้อมูล</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <!-- -- Price -->
                                         <div class="col-xs-12 col-md-4">
                                             <div class="form-group">
@@ -221,43 +265,6 @@
                                                         name="globalCost" :precision=2
                                                         class="form-control" separator=","
                                                         v-model="item.local_wage"></vue-numeric>
-                                            </div>
-                                        </div>
-                                        <!-- -- Quantity and Unit -->
-                                        <div class="col-xs-12 col-md-4">
-                                            <div class="row">
-                                                <div class="col-xs-8">
-                                                    <div class="form-group">
-                                                        <label class="control-label">
-                                                            จำนวน
-                                                        </label>
-                                                        <div :class="{'input-error':errors.has('form.add_child_job_item_quantity_'+index)}">
-                                                            <input v-validate="'required'"
-                                                                   type="number"
-                                                                   :data-vv-name="'add_child_job_item_quantity_'+index"
-                                                                   class="form-control"
-                                                                   v-model="item.quantity">
-                                                        </div>
-                                                        <span v-show="errors.has('form.add_child_job_item_quantity_'+index)"
-                                                              class="text-error text-danger">กรุณาระบุข้อมูล</span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xs-4">
-                                                    <div class="form-group">
-                                                        <label class="control-label">
-                                                            หน่วย
-                                                        </label>
-                                                        <div :class="{'input-error':errors.has('form.add_child_job_item_unit_'+index)}">
-                                                            <input v-validate="'required'"
-                                                                   type="text"
-                                                                   :data-vv-name="'add_child_job_item_unit_'+index"
-                                                                   class="form-control"
-                                                                   v-model="item.unit">
-                                                        </div>
-                                                        <span v-show="errors.has('form.add_child_job_item_unit_'+index)"
-                                                              class="text-error text-danger">กรุณาระบุข้อมูล</span>
-                                                    </div>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
