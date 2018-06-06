@@ -2,6 +2,7 @@ import ProjectOrderService from '../../../../assets/js/services/project_order/pr
 import WebUrl from '../../../../assets/js/services/webUrl';
 import {ProjectOrderEditModal} from '../project_order_edit';
 import {Porlor5Index} from "../porlor_5/porlor_5_index";
+import {Porlor6Index} from "../porlor_6/porlor_6_index";
 
 let webUrl = new WebUrl();
 let projectOderService = new ProjectOrderService();
@@ -9,7 +10,8 @@ new Vue({
     el: '#project-order-index',
     mixins: [
         ProjectOrderEditModal,
-        Porlor5Index
+        Porlor5Index,
+        Porlor6Index
     ],
     data: {
         showLoading: '',
@@ -53,6 +55,11 @@ new Vue({
           this.$modal.show('porlor-5-modal',{
               order:order
           })
+        }, //Open Porlor 6
+        openPorlor6Modal(order){
+          this.$modal.show('porlor-6-modal',{
+              order:order
+          })
         },
         getAllProjectOrder() {
             projectOderService.getAllProjectOrders()
@@ -72,6 +79,9 @@ new Vue({
         },
         //Before Close Porlor 5
         beforeClosePorlor5Modal(){
+
+        },  //Before Close Porlor 6
+        beforeClosePorlor6Modal(){
 
         },
         //Delete Project

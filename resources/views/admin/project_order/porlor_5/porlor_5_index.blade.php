@@ -183,13 +183,13 @@
                                                             </span>
                                                             <span v-if="porlor5_result.page>1 && part_index == 0">
                                                                 <a @click="porlor5_moveToPreviousPage(porlor4)"
-                                                                   class="btn btn-default">
+                                                                   class="btn btn-info btn-sm">
                                                                      <i class="fas fa-arrow-alt-up"></i>
                                                                 </a>
                                                             </span>
                                                             <span v-if="porlor5_result.parts.length >1 && part_index+1==porlor5_result.parts.length">
                                                                 <a @click="porlor5_moveToNextPage(porlor4)"
-                                                                   class="btn btn-default">
+                                                                   class="btn btn-info btn-sm">
                                                                    <i class="fas fa-arrow-alt-down"></i>
                                                                 </a>
                                                             </span>

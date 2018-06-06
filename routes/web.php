@@ -138,6 +138,10 @@ Route::prefix('admin')->middleware('auth')
                 //Move to Next Page
                 Route::put('porlor4/move_to_next_page/{porlor4_id}','Admin\Project\Porlor5\Porlor5Controller@moveToNextPage');
             });
+            // -- -- -- Porlor 6
+            Route::prefix('{project_order_id}/porlor_6')->group(function(){
+               Route::get('/','Admin\Project\Porlor6\Porlor6Controller@getPorlor6');
+            });
         });
 
         // -- -- Porlor 4 Part

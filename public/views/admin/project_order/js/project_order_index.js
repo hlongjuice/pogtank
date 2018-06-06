@@ -124,6 +124,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_js_services_webUrl__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__project_order_edit__ = __webpack_require__(209);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__porlor_5_porlor_5_index__ = __webpack_require__(210);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__porlor_6_porlor_6_index__ = __webpack_require__(212);
+
 
 
 
@@ -133,7 +135,7 @@ var webUrl = new __WEBPACK_IMPORTED_MODULE_1__assets_js_services_webUrl__["a" /*
 var projectOderService = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_project_order_service__["a" /* default */]();
 new Vue({
     el: '#project-order-index',
-    mixins: [__WEBPACK_IMPORTED_MODULE_2__project_order_edit__["a" /* ProjectOrderEditModal */], __WEBPACK_IMPORTED_MODULE_3__porlor_5_porlor_5_index__["a" /* Porlor5Index */]],
+    mixins: [__WEBPACK_IMPORTED_MODULE_2__project_order_edit__["a" /* ProjectOrderEditModal */], __WEBPACK_IMPORTED_MODULE_3__porlor_5_porlor_5_index__["a" /* Porlor5Index */], __WEBPACK_IMPORTED_MODULE_4__porlor_6_porlor_6_index__["a" /* Porlor6Index */]],
     data: {
         showLoading: '',
         orders: {}
@@ -177,6 +179,12 @@ new Vue({
                 order: order
             });
         },
+        //Open Porlor 6
+        openPorlor6Modal: function openPorlor6Modal(order) {
+            this.$modal.show('porlor-6-modal', {
+                order: order
+            });
+        },
         getAllProjectOrder: function getAllProjectOrder() {
             var _this2 = this;
 
@@ -197,6 +205,8 @@ new Vue({
 
         //Before Close Porlor 5
         beforeClosePorlor5Modal: function beforeClosePorlor5Modal() {},
+        //Before Close Porlor 6
+        beforeClosePorlor6Modal: function beforeClosePorlor6Modal() {},
 
         //Delete Project
         deleteProject: function deleteProject(order) {
@@ -472,6 +482,109 @@ var Porlor5Service = function () {
 }();
 
 /* harmony default export */ __webpack_exports__["a"] = (Porlor5Service);
+
+/***/ }),
+
+/***/ 212:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Porlor6Index; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_6_porlor_6_service__ = __webpack_require__(213);
+
+
+var porlor6Service = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_6_porlor_6_service__["a" /* default */]();
+var Porlor6Index = {
+    data: function data() {
+        return {
+            porlor6: {
+                is_loading: false,
+                project: '',
+                project_order: ''
+            }
+
+        };
+    },
+
+    methods: {
+        beforeOpenPorlor6Modal: function beforeOpenPorlor6Modal(data) {
+            this.porlor6.project_order = data.params.order;
+        },
+        openedPorlor6Modal: function openedPorlor6Modal() {
+            var _this = this;
+
+            this.porlor6.is_loading = true;
+            Promise.all([this.porlor6_getPorlor6()]).then(function () {
+                _this.porlor6.is_loading = false;
+            }).catch(function (err) {
+                alert(err);
+            });
+        },
+        closePorlor6Modal: function closePorlor6Modal() {
+            this.$modal.hide('porlor-6-modal');
+        },
+
+        //porlor6
+        //-- Get Porlor Items
+        porlor6_getPorlor6: function porlor6_getPorlor6() {
+            var _this2 = this;
+
+            porlor6Service.getPorlor6(this.porlor6.project_order.id).then(function (result) {
+                console.log('Porlor 6 : ', result);
+                _this2.porlor6.project = result;
+                _this2.porlor6.is_loading = false;
+            }).catch(function (err) {
+                alert(err);
+                _this2.porlor6.is_loading = false;
+            });
+        }
+    }
+};
+
+/***/ }),
+
+/***/ 213:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__webUrl__ = __webpack_require__(2);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+
+var webUrl = new __WEBPACK_IMPORTED_MODULE_0__webUrl__["a" /* default */]();
+
+var Porlor6Service = function () {
+    function Porlor6Service() {
+        _classCallCheck(this, Porlor6Service);
+
+        this.url = webUrl.getUrl();
+        this._put_method = {
+            _method: 'PUT'
+        };
+    }
+    //Get Porlor5
+
+
+    _createClass(Porlor6Service, [{
+        key: 'getPorlor6',
+        value: function getPorlor6(project_order_id) {
+            var url = this.url + '/admin/project_order/' + project_order_id + '/porlor_6';
+            return new Promise(function (resolve, reject) {
+                axios.get(url).then(function (result) {
+                    resolve(result.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
+    }]);
+
+    return Porlor6Service;
+}();
+
+/* harmony default export */ __webpack_exports__["a"] = (Porlor6Service);
 
 /***/ }),
 
