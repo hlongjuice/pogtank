@@ -343,12 +343,7 @@ var Porlor5Index = {
             var _this = this;
 
             this.porlor5.is_loading = true;
-            Promise.all([porlor5Service.getPorlor5(this.porlor5.project_order.id).then(function (result) {
-                console.log(result);
-                _this.porlor5.project = result;
-            }).catch(function (err) {
-                alert(err);
-            })]).then(function () {
+            Promise.all([this.porlor5_getPorlor5()]).then(function () {
                 _this.porlor5.is_loading = false;
             }).catch(function (err) {
                 alert(err);
@@ -356,6 +351,47 @@ var Porlor5Index = {
         },
         closePorlor5Modal: function closePorlor5Modal() {
             this.$modal.hide('porlor-5-modal');
+        },
+
+        //porlor5
+        //-- Get Porlor Items
+        porlor5_getPorlor5: function porlor5_getPorlor5() {
+            var _this2 = this;
+
+            porlor5Service.getPorlor5(this.porlor5.project_order.id).then(function (result) {
+                console.log(result);
+                _this2.porlor5.project = result;
+                _this2.porlor5.is_loading = false;
+            }).catch(function (err) {
+                alert(err);
+                _this2.porlor5.is_loading = false;
+            });
+        },
+
+        //-- move to Previous Page
+        porlor5_moveToPreviousPage: function porlor5_moveToPreviousPage(porlor4) {
+            var _this3 = this;
+
+            this.porlor5.is_loading = true;
+            porlor5Service.moveToPreviousPage(porlor4.project_order_id, porlor4.id).then(function (result) {
+                _this3.porlor5_getPorlor5();
+            }).catch(function (err) {
+                alert(err);
+                _this3.porlor5.is_loading = false;
+            });
+        },
+
+        //-- Move to next Page
+        porlor5_moveToNextPage: function porlor5_moveToNextPage(porlor4) {
+            var _this4 = this;
+
+            this.porlor5.is_loading = true;
+            porlor5Service.moveToNextPage(porlor4.project_order_id, porlor4.id).then(function (result) {
+                _this4.porlor5_getPorlor5();
+            }).catch(function (err) {
+                alert(err);
+                _this4.porlor5.is_loading = false;
+            });
         }
     }
 };
@@ -379,8 +415,10 @@ var Porlor5Service = function () {
         _classCallCheck(this, Porlor5Service);
 
         this.url = webUrl.getUrl();
+        this._put_method = {
+            _method: 'PUT'
+        };
     }
-
     //Get Porlor5
 
 
@@ -390,6 +428,38 @@ var Porlor5Service = function () {
             var url = this.url + '/admin/project_order/' + project_order_id + '/porlor_5';
             return new Promise(function (resolve, reject) {
                 axios.get(url).then(function (result) {
+                    resolve(result.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
+        //Move to Previous Page
+
+    }, {
+        key: 'moveToPreviousPage',
+        value: function moveToPreviousPage(project_order_id, porlor4_id) {
+            var _this = this;
+
+            var url = this.url + '/admin/project_order/' + project_order_id + '/porlor_5/porlor4/move_to_previous_page/' + porlor4_id;
+            return new Promise(function (resolve, reject) {
+                axios.post(url, _this._put_method).then(function (result) {
+                    resolve(result.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
+        //Move to Next Page
+
+    }, {
+        key: 'moveToNextPage',
+        value: function moveToNextPage(project_order_id, porlor4_id) {
+            var _this2 = this;
+
+            var url = this.url + '/admin/project_order/' + project_order_id + '/porlor_5/porlor4/move_to_next_page/' + porlor4_id;
+            return new Promise(function (resolve, reject) {
+                axios.post(url, _this2._put_method).then(function (result) {
                     resolve(result.data);
                 }).catch(function (err) {
                     reject(err);

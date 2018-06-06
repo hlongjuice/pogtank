@@ -287,9 +287,11 @@ var AddNewPartModal = {
             //     }).catch(err=>{alert(err)});
             porlor4PartService.getAvailableParts(this.project_details.id).then(function (result) {
                 _this.parts = result;
+                _this.showLoading = false;
                 console.log('Available Parts are :', result);
             }).catch(function (err) {
                 alert(err);
+                _this.showLoading = false;
             });
         },
 

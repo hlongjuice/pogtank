@@ -40,8 +40,12 @@ export const AddNewPartModal={
             porlor4PartService.getAvailableParts(this.project_details.id)
                 .then(result=>{
                     this.parts=result;
+                    this.showLoading=false;
                     console.log('Available Parts are :',result)
-                }).catch(err=>{alert(err)})
+                }).catch(err=>{
+                    alert(err);
+                this.showLoading=false;
+                })
         },
         //Add Part
         addPart(){
