@@ -7,7 +7,8 @@ export const Porlor6Index = {
             porlor6: {
                 is_loading: false,
                 project: '',
-                project_order: ''
+                project_order: '',
+                blank_rows:[]
             }
 
         }
@@ -18,6 +19,9 @@ export const Porlor6Index = {
 
         },
         openedPorlor6Modal() {
+            for(let i=0;i<5;i++){
+                this.porlor6.blank_rows.push('');
+            }
             this.porlor6.is_loading = true;
             Promise.all([
                 this.porlor6_getPorlor6()

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Project\Porlor6;
 
 use App\Http\Controllers\Admin\Project\Porlor5\Porlor5Controller;
+use App\Http\Controllers\Others\NumberThaiController;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -32,10 +33,14 @@ class Porlor6Controller extends Controller
             $round_down_construction_cost =  floor($construction_cost / 10) * 10;//ถ้าต่ำกว่า 100 ปัดหลัก 10
         }
 
+        $numberThai = new NumberThaiController();
+        $round_down_construction_cost_text = $numberThai->convertToBaht($round_down_construction_cost);
+
 
         $porlor6=collect([
             'construction_cost'=>$construction_cost,
-            'round_down_construction_cost' =>$round_down_construction_cost
+            'round_down_construction_cost' =>$round_down_construction_cost,
+            'round_down_construction_cost_text'=>$round_down_construction_cost_text
         ]);
         $project->porlor6=$porlor6;
         return $project;

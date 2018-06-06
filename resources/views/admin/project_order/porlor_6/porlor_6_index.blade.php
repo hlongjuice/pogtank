@@ -122,38 +122,41 @@
                                     <thead>
                                     <tr class="table-header-green">
                                         <th width="7%" class="text-center">ลำดับที่</th>
-                                        <th width="40%" class="text-center" >รายการ</th>
+                                        <th width="50%" class="text-center" >รายการ</th>
                                         <th class="text-center" >ค่าก่อสรา้ง</th>
-                                        <th class="text-center">หมายเหตุ</th>
+                                        <th  width="15%" class="text-center">หมายเหตุ</th>
                                     </tr>
                                     </thead>
                                     {{-- -- Table Content --}}
                                     <tbody>
                                         <tr>
-                                            <td>1</td>
+                                            <td class="text-center" >1</td>
                                             <td>@{{ porlor6.project.project_name }}</td>
                                             <td class="text-right">@{{ porlor6.project.porlor6.construction_cost | currency('') }}</td>
                                             <td></td>
                                         </tr>
+                                        <tr v-for="blank_row in porlor6.blank_rows">
+                                            <td ><span style="visibility: hidden">5</span></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
                                         {{--Result--}}
                                         <tr>
-                                            <td>1</td>
+                                            <td class="text-center" rowspan="3">สรุป</td>
                                             <td class="text-center">รวมค่าก่อสร้าง</td>
                                             <td class="text-right">@{{ porlor6.project.porlor6.construction_cost | currency('') }}</td>
                                             <td></td>
                                         </tr>
                                         {{--Result Round Down--}}
                                         <tr>
-                                            <td>1</td>
-                                            <td class="text-center">ราคากลาง</td>
-                                            <td class="text-right">@{{ porlor6.project.porlor6.construction_cost | currency('') }}</td>
+                                            <td class="td-result-green text-center">ราคากลาง</td>
+                                            <td class="td-result-green text-right">@{{ porlor6.project.porlor6.round_down_construction_cost | currency('') }}</td>
                                             <td></td>
                                         </tr>  {{--Result Round Down Text--}}
                                         <tr>
-                                            <td>1</td>
                                             <td class="text-center">ราคากลาง(ตัวอักษร)</td>
-                                            <td class="text-right">@{{ porlor6.project.porlor6.construction_cost | currency('') }}</td>
-                                            <td></td>
+                                            <td colspan="2" class="text-center">@{{ porlor6.project.porlor6.round_down_construction_cost_text }}</td>
                                         </tr>
                                     </tbody>
                                 </table>

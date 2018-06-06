@@ -500,7 +500,8 @@ var Porlor6Index = {
             porlor6: {
                 is_loading: false,
                 project: '',
-                project_order: ''
+                project_order: '',
+                blank_rows: []
             }
 
         };
@@ -513,6 +514,9 @@ var Porlor6Index = {
         openedPorlor6Modal: function openedPorlor6Modal() {
             var _this = this;
 
+            for (var i = 0; i < 5; i++) {
+                this.porlor6.blank_rows.push('');
+            }
             this.porlor6.is_loading = true;
             Promise.all([this.porlor6_getPorlor6()]).then(function () {
                 _this.porlor6.is_loading = false;
