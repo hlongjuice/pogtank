@@ -719,6 +719,21 @@ var ProjectOrderService = function () {
                 });
             });
         }
+        //Get Referees
+
+    }, {
+        key: 'getReferees',
+        value: function getReferees(project_order_id) {
+            var url = this.url + '/admin/project_order/get_referees/' + project_order_id;
+            return new Promise(function (resolve, reject) {
+                axios.get(url).then(function (result) {
+                    console.log('Result', result);
+                    resolve(result.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
         //Add New Project Order
 
     }, {

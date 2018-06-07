@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Project;
 
 use App\Models\Admin\Project\ProjectOrder;
+use App\Models\Admin\Project\Referee;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DB;
@@ -30,6 +31,13 @@ class ProjectController extends Controller
         $details = ProjectOrder::with(['province', 'amphoe', 'district'])
             ->where('id', $project_order_id)->first();
         return response()->json($details);
+    }
+    //Get Project Referees
+    public function getReferees($project_order_id){
+        $referees = Referee::where('project_order_id',$project_order_id)
+            ->orderBy('name')
+            ->get();
+        return response()->json($referees);
     }
     //Add New Order
     public function addNewOrder(Request $request){
