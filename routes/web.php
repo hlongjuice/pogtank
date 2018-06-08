@@ -66,8 +66,6 @@ Route::prefix('admin')->middleware('auth')
             Route::post('/add_new_order', 'Admin\Project\ProjectController@addNewOrder');
             // -- -- --Get Project Details
             Route::get('/get_project_details/{project_order_id}', 'Admin\Project\ProjectController@getProjectDetails');
-            // -- -- --Get Project Referees
-            Route::get('/get_referees/{project_order_id}','Admin\Project\ProjectController@getReferees');
             // -- -- --Get All Project Order
             Route::get('/get_all_orders', 'Admin\Project\ProjectController@getAllProjectOrders');
             // -- -- --Update Project Details
@@ -144,17 +142,26 @@ Route::prefix('admin')->middleware('auth')
             Route::prefix('{project_order_id}/porlor_6')->group(function(){
                Route::get('/','Admin\Project\Porlor6\Porlor6Controller@getPorlor6');
             });
+            // -- -- -- Project Referee
+            Route::prefix('referee')->group(function(){
+                // -- Add New Referee Referee
+                Route::post('add_referees/{project_order_id}','Admin\Project\ProjectRefereeController@addReferees');
+                // -- Delete Referee
+//                Route::delete('delete_referees','');
+                // -- Get Referees
+                Route::get('get_referees/{project_order_id}','Admin\Project\ProjectRefereeController@getReferees');
+            });
         });
         // -- -- Referee
-        Route::prefix('referee')->group(function(){
+        Route::prefix('referee_rank')->group(function(){
             //Get All Referee
-           Route::get('get_referees','Admin\Referee\RefereeController@getReferees');
+           Route::get('get_referee_ranks','Admin\Referee\RefereeRankController@getRefereeRanks');
            //Add New Referee
-            Route::post('add_new_referee','Admin\Referee\RefereeController@addReferee');
+            Route::post('add_referee_ranks','Admin\Referee\RefereeRankController@addRanks');
             //Update Referee
-            Route::put('update_referee/{referee_id}','Admin\Referee\RefereeController@updateReferee');
+            Route::put('update_rank/{referee_id}','Admin\Referee\RefereeRankController@updateRank');
             //Delete Referee
-            Route::delete('delete_referee/{referee_id}','Admin\Referee\RefereeController@deleteReferee');
+            Route::delete('delete_rank/{referee_id}','Admin\Referee\RefereeRankController@deleteRank');
         });
 
         // -- -- Porlor 4 Part

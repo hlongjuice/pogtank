@@ -1,6 +1,6 @@
 import WebUrl from '../webUrl';
 let webUrl = new WebUrl();
-class RefereeService {
+class RefereeRankService {
     constructor() {
         this.url = webUrl.getUrl();
         this._delete_method = {
@@ -8,8 +8,8 @@ class RefereeService {
         };
     }
     //Add New Referee
-    addReferee(dataInput) {
-        let url = this.url + '/admin/referee/add_referee';
+    addRefereeRanks(dataInput) {
+        let url = this.url + '/admin/referee_rank/add_referee_rank';
         return new Promise((resolve, reject) => {
             axios.post(url, dataInput)
                 .then(result => {
@@ -20,8 +20,8 @@ class RefereeService {
         })
     }
     //Get All Referee
-    getReferees(){
-        let url = this.url + '/admin/referee/get_referees';
+    getRefereeRanks(){
+        let url = this.url + '/admin/referee_rank/get_referee_ranks';
         return new Promise((resolve, reject) => {
             axios.get(url)
                 .then(result => {
@@ -32,9 +32,9 @@ class RefereeService {
         })
     }
     //Update Referee
-    updateReferee(referee_id,dataInput){
+    updateRank(referee_id,dataInput){
         dataInput._method='PUT';
-        let url = this.url + '/admin/referee/update_referee/'+referee_id;
+        let url = this.url + '/admin/referee_rank/update_referee_rank/'+referee_id;
         return new Promise((resolve, reject) => {
             axios.post(url, dataInput)
                 .then(result => {
@@ -46,4 +46,4 @@ class RefereeService {
     }
 }
 
-export default RefereeService;
+export default RefereeRankService;

@@ -11,6 +11,16 @@ class ProjectOrderService{
         }
 
     }
+    //Add New Project Order
+    addNewOrder(inputData){
+        let url=this.url+'/admin/project_order/add_new_order';
+        return new Promise((resolve,reject)=>{
+            axios.post(url,inputData)
+                .then(result=>{
+                    resolve(result.data)
+                }).catch(err=>{alert(err)})
+        })
+    }
     //Get Project Details
     getProjectDetails(project_order_id){
         let url = this.url+'/admin/project_order/get_project_details/'+project_order_id;
@@ -35,29 +45,6 @@ class ProjectOrderService{
                 }).catch(err=>{
                     reject(err)
                 })
-        })
-    }
-    //Get Referees
-    getReferees(project_order_id){
-        let url = this.url+'/admin/project_order/get_referees/'+project_order_id;
-        return new Promise((resolve,reject)=>{
-            axios.get(url)
-                .then(result=>{
-                    console.log('Result',result);
-                    resolve(result.data)
-                }).catch(err=>{
-                reject(err)
-            })
-        })
-    }
-    //Add New Project Order
-    addNewOrder(inputData){
-        let url=this.url+'/admin/project_order/add_new_order';
-        return new Promise((resolve,reject)=>{
-            axios.post(url,inputData)
-                .then(result=>{
-                    resolve(result.data)
-                }).catch(err=>{alert(err)})
         })
     }
     //Update Project Details

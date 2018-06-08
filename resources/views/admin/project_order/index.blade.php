@@ -7,8 +7,12 @@
     <div id="project-order-index" class="row" v-cloak>
         <loading :show="showLoading"></loading>
         @include('admin.project_order.project_order_edit')
+        {{--Porlor5--}}
         @include('admin.project_order.porlor_5.porlor_5_index')
+        {{--Porlor6--}}
         @include('admin.project_order.porlor_6.porlor_6_index')
+        {{--Referee--}}
+        @include('admin.project_order.referee.referee_index')
         <div class="col-md-12">
             <!-- BEGIN EXAMPLE TABLE PORTLET-->
             <div class="portlet">
@@ -38,13 +42,6 @@
                                     </a>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="btn-group pull-right">
-                                    <button class="btn dropdown-toggle" data-toggle="dropdown">Tools <i
-                                                class="fa fa-angle-down"></i>
-                                    </button>
-                                </div>
-                            </div>
                         </div>
                     </div>
                     {{-- Types Table--}}
@@ -54,6 +51,7 @@
                         <tr>
                             {{--<th>ID</th>--}}
                             <th>โครงการ</th>
+                            <th>คณะกรรมการ</th>
                             <th>ปร.4</th>
                             <th>ปร.5</th>
                             <th>ปร.6</th>
@@ -66,6 +64,7 @@
                         <tr v-for="order in orders.data">
                             {{--<td></td>--}}
                             <td>@{{ order.project_name }}</td>
+                            <td><a @click="openProjectReferee(order)" class="btn btn-info">คณะกรรมการ</a></td>
                             <td><a @click="openPorlor4Page(order)" class="btn btn-info">ปร.4</a></td>
                             <td><a @click="openPorlor5Modal(order)" class="btn btn-info">ปร.5</a></td>
                             <td><a @click="openPorlor6Modal(order)" class="btn btn-info">ปร.6</a></td>

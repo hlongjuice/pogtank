@@ -3,6 +3,8 @@ import WebUrl from '../../../../assets/js/services/webUrl';
 import {ProjectOrderEditModal} from '../project_order_edit';
 import {Porlor5Index} from "../porlor_5/porlor_5_index";
 import {Porlor6Index} from "../porlor_6/porlor_6_index";
+import {ProjectReferee} from "../referee/referee_index";
+import {ProjectRefereeAddModal} from "../referee/add_referee/add_referee";
 
 let webUrl = new WebUrl();
 let projectOderService = new ProjectOrderService();
@@ -11,7 +13,9 @@ new Vue({
     mixins: [
         ProjectOrderEditModal,
         Porlor5Index,
-        Porlor6Index
+        Porlor6Index,
+        ProjectReferee,
+        ProjectRefereeAddModal
     ],
     data: {
         showLoading: '',
@@ -61,6 +65,12 @@ new Vue({
               order:order
           })
         },
+        //Open Project Referee
+        openProjectReferee(order){
+          this.$modal.show('project-referee-modal',{
+              order:order
+          })
+        },
         getAllProjectOrder() {
             projectOderService.getAllProjectOrders()
                 .then(result => {
@@ -84,6 +94,11 @@ new Vue({
         beforeClosePorlor6Modal(){
 
         },
+        //Before Close Project Referee Modal
+        beforeCloseProjectRefereeModal(){
+
+        }
+        ,
         //Delete Project
         deleteProject(order) {
             this.$dialog.confirm('ยืนยันการลบ')

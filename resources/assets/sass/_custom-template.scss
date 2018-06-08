@@ -7,13 +7,12 @@
 .btn-danger-delete {
   line-height: 1.1;
 }
-
-//Modal
-.v--modal-overlay {
-  z-index: 9999 !important;
+//*** Badge
+.badge-notify{
+  //margin-bottom: 3px;
+  height: inherit;
 }
-
-//Confirm Dialog
+//*** Confirm Dialog
 .dg-backdrop, .dg-container{
   z-index:9999 !important;
 }
@@ -25,7 +24,86 @@
   color: map_get($colors,light) !important;
   background-color:map_get($colors,success) !important;
 }
-//Portlet
+//--End Confirm Dialog
+//*** Form
+// -- Input
+.input-error {
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  border: 1px solid map_get($colors, danger);
+}
+.text-error {
+  display: block;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+// -- Button
+// -- -- Group Button
+.group-button {
+  position: relative;
+  width: 200px;
+  .group-button-item {
+    margin-right: 5px;
+    float: left;
+  }
+  .w-50 {
+    width: 50%;
+  }
+}
+// -- -- Save
+.form-submit-button-tab {
+  position: absolute;
+  right: 20px;
+  top: 0;
+  button {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+@media (max-width: 760px) {
+  .form-submit-button-tab {
+    //content:" ";
+    //display:block;
+    //position:absolute;
+    //top:0;left:0;right:0;bottom:0;
+    //z-index:10;
+  }
+}
+.form-submit-button {
+  position: absolute;
+  right: 20px;
+  top: 2px;
+  width: 20%;
+  button {
+    //width:100%;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  //Custom Size
+  .w-50 {
+    width: 50%;
+  }
+}
+//-- --End Form
+//*** Line
+.line{
+  border-bottom:solid 1px;
+  margin-bottom:10px;
+  &.line-gray{
+    border-bottom-color: map_get($colors,gray);
+  }
+}
+//-- --End line
+//*** Modal
+.v--modal-overlay {
+  z-index: 9999 !important;
+}
+//*** Margin
+.margin-top-5{
+  margin-top:5px !important;
+}
+//*** Portlet
 .portlet-primary {
   .portlet-title,.tools {
     background-color: map_get($colors, primary);
@@ -34,12 +112,7 @@
     }
   }
 }
-//Badge
-.badge-notify{
-  //margin-bottom: 3px;
-  height: inherit;
-}
-//Table
+//*** Table
 .table td{
   vertical-align: middle !important;
 }
@@ -65,8 +138,8 @@
   background-color:map_get($colors,table-green);
   border:1px solid map_get($colors,dark-light) !important;
 }
-
-//Text
+//-- --End Table
+//*** Text
 // -- Label
 .label-status{
   font-size:1.2em;
@@ -75,11 +148,9 @@
 .text-warning {
   color: map_get($colors, warning);
 }
-
 .text-danger {
   color: map_get($colors, danger);
 }
-
 .text-success {
   color: map_get($colors, success);
 }
@@ -89,78 +160,6 @@
 .text-large{
 
 }
-
-//Form
-// -- Input
-.input-error {
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  border-radius: 4px;
-  border: 1px solid map_get($colors, danger);
-}
-
-.text-error {
-  display: block;
-  margin-top: 5px;
-  margin-bottom: 10px;
-}
-
-// -- Button
-// -- -- Group Button
-.group-button {
-  position: relative;
-  width: 200px;
-  .group-button-item {
-    margin-right: 5px;
-    float: left;
-  }
-  .w-50 {
-    width: 50%;
-  }
-}
-
-// -- -- Save
-.form-submit-button-tab {
-  position: absolute;
-  right: 20px;
-  top: 0;
-  button {
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-}
-
-@media (max-width: 760px) {
-  .form-submit-button-tab {
-    //content:" ";
-    //display:block;
-    //position:absolute;
-    //top:0;left:0;right:0;bottom:0;
-    //z-index:10;
-  }
-}
-.form-submit-button {
-  position: absolute;
-  right: 20px;
-  top: 2px;
-  width: 20%;
-  button {
-    //width:100%;
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-  //Custom Size
-  .w-50 {
-    width: 50%;
-  }
-}
-//Line
-.line{
-  border-bottom:solid 1px;
-  margin-bottom:10px;
-  &.line-gray{
-    border-bottom-color: map_get($colors,gray);
-  }
-}
+//-- --End Text
 
 

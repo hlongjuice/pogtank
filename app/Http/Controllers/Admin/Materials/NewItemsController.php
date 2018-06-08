@@ -61,7 +61,6 @@ class NewItemsController extends Controller
 
     //Delete Approved Items
     public function deleteApprovedItems(Request $request){
-
         $result= DB::transaction(function() use ($request){
             $item_ids= array_pluck($request->input('approved_items'),'id');
             MaterialItem::destroy($item_ids);
