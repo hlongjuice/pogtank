@@ -22,8 +22,19 @@ class ProjectRefereeService{
         })
     }
     //Delete Project Referee
-    deleteReferee(project_referee_id){
-
+    deleteReferees(project_order_id,inputData){
+        //Add _method สำหรับ Delete Method ที่ Api
+        inputData._method='DELETE';
+        let url = this.url+'/admin/project_order/referee/delete_referees/'+project_order_id;
+        return new Promise((resolve,reject)=>{
+            axios.post(url,inputData)
+                .then(result=>{
+                    console.log('Result',result);
+                    resolve(result.data)
+                }).catch(err=>{
+                reject(err)
+            })
+        })
     }
     //Get Referees
     getReferees(project_order_id){
@@ -31,7 +42,19 @@ class ProjectRefereeService{
         return new Promise((resolve,reject)=>{
             axios.get(url)
                 .then(result=>{
-                    console.log('Result',result);
+                    resolve(result.data)
+                }).catch(err=>{
+                reject(err)
+            })
+        })
+    }
+    //Update Referee
+    updateReferee(project_order_id,inputData){
+        inputData._method='PUT';
+        let url = this.url+'/admin/project_order/referee/update_referee/'+project_order_id;
+        return new Promise((resolve,reject)=>{
+            axios.post(url,inputData)
+                .then(result=>{
                     resolve(result.data)
                 }).catch(err=>{
                 reject(err)

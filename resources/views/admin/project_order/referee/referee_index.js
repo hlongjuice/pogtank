@@ -7,9 +7,10 @@ export const ProjectReferee = {
                 is_loading: false,
                 is_scrollable: true,
                 project_order: '',
-                referees: '',
+                referees: [],
+                select_all_referees:false,
                 form:{
-                    selected_items:[]
+                    selected_referees:[]
                 }
             }
         }
@@ -39,8 +40,11 @@ export const ProjectReferee = {
                 this.projectReferee_getReferees();
             }
         },
-        beforeCloseProjectRefereeEditModal() {
+        beforeCloseProjectRefereeEditModal(data) {
             this.project_referee.is_scrollable = true;
+            if(data.params.is_updated){
+                this.projectReferee_getReferees();
+            }
         },
         closeProjectRefereeModal() {
             this.$modal.hide('project-referee-modal')
@@ -51,17 +55,23 @@ export const ProjectReferee = {
                 order: this.project_referee.project_order
             })
         },
-        openProjectRefereeEditModal() {
-
+        openProjectRefereeEditModal(referee) {
+            this.project_referee.is_scrollable=false;
+            this.$modal.show('project-referee-edit-modal',{
+                order:this.project_referee.project_order,
+                referee:referee
+            })
         },
         //Project Referee Methods
         //-- Add New Referee
         //-- Get Porlor Items
         projectReferee_getReferees() {
+            console.log('Get Referees');
+            this.project_referee.is_loading = true;
             projectRefereeService.getReferees(this.project_referee.project_order.id)
                 .then(result => {
                     console.log(result);
-                    this.project_referee.referees = result;
+                    this.project_referee.referees=result;
                     this.project_referee.is_loading = false;
                 })
                 .catch(err => {
@@ -69,23 +79,47 @@ export const ProjectReferee = {
                     this.project_referee.is_loading = false;
                 })
         },
-        //-- Edit Referee Modal
-        projectReferee_editRefereeModal(referee) {
-            this.$modal.show('project-referee-edit-modal', {
-                referee: referee
-            })
-        },
         //-- Delete Referee
         projectReferee_deleteReferee(referee) {
+            this.project_referee.form.selected_referees.splice(0);
+            this.project_referee.select_all_referees=false;
+            this.project_referee.form.selected_referees.push(referee);
+            this.projectReferee_deleteMultipleReferees();
 
         },
+        //-- Delete Multiple Referees
+        projectReferee_deleteMultipleReferees(){
+            let referee_names = this.project_referee.form.selected_referees.map(referee=>{
+                return referee.name;
+            }).join("<br />");
+            this.$dialog.confirm('ยืนยันการลบรายการ <br>' +
+                ''+referee_names)
+                .then(()=>{
+                    projectRefereeService.deleteReferees(this.project_referee.project_order.id,this.project_referee.form)
+                        .then(result=>{
+                            this.projectReferee_resetData();
+                            this.projectReferee_getReferees();
+                        }).catch(err=>{
+                        alert(err)
+                    })
+                })
+                .catch();
+        },
         projectReferee_resetData() {
-            this.project_referee = {
-                is_loading: false,
-                is_scrollable: true,
-                project_order: '',
-                referees: ''
+            console.log('Reset Referee Data');
+            this.project_referee.is_loading=false;
+            this.project_referee.is_scrollable=true;
+            this.project_referee.select_all_referees=false;
+            this.project_referee.referees=[];
+        },
+        projectReferee_selectAllReferees(){
+            this.project_referee.form.selected_referees.splice(0);
+            if(this.project_referee.select_all_referees){
+                this.project_referee.referees.forEach(referee=>{
+                    this.project_referee.form.selected_referees.push(referee)
+                })
             }
+
         }
     }
 };

@@ -147,9 +147,11 @@ Route::prefix('admin')->middleware('auth')
                 // -- Add New Referee Referee
                 Route::post('add_referees/{project_order_id}','Admin\Project\ProjectRefereeController@addReferees');
                 // -- Delete Referee
-//                Route::delete('delete_referees','');
+                Route::delete('delete_referees/{project_order_id}','Admin\Project\ProjectRefereeController@deleteReferees');
                 // -- Get Referees
                 Route::get('get_referees/{project_order_id}','Admin\Project\ProjectRefereeController@getReferees');
+                // -- Update Referee
+                Route::put('update_referee/{project_order_id}','Admin\Project\ProjectRefereeController@updateReferee');
             });
         });
         // -- -- Referee

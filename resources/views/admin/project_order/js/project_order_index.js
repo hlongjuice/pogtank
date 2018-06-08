@@ -5,6 +5,7 @@ import {Porlor5Index} from "../porlor_5/porlor_5_index";
 import {Porlor6Index} from "../porlor_6/porlor_6_index";
 import {ProjectReferee} from "../referee/referee_index";
 import {ProjectRefereeAddModal} from "../referee/add_referee/add_referee";
+import {ProjectRefereeEditModal} from "../referee/edit_referee/edit_referee";
 
 let webUrl = new WebUrl();
 let projectOderService = new ProjectOrderService();
@@ -15,7 +16,8 @@ new Vue({
         Porlor5Index,
         Porlor6Index,
         ProjectReferee,
-        ProjectRefereeAddModal
+        ProjectRefereeAddModal,
+        ProjectRefereeEditModal
     ],
     data: {
         showLoading: '',
@@ -50,7 +52,6 @@ new Vue({
         //Open Project Order Edit Modal
         openProjectOrderEditModal(order) {
             this.$modal.show('project-order-edit-modal', {
-                // order:order
                 order: order
             })
         },
