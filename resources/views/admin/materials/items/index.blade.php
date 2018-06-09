@@ -64,70 +64,72 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- -- --Approved Table -->
-                                <table v-if="approvedItems.data" class="table table-hover table-bordered">
-                                    <!-- -- -- --Table Header -->
-                                    <thead>
-                                    <tr>
-                                        <td class="text-center" width="5%">
-                                            <input @change="selectAllApprovedItems"
-                                                   type="checkbox"
-                                                   v-model="chk_all_approved_items"
-                                                   id="chk_all_approved_items"
-                                            >
-
-                                        </td>
-                                        <td>ชื่อวัสดุ/อุปกรณ์</td>
-                                        <td>หมวดหมู่</td>
-                                        <td>สถาณะ</td>
-                                        <th>Edit</th>
-                                        <th>Delete</th>
-                                    </tr>
-                                    </thead>
-                                    <!-- -- -- --Table Body -->
-                                    <tbody>
-                                    <template v-for="(item,index) in approvedItems.data">
-                                        {{--แสดง Item ที่ได้รับการ Approved แล้ว--}}
-                                        <tr v-if="item.approved_global_details">
-                                            <td class="text-center">
-                                                <input type="checkbox"
-                                                       v-model="selected_items.approved_items"
-                                                       :value="item"
+                                <div class="table-responsive">
+                                    <!-- -- --Approved Table -->
+                                    <table v-if="approvedItems.data" class="table table-hover table-bordered">
+                                        <!-- -- -- --Table Header -->
+                                        <thead>
+                                        <tr>
+                                            <td class="text-center" width="5%">
+                                                <input @change="selectAllApprovedItems"
+                                                       type="checkbox"
+                                                       v-model="chk_all_approved_items"
+                                                       id="chk_all_approved_items"
                                                 >
+
                                             </td>
-                                            <td>
-                                                {{-- -- -- -- --Edit Button--}}
-                                                <a @click="openMaterialItemEdit(item.id)">
-                                                    @{{item.approved_global_details.name}}
-                                                </a></td>
-                                            <td v-if="item.approved_global_details.type">
-                                                @{{item.approved_global_details.type.name}}
-                                            </td>
-                                            <td>
-                                                <p class=" text-success">
-                                                    @{{item.published.name}}
-                                                </p>
-                                            </td>
-                                            <td>
-                                                <a class="btn btn-info"
-                                                   @click="openMaterialItemEdit(item.id)">
-                                                    <span class="hidden-xs">แก้ไข</span>
-                                                    <i class="far fa-edit"></i>
-                                                </a>
-                                            </td>
-                                            {{-- -- -- -- --Delete--}}
-                                            <td>
-                                                <a @click="deleteSingleApprovedItem(item)" class="btn btn-danger">
-                                                    <span class="hidden-xs">ลบ</span>
-                                                    <i class="far fa-trash-alt"></i>
-                                                </a>
-                                            </td>
+                                            <td>ชื่อวัสดุ/อุปกรณ์</td>
+                                            <td>หมวดหมู่</td>
+                                            <td>สถาณะ</td>
+                                            <th>Edit</th>
+                                            <th>Delete</th>
                                         </tr>
-                                    </template>
-                                    </tbody>
-                                </table>
-                                <pagination v-if="approvedItems" :data="approvedItems"
-                                            @pagination-change-page="getApprovedItems"></pagination>
+                                        </thead>
+                                        <!-- -- -- --Table Body -->
+                                        <tbody>
+                                        <template v-for="(item,index) in approvedItems.data">
+                                            {{--แสดง Item ที่ได้รับการ Approved แล้ว--}}
+                                            <tr v-if="item.approved_global_details">
+                                                <td class="text-center">
+                                                    <input type="checkbox"
+                                                           v-model="selected_items.approved_items"
+                                                           :value="item"
+                                                    >
+                                                </td>
+                                                <td>
+                                                    {{-- -- -- -- --Edit Button--}}
+                                                    <a @click="openMaterialItemEdit(item.id)">
+                                                        @{{item.approved_global_details.name}}
+                                                    </a></td>
+                                                <td v-if="item.approved_global_details.type">
+                                                    @{{item.approved_global_details.type.name}}
+                                                </td>
+                                                <td>
+                                                    <p class=" text-success">
+                                                        @{{item.published.name}}
+                                                    </p>
+                                                </td>
+                                                <td>
+                                                    <a class="btn btn-info"
+                                                       @click="openMaterialItemEdit(item.id)">
+                                                        <span class="hidden-xs">แก้ไข</span>
+                                                        <i class="far fa-edit"></i>
+                                                    </a>
+                                                </td>
+                                                {{-- -- -- -- --Delete--}}
+                                                <td>
+                                                    <a @click="deleteSingleApprovedItem(item)" class="btn btn-danger">
+                                                        <span class="hidden-xs">ลบ</span>
+                                                        <i class="far fa-trash-alt"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </template>
+                                        </tbody>
+                                    </table>
+                                    <pagination v-if="approvedItems" :data="approvedItems"
+                                                @pagination-change-page="getApprovedItems"></pagination>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -149,65 +151,67 @@
                                     <div class="row">
                                     </div>
                                 </div>
-                                <!-- --  Waiting Materials Table -->
-                                <table class="table table-hover table-bordered" id="sample_editable_1">
-                                    <!-- -- -- Table Header -->
-                                    <thead>
-                                    <tr>
-                                        <td>ชื่อวัสดุ/อุปกรณ์</td>
-                                        <td>หมวดหมู่</td>
-                                        <th>รายละเอียด</th>
-                                        <th>Delete</th>
-                                    </tr>
-                                    </thead>
-                                    <!-- -- -- Table Body -->
-                                    <tbody>
-                                    {{--{{dd($waitingMaterials)}}--}}
-                                    @foreach($waitingMaterials as $waitingMaterial)
-                                        @if($waitingMaterial->approvedGlobalDetails)
-                                            <tr>
-                                                <td>
-                                                    {{-- -- -- -- --Edit Button--}}
-                                                    <a href="{{route('admin.materials.items.edit',$waitingMaterial->id)}}">
-                                                        {{$waitingMaterial->approvedGlobalDetails->name}}
-                                                    </a>
-                                                </td>
-                                                <td>{{$waitingMaterial->approvedGlobalDetails->type ? $waitingMaterial->approvedGlobalDetails->type->name:''}}</td>
-                                                <td>
-                                                    <a class="btn btn-primary"
-                                                       href="{{route('admin.materials.items.edit',$waitingMaterial->id)}}">
-                                                        <i class="fal fa-file-alt"></i>
-                                                        <span class="hidden-xs">ดูรายละเอียด</span>
-                                                    </a>
-                                                </td>
-                                                {{-- -- -- -- --Delete--}}
-                                                <td>
-                                                </td>
-                                            </tr>
-                                        @else
-                                            <tr>
-                                                <td>
-                                                    {{-- -- -- -- --Edit Button--}}
-                                                    <a href="{{route('admin.materials.items.edit',$waitingMaterial->id)}}">
-                                                        {{$waitingMaterial->waitingGlobalDetails->name}}
-                                                    </a>
-                                                </td>
-                                                <td>{{$waitingMaterial->waitingGlobalDetails->type ? $waitingMaterial->waitingGlobalDetails->type->name:''}}</td>
-                                                <td>
-                                                    <a class="btn btn-primary"
-                                                       href="{{route('admin.materials.items.edit',$waitingMaterial->id)}}">
-                                                        <i class="fal fa-file-alt"></i>
-                                                        <span class="hidden-xs">ดูรายละเอียด</span>
-                                                    </a>
-                                                </td>
-                                                {{-- -- -- -- --Delete--}}
-                                                <td>
-                                                </td>
-                                            </tr>
-                                        @endif
-                                    @endforeach
-                                    </tbody>
-                                </table>
+                                <div class="table-responsive">
+                                    <!-- --  Waiting Materials Table -->
+                                    <table class="table table-hover table-bordered" id="sample_editable_1">
+                                        <!-- -- -- Table Header -->
+                                        <thead>
+                                        <tr>
+                                            <td>ชื่อวัสดุ/อุปกรณ์</td>
+                                            <td>หมวดหมู่</td>
+                                            <th>รายละเอียด</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                        </thead>
+                                        <!-- -- -- Table Body -->
+                                        <tbody>
+                                        {{--{{dd($waitingMaterials)}}--}}
+                                        @foreach($waitingMaterials as $waitingMaterial)
+                                            @if($waitingMaterial->approvedGlobalDetails)
+                                                <tr>
+                                                    <td>
+                                                        {{-- -- -- -- --Edit Button--}}
+                                                        <a href="{{route('admin.materials.items.edit',$waitingMaterial->id)}}">
+                                                            {{$waitingMaterial->approvedGlobalDetails->name}}
+                                                        </a>
+                                                    </td>
+                                                    <td>{{$waitingMaterial->approvedGlobalDetails->type ? $waitingMaterial->approvedGlobalDetails->type->name:''}}</td>
+                                                    <td>
+                                                        <a class="btn btn-primary"
+                                                           href="{{route('admin.materials.items.edit',$waitingMaterial->id)}}">
+                                                            <i class="fal fa-file-alt"></i>
+                                                            <span class="hidden-xs">ดูรายละเอียด</span>
+                                                        </a>
+                                                    </td>
+                                                    {{-- -- -- -- --Delete--}}
+                                                    <td>
+                                                    </td>
+                                                </tr>
+                                            @else
+                                                <tr>
+                                                    <td>
+                                                        {{-- -- -- -- --Edit Button--}}
+                                                        <a href="{{route('admin.materials.items.edit',$waitingMaterial->id)}}">
+                                                            {{$waitingMaterial->waitingGlobalDetails->name}}
+                                                        </a>
+                                                    </td>
+                                                    <td>{{$waitingMaterial->waitingGlobalDetails->type ? $waitingMaterial->waitingGlobalDetails->type->name:''}}</td>
+                                                    <td>
+                                                        <a class="btn btn-primary"
+                                                           href="{{route('admin.materials.items.edit',$waitingMaterial->id)}}">
+                                                            <i class="fal fa-file-alt"></i>
+                                                            <span class="hidden-xs">ดูรายละเอียด</span>
+                                                        </a>
+                                                    </td>
+                                                    {{-- -- -- -- --Delete--}}
+                                                    <td>
+                                                    </td>
+                                                </tr>
+                                            @endif
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>

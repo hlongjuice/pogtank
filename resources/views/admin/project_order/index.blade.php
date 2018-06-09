@@ -44,37 +44,39 @@
                             </div>
                         </div>
                     </div>
-                    {{-- Types Table--}}
-                    <table class="table table-striped table-hover table-bordered">
-                        {{-- -- Table Header--}}
-                        <thead>
-                        <tr>
-                            {{--<th>ID</th>--}}
-                            <th>โครงการ</th>
-                            <th>คณะกรรมการ</th>
-                            <th>ปร.4</th>
-                            <th>ปร.5</th>
-                            <th>ปร.6</th>
-                            <th>Edit</th>
-                            <th>Delete</th>
-                        </tr>
-                        </thead>
-                        {{-- -- Table Content--}}
-                        <tbody>
-                        <tr v-for="order in orders.data">
-                            {{--<td></td>--}}
-                            <td>@{{ order.project_name }}</td>
-                            <td><a @click="openProjectReferee(order)" class="btn btn-info">คณะกรรมการ</a></td>
-                            <td><a @click="openPorlor4Page(order)" class="btn btn-info">ปร.4</a></td>
-                            <td><a @click="openPorlor5Modal(order)" class="btn btn-info">ปร.5</a></td>
-                            <td><a @click="openPorlor6Modal(order)" class="btn btn-info">ปร.6</a></td>
-                            <td><a class="btn btn-warning" @click="openProjectOrderEditModal(order)">แก้ไข</a></td>
-                            <td><a class="btn btn-danger" @click="deleteProject(order)">ลบ</a></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <pagination :data="orders"
-                                v-on:pagination-change-page="getSelectedProductPage"></pagination>
+                    <div class="table-responsive">
+                        {{-- Types Table--}}
+                        <table class="table table-striped table-hover table-bordered">
+                            {{-- -- Table Header--}}
+                            <thead>
+                            <tr>
+                                {{--<th>ID</th>--}}
+                                <th>โครงการ</th>
+                                <th>คณะกรรมการ</th>
+                                <th>ปร.4</th>
+                                <th>ปร.5</th>
+                                <th>ปร.6</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                            </thead>
+                            {{-- -- Table Content--}}
+                            <tbody>
+                            <tr v-for="order in orders.data">
+                                {{--<td></td>--}}
+                                <td>@{{ order.project_name }}</td>
+                                <td><a @click="openProjectReferee(order)" class="btn btn-info">คณะกรรมการ</a></td>
+                                <td><a @click="openPorlor4Page(order)" class="btn btn-info">ปร.4</a></td>
+                                <td><a @click="openPorlor5Modal(order)" class="btn btn-info">ปร.5</a></td>
+                                <td><a @click="openPorlor6Modal(order)" class="btn btn-info">ปร.6</a></td>
+                                <td><a class="btn btn-warning" @click="openProjectOrderEditModal(order)">แก้ไข</a></td>
+                                <td><a class="btn btn-danger" @click="deleteProject(order)">ลบ</a></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <pagination :data="orders"
+                                    v-on:pagination-change-page="getSelectedProductPage"></pagination>
+                    </div>
                 </div>
             </div>
             <!-- END Types Table-->

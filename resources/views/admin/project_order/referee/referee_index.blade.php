@@ -5,9 +5,11 @@
         @before-open="beforeOpenProjectRefereeModal($event)"
         @opened="openedProjectRefereeModal"
         @before-close="beforeCloseProjectRefereeModal"
-        width="99%"
+        width="90%"
+        :max-width="50"
         height="auto"
         :scrollable="project_referee.isScrollable"
+        :draggable="false"
 >
     <div class="row">
         <loading :show="project_referee.is_loading"></loading>
