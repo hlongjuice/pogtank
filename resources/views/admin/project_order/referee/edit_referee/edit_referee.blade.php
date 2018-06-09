@@ -5,7 +5,7 @@
         @before-open="beforeOpenProjectRefereeEditModal($event)"
         @opened="openedProjectRefereeEditModal"
         @before-close="beforeCloseProjectRefereeEditModal"
-        width="90%"
+        width="99%"
         height="auto"
         :scrollable="true"
 >

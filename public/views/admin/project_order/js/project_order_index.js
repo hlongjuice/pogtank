@@ -60,12 +60,12 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 208);
+/******/ 	return __webpack_require__(__webpack_require__.s = 209);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 161:
+/***/ 162:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -77,56 +77,36 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 var webUrl = new __WEBPACK_IMPORTED_MODULE_0__webUrl__["a" /* default */]();
 
-var ProjectRefereeService = function () {
-    function ProjectRefereeService() {
-        _classCallCheck(this, ProjectRefereeService);
+var RefereeRankService = function () {
+    function RefereeRankService() {
+        _classCallCheck(this, RefereeRankService);
 
         this.url = webUrl.getUrl();
         this._delete_method = {
             _method: 'DELETE'
         };
-        this._put_method = {
-            _method: 'PUT'
-        };
     }
     //Add New Referee
 
 
-    _createClass(ProjectRefereeService, [{
-        key: 'addReferees',
-        value: function addReferees(project_order_id, inputData) {
-            var url = this.url + '/admin/project_order/referee/add_referees/' + project_order_id;
+    _createClass(RefereeRankService, [{
+        key: 'addRefereeRanks',
+        value: function addRefereeRanks(dataInput) {
+            var url = this.url + '/admin/referee_rank/add_referee_rank';
             return new Promise(function (resolve, reject) {
-                axios.post(url, inputData).then(function (result) {
+                axios.post(url, dataInput).then(function (result) {
                     resolve(result.data);
                 }).catch(function (err) {
                     reject(err);
                 });
             });
         }
-        //Delete Project Referee
+        //Get All Referee
 
     }, {
-        key: 'deleteReferees',
-        value: function deleteReferees(project_order_id, inputData) {
-            //Add _method สำหรับ Delete Method ที่ Api
-            inputData._method = 'DELETE';
-            var url = this.url + '/admin/project_order/referee/delete_referees/' + project_order_id;
-            return new Promise(function (resolve, reject) {
-                axios.post(url, inputData).then(function (result) {
-                    console.log('Result', result);
-                    resolve(result.data);
-                }).catch(function (err) {
-                    reject(err);
-                });
-            });
-        }
-        //Get Referees
-
-    }, {
-        key: 'getReferees',
-        value: function getReferees(project_order_id) {
-            var url = this.url + '/admin/project_order/referee/get_referees/' + project_order_id;
+        key: 'getRefereeRanks',
+        value: function getRefereeRanks() {
+            var url = this.url + '/admin/referee_rank/get_referee_ranks';
             return new Promise(function (resolve, reject) {
                 axios.get(url).then(function (result) {
                     resolve(result.data);
@@ -138,12 +118,12 @@ var ProjectRefereeService = function () {
         //Update Referee
 
     }, {
-        key: 'updateReferee',
-        value: function updateReferee(project_order_id, inputData) {
-            inputData._method = 'PUT';
-            var url = this.url + '/admin/project_order/referee/update_referee/' + project_order_id;
+        key: 'updateRank',
+        value: function updateRank(referee_id, dataInput) {
+            dataInput._method = 'PUT';
+            var url = this.url + '/admin/referee_rank/update_referee_rank/' + referee_id;
             return new Promise(function (resolve, reject) {
-                axios.post(url, inputData).then(function (result) {
+                axios.post(url, dataInput).then(function (result) {
                     resolve(result.data);
                 }).catch(function (err) {
                     reject(err);
@@ -152,10 +132,10 @@ var ProjectRefereeService = function () {
         }
     }]);
 
-    return ProjectRefereeService;
+    return RefereeRankService;
 }();
 
-/* harmony default export */ __webpack_exports__["a"] = (ProjectRefereeService);
+/* harmony default export */ __webpack_exports__["a"] = (RefereeRankService);
 
 /***/ }),
 
@@ -201,27 +181,27 @@ var WebUrl = function () {
 
 /***/ }),
 
-/***/ 208:
+/***/ 209:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(209);
+module.exports = __webpack_require__(210);
 
 
 /***/ }),
 
-/***/ 209:
+/***/ 210:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_project_order_service__ = __webpack_require__(36);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_js_services_webUrl__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__project_order_edit__ = __webpack_require__(210);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__porlor_5_porlor_5_index__ = __webpack_require__(211);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__porlor_6_porlor_6_index__ = __webpack_require__(213);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__referee_referee_index__ = __webpack_require__(215);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__referee_add_referee_add_referee__ = __webpack_require__(216);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__referee_edit_referee_edit_referee__ = __webpack_require__(243);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__project_order_edit__ = __webpack_require__(211);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__porlor_5_porlor_5_index__ = __webpack_require__(212);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__porlor_6_porlor_6_index__ = __webpack_require__(214);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__referee_referee_index__ = __webpack_require__(216);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__referee_add_referee_add_referee__ = __webpack_require__(217);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__referee_edit_referee_edit_referee__ = __webpack_require__(218);
 
 
 
@@ -335,7 +315,7 @@ new Vue({
 
 /***/ }),
 
-/***/ 210:
+/***/ 211:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -432,12 +412,12 @@ var ProjectOrderEditModal = {
 
 /***/ }),
 
-/***/ 211:
+/***/ 212:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Porlor5Index; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_5_porlor_5_service__ = __webpack_require__(212);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_5_porlor_5_service__ = __webpack_require__(213);
 
 
 var porlor5Service = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_5_porlor_5_service__["a" /* default */]();
@@ -517,7 +497,7 @@ var Porlor5Index = {
 
 /***/ }),
 
-/***/ 212:
+/***/ 213:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -594,12 +574,12 @@ var Porlor5Service = function () {
 
 /***/ }),
 
-/***/ 213:
+/***/ 214:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Porlor6Index; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_6_porlor_6_service__ = __webpack_require__(214);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_6_porlor_6_service__ = __webpack_require__(215);
 
 
 var porlor6Service = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_6_porlor_6_service__["a" /* default */]();
@@ -656,7 +636,7 @@ var Porlor6Index = {
 
 /***/ }),
 
-/***/ 214:
+/***/ 215:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -701,12 +681,12 @@ var Porlor6Service = function () {
 
 /***/ }),
 
-/***/ 215:
+/***/ 216:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ProjectReferee; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_project_referee_service__ = __webpack_require__(161);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_project_referee_service__ = __webpack_require__(40);
 
 var projectRefereeService = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_project_referee_service__["a" /* default */]();
 var ProjectReferee = {
@@ -770,7 +750,7 @@ var ProjectReferee = {
             this.$modal.show('project-referee-edit-modal', {
                 order: this.project_referee.project_order,
                 referee: referee
-            });
+            }, { draggable: true });
         },
 
         //Project Referee Methods
@@ -837,13 +817,13 @@ var ProjectReferee = {
 
 /***/ }),
 
-/***/ 216:
+/***/ 217:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ProjectRefereeAddModal; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_referee_referee_rank_service__ = __webpack_require__(217);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_js_services_project_order_project_referee_service__ = __webpack_require__(161);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_referee_referee_rank_service__ = __webpack_require__(162);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_js_services_project_order_project_referee_service__ = __webpack_require__(40);
 
 
 var projectRefereeService = new __WEBPACK_IMPORTED_MODULE_1__assets_js_services_project_order_project_referee_service__["a" /* default */]();
@@ -955,87 +935,13 @@ var ProjectRefereeAddModal = {
 
 /***/ }),
 
-/***/ 217:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__webUrl__ = __webpack_require__(2);
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-
-var webUrl = new __WEBPACK_IMPORTED_MODULE_0__webUrl__["a" /* default */]();
-
-var RefereeRankService = function () {
-    function RefereeRankService() {
-        _classCallCheck(this, RefereeRankService);
-
-        this.url = webUrl.getUrl();
-        this._delete_method = {
-            _method: 'DELETE'
-        };
-    }
-    //Add New Referee
-
-
-    _createClass(RefereeRankService, [{
-        key: 'addRefereeRanks',
-        value: function addRefereeRanks(dataInput) {
-            var url = this.url + '/admin/referee_rank/add_referee_rank';
-            return new Promise(function (resolve, reject) {
-                axios.post(url, dataInput).then(function (result) {
-                    resolve(result.data);
-                }).catch(function (err) {
-                    reject(err);
-                });
-            });
-        }
-        //Get All Referee
-
-    }, {
-        key: 'getRefereeRanks',
-        value: function getRefereeRanks() {
-            var url = this.url + '/admin/referee_rank/get_referee_ranks';
-            return new Promise(function (resolve, reject) {
-                axios.get(url).then(function (result) {
-                    resolve(result.data);
-                }).catch(function (err) {
-                    reject(err);
-                });
-            });
-        }
-        //Update Referee
-
-    }, {
-        key: 'updateRank',
-        value: function updateRank(referee_id, dataInput) {
-            dataInput._method = 'PUT';
-            var url = this.url + '/admin/referee_rank/update_referee_rank/' + referee_id;
-            return new Promise(function (resolve, reject) {
-                axios.post(url, dataInput).then(function (result) {
-                    resolve(result.data);
-                }).catch(function (err) {
-                    reject(err);
-                });
-            });
-        }
-    }]);
-
-    return RefereeRankService;
-}();
-
-/* harmony default export */ __webpack_exports__["a"] = (RefereeRankService);
-
-/***/ }),
-
-/***/ 243:
+/***/ 218:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ProjectRefereeEditModal; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_referee_referee_rank_service__ = __webpack_require__(217);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_js_services_project_order_project_referee_service__ = __webpack_require__(161);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_referee_referee_rank_service__ = __webpack_require__(162);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_js_services_project_order_project_referee_service__ = __webpack_require__(40);
 
 
 
@@ -1303,6 +1209,100 @@ var ProjectOrderService = function () {
 }();
 
 /* harmony default export */ __webpack_exports__["a"] = (ProjectOrderService);
+
+/***/ }),
+
+/***/ 40:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__webUrl__ = __webpack_require__(2);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+
+var webUrl = new __WEBPACK_IMPORTED_MODULE_0__webUrl__["a" /* default */]();
+
+var ProjectRefereeService = function () {
+    function ProjectRefereeService() {
+        _classCallCheck(this, ProjectRefereeService);
+
+        this.url = webUrl.getUrl();
+        this._delete_method = {
+            _method: 'DELETE'
+        };
+        this._put_method = {
+            _method: 'PUT'
+        };
+    }
+    //Add New Referee
+
+
+    _createClass(ProjectRefereeService, [{
+        key: 'addReferees',
+        value: function addReferees(project_order_id, inputData) {
+            var url = this.url + '/admin/project_order/referee/add_referees/' + project_order_id;
+            return new Promise(function (resolve, reject) {
+                axios.post(url, inputData).then(function (result) {
+                    resolve(result.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
+        //Delete Project Referee
+
+    }, {
+        key: 'deleteReferees',
+        value: function deleteReferees(project_order_id, inputData) {
+            //Add _method สำหรับ Delete Method ที่ Api
+            inputData._method = 'DELETE';
+            var url = this.url + '/admin/project_order/referee/delete_referees/' + project_order_id;
+            return new Promise(function (resolve, reject) {
+                axios.post(url, inputData).then(function (result) {
+                    console.log('Result', result);
+                    resolve(result.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
+        //Get Referees
+
+    }, {
+        key: 'getReferees',
+        value: function getReferees(project_order_id) {
+            var url = this.url + '/admin/project_order/referee/get_referees/' + project_order_id;
+            return new Promise(function (resolve, reject) {
+                axios.get(url).then(function (result) {
+                    resolve(result.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
+        //Update Referee
+
+    }, {
+        key: 'updateReferee',
+        value: function updateReferee(project_order_id, inputData) {
+            inputData._method = 'PUT';
+            var url = this.url + '/admin/project_order/referee/update_referee/' + project_order_id;
+            return new Promise(function (resolve, reject) {
+                axios.post(url, inputData).then(function (result) {
+                    resolve(result.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
+    }]);
+
+    return ProjectRefereeService;
+}();
+
+/* harmony default export */ __webpack_exports__["a"] = (ProjectRefereeService);
 
 /***/ })
 

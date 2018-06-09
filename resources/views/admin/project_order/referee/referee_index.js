@@ -60,7 +60,7 @@ export const ProjectReferee = {
             this.$modal.show('project-referee-edit-modal',{
                 order:this.project_referee.project_order,
                 referee:referee
-            })
+            },{draggable: true})
         },
         //Project Referee Methods
         //-- Add New Referee
