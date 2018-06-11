@@ -68,10 +68,9 @@ class Porlor4JobController extends Controller
     }
 
     //Add Child Job Items V2
-    public function addChildJobItemsV2(Request $request, $porlor_4_id)
+    public function addChildJobItems(Request $request, $porlor_4_id)
     {
         $result = DB::transaction(function () use ($request, $porlor_4_id) {
-
 
             $jobParent = Porlor4Job::withDepth()->where('id', $request->input('child_job')['id'])->first();
             $isItemPerUnit = null;
@@ -226,7 +225,6 @@ class Porlor4JobController extends Controller
     }
 
     //ใส่ข้อมูลผลรวมของกลุ่มต่างๆไว้ที่ item ตัวสุดท้ายของกลุ่มนั้น เพราะตอนนำไปใช้งาน ส่ง nested ที่แปลงเป็น flat เรีนบร้อยแล้ว
-    public function getAllChildJobsV2($porlor_4_id, $root_job_id)
     {
         $result = collect([]);
         $sumPrice = 0;

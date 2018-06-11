@@ -106,7 +106,7 @@ export const Porlor4AddChildJobItem = {
                 .then(result => {
                     if (result) {
                         this.add_child_job_item.isLoading = true;
-                        porlor4JobService.addChildJobItemV2(this.porlor4.id, this.add_child_job_item.form)
+                        porlor4JobService.addChildJobItem(this.porlor4.id, this.add_child_job_item.form)
                             .then(result => {
                                 console.log('Add New Item Success');
                                 this.add_child_job_item.isLoading = false;

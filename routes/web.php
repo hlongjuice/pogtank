@@ -95,8 +95,6 @@ Route::prefix('admin')->middleware('auth')
                 Route::get('get_all_root_jobs', 'Admin\Project\Porlor4JobController@getAllRootJobs');
                 // -- -- --- -- Get All Child Jobs
                 Route::get('get_all_child_jobs/{root_job_id}', 'Admin\Project\Porlor4JobController@getAllChildJobs');
-                // -- -- -- -- Get All Child Jobs
-                Route::get('get_all_child_jobs_v2/{root_job_id}', 'Admin\Project\Porlor4JobController@getAllChildJobsV2');
                 // -- -- -- -- Get All Child Jobs WithOut Items
                 Route::get('get_all_child_jobs_without_items/{root_job_id}', 'Admin\Project\Porlor4JobController@getAllChildJobsWithOutItems');
                 // -- -- -- -- Get All Leaf Jobs
@@ -111,8 +109,6 @@ Route::prefix('admin')->middleware('auth')
                 Route::post('add_child_job/{parent_id}', 'Admin\Project\Porlor4JobController@addChildJob');
                 // -- -- -- -- Add Child Job Item
                 Route::post('add_child_job_item', 'Admin\Project\Porlor4JobController@addChildJobItems');
-                // -- -- -- -- Add Child Job Item V2
-                Route::post('add_child_job_item_v2', 'Admin\Project\Porlor4JobController@addChildJobItemsV2');
                 // -- -- -- -- Add Child Job With Details
                 Route::post('add_child_job_with_details/{parent_id}', 'Admin\Project\Porlor4JobController@addChildJobWithDetails');
                 // -- -- -- -- Edit Child Job
@@ -300,4 +296,12 @@ Route::prefix('admin')->middleware('auth')
             });
         });
     });
+
+// -- All Web Method
+Route::prefix('project')->group(function(){
+    Route::prefix('export')->group(function(){
+       Route::get('porlor4/{porlor4_id}/job/{root_job_id}','Web\Export\Project\ExportPorlor4Controller@exportByRootID')
+       ->name('project.export.porlor4');
+    });
+});
 

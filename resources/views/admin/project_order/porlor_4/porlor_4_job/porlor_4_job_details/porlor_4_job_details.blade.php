@@ -43,6 +43,13 @@
 
                         </div>
                         <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-6 pull-right text-right">
+                                    <a @click="jobDetails_exportPorlor4ByRootID" class="btn btn-info">
+                                       <h5>ดาวน์โหลดเอกสาร <i class="far fa-download"></i></h5>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     {{--Porlor 4 Details--}}

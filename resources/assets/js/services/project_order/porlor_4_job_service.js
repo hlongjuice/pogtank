@@ -39,16 +39,6 @@ class Porlor4JobService {
                 }).catch(err=>{reject(err)})
         })
     }
-    //Add Child Job Item V2
-    addChildJobItemV2(porlor_4_id,dataInputs){
-        let url =this.url+'/admin/project_order/porlor_4_id/'+porlor_4_id+'/add_child_job_item_v2';
-        return new Promise((resolve,reject)=>{
-            axios.post(url,dataInputs)
-                .then(result=>{
-                    resolve(result.data)
-                }).catch(err=>{reject(err)})
-        })
-    }
     //Get All Root Jobs
     getAllRootJobs(porlor_4_id){
         let url=this.url+'/admin/project_order/porlor_4_id/'+porlor_4_id+'/get_all_root_jobs';
@@ -64,16 +54,6 @@ class Porlor4JobService {
     //Get All Child Job
     getAllChildJobs(porlor_4_id,root_job_id){
         let url = this.url+"/admin/project_order/porlor_4_id/"+porlor_4_id+'/get_all_child_jobs/'+root_job_id;
-        return new Promise((resolve,reject)=>{
-            axios.get(url)
-                .then(result=>{
-                    resolve(result.data)
-                }).catch(err=>{reject(err)})
-        })
-    }
-    //Get All Child Job V2
-    getAllChildJobsV2(porlor_4_id,root_job_id){
-        let url = this.url +"/admin/project_order/porlor_4_id/"+porlor_4_id+"/get_all_child_jobs_v2/"+root_job_id;
         return new Promise((resolve,reject)=>{
             axios.get(url)
                 .then(result=>{

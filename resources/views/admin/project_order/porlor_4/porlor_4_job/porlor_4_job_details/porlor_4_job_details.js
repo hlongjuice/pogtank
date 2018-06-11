@@ -1,6 +1,10 @@
 import Porlor4JobService from '../../../../../../assets/js/services/project_order/porlor_4_job_service';
+import Porlor4ExportService from '../../../../../../assets/js/services/project_order/porlor_4_export_service';
+import WebUrlService from '../../../../../../assets/js/services/webUrl';
 
+let webUrlService = new WebUrlService();
 let porlor4JobService = new Porlor4JobService();
+let porlor4ExportService = new Porlor4ExportService();
 export const Porlor4JobDetails = {
     data: function () {
         return {
@@ -33,7 +37,7 @@ export const Porlor4JobDetails = {
         //Get All Child Job and Item
         getAllChildJobAndItems() {
             this.showLoadingJobDetails = true;
-            porlor4JobService.getAllChildJobsV2(this.porlor4.id, this.root_job.id)
+            porlor4JobService.getAllChildJobs(this.porlor4.id, this.root_job.id)
                 .then(result => {
                     // this.child_jobs = result;
                     this.child_jobs = result;
@@ -192,6 +196,17 @@ export const Porlor4JobDetails = {
         },
         jobDetails_deletePage(index) {
             this.child_jobs.splice(index, 1);
+        },
+
+        //Export Porlor4
+        jobDetails_exportPorlor4ByRootID(){
+            window.location = webUrlService.getRoute('/project/export/porlor4/'+this.porlor4.id+'/job/'+this.root_job.id);
+            // porlor4ExportService.exportByRootID(this.porlor4.id, this.root_job.id)
+            //     .then(result=>{
+            //         console.log('Porlor 4 Export By Root ID :',result);
+            //     }).catch(err=>{
+            //         alert(err)
+            // })
         }
     }
 };
