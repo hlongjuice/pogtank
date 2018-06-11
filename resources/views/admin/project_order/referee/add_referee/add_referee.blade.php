@@ -6,6 +6,8 @@
         @opened="openedProjectRefereeAddModal"
         @before-close="beforeCloseProjectRefereeAddModal"
         width="90%"
+        :max-width="600"
+        :adaptive="true"
         height="auto"
         :scrollable="true"
 >

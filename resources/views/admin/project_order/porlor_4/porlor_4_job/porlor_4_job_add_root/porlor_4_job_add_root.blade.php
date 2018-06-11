@@ -4,29 +4,32 @@
         v-cloak
         @before-open="beforeOpenAddRootJobModal($event)"
         @before-close="beforeCloseAddRootJobModal"
-        width="50%"
+        width="90%"
+        :max-width="650"
+        :adaptive="true"
         height="auto"
         :scrollable="true"
 >
     <div class="row">
-        <div class="col-xs-12">
-            <div class="panel panel-default">
-                {{-- Close Button--}}
-                <div class="panel-heading">
-                    <button class="btn btn-danger" @click="closeAddRootJobModal">Close</button>
-                </div>
-                <div class="panel-body">
-                    <!-- FORM-->
-                    <form
-                            @submit.prevent="addRootJob('form',$event)"
-                            data-vv-scope="form"
-                            class="horizontal-form">
-                        {{csrf_field()}}
-                        <div class="col-xs-12">
-                            <button type="submit" class="col-xs-3 pull-right btn btn-success margin-bottom-20">
-                                บันทึก
-                            </button>
+        <!-- FORM-->
+        <form
+                @submit.prevent="addRootJob('form',$event)"
+                data-vv-scope="form"
+                class="horizontal-form">
+            {{csrf_field()}}
+            <div class="col-xs-12">
+                <div class="panel panel-default">
+                    {{-- Close Button--}}
+                    <div class="panel-heading">
+                        <div class="panel-title text-center">
+                            <h4>เพิ่มงานใหม่</h4>
                         </div>
+                        <a class="btn btn-danger" @click="closeAddRootJobModal">Close</a>
+                        <button type="submit" class="col-xs-3 pull-right btn btn-success margin-bottom-20">
+                            บันทึก
+                        </button>
+                    </div>
+                    <div class="panel-body">
                         <div class="portlet">
                             <div class="portlet-title">
                                 <div class="caption">
@@ -55,11 +58,10 @@
                                 </div>
                             </div>
                         </div>
-                    </form>
-                    <!-- END FORM-->
+                    </div>
                 </div>
             </div>
-
-        </div>
+        </form>
+        <!-- END FORM-->
     </div>
 </modal>

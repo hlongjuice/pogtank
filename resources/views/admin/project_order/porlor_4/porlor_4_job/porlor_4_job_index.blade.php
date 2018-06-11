@@ -19,16 +19,16 @@
                     <div class="caption">
                         <i class="fa fa-edit"></i>ส่วนที่ @{{ partDetails.position }} : @{{ partDetails.name }}
                     </div>
-                    <div class="tools">
-                        <a href="javascript:;" class="collapse">
-                        </a>
-                        <a href="#portlet-config" data-toggle="modal" class="config">
-                        </a>
-                        <a href="javascript:;" class="reload">
-                        </a>
-                        <a href="javascript:;" class="remove">
-                        </a>
-                    </div>
+                    {{--<div class="tools">--}}
+                        {{--<a href="javascript:;" class="collapse">--}}
+                        {{--</a>--}}
+                        {{--<a href="#portlet-config" data-toggle="modal" class="config">--}}
+                        {{--</a>--}}
+                        {{--<a href="javascript:;" class="reload">--}}
+                        {{--</a>--}}
+                        {{--<a href="javascript:;" class="remove">--}}
+                        {{--</a>--}}
+                    {{--</div>--}}
                 </div>
                 <div class="portlet-body">
                     <div class="table-toolbar">
@@ -43,9 +43,9 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="btn-group pull-right">
-                                    <button class="btn dropdown-toggle" data-toggle="dropdown">Tools <i
-                                                class="fa fa-angle-down"></i>
-                                    </button>
+                                    {{--<button class="btn dropdown-toggle" data-toggle="dropdown">Tools <i--}}
+                                                {{--class="fa fa-angle-down"></i>--}}
+                                    {{--</button>--}}
                                 </div>
                             </div>
                         </div>
@@ -62,7 +62,7 @@
                                     <i class="fal fa-file-alt"></i>
                                     <span class="hidden-xs"> รายละเอียด</span>
                                 </th>
-                                <th></th>
+                                <th>Edit</th>
                                 <th>Delete</th>
                             </tr>
                             </thead>

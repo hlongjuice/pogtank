@@ -6,8 +6,9 @@
         @opened="openedPorlor5Modal"
         @before-close="beforeClosePorlor5Modal"
         width="99%"
+        :adaptive="true"
         height="auto"
-        :scrollable="true"
+        :scrollable="false"
 >
     <div class="row">
         <loading :show="porlor5.is_loading"></loading>
@@ -16,7 +17,7 @@
                 <div class="panel-heading">
                     <button class="btn btn-danger" @click="closePorlor5Modal">Close</button>
                 </div>
-                <div v-if="porlor5.project" class="panel-body">
+                <div style="height:1200px;overflow: auto" v-if="porlor5.project" class="panel-body">
                     <template v-for="(porlor5_result) in porlor5.project.porlor5">
                         {{--Page Header--}}
                         <div class="panel">
@@ -248,6 +249,10 @@
                                 </div>
                             </div>
                         </div>
+                    </template>
+                    <template v-if="porlor5.project.porlor5.length == 0">
+                        <h2>ยังไม่พบข้อมูล</h2>
+                        <h3>รอการระบุข้อมูล ปร.4 อย่างน้อย 1 รายการ</h3>
                     </template>
                 </div>
             </div>

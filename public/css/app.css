@@ -148,3 +148,7 @@ fieldset[disabled] .multiselect{pointer-events:none}.multiselect__spinner{positi
   color: #868e96;
 }
 
+.text-light {
+  color: #f8f9fa;
+}
+

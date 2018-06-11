@@ -4,28 +4,31 @@
         v-cloak
         @before-open="beforeOpenAddNewPartModal($event)"
         @before-close="beforeCloseAddNewPartModal"
-        width="50%"
+        width="90%"
+        :max-width="650"
+        :adaptive="true"
         height="60%"
         :scrollable="true"
 >
     <div class="row">
-        <div class="col-xs-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <button class="btn btn-danger" @click="closeAddNewPartModal">Close</button>
-                </div>
-                <div class="panel-body">
-                    <!-- FORM-->
-                    <form
-                            @submit.prevent="addPart('form',$event)"
-                            data-vv-scope="form"
-                            class="horizontal-form">
-                        {{csrf_field()}}
-                        <div class="col-xs-12">
-                            <button type="submit" class="col-xs-3 pull-right btn btn-success margin-bottom-20">
-                                บันทึก
-                            </button>
+        <!-- FORM-->
+        <form
+                @submit.prevent="addPart('form',$event)"
+                data-vv-scope="form"
+                class="horizontal-form">
+            {{csrf_field()}}
+            <div class="col-xs-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <div class="panel-title text-center">
+                            <h4>เพิ่มส่วนใหม่</h4>
                         </div>
+                        <button type="button" class="btn btn-danger" @click="closeAddNewPartModal">Close</button>
+                        <button type="submit" class="col-xs-3 pull-right btn btn-success margin-bottom-20">
+                            บันทึก
+                        </button>
+                    </div>
+                    <div class="panel-body">
                         <div class="portlet">
                             <div class="portlet-title">
                                 <div class="caption">
@@ -66,11 +69,11 @@
                                 </div>
                             </div>
                         </div>
-                    </form>
-                    <!-- END FORM-->
+                    </div>
                 </div>
-            </div>
 
-        </div>
+            </div>
+        </form>
+        <!-- END FORM-->
     </div>
 </modal>

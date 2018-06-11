@@ -77,17 +77,22 @@ License: You must have a valid license purchased only from themeforest(the above
     <!-- BEGIN TOP NAVIGATION BAR -->
     <div class="header-inner">
         <!-- BEGIN LOGO -->
-        <div class="page-logo">
-            <a href="index.html">
-                <img src="{{asset('templates/admin/conquer/theme/assets/img/logo.png')}}" alt="logo"/>
-            </a>
+        {{--<div class="page-logo">--}}
+            {{--<a href="index.html">--}}
+                {{--<img src="{{asset('templates/admin/conquer/theme/assets/img/logo.png')}}" alt="logo"/>--}}
+               {{----}}
+            {{--</a>--}}
+
+        {{--</div>--}}
+        <div class="col-xs-5">
+            <h4 class="text-light">Dashboard</h4>
         </div>
-        <form class="search-form search-form-header" role="form" action="index.html">
-            <div class="input-icon right">
-                <i class="icon-magnifier"></i>
-                <input type="text" class="form-control input-sm" name="query" placeholder="Search...">
-            </div>
-        </form>
+        {{--<form class="search-form search-form-header" role="form" action="index.html">--}}
+            {{--<div class="input-icon right">--}}
+                {{--<i class="icon-magnifier"></i>--}}
+                {{--<input type="text" class="form-control input-sm" name="query" placeholder="Search...">--}}
+            {{--</div>--}}
+        {{--</form>--}}
         <!-- END LOGO -->
         <!-- BEGIN RESPONSIVE MENU TOGGLER -->
         <a href="javascript:;" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
