@@ -225,6 +225,7 @@ class Porlor4JobController extends Controller
     }
 
     //ใส่ข้อมูลผลรวมของกลุ่มต่างๆไว้ที่ item ตัวสุดท้ายของกลุ่มนั้น เพราะตอนนำไปใช้งาน ส่ง nested ที่แปลงเป็น flat เรีนบร้อยแล้ว
+    public function getAllChildJobs($porlor_4_id, $root_job_id)
     {
         $result = collect([]);
         $sumPrice = 0;
