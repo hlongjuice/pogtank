@@ -53,7 +53,7 @@ class Porlor5Controller extends Controller
             }
         }
         $porlor5 = collect([]);
-//        $project->porlor5 = $project->porlor4->groupBy('page_number');
+        //$project->porlor5 = $project->porlor4->groupBy('page_number');
         //จัดกลุ่ม Parts แยกตามหน้า
         $porlor5GroupByPage = $project->porlor4->groupBy('page_number');
         foreach ($porlor5GroupByPage as $page => $parts) {
@@ -67,6 +67,7 @@ class Porlor5Controller extends Controller
         $project->porlor5 = $porlor5;
         return $project;
     }
+
     //Move to Previous Page
     public function moveToPreviousPage($project_order_id,$porlor4_id){
         $part = Porlor4::where('id',$porlor4_id)->first();
@@ -76,6 +77,7 @@ class Porlor5Controller extends Controller
         }
         return response()->json($part);
     }
+
     //Move to Next Page
     public function moveToNextPage($project_order_id,$porlor4_id){
         $part = Porlor4::where('id',$porlor4_id)->first();
