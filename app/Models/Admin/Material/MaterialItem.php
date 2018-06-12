@@ -6,6 +6,30 @@ use App\Http\Controllers\GlobalVariableController;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * App\Models\Admin\Material\MaterialItem
+ *
+ * @property int $id
+ * @property int $type_id
+ * @property int $published_id
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+ * @property string|null $deleted_at
+ * @property-read \App\Models\Admin\Material\MaterialItemVersion $approvedGlobalDetails
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Admin\Material\MaterialItemLocalPriceVersion[] $approvedLocalPrices
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Admin\Material\MaterialItemVersion[] $globalDetails
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Admin\Material\MaterialItemLocalPrice[] $localPrices
+ * @property-read \App\Models\Admin\PublishedStatus $published
+ * @property-read \App\Models\Admin\Material\MaterialItemVersion $waitingGlobalDetails
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Admin\Material\MaterialItemLocalPriceVersion[] $waitingLocalPrices
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Admin\Material\MaterialItem whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Admin\Material\MaterialItem whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Admin\Material\MaterialItem whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Admin\Material\MaterialItem wherePublishedId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Admin\Material\MaterialItem whereTypeId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Admin\Material\MaterialItem whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class MaterialItem extends Model
 {
 //    use SoftDeletes;

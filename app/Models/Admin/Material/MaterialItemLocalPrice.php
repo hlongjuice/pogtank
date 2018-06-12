@@ -6,6 +6,26 @@ use App\Http\Controllers\GlobalVariableController;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * App\Models\Admin\Material\MaterialItemLocalPrice
+ *
+ * @property int $id
+ * @property int $material_id
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+ * @property string|null $deleted_at
+ * @property-read \App\Models\Admin\Material\MaterialItemLocalPriceVersion $approvedPrice
+ * @property-read \App\Models\Admin\Material\MaterialItem $material
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Admin\Material\MaterialItemLocalPriceVersion[] $priceDetails
+ * @property-read \App\Models\Admin\PublishedStatus $published
+ * @property-read \App\Models\Admin\Material\MaterialItemLocalPriceVersion $waitingPrice
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Admin\Material\MaterialItemLocalPrice whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Admin\Material\MaterialItemLocalPrice whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Admin\Material\MaterialItemLocalPrice whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Admin\Material\MaterialItemLocalPrice whereMaterialId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Admin\Material\MaterialItemLocalPrice whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class MaterialItemLocalPrice extends Model
 {
 //    use SoftDeletes;
