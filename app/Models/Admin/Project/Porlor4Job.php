@@ -59,4 +59,8 @@ class Porlor4Job extends Model
     public function item(){
         return $this->hasOne('App\Models\Admin\Project\Porlor4JobItem','porlor_4_job_id');
     }
+    //Porlor 4
+    public function porlor4(){
+        return $this->belongsTo('App\Models\Admin\Project\Porlor4','porlor_4_id');
+    }
 }

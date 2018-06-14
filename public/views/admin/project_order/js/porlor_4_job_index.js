@@ -1658,13 +1658,9 @@ var Porlor4JobDetails = {
 
         //Export Porlor4
         jobDetails_exportPorlor4ByRootID: function jobDetails_exportPorlor4ByRootID() {
-            window.location = webUrlService.getRoute('/project/export/porlor4/' + this.porlor4.id + '/job/' + this.root_job.id);
-            // porlor4ExportService.exportByRootID(this.porlor4.id, this.root_job.id)
-            //     .then(result=>{
-            //         console.log('Porlor 4 Export By Root ID :',result);
-            //     }).catch(err=>{
-            //         alert(err)
-            // })
+            // window.location = webUrlService.getRoute('/project/export/porlor4/'+this.porlor4.id+'/job/'+this.root_job.id);
+            var url = webUrlService.getRoute('/project/export/porlor4/' + this.porlor4.id + '/job/' + this.root_job.id);
+            window.open(url); //Open New Tab
         }
     }
 };

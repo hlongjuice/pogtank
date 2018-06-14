@@ -22,4 +22,5 @@ class GlobalVariableController extends Controller
         }
         return $number;
     }
+
 }

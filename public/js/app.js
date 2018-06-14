@@ -25315,12 +25315,12 @@ window.axios = __webpack_require__(9);
 window.axios.defaults.baseURL = webUrl.getUrl();
 
 //
-// window.axios.interceptors.response.use(null, function(error) {
-//     if (error.response.status === 401) {
-//         window.location=webUrl.getRoute('/login');
-//     }
-//     return Promise.reject(error);
-// });
+window.axios.interceptors.response.use(null, function (error) {
+  if (error.response.status === 401) {
+    window.location = webUrl.getRoute('/login');
+  }
+  return Promise.reject(error);
+});
 
 /**
  * Next we will register the CSRF Token as a common header with Axios so that
