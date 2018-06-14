@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web\Export\Project;
 
 
 use App\Http\Controllers\Admin\Project\Porlor4JobController;
+use App\Http\Controllers\Others\ThaiDateController;
 use App\Models\Admin\Project\Porlor4;
 use App\Models\Admin\Project\Porlor4Job;
 use Carbon\Carbon;
@@ -19,7 +20,6 @@ class ExportPorlor4Controller extends Controller
 
     public function exportByRootID($porlor4_id, $root_job_id)
     {
-
         $rootJob = Porlor4Job::with([
             'porlor4.projectDetails.province',
             'porlor4.projectDetails.amphoe',
@@ -27,21 +27,21 @@ class ExportPorlor4Controller extends Controller
             'porlor4.part'
         ])->where('id', $root_job_id)->first();
         $rootJob->calculated_child_job = (new Porlor4JobController)->getAllChildJobs($porlor4_id, $root_job_id);
-        Excel::create('test', function (LaravelExcelWriter $excel) use ($rootJob) {
-            $excel->sheet($rootJob->name, function ($sheet) use ($rootJob) {
-                $row =1;
-                $this->setSheetStyles($sheet);
-                foreach ($rootJob->calculated_child_job as $childJob) {
-                    $this->setHeaders($sheet, $rootJob, $childJob,$row);
-                    $row++;
-                }
-            });
-        })->export('xls');
+//        Excel::create('test', function (LaravelExcelWriter $excel) use ($rootJob) {
+//            $excel->sheet($rootJob->name, function ($sheet) use ($rootJob) {
+//                $row =1;
+//                $this->setSheetStyles($sheet);
+//                foreach ($rootJob->calculated_child_job as $childJob) {
+//                    $this->setHeaders($sheet, $rootJob, $childJob,$row);
+//                    $this->setContents($sheet,$rootJob,$childJob,$row);
+//                    $row++;
+//                }
+//            });
+//        })->export('xls');
 //        return response()->json($rootJob);
     }
 
-    public function setHeaders(LaravelExcelWorksheet $sheet, $rootJob, $childJob,&$row)//update $row value with pointer
-    {
+    public function setHeaders($sheet,$rootJob,$childJob,&$row){
         //Header Table
         //Porlor 4 Page
         $sheet->cell('J'.$row, function (CellWriter $cell) use ($childJob) {
@@ -70,8 +70,8 @@ class ExportPorlor4Controller extends Controller
             $row++;
             $sheet->mergeCells('A'.$row.':J'.$row);
             $sheet->cell('A'.$row,function(CellWriter $cell) use ($rootJob){
-              $cell->setValue('('.$rootJob->porlor4->part->name.')');
-              $cell->setAlignment('center');
+                $cell->setValue('('.$rootJob->porlor4->part->name.')');
+                $cell->setAlignment('center');
             });
             //Project Details
             // -- Root Job Name
@@ -80,12 +80,12 @@ class ExportPorlor4Controller extends Controller
                 $cell->setValue('งาน : ');
             });
             $sheet->cell('B'.$row,function (CellWriter $cell) use($rootJob){
-               $cell->setValue($rootJob->name);
+                $cell->setValue($rootJob->name);
             });
             // -- Project Name
             $row++;
             $sheet->cell('A'.$row,function(CellWriter $cell){
-               $cell->setValue('โครงการ : ');
+                $cell->setValue('โครงการ : ');
             });
             $sheet->cell('B'.$row,function(CellWriter $cell) use($rootJob){
                 $cell->setValue($rootJob->porlor4->projectDetails->project_name);
@@ -95,26 +95,26 @@ class ExportPorlor4Controller extends Controller
             // -- -- Project Address
             $sheet->mergeCells('A'.$row.':B'.$row);
             $sheet->cell('A'.$row,function(CellWriter $cell) use ($rootJob){
-               $cell->setValue('สถานที่ก่อสร้าง : '
-                   .$rootJob->porlor4->projectDetails->location
-                   .' ต.'.$rootJob->porlor4->projectDetails->district->name
-                   .' อ.'.$rootJob->porlor4->projectDetails->amphoe->name
-                   .' จ.'.$rootJob->porlor4->projectDetails->province->name
-               );
+                $cell->setValue('สถานที่ก่อสร้าง : '
+                    .$rootJob->porlor4->projectDetails->location
+                    .' ต.'.$rootJob->porlor4->projectDetails->district->name
+                    .' อ.'.$rootJob->porlor4->projectDetails->amphoe->name
+                    .' จ.'.$rootJob->porlor4->projectDetails->province->name
+                );
             });
             // -- -- Form Number
             $sheet->cell('E'.$row,function(CellWriter $cell){
-               $cell->setValue('แบบเลขที่ : ');
+                $cell->setValue('แบบเลขที่ : ');
             });
             $sheet->cell('F'.$row,function(CellWriter $cell) use($rootJob){
-               $cell->setValue($rootJob->porlor4->projectDetails->form_number);
+                $cell->setValue($rootJob->porlor4->projectDetails->form_number);
             });
             // -- -- Form Number Release
             $sheet->cell('I'.$row,function(CellWriter $cell){
-               $cell->setValue('ออกเมื่อวันที่ : ');
+                $cell->setValue('ออกเมื่อวันที่ : ');
             });
             $sheet->cell('J'.$row,function(CellWriter $cell) use($rootJob){
-               $cell->setValue($rootJob->porlor4->projectDetails->form_number_release);
+                $cell->setValue($rootJob->porlor4->projectDetails->form_number_release);
             });
             // -- Project Owner Name
             $row++;
@@ -126,22 +126,22 @@ class ExportPorlor4Controller extends Controller
             $row++;
             $sheet->mergeCells('A'.$row.':B'.$row);
             $sheet->cell('A'.$row,function(CellWriter $cell) use($rootJob){
-               $cell->setValue('หน่วยงานประมาณการ : '.$rootJob->porlor4->projectDetails->agency_name);
+                $cell->setValue('หน่วยงานประมาณการ : '.$rootJob->porlor4->projectDetails->agency_name);
             });
             // -- Project Referee Name ,Project Updated At
             // -- -- Project Referee Name
             $row++;
             $sheet->mergeCells('A'.$row.':B'.$row);
             $sheet->cell('A'.$row,function(CellWriter $cell) use($rootJob){
-               $cell->setValue('คำนวนราคากลางโดย : '.$rootJob->porlor4->projectDetails->referee_name);
+                $cell->setValue('คำนวนราคากลางโดย : '.$rootJob->porlor4->projectDetails->referee_name);
             });
             // -- -- Project Updated At
             $sheet->cell('E'.$row,function(CellWriter $cell){
-               $cell->setValue('เมื่อวันที่ : ');
+                $cell->setValue('เมื่อวันที่ : ');
             });
             $sheet->cell('F'.$row,function(CellWriter $cell) use($rootJob){
                 $date= Carbon::createFromFormat('Y-m-d H:i:s',$rootJob->porlor4->projectDetails->updated_at);
-               $cell->setValue($date);
+                $cell->setValue($date);
             });
             //Global Unit
             $row++;
@@ -149,10 +149,14 @@ class ExportPorlor4Controller extends Controller
                 $cell->setValue('หน่วย : บาท');
                 $cell->setAlignment('right');
             });
+            $this->setTableHeaders($sheet,$rootJob,$childJob,$row);
         }
     }
+    public function setTableHeaders($sheet,$rootJob,$childJob,&$row){
 
-    public function setContents()
+    }
+
+    public function setContents($sheet,$rootJob,$childJob,&$row)
     {
 
     }
