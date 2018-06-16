@@ -13,11 +13,19 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Excel;
 use Maatwebsite\Excel\Classes\LaravelExcelWorksheet;
+use Maatwebsite\Excel\Classes\PHPExcel;
 use Maatwebsite\Excel\Writers\CellWriter;
 use Maatwebsite\Excel\Writers\LaravelExcelWriter;
 
 class ExportPorlor4Controller extends Controller
 {
+    private $tableHeaderColor;
+    private $tableResultColor;
+    public function __construct()
+    {
+        $this->tableHeaderColor='CDD5B4';
+        $this->tableResultColor='DAE3C0';
+    }
 
     public function exportByRootID($porlor4_id, $root_job_id)
     {
@@ -42,6 +50,7 @@ class ExportPorlor4Controller extends Controller
 //        return response()->json($rootJob);
     }
 
+    //Porlor 4 Header
     public function setHeaders(LaravelExcelWorksheet $sheet,$rootJob,$childJob,&$row){
         //Header Table
         //Porlor 4 Page
@@ -153,6 +162,7 @@ class ExportPorlor4Controller extends Controller
         }
         $this->setTableHeaders($sheet,$rootJob,$childJob,$row);
     }
+    // -- Porlor 4 Table Header
     public function setTableHeaders(LaravelExcelWorksheet $sheet,$rootJob,$childJob,&$row){
         $row++;
         //Order Number
@@ -190,23 +200,163 @@ class ExportPorlor4Controller extends Controller
         $sheet->mergeCells('J'.$row.':J'.($row+1));
         $sheet->cell('J'.$row,'หมายเหตุ');
 
-
-        $sheet->row($row,function(CellWriter $row){
-            $row->setValignment('center');
-            $row->setAlignment('center');
-        });
-        // Next Row
-        $sheet->row($row+1,function(CellWriter $row){
-            $row->setValignment('center');
-            $row->setAlignment('center');
-        });
-
-
+        //Set Row and Row + 1 Style (Alignment , Background , Border)
+        $sheet->getStyle('A'.$row.':J'.($row+1))
+            ->applyFromArray([
+                'alignment' => [
+                    'horizontal'=>\PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+                    'vertical'=>\PHPExcel_Style_Alignment::VERTICAL_CENTER
+                ],
+                'borders' => [
+                    'allborders' => ['style' => \PHPExcel_Style_Border::BORDER_THIN],
+                ],
+                'fill' => [
+                    'type' => \PHPExcel_Style_Fill::FILL_SOLID,
+                    'startcolor' => ['rgb' => $this->tableHeaderColor]
+                ]
+            ]);
     }
-
-    public function setContents($sheet,$rootJob,$childJob,&$row)
+    //Porlor 4 Table Content
+    public function setContents(LaravelExcelWorksheet $sheet,$rootJob,$childJob,&$row)
     {
-        $row++;
+        //Table Content แยกตามกลุ่มงานใน 1 หน้า
+        foreach ($childJob['jobs'] as $job){
+            $row++;
+            //4. รายการผลรวมต่อหน้า
+            if(isset($job['row_page_result']) && $job['row_page_result']==1){
+                //ยอดยกไป
+                if($job['page']<$job['total_page']){
+                    $sheet->cell('B'.$row,function(CellWriter $cell) use($job){
+                        $cell->setValue('ยอดยกไป รายการที่ 1 - '.$job['last_job_order_number']);
+                        $cell->setAlignment('right');
+                    });
+                    $sheet->cell('F'.$row,function(CellWriter $cell) use($job){
+                        $cell->setValue($job['page_sum_total_price']);
+                        $cell->setAlignment('right');
+                    });
+                    $sheet->cell('H'.$row,function(CellWriter $cell) use($job){
+                       $cell->setValue($job['page_sum_total_wage']);
+                       $cell->setAlignment('right');
+                    });
+                    $sheet->cell('I'.$row,function(CellWriter $cell) use($job){
+                       $cell->setValue($job['page_sum_total_price_wage']);
+                       $cell->setAlignment('right');
+                    });
+                }
+                //ผลรวมทั้งหมด
+                else{
+                    $sheet->cell('B'.$row,function(CellWriter $cell) use($job){
+                       $cell->setValue('รวมราคารายการที่ 1 - '.$job['last_job_order_number']);
+                       $cell->setAlignment('center');
+                    });
+                    $sheet->cell('F'.$row,function(CellWriter $cell) use($job){
+                        $cell->setValue($job['page_sum_total_price']);
+                        $cell->setAlignment('right');
+                    });
+                    $sheet->cell('H'.$row,function(CellWriter $cell) use($job){
+                        $cell->setValue($job['page_sum_total_wage']);
+                        $cell->setAlignment('right');
+                    });
+                    $sheet->cell('I'.$row,function(CellWriter $cell) use($job){
+                        $cell->setValue($job['page_sum_total_price_wage']);
+                        $cell->setAlignment('right');
+                    });
+                }
+            }
+            //3. รายการผลรวมกลุ่ม
+            else if(isset($job['row_group_result']) &&$job['row_group_result'] == 1){
+                //Group Depth <= 2
+                if($job['group_depth'] <=2){
+                    $sheet->cell('B'.$row,function(CellWriter $cell) use($job){
+                        $cell->setValue('รวมราคารายการที่ '.$job['group_order_number']);
+                        $cell->setAlignment('center');
+                    });
+                    $sheet->cell('F'.$row,function(CellWriter $cell) use($job){
+                        $cell->setValue($job['group_sum_total_price']);
+                        $cell->setAlignment('right');
+                    });
+                    $sheet->cell('H'.$row,function(CellWriter $cell) use($job){
+                        $cell->setValue($job['group_sum_total_wage']);
+                        $cell->setAlignment('right');
+                    });
+                    $sheet->cell('I'.$row,function(CellWriter $cell) use($job){
+                        $cell->setValue($job['group_sum_total_price_wage']);
+                        $cell->setAlignment('right');
+                    });
+                    //Result Color Background
+                    $sheet->getStyle('A'.$row.':J'.$row)
+                        ->getFill()->setFillType(\PHPExcel_Style_Fill::FILL_SOLID)
+                        ->getStartColor()->setRGB($this->tableResultColor);
+                }
+                //หากมากกว่า lv 2 ไม่ต้อง highlight สีเขียว
+                else{
+                    $sheet->cell('B'.$row,function(CellWriter $cell) use($job){
+                        $cell->setValue('รวมราคารายการที่ '.$job['group_order_number']);
+                        $cell->setAlignment('center');
+                    });
+                    $sheet->cell('F'.$row,function(CellWriter $cell) use($job){
+                        $cell->setValue($job['group_sum_total_price']);
+                        $cell->setAlignment('right');
+                    });
+                    $sheet->cell('H'.$row,function(CellWriter $cell) use($job){
+                        $cell->setValue($job['group_sum_total_wage']);
+                        $cell->setAlignment('right');
+                    });
+                    $sheet->cell('I'.$row,function(CellWriter $cell) use($job){
+                        $cell->setValue($job['group_sum_total_price_wage']);
+                        $cell->setAlignment('right');
+                    });
+                }
+            }
+            //2. ยอดยกมา
+            else if(isset($job['bring_forward']) && $job['bring_forward'] == 1){
+                $sheet->cell('B'.$row,function(CellWriter $cell) use($job){
+                    $cell->setValue('ยอดยกไป รายการที่ 1 - '.$job['last_job_order_number']);
+                    $cell->setAlignment('right');
+                });
+                $sheet->cell('F'.$row,function(CellWriter $cell) use($job){
+                    $cell->setValue($job['page_sum_total_price']);
+                    $cell->setAlignment('right');
+                });
+                $sheet->cell('H'.$row,function(CellWriter $cell) use($job){
+                    $cell->setValue($job['page_sum_total_wage']);
+                    $cell->setAlignment('right');
+                });
+                $sheet->cell('I'.$row,function(CellWriter $cell) use($job){
+                    $cell->setValue($job['page_sum_total_price_wage']);
+                    $cell->setAlignment('right');
+                });
+            }
+            //1. รายการ job
+            else{
+                if(isset($job['group_item_per_unit']) && $job['group_item_per_unit'] == 1){
+                    //A. Job Order Number
+                    $sheet->cell('A'.$row,function(CellWriter $cell) use ($job){
+                        $cell->setValue($job['job_order_number']);
+                        $cell->setAlignment('center');
+                    });
+                    //B. Job Name
+                    $sheet->cell('B'.$row,function(CellWriter $cell) use ($job){
+                       $cell->setValue($job['name']);
+                       $cell->setAlignment('left');
+                    });
+                    // เพิ่ม รายการ .1 รายการต่อ 1 หน่วย
+                    $row++;
+                    $sheet->cell('A'.$row,function (CellWriter $cell) use($job){
+                       $cell->setValue($job['job_order_number'].'.1');
+                       $cell->setAlignment('center');
+                    });
+                    $sheet->cell('B'.$row,function(CellWriter $cell) use ($job){
+                       $cell->setValue($job['name_per_unit']);
+                       $cell->setAlignment('left');
+                    });
+                }
+            }
+            //Table Content Row Style
+            $sheet->getStyle('A'.$row.':J'.$row)
+                ->getBorders()->getAllBorders()->setBorderStyle('thin');
+        }
+
     }
 
     public function setSheetStyles(LaravelExcelWorksheet $sheet)
