@@ -364,6 +364,7 @@
                                                             </a>
                                                         </td>
                                                         <td class="text-center">@{{job.job_order_number}}</td>
+                                                        {{--Job Name--}}
                                                         <td class="text-left">
                                                             @{{ job.name }}
                                                             <span v-if="job.is_item == 0">

@@ -77,6 +77,18 @@ fieldset[disabled] .multiselect{pointer-events:none}.multiselect__spinner{positi
   width: 50%;
 }
 
+@media (min-width: 760px) {
+  .multiselect-add-new-item-btn {
+    position: absolute;
+    width: 40px;
+    height: 38px;
+    right: -35px;
+    top: 0;
+    padding: 4px 8px;
+    text-align: center;
+  }
+}
+
 .line {
   border-bottom: solid 1px;
   margin-bottom: 10px;
@@ -92,6 +104,10 @@ fieldset[disabled] .multiselect{pointer-events:none}.multiselect__spinner{positi
 
 .margin-top-5 {
   margin-top: 5px !important;
+}
+
+.margin-left-5 {
+  margin-left: 5px !important;
 }
 
 .portlet-primary .portlet-title,

@@ -85,6 +85,18 @@
     width: 50%;
   }
 }
+//-- Multi select
+.multiselect-add-new-item-btn{
+  @media (min-width: 760px){
+    position: absolute;
+    width: 40px;
+    height: 38px;
+    right: -35px;
+    top: 0;
+    padding: 4px 8px;
+    text-align: center;
+  }
+}
 //-- --End Form
 //*** Line
 .line{
@@ -102,6 +114,9 @@
 //*** Margin
 .margin-top-5{
   margin-top:5px !important;
+}
+.margin-left-5{
+  margin-left: 5px !important;
 }
 //*** Portlet
 .portlet-primary {
@@ -122,6 +137,7 @@
     border:1px solid map_get($colors,dark-light) !important;
   }
 }
+
 .table-result-green{
   td{
     background-color:map_get($colors,table-result-green) !important;

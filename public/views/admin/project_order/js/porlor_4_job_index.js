@@ -1916,6 +1916,7 @@ var Porlor4AddChildJobItem = {
                 add_status: false,
                 isLoading: false,
                 show_add_new_material_button: true,
+                show_real_time_add_new_material_button: false,
                 leaf_jobs: [],
                 new_material_item: {
                     name: '',
@@ -1976,6 +1977,7 @@ var Porlor4AddChildJobItem = {
                 add_status: false,
                 isLoading: false,
                 show_add_new_material_button: true,
+                show_real_time_add_new_material_button: false,
                 leaf_jobs: [],
                 new_material_item: {
                     name: ''
@@ -2035,6 +2037,7 @@ var Porlor4AddChildJobItem = {
         addChildJobItem_AddMoreInputs: function addChildJobItem_AddMoreInputs() {
             var _this3 = this;
 
+            console.log('Test Refs', this.$refs.fileInput.trigger);
             //
             if (this.add_child_job_item.isLoading === false) {
                 this.add_child_job_item.isLoading = true;
@@ -2059,7 +2062,10 @@ var Porlor4AddChildJobItem = {
                 _this3.add_child_job_item.isLoading = false;
             });
         },
-        addChildJobItem_AddNewMaterialItem: function addChildJobItem_AddNewMaterialItem(item, index) {
+        test_click: function test_click() {
+            alert('Clicked!!');
+        },
+        addChildJobItem_AddNewMaterialItem: function addChildJobItem_AddNewMaterialItem(item, index, event) {
             var _this4 = this;
 
             var inputs = {
@@ -2085,11 +2091,20 @@ var Porlor4AddChildJobItem = {
             });
         },
         addChildJobItem_SearchItemsByName: function addChildJobItem_SearchItemsByName(item, search_name) {
+            var _this5 = this;
+
             console.log('Search Items By Name :', search_name);
             this.add_child_job_item.new_material_item.name = search_name;
             materialItemService.searchItemsByName(search_name).then(function (result) {
                 console.log('Search Result :', result);
                 item.material_items = result;
+                var findSearchIndex = item.material_items.findIndex(function (item) {
+                    return item.approved_global_details.name == search_name;
+                });
+                _this5.add_child_job_item.show_real_time_add_new_material_button = findSearchIndex < 0;
+                if (item.material_items.length == 0) {
+                    _this5.add_child_job_item.show_real_time_add_new_material_button = false;
+                }
             }).catch(function (err) {
                 alert(err);
             });
@@ -2103,12 +2118,12 @@ var Porlor4AddChildJobItem = {
 
         //Get Items OF Type
         getMaterialItemsOfType: function getMaterialItemsOfType(index) {
-            var _this5 = this;
+            var _this6 = this;
 
             this.add_child_job_item.form.items[index].material_item = '';
             materialItemService.getItemsOfType(this.add_child_job_item.form.items[index].material_type.id).then(function (result) {
                 console.log('Material Item :', result);
-                _this5.add_child_job_item.form.items[index].material_items = result;
+                _this6.add_child_job_item.form.items[index].material_items = result;
             }).catch(function (err) {
                 alert(err);
             });
@@ -2116,13 +2131,13 @@ var Porlor4AddChildJobItem = {
 
         //Search Item Of Type By name
         searchMaterialItemsOfType: function searchMaterialItemsOfType(item, search_name) {
-            var _this6 = this;
+            var _this7 = this;
 
             this.add_child_job_item.new_material_item.name = search_name;
             // this.add_child_job_item.isLoading = true;
             materialItemService.searchItemsOfTypeByName(item.material_type.id, search_name).then(function (result) {
                 console.log('Search Material Items :', result);
-                _this6.add_child_job_item.material_items = result;
+                _this7.add_child_job_item.material_items = result;
                 // this.add_child_job_item.isLoading = false;
             }).catch(function (err) {
                 alert(err);
@@ -2271,6 +2286,7 @@ var Porlor4EditChildJobItem = {
         return {
             edit_child_job_item: {
                 job_item: '',
+                show_real_time_add_new_material_button: false,
                 add_status: false,
                 isLoading: false,
                 new_material_item: {
@@ -2394,6 +2410,10 @@ var Porlor4EditChildJobItem = {
             materialItemService.searchItemsByName(search_name).then(function (result) {
                 console.log('Search Result :', result);
                 _this4.edit_child_job_item.material_items = result;
+                var findSearchIndex = _this4.edit_child_job_item.material_items.findIndex(function (item) {
+                    return item.approved_global_details.name == search_name;
+                });
+                _this4.edit_child_job_item.show_real_time_add_new_material_button = findSearchIndex < 0;
             }).catch(function (err) {
                 alert(err);
             });

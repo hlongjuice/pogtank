@@ -8,6 +8,7 @@ export const Porlor4EditChildJobItem = {
         return {
             edit_child_job_item: {
                 job_item: '',
+                show_real_time_add_new_material_button:false,
                 add_status: false,
                 isLoading: false,
                 new_material_item: {
@@ -134,6 +135,10 @@ export const Porlor4EditChildJobItem = {
                 .then(result => {
                     console.log('Search Result :', result);
                     this.edit_child_job_item.material_items = result;
+                    let findSearchIndex= this.edit_child_job_item.material_items.findIndex(item=>{
+                        return item.approved_global_details.name == search_name;
+                    });
+                    this.edit_child_job_item.show_real_time_add_new_material_button = findSearchIndex < 0;
                 }).catch(err => {
                 alert(err)
             })

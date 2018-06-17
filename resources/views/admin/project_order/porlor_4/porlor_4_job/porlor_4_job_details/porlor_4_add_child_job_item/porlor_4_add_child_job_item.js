@@ -13,6 +13,7 @@ export const Porlor4AddChildJobItem = {
                 add_status: false,
                 isLoading: false,
                 show_add_new_material_button:true,
+                show_real_time_add_new_material_button:false,
                 leaf_jobs: [],
                 new_material_item: {
                     name: '',
@@ -76,6 +77,7 @@ export const Porlor4AddChildJobItem = {
                 add_status: false,
                 isLoading: false,
                 show_add_new_material_button:true,
+                show_real_time_add_new_material_button:false,
                 leaf_jobs: [],
                 new_material_item: {
                     name: ''
@@ -133,6 +135,7 @@ export const Porlor4AddChildJobItem = {
             }
         },
         addChildJobItem_AddMoreInputs() {
+            console.log('Test Refs',this.$refs.fileInput.trigger);
             //
             if (this.add_child_job_item.isLoading === false) {
                 this.add_child_job_item.isLoading = true;
@@ -158,7 +161,11 @@ export const Porlor4AddChildJobItem = {
                 this.add_child_job_item.isLoading = false
             })
         },
-        addChildJobItem_AddNewMaterialItem(item, index) {
+        test_click(){
+            alert('Clicked!!');
+        }
+        ,
+        addChildJobItem_AddNewMaterialItem(item, index,event) {
             let inputs = {
                 material_item: {
                     name: this.add_child_job_item.new_material_item.name
@@ -179,7 +186,6 @@ export const Porlor4AddChildJobItem = {
                         }).catch(err => {
                         alert(err)
                     })
-
                 }).catch(err => {
                 alert(err)
             })
@@ -191,6 +197,13 @@ export const Porlor4AddChildJobItem = {
                 .then(result => {
                     console.log('Search Result :', result);
                     item.material_items = result;
+                    let findSearchIndex= item.material_items.findIndex(item=>{
+                        return item.approved_global_details.name == search_name;
+                    });
+                    this.add_child_job_item.show_real_time_add_new_material_button = findSearchIndex < 0;
+                    if(item.material_items.length == 0){
+                        this.add_child_job_item.show_real_time_add_new_material_button = false;
+                    }
                 }).catch(err => {
                 alert(err)
             })

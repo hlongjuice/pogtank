@@ -81,6 +81,14 @@
                                                             <span class="option__title">@{{ props.option.approved_global_details.name }}</span>
                                                         </div>
                                                     </template>
+                                                    <template slot="clear" slot-scope="props">
+                                                        <div class="multiselect-add-new-item-btn" v-if="edit_child_job_item.form.material_items.length ">
+                                                            <template v-if="props.search">
+                                                                <a v-if="edit_child_job_item.show_real_time_add_new_material_button" @click="editChildJobItem_addNewMaterialItem"
+                                                                   class="btn btn-primary">เพิ่มรายการใหม่</a>
+                                                            </template>
+                                                        </div>
+                                                    </template>
                                                     <div class="row"
                                                          slot="noResult">
                                                         <div class="col-xs-12">
@@ -89,7 +97,7 @@
                                                         <div class="col-xs-12">
                                                             <span>@{{edit_child_job_item.new_material_item.name}} </span>
                                                             <a @click="editChildJobItem_addNewMaterialItem"
-                                                               class="pull-right btn btn-primary">เพิ่มรายใหม่</a>
+                                                               class="pull-right btn btn-primary">เพิ่มรายการใหม่</a>
                                                         </div>
                                                     </div>
                                                 </multiselect>

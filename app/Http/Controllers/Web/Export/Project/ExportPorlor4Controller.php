@@ -329,6 +329,7 @@ class ExportPorlor4Controller extends Controller
             }
             //1. รายการ job
             else{
+                //Group Item Per Unit
                 if(isset($job['group_item_per_unit']) && $job['group_item_per_unit'] == 1){
                     //A. Job Order Number
                     $sheet->cell('A'.$row,function(CellWriter $cell) use ($job){
@@ -351,6 +352,159 @@ class ExportPorlor4Controller extends Controller
                        $cell->setAlignment('left');
                     });
                 }
+                //Normal Item List
+                else{
+                    //A. Job Order Number
+                    $sheet->cell('A'.$row,function(CellWriter $cell) use ($job){
+                        $cell->setValue($job['job_order_number']);
+                        $cell->setAlignment('center');
+                    });
+                    //B. Job Name
+                    $sheet->cell('B'.$row,function(CellWriter $cell) use ($job){
+                        $cell->setValue($job['name']);
+                        $cell->setAlignment('left');
+                    });
+                    //J. Etc..
+                    $sheet->cell('J'.$row,function(CellWriter $cell) use ($job){
+                        $cell->setValue('');
+                        $cell->setAlignment('center');
+                    });
+                    //รายการที่เป็น Item จะมีการแสดงราคา ต่าวัสดุ และ ค่าแรง
+                    if($job['is_item'] == 1){
+                        //C. Quantity
+                        $sheet->cell('C'.$row,function(CellWriter $cell) use ($job){
+                            $cell->setValue($job['item']['quantity']);
+                            $cell->setAlignment('right');
+                        });
+                        //D. Unit
+                        $sheet->cell('D'.$row,function(CellWriter $cell) use ($job){
+                            $cell->setValue($job['item']['unit']);
+                            $cell->setAlignment('center');
+                        });
+                        //E. Price Per Un it
+                        $sheet->cell('E'.$row,function(CellWriter $cell) use ($job){
+                            $cell->setValue($job['item']['local_price']);
+                            $cell->setAlignment('right');
+                        });
+                        //F. Total Price
+                        $sheet->cell('F'.$row,function(CellWriter $cell) use ($job){
+                            $cell->setValue($job['item']['total_price']);
+                            $cell->setAlignment('right');
+                        });
+                        //G. Local Wage
+                        $sheet->cell('G'.$row,function(CellWriter $cell) use ($job){
+                            $cell->setValue($job['item']['local_wage']);
+                            $cell->setAlignment('right');
+                        });
+                        //H. Total Wage
+                        $sheet->cell('H'.$row,function(CellWriter $cell) use ($job){
+                            $cell->setValue($job['item']['total_wage']);
+                            $cell->setAlignment('right');
+                        });
+                        //I. Total Sum Price Wage
+                        $sheet->cell('I'.$row,function(CellWriter $cell) use ($job){
+                            $cell->setValue($job['item']['sum_total_price_wage']);
+                            $cell->setAlignment('right');
+                        });
+                    }
+                }
+            }
+            // -- 1. รายการวัสดุ/งาน ต่อ 1 หน่วย .1
+            if(isset($job['parent_group_item_per_unit']) && $job['parent_group_item_per_unit'] == 1){
+                $row++; // New Line
+                // -- รวมราคา ต่อ 1 หน่วย
+                // -- -- B.
+                $sheet->cell('B'.$row,function(CellWriter $cell) use ($job){
+                    $cell->setValue('รวมราคา '.$job['parent_name_per_unit']);
+                    $cell->setAlignment('center');
+                });
+                // -- -- F. Parent Sum Total Price
+                $sheet->cell('F'.$row,function(CellWriter $cell) use ($job){
+                    $cell->setValue($job['parent_sum_total_price']);
+                    $cell->setAlignment('right');
+                });
+                // -- -- H. Parent Sum Total Wage
+                $sheet->cell('H'.$row,function(CellWriter $cell) use ($job){
+                    $cell->setValue($job['parent_sum_total_wage']);
+                    $cell->setAlignment('right');
+                });
+                // -- -- I. Parent Sum Total Price Wage
+                $sheet->cell('I'.$row,function(CellWriter $cell) use ($job){
+                    $cell->setValue($job['parent_sum_total_price_wage']);
+                    $cell->setAlignment('right');
+                });
+                // -- สรุปราคา ต่อ 1 หน่วย
+                // -- คือผลรวมที่ปัดเศษลงแล้ว
+                $row++; // New Line
+                // -- -- B.
+                $sheet->cell('B'.$row,function(CellWriter $cell) use ($job){
+                    $cell->setValue('รวมราคา '.$job['parent_name_per_unit']);
+                    $cell->setAlignment('center');
+                });
+                // -- -- F. Parent Round Down Sum Total Price
+                $sheet->cell('F'.$row,function(CellWriter $cell) use ($job){
+                    $cell->setValue($job['parent_round_down_sum_total_price']);
+                    $cell->setAlignment('right');
+                });
+                // -- -- H. Parent Round Down Sum Total Wage
+                $sheet->cell('H'.$row,function(CellWriter $cell) use ($job){
+                    $cell->setValue($job['parent_round_down_sum_total_wage']);
+                    $cell->setAlignment('right');
+                });
+                // -- -- I. Parent Round Down Sum Total Price Wage
+                $sheet->cell('I'.$row,function(CellWriter $cell) use ($job){
+                    $cell->setValue($job['parent_round_down_sum_total_price_wage']);
+                    $cell->setAlignment('right');
+                });
+
+                // -- สรุปราคา ต่อ จำนวนหน่วยที่ระบุ ลงท้ายด้วย .2
+                $row++; // New Line
+                // -- -- A. Parent Order Number .2
+                $sheet->cell('A'.$row,function(CellWriter $cell) use ($job){
+                    $cell->setValue($job['parent_order_number'].'.2');
+                    $cell->setAlignment('center');
+                });
+                // -- -- B. Parent Name
+                $sheet->cell('B'.$row,function(CellWriter $cell) use ($job){
+                    $cell->setValue($job['parent_name']);
+                    $cell->setAlignment('left');
+                });
+                // -- -- C. Parent Quantity Factor
+                $sheet->cell('C'.$row,function(CellWriter $cell) use ($job){
+                    $cell->setValue($job['parent_quantity_factor']);
+                    $cell->setAlignment('right');
+                });
+                // -- -- D. Parent Unit
+                $sheet->cell('D'.$row,function(CellWriter $cell) use ($job){
+                    $cell->setValue($job['parent_unit']);
+                    $cell->setAlignment('center');
+                });
+                // -- -- E. Parent Round Down Sum Total Price
+                $sheet->cell('E'.$row,function(CellWriter $cell) use ($job){
+                    $cell->setValue($job['parent_round_down_sum_total_price']);
+                    $cell->setAlignment('right');
+                });
+                // -- -- F. Parent Group Item Per Unit Sum Total Price
+                $sheet->cell('F'.$row,function(CellWriter $cell) use ($job){
+                    $cell->setValue($job['parent_group_item_per_unit_sum_total_price']);
+                    $cell->setAlignment('right');
+                });
+                // -- -- G. Parent Round Down Sum Total Wage
+                $sheet->cell('G'.$row,function(CellWriter $cell) use ($job){
+                    $cell->setValue($job['parent_round_down_sum_total_wage']);
+                    $cell->setAlignment('right');
+                });
+                // -- -- H. Parent Group Item Per Unit Sum Total Wage
+                $sheet->cell('H'.$row,function(CellWriter $cell) use ($job){
+                    $cell->setValue($job['parent_group_item_per_unit_sum_total_wage']);
+                    $cell->setAlignment('right');
+                });
+                // -- -- I. Parent Group Item Per Unit Sum Total Price Wage
+                $sheet->cell('I'.$row,function(CellWriter $cell) use ($job){
+                    $cell->setValue($job['parent_group_item_per_unit_sum_total_price_wage']);
+                    $cell->setAlignment('right');
+                });
+
             }
             //Table Content Row Style
             $sheet->getStyle('A'.$row.':J'.$row)
