@@ -61,4 +61,8 @@ class ProjectOrder extends Model
     public function district(){
         return $this->belongsTo('App\Models\City\District','district_id');
     }
+    //Referee
+    public function referees(){
+        return $this->hasMany('App\Models\Admin\Project\ProjectReferee','project_order_id');
+    }
 }

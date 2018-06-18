@@ -34,6 +34,7 @@ class ExportPorlor4Controller extends Controller
             'porlor4.projectDetails.province',
             'porlor4.projectDetails.amphoe',
             'porlor4.projectDetails.district',
+            'porlor4.projectDetails.referees',
             'porlor4.part'
         ])->where('id', $root_job_id)->first();
         $rootJob->calculated_child_job = (new Porlor4JobController)->getAllChildJobs($porlor4_id, $root_job_id);
@@ -46,6 +47,7 @@ class ExportPorlor4Controller extends Controller
                     $this->setContents($sheet,$rootJob,$childJob,$row);
                     $row++;
                 }
+                $this->setReferees($sheet,$rootJob,$row);
             });
         })->export('xls');
 //        return response()->json($rootJob);
@@ -523,6 +525,18 @@ class ExportPorlor4Controller extends Controller
             $this->setContentStylePerRow($sheet,$startRow,$endRow);
         }
 
+    }
+    //Set Referee
+    public function setReferees(LaravelExcelWorksheet $sheet,$rootJob,&$row){
+        $row++;
+        $sheet->mergeCells('A'.$row.':J'.$row);
+        $sheet->cell(function(CellWriter $cell){
+            $cell->setValue('คณะกรรมการราคากลาง');
+            $cell->setAlignment('center');
+        });
+        foreach ($rootJob->porlor4->projectDetails->referees as $referee){
+            
+        }
     }
 
     public function setContentStylePerRow(LaravelExcelWorksheet $sheet,$startRow,$endRow){
