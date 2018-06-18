@@ -2037,7 +2037,6 @@ var Porlor4AddChildJobItem = {
         addChildJobItem_AddMoreInputs: function addChildJobItem_AddMoreInputs() {
             var _this3 = this;
 
-            console.log('Test Refs', this.$refs.fileInput.trigger);
             //
             if (this.add_child_job_item.isLoading === false) {
                 this.add_child_job_item.isLoading = true;
@@ -2063,11 +2062,13 @@ var Porlor4AddChildJobItem = {
             });
         },
         test_click: function test_click() {
-            alert('Clicked!!');
+            console.log('Clicked');
         },
         addChildJobItem_AddNewMaterialItem: function addChildJobItem_AddNewMaterialItem(item, index, event) {
             var _this4 = this;
 
+            console.log(this.$refs.myMulti);
+            this.$refs.myMulti[0].deactivate();
             var inputs = {
                 material_item: {
                     name: this.add_child_job_item.new_material_item.name

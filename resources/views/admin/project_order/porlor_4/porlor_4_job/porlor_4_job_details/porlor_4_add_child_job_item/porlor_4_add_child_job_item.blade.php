@@ -153,62 +153,66 @@
                                         <div class="col-xs-12 col-md-4">
                                             <div class="form-group">
                                                 <label class="control-label">วัสดุ/งาน</label>
-                                                <div>
-                                                    <div :class="{'input-error':errors.has('form.add_child_job_item_material_item_'+index)}">
-                                                        <multiselect
-                                                                @search-change="addChildJobItem_SearchItemsByName(item,$event)"
-                                                                :id="index"
-                                                                @close="addChildJobItemGetItemDetails(index,item.material_item.approved_global_details)"
-                                                                v-model="item.material_item"
-                                                                placeholder="พิมพ์เพื่อค้นหา" track-by="id"
-                                                                :options="item.material_items"
-                                                                :option-height="104"
-                                                                :show-labels="false"
-                                                                :allow-empty="false"
-                                                                :max-height="250"
-                                                                :custom-label="materialItemCustomLabel"
-                                                                :loading="add_child_job_item.new_material_item.is_loading"
-                                                                {{--:loading="add_child_job_item.isLoading"--}}
-                                                        >
-                                                            <template v-if="props.option.approved_global_details"
-                                                                      slot="option" slot-scope="props">
-                                                                <div class="option__desc">
+                                                <div :class="{'input-error':errors.has('form.add_child_job_item_material_item_'+index)}">
+                                                    <multiselect
+                                                            @search-change="addChildJobItem_SearchItemsByName(item,$event)"
+                                                            :id="index"
+                                                            @close="addChildJobItemGetItemDetails(index,item.material_item.approved_global_details)"
+                                                            v-model="item.material_item"
+                                                            placeholder="พิมพ์เพื่อค้นหา" track-by="id"
+                                                            :options="item.material_items"
+                                                            :option-height="104"
+                                                            :show-labels="false"
+                                                            :allow-empty="false"
+                                                            :max-height="250"
+                                                            :custom-label="materialItemCustomLabel"
+                                                            :loading="add_child_job_item.new_material_item.is_loading"
+                                                            ref="myMulti"
+                                                            {{--:loading="add_child_job_item.isLoading"--}}
+                                                    >
+                                                        <template v-if="props.option.approved_global_details"
+                                                                  slot="option" slot-scope="props">
+                                                            <div class="option__desc">
                                                                 <span class="option__title">
                                                                     @{{ props.option.approved_global_details.name }}
                                                                 </span>
-                                                                </div>
-                                                            </template>
-                                                            <template slot="clear" slot-scope="props">
-                                                                <div class="multiselect-add-new-item-btn" v-if="item.material_items.length ">
-                                                                <template v-if="props.search">
-                                                                <a v-if="add_child_job_item.show_real_time_add_new_material_button"
-                                                                   @click="addChildJobItem_AddNewMaterialItem(item,index,$event)"
-                                                                   class=" btn btn-primary">เพิ่มรายการใหม่</a>
-                                                                </template>
-                                                                </div>
-                                                            </template>
-                                                            <div class="row"
-                                                                 slot="noResult">
-                                                                <div class="col-xs-12">
-                                                                    <p>ยังไม่มีรายการในระบบ</p>
-                                                                </div>
-                                                                <div class="col-xs-12">
-                                                                    <span>@{{add_child_job_item.new_material_item.name}} </span>
-                                                                    <a v-if="add_child_job_item.show_add_new_material_button"
-                                                                       @click="addChildJobItem_AddNewMaterialItem(item,index)"
-                                                                       class="pull-right btn btn-primary">เพิ่มรายการใหม่</a>
-                                                                </div>
                                                             </div>
-                                                        </multiselect>
-                                                        <input
-                                                                :data-vv-name="'add_child_job_item_material_item_'+index"
-                                                                hidden
-                                                                v-model="item.material_item">
-                                                    </div>
-                                                    <input type="file" ref="fileInput"/>
+                                                        </template>
+                                                        <template slot="clear" slot-scope="props">
+                                                            <div class="multiselect-add-new-item-btn"
+                                                                 v-if="item.material_items.length ">
+                                                                <template v-if="props.search">
+                                                                    <a v-if="add_child_job_item.show_real_time_add_new_material_button"
+                                                                       @click="addChildJobItem_AddNewMaterialItem(item,index,$event)"
+                                                                       class=" btn btn-primary">เพิ่มรายการใหม่</a>
+                                                                </template>
+                                                            </div>
+                                                        </template>
+                                                        <div class="row"
+                                                             slot="noResult">
+                                                            <div class="col-xs-12">
+                                                                <p>ยังไม่มีรายการในระบบ</p>
+                                                            </div>
+                                                            <div class="col-xs-12">
+                                                                <span>@{{add_child_job_item.new_material_item.name}} </span>
+                                                                <a v-if="add_child_job_item.show_add_new_material_button"
+                                                                   @click="addChildJobItem_AddNewMaterialItem(item,index)"
+                                                                   class="pull-right btn btn-primary">เพิ่มรายการใหม่</a>
+                                                            </div>
+                                                        </div>
+                                                    </multiselect>
+                                                    <input
+                                                            :data-vv-name="'add_child_job_item_material_item_'+index"
+                                                            hidden
+                                                            v-model="item.material_item">
                                                 </div>
                                                 <span v-show="errors.has('form.add_child_job_item_material_item_'+index)"
                                                       class="text-error text-danger">กรุณาระบุข้อมูล</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12">
+                                            <div>
+                                                <a @click="test_click" ref="testClick" class="btn btn-danger">Test Click</a>
                                             </div>
                                         </div>
                                     </div>
