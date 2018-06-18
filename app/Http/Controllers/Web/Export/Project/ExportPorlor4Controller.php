@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web\Export\Project;
 
 
 use App\Http\Controllers\Admin\Project\Porlor4JobController;
+use App\Http\Controllers\Others\ExcelStyleController;
 use App\Http\Controllers\Others\NumberThaiController;
 use App\Http\Controllers\Others\ThaiDateController;
 use App\Models\Admin\Project\Porlor4;
@@ -124,7 +125,9 @@ class ExportPorlor4Controller extends Controller
                 $cell->setValue('ออกเมื่อวันที่ : ');
             });
             $sheet->cell('J'.$row,function(CellWriter $cell) use($rootJob){
-                $cell->setValue($rootJob->porlor4->projectDetails->form_number_release);
+                $form_number_release = Carbon::createFromFormat('Y-m-d',$rootJob->porlor4->projectDetails->form_number_release)
+                    ->format('d/m/Y');
+                $cell->setValue($form_number_release);
             });
             // -- Project Owner Name
             $row++;
@@ -150,8 +153,9 @@ class ExportPorlor4Controller extends Controller
                 $cell->setValue('เมื่อวันที่ : ');
             });
             $sheet->cell('F'.$row,function(CellWriter $cell) use($rootJob){
-                $date= Carbon::createFromFormat('Y-m-d H:i:s',$rootJob->porlor4->projectDetails->updated_at);
-                $cell->setValue($date);
+                $updated_at= Carbon::createFromFormat('Y-m-d H:i:s',$rootJob->porlor4->projectDetails->updated_at)
+                    ->format('d/m/Y');
+                $cell->setValue($updated_at);
             });
             //Global Unit
             $row++;
@@ -215,13 +219,17 @@ class ExportPorlor4Controller extends Controller
                     'startcolor' => ['rgb' => $this->tableHeaderColor]
                 ]
             ]);
+        $row++; //Header ใช้ 2 Row
     }
     //Porlor 4 Table Content
     public function setContents(LaravelExcelWorksheet $sheet,$rootJob,$childJob,&$row)
     {
         //Table Content แยกตามกลุ่มงานใน 1 หน้า
         foreach ($childJob['jobs'] as $job){
+
             $row++;
+            //อาจมีการ เพิ่ม row ในการวนลูปแต่ละรอบเลยต้องเก็บ start และ end ไว้
+            $startRow = $row;
             //4. รายการผลรวมต่อหน้า
             if(isset($job['row_page_result']) && $job['row_page_result']==1){
                 //ยอดยกไป
@@ -261,6 +269,10 @@ class ExportPorlor4Controller extends Controller
                         $cell->setValue($job['page_sum_total_price_wage']);
                         $cell->setAlignment('right');
                     });
+                    //Result Color Background
+                    $sheet->getStyle('A'.$row.':J'.$row)
+                        ->getFill()->setFillType(\PHPExcel_Style_Fill::FILL_SOLID)
+                        ->getStartColor()->setRGB(ExcelStyleController::tableTotalResultColor['green']);
                 }
             }
             //3. รายการผลรวมกลุ่ม
@@ -311,7 +323,7 @@ class ExportPorlor4Controller extends Controller
             //2. ยอดยกมา
             else if(isset($job['bring_forward']) && $job['bring_forward'] == 1){
                 $sheet->cell('B'.$row,function(CellWriter $cell) use($job){
-                    $cell->setValue('ยอดยกไป รายการที่ 1 - '.$job['last_job_order_number']);
+                    $cell->setValue('ยอดยกมา รายการที่ 1 - '.$job['last_job_order_number']);
                     $cell->setAlignment('right');
                 });
                 $sheet->cell('F'.$row,function(CellWriter $cell) use($job){
@@ -506,10 +518,22 @@ class ExportPorlor4Controller extends Controller
                 });
 
             }
-            //Table Content Row Style
-            $sheet->getStyle('A'.$row.':J'.$row)
-                ->getBorders()->getAllBorders()->setBorderStyle('thin');
+
+            $endRow= $row;
+            $this->setContentStylePerRow($sheet,$startRow,$endRow);
         }
+
+    }
+
+    public function setContentStylePerRow(LaravelExcelWorksheet $sheet,$startRow,$endRow){
+        //Table Content Row Style
+        $sheet->getStyle('A'.$startRow.':J'.$endRow)
+            ->getBorders()->getAllBorders()->setBorderStyle('thin');
+        //Table Column Format
+        $sheet->getStyle('C'.$startRow.':C'.$endRow)
+            ->getNumberFormat()->setFormatCode('_-* #,##0.00_-;-* #,##0.00_-;_-* "-"??_-;_-@_-'); //Format บัญชี(Accounting)
+        $sheet->getStyle('E'.$startRow.':I'.$endRow)
+            ->getNumberFormat()->setFormatCode('_-* #,##0.00_-;-* #,##0.00_-;_-* "-"??_-;_-@_-');//Format บัญชี(Accounting)
 
     }
 
