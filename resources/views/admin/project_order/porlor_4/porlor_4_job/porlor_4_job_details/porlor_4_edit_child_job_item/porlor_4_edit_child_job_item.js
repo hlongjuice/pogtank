@@ -8,17 +8,18 @@ export const Porlor4EditChildJobItem = {
         return {
             edit_child_job_item: {
                 job_item: '',
-                show_real_time_add_new_material_button:false,
-                add_status: false,
+                show_real_time_add_new_material_button: false,
+                updated_status: false,
                 isLoading: false,
                 new_material_item: {
-                    name: ''
+                    name: '',
+                    is_loading: false
                 },
-                old_item_id:'',
+                old_item_id: '',
                 form: {
-                    project_details:'',
-                    job_id:'',
-                    item_id:'',
+                    project_details: '',
+                    job_id: '',
+                    item_id: '',
                     is_item: 1,
                     page_number: '',
                     child_job: '',
@@ -36,12 +37,13 @@ export const Porlor4EditChildJobItem = {
     },
     methods: {
         beforeOpenEditChildJobItemModal(event) {
-            console.log('Edit Child Job ITem Job ITem : ',event.params.job_item);
-            console.log('Item ID',this.edit_child_job_item.form.item_id);
-            this.edit_child_job_item.old_item_id ='';
+            console.log('Edit Child Job ITem Job ITem : ', event.params.job_item);
+            console.log('Item ID', this.edit_child_job_item.form.item_id);
+            this.editChildJobItem_resetData();
+            this.edit_child_job_item.old_item_id = '';
             // this.edit_child_job_item.job_item = event.params.job_item;
             this.edit_child_job_item.form.job_id = event.params.job_item.id;
-            this.edit_child_job_item.form.item_id=event.params.job_item.item.id;
+            this.edit_child_job_item.form.item_id = event.params.job_item.item.id;
             this.edit_child_job_item.form.material_item = event.params.job_item.item.details;
             this.edit_child_job_item.form.local_price = event.params.job_item.item.local_price;
             this.edit_child_job_item.form.local_wage = event.params.job_item.item.local_wage;
@@ -49,7 +51,7 @@ export const Porlor4EditChildJobItem = {
             this.edit_child_job_item.form.quantity = event.params.job_item.item.quantity;
             this.edit_child_job_item.form.project_details = this.project_details;
             this.edit_child_job_item.old_item_id = this.edit_child_job_item.form.material_item.approved_global_details.id;
-            console.log('Edit Child Job Ites Form :',this.edit_child_job_item.form)
+            console.log('Edit Child Job Ites Form :', this.edit_child_job_item.form)
 
         },
         openedEditChildJobItemModal() {
@@ -69,8 +71,38 @@ export const Porlor4EditChildJobItem = {
                 this.edit_child_job_item.isLoading = false;
             });
         },
+        //Reset Data Before Use
+        editChildJobItem_resetData() {
+            this.edit_child_job_item = {
+                job_item: '',
+                show_real_time_add_new_material_button: false,
+                updated_status: false,
+                isLoading: false,
+                new_material_item: {
+                    name: '',
+                    is_loading: false
+                },
+                old_item_id: '',
+                form: {
+                    project_details: '',
+                    job_id: '',
+                    item_id: '',
+                    is_item: 1,
+                    page_number: '',
+                    child_job: '',
+                    material_items: [],
+                    material_type: '',
+                    material_item: '',
+                    material_name: '',
+                    local_price: '',
+                    local_wage: '',
+                    quantity: 0,
+                    unit: ''
+                },
+            }
+        },
         editChildJobItem_updateItem(form, event) {
-            console.log('Update Item Form',form,event);
+            console.log('Update Item Form', form, event);
             //this.project_details จาก ไฟล์ root mixin (porlor_4_index.js)
             console.log('Item Form Inputs :', this.edit_child_job_item.form);
             this.$validator.validateAll(form)
@@ -81,7 +113,7 @@ export const Porlor4EditChildJobItem = {
                             .then(result => {
                                 console.log('Update Child Job Item Success');
                                 this.edit_child_job_item.isLoading = false;
-                                this.edit_child_job_item.add_status = true;
+                                this.edit_child_job_item.updated_status = true;
                                 this.closeEditChildJobItemModal();
                             }).catch(err => {
                             alert(err);
@@ -93,10 +125,10 @@ export const Porlor4EditChildJobItem = {
                 })
         },
         editChildJobItem_getItemDetails(item) {
-            console.log('Edit Child Job Form Item ID :',this.edit_child_job_item.form.material_item.approved_global_details.id);
-            console.log('Selected Item ',item);
+            console.log('Edit Child Job Form Item ID :', this.edit_child_job_item.form.material_item.approved_global_details.id);
+            console.log('Selected Item ', item);
             if (item) {
-                if(this.edit_child_job_item.old_item_id != item.id ||this.edit_child_job_item.old_item_id =='' ){
+                if (this.edit_child_job_item.old_item_id != item.id || this.edit_child_job_item.old_item_id == '') {
                     this.edit_child_job_item.form.local_price = item.global_price;
                     this.edit_child_job_item.form.local_wage = item.global_wage;
                     this.edit_child_job_item.form.unit = item.unit;
@@ -110,6 +142,8 @@ export const Porlor4EditChildJobItem = {
                     name: this.edit_child_job_item.new_material_item.name
                 }
             };
+            this.$refs.edit_child_job_item_multi_select_item.deactivate();
+            this.add_child_job_item.new_material_item.is_loading=true;
             console.log('Add New Item Inputs', inputs);
             materialItemService.addNewOtherItem(inputs)
                 .then(new_item => {
@@ -119,6 +153,7 @@ export const Porlor4EditChildJobItem = {
                         .then(items => {
                             console.log('get New Item Success : ', new_item);
                             this.edit_child_job_item.form.material_items = items;
+                            this.add_child_job_item.new_material_item.is_loading=false;
                         }).catch(err => {
                         alert(err)
                     })
@@ -135,17 +170,20 @@ export const Porlor4EditChildJobItem = {
                 .then(result => {
                     console.log('Search Result :', result);
                     this.edit_child_job_item.material_items = result;
-                    let findSearchIndex= this.edit_child_job_item.material_items.findIndex(item=>{
+                    let findSearchIndex = this.edit_child_job_item.material_items.findIndex(item => {
                         return item.approved_global_details.name == search_name;
                     });
                     this.edit_child_job_item.show_real_time_add_new_material_button = findSearchIndex < 0;
+                    if(this.edit_child_job_item.material_items.length == 0){
+                        this.edit_child_job_item.show_real_time_add_new_material_button = false;
+                    }
                 }).catch(err => {
                 alert(err)
             })
         },
         closeEditChildJobItemModal() {
             this.$modal.hide('porlor-4-edit-child-job-item-modal', {
-                edit_status: this.edit_child_job_item.add_status
+                edit_status: this.edit_child_job_item.updated_status
             })
         },
         editChildJobItem_customLabel(item) {

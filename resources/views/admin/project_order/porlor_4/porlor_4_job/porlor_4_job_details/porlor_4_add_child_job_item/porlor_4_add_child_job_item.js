@@ -165,8 +165,7 @@ export const Porlor4AddChildJobItem = {
         }
         ,
         addChildJobItem_AddNewMaterialItem(item, index,event) {
-            console.log(this.$refs.myMulti);
-            this.$refs.myMulti[0].deactivate();
+            this.$refs.add_child_job_item_multi_select_item[index].deactivate();
             let inputs = {
                 material_item: {
                     name: this.add_child_job_item.new_material_item.name

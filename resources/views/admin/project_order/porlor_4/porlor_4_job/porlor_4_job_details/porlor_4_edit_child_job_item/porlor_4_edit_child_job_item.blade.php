@@ -74,6 +74,8 @@
                                                         :allow-empty="false"
                                                         :max-height="250"
                                                         :custom-label="editChildJobItem_materialItemCustomLabel"
+                                                        :loading="edit_child_job_item.new_material_item.is_loading"
+                                                        ref="edit_child_job_item_multi_select_item"
                                                         {{--:loading="edit_child_job_item.isLoading"--}}
                                                 >
                                                     <template slot="option" slot-scope="props">

@@ -97,7 +97,7 @@
                         <div class="col-md-4">
                             <a @click="addChildJobItem_AddMoreInputs"
                                class="pull-right btn btn-primary margin-bottom-10">
-                                + เพิ่มรายการ</a>
+                                + เพิ่มฟอร์ม</a>
                         </div>
                         {{--Items Loop--}}
                         <template v-for="(item,index) of add_child_job_item.form.items">
@@ -167,7 +167,7 @@
                                                             :max-height="250"
                                                             :custom-label="materialItemCustomLabel"
                                                             :loading="add_child_job_item.new_material_item.is_loading"
-                                                            ref="myMulti"
+                                                            ref="add_child_job_item_multi_select_item"
                                                             {{--:loading="add_child_job_item.isLoading"--}}
                                                     >
                                                         <template v-if="props.option.approved_global_details"
@@ -208,11 +208,6 @@
                                                 </div>
                                                 <span v-show="errors.has('form.add_child_job_item_material_item_'+index)"
                                                       class="text-error text-danger">กรุณาระบุข้อมูล</span>
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-12">
-                                            <div>
-                                                <a @click="test_click" ref="testClick" class="btn btn-danger">Test Click</a>
                                             </div>
                                         </div>
                                     </div>

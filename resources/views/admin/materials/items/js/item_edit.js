@@ -178,11 +178,12 @@ let vm = new Vue({
         // -- Form Validation
         validateForm: function (scope, ev) {
             console.log(vm.form.materialID);
+            vm.form._method='PUT';
             this.$validator.validateAll(scope)
                 .then(function (result) {
                     let errMassage = 'กรุณาระบุ ';
                     if (result) {
-                        axios.put('/admin/materials/items/' + vm.form.materialID, vm.form)
+                        axios.post('/admin/materials/items/' + vm.form.materialID, vm.form)
                             .then((result) => {
                                 console.log(result);
                                 // window.location = indexRoute + '/updated'
@@ -247,9 +248,12 @@ let vm = new Vue({
             }
         },
         deleteWaitingGlobalDetails: function (item) {
+            let deleteMethod = {
+              '_method':'DELETE'
+            };
             if (confirm('ยืนยันการลบ')) {
-                axios.delete('/admin/materials/items/' + item.material_id + '/waiting_global_details/'
-                    + item.id)
+                axios.post('/admin/materials/items/' + item.material_id + '/waiting_global_details/'
+                    + item.id,deleteMethod)
                     .then((result) => {
                         console.log(result);
                         this.waitingGlobalDetails = null;
@@ -274,10 +278,11 @@ let vm = new Vue({
                 let items = {
                     'waitingLocalPriceIDs': this.checkedWaitingLocalPrices.map(item => {
                         return item.id
-                    })
+                    }),
+                    '_method':'DELETE'
                 };
-                axios.delete('/admin/materials/items/local_price/'
-                    + this.material.id + '/waiting_local_prices', {data: items})
+                axios.post('/admin/materials/items/local_price/'
+                    + this.material.id + '/waiting_local_prices',items)
                     .then((result) => {
                         this.getWaitingLocalPrices();
                         this.decreaseWaitingItemNumber(1);
@@ -295,10 +300,11 @@ let vm = new Vue({
         updateGlobalDetailsStatus: function (item) {
             let inputs = {
                 'publishedStatus': 'approved',
-                'materialID': item.material_id
+                'materialID': item.material_id,
+                '_method':'PUT'
             };
             if (confirm('ยืนยันการอนุมัติ')) {
-                axios.put('/admin/materials/items/update_global_details_status/'
+                axios.post('/admin/materials/items/update_global_details_status/'
                     + item.id, inputs)
                     .then(result => {
                         console.log(result);
@@ -318,9 +324,10 @@ let vm = new Vue({
                     'waitingLocalPriceIDs': this.checkedWaitingLocalPrices.map(item => {
                         return item.id
                     }),
-                    'publishedStatus': 'approved'
+                    'publishedStatus': 'approved',
+                    '_method':'PUT'
                 };
-                axios.put('admin/materials/items/' + this.material.id + '/update_local_price', items)
+                axios.post('admin/materials/items/' + this.material.id + '/update_local_price', items)
                     .then((result) => {
                         console.log(result);
                         this.refreshData();

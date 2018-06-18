@@ -278,7 +278,7 @@ function forEach(obj, fn) {
   }
 
   // Force an array if not already something iterable
-  if (typeof obj !== 'object' && !isArray(obj)) {
+  if (typeof obj !== 'object') {
     /*eslint no-param-reassign:0*/
     obj = [obj];
   }
@@ -665,8 +665,6 @@ var defaults = __webpack_require__(3);
 var utils = __webpack_require__(0);
 var InterceptorManager = __webpack_require__(22);
 var dispatchRequest = __webpack_require__(23);
-var isAbsoluteURL = __webpack_require__(25);
-var combineURLs = __webpack_require__(26);
 
 /**
  * Create a new instance of Axios
@@ -695,13 +693,8 @@ Axios.prototype.request = function request(config) {
     }, arguments[1]);
   }
 
-  config = utils.merge(defaults, this.defaults, { method: 'get' }, config);
+  config = utils.merge(defaults, {method: 'get'}, this.defaults, config);
   config.method = config.method.toLowerCase();
-
-  // Support baseURL config
-  if (config.baseURL && !isAbsoluteURL(config.url)) {
-    config.url = combineURLs(config.baseURL, config.url);
-  }
 
   // Hook up interceptors middleware
   var chain = [dispatchRequest, undefined];
@@ -879,9 +872,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
       if (utils.isArray(val)) {
         key = key + '[]';
-      }
-
-      if (!utils.isArray(val)) {
+      } else {
         val = [val];
       }
 
@@ -916,6 +907,15 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 var utils = __webpack_require__(0);
 
+// Headers whose duplicates are ignored by node
+// c.f. https://nodejs.org/api/http.html#http_message_headers
+var ignoreDuplicateOf = [
+  'age', 'authorization', 'content-length', 'content-type', 'etag',
+  'expires', 'from', 'host', 'if-modified-since', 'if-unmodified-since',
+  'last-modified', 'location', 'max-forwards', 'proxy-authorization',
+  'referer', 'retry-after', 'user-agent'
+];
+
 /**
  * Parse headers into an object
  *
@@ -943,7 +943,14 @@ module.exports = function parseHeaders(headers) {
     val = utils.trim(line.substr(i + 1));
 
     if (key) {
-      parsed[key] = parsed[key] ? parsed[key] + ', ' + val : val;
+      if (parsed[key] && ignoreDuplicateOf.indexOf(key) >= 0) {
+        return;
+      }
+      if (key === 'set-cookie') {
+        parsed[key] = (parsed[key] ? parsed[key] : []).concat([val]);
+      } else {
+        parsed[key] = parsed[key] ? parsed[key] + ', ' + val : val;
+      }
     }
   });
 
@@ -1720,6 +1727,8 @@ var utils = __webpack_require__(0);
 var transformData = __webpack_require__(24);
 var isCancel = __webpack_require__(7);
 var defaults = __webpack_require__(3);
+var isAbsoluteURL = __webpack_require__(25);
+var combineURLs = __webpack_require__(26);
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -1738,6 +1747,11 @@ function throwIfCancellationRequested(config) {
  */
 module.exports = function dispatchRequest(config) {
   throwIfCancellationRequested(config);
+
+  // Support baseURL config
+  if (config.baseURL && !isAbsoluteURL(config.url)) {
+    config.url = combineURLs(config.baseURL, config.url);
+  }
 
   // Ensure headers exist
   config.headers = config.headers || {};
@@ -2067,8 +2081,7 @@ var Porlor4AddChildJobItem = {
         addChildJobItem_AddNewMaterialItem: function addChildJobItem_AddNewMaterialItem(item, index, event) {
             var _this4 = this;
 
-            console.log(this.$refs.myMulti);
-            this.$refs.myMulti[0].deactivate();
+            this.$refs.add_child_job_item_multi_select_item[index].deactivate();
             var inputs = {
                 material_item: {
                     name: this.add_child_job_item.new_material_item.name
@@ -2288,10 +2301,11 @@ var Porlor4EditChildJobItem = {
             edit_child_job_item: {
                 job_item: '',
                 show_real_time_add_new_material_button: false,
-                add_status: false,
+                updated_status: false,
                 isLoading: false,
                 new_material_item: {
-                    name: ''
+                    name: '',
+                    is_loading: false
                 },
                 old_item_id: '',
                 form: {
@@ -2317,6 +2331,7 @@ var Porlor4EditChildJobItem = {
         beforeOpenEditChildJobItemModal: function beforeOpenEditChildJobItemModal(event) {
             console.log('Edit Child Job ITem Job ITem : ', event.params.job_item);
             console.log('Item ID', this.edit_child_job_item.form.item_id);
+            this.editChildJobItem_resetData();
             this.edit_child_job_item.old_item_id = '';
             // this.edit_child_job_item.job_item = event.params.job_item;
             this.edit_child_job_item.form.job_id = event.params.job_item.id;
@@ -2347,6 +2362,37 @@ var Porlor4EditChildJobItem = {
                 _this.edit_child_job_item.isLoading = false;
             });
         },
+
+        //Reset Data Before Use
+        editChildJobItem_resetData: function editChildJobItem_resetData() {
+            this.edit_child_job_item = {
+                job_item: '',
+                show_real_time_add_new_material_button: false,
+                updated_status: false,
+                isLoading: false,
+                new_material_item: {
+                    name: '',
+                    is_loading: false
+                },
+                old_item_id: '',
+                form: {
+                    project_details: '',
+                    job_id: '',
+                    item_id: '',
+                    is_item: 1,
+                    page_number: '',
+                    child_job: '',
+                    material_items: [],
+                    material_type: '',
+                    material_item: '',
+                    material_name: '',
+                    local_price: '',
+                    local_wage: '',
+                    quantity: 0,
+                    unit: ''
+                }
+            };
+        },
         editChildJobItem_updateItem: function editChildJobItem_updateItem(form, event) {
             var _this2 = this;
 
@@ -2359,7 +2405,7 @@ var Porlor4EditChildJobItem = {
                     porlor4JobService.updateChildJobItem(_this2.porlor4.id, _this2.edit_child_job_item.form).then(function (result) {
                         console.log('Update Child Job Item Success');
                         _this2.edit_child_job_item.isLoading = false;
-                        _this2.edit_child_job_item.add_status = true;
+                        _this2.edit_child_job_item.updated_status = true;
                         _this2.closeEditChildJobItemModal();
                     }).catch(function (err) {
                         alert(err);
@@ -2389,6 +2435,8 @@ var Porlor4EditChildJobItem = {
                     name: this.edit_child_job_item.new_material_item.name
                 }
             };
+            this.$refs.edit_child_job_item_multi_select_item.deactivate();
+            this.add_child_job_item.new_material_item.is_loading = true;
             console.log('Add New Item Inputs', inputs);
             materialItemService.addNewOtherItem(inputs).then(function (new_item) {
                 console.log('Add New Item Success : ', new_item);
@@ -2396,6 +2444,7 @@ var Porlor4EditChildJobItem = {
                 materialItemService.searchItemsByName(_this3.edit_child_job_item.new_material_item.name).then(function (items) {
                     console.log('get New Item Success : ', new_item);
                     _this3.edit_child_job_item.form.material_items = items;
+                    _this3.add_child_job_item.new_material_item.is_loading = false;
                 }).catch(function (err) {
                     alert(err);
                 });
@@ -2415,13 +2464,16 @@ var Porlor4EditChildJobItem = {
                     return item.approved_global_details.name == search_name;
                 });
                 _this4.edit_child_job_item.show_real_time_add_new_material_button = findSearchIndex < 0;
+                if (_this4.edit_child_job_item.material_items.length == 0) {
+                    _this4.edit_child_job_item.show_real_time_add_new_material_button = false;
+                }
             }).catch(function (err) {
                 alert(err);
             });
         },
         closeEditChildJobItemModal: function closeEditChildJobItemModal() {
             this.$modal.hide('porlor-4-edit-child-job-item-modal', {
-                edit_status: this.edit_child_job_item.add_status
+                edit_status: this.edit_child_job_item.updated_status
             });
         },
         editChildJobItem_customLabel: function editChildJobItem_customLabel(item) {
@@ -2849,9 +2901,10 @@ var MaterialItem = function () {
     }, {
         key: 'updateGlobalDetails',
         value: function updateGlobalDetails(inputData) {
+            inputData._method = 'PUT';
             var url = this.url + '/admin/materials/items/update_global_details';
             return new Promise(function (resolve, reject) {
-                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.put(url, inputData).then(function (result) {
+                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post(url, inputData).then(function (result) {
                     resolve(result.data);
                 }).catch(function (err) {
                     reject(err);
@@ -2863,10 +2916,11 @@ var MaterialItem = function () {
     }, {
         key: 'updateLocalPriceDetails',
         value: function updateLocalPriceDetails(inputData, id) {
+            inputData._method = 'PUT';
             var url = this.url + '/admin/materials/items/update_local_price_details/' + id;
             // let url=this.url+'/test';
             return new Promise(function (resolve, reject) {
-                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.put(url, inputData).then(function (result) {
+                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post(url, inputData).then(function (result) {
                     resolve(result.data);
                 }).catch(function (err) {
                     reject(err);
@@ -3030,6 +3084,10 @@ var defaults = {
     return data;
   }],
 
+  /**
+   * A timeout in milliseconds to abort a request. If set to 0 (default) a
+   * timeout is not created.
+   */
   timeout: 0,
 
   xsrfCookieName: 'XSRF-TOKEN',
@@ -3595,7 +3653,7 @@ module.exports = function xhrAdapter(config) {
       var responseData = !config.responseType || config.responseType === 'text' ? request.responseText : request.response;
       var response = {
         data: responseData,
-        // IE sends 1223 instead of 204 (https://github.com/mzabriskie/axios/issues/201)
+        // IE sends 1223 instead of 204 (https://github.com/axios/axios/issues/201)
         status: request.status === 1223 ? 204 : request.status,
         statusText: request.status === 1223 ? 'No Content' : request.statusText,
         headers: responseHeaders,

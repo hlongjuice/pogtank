@@ -127,9 +127,10 @@ class MaterialItem {
     }
     //update Global Details Values
     updateGlobalDetails(inputData){
+        inputData._method = 'PUT';
         let url = this.url+'/admin/materials/items/update_global_details';
         return new Promise((resolve,reject)=>{
-            axois.put(url,inputData)
+            axois.post(url,inputData)
                 .then(result=>{
                     resolve(result.data)
                 }).catch(err=>{
@@ -139,10 +140,11 @@ class MaterialItem {
     }
     //Update Local Price Details
     updateLocalPriceDetails(inputData,id){
+        inputData._method = 'PUT';
         let url= this.url+'/admin/materials/items/update_local_price_details/'+id;
         // let url=this.url+'/test';
         return new Promise((resolve,reject)=>{
-            axois.put(url,inputData)
+            axois.post(url,inputData)
                 .then(result=>{
                     resolve(result.data)
                 }).catch(err=>{reject(err)})

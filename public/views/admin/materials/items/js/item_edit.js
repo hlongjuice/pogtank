@@ -278,7 +278,7 @@ function forEach(obj, fn) {
   }
 
   // Force an array if not already something iterable
-  if (typeof obj !== 'object' && !isArray(obj)) {
+  if (typeof obj !== 'object') {
     /*eslint no-param-reassign:0*/
     obj = [obj];
   }
@@ -665,8 +665,6 @@ var defaults = __webpack_require__(3);
 var utils = __webpack_require__(0);
 var InterceptorManager = __webpack_require__(22);
 var dispatchRequest = __webpack_require__(23);
-var isAbsoluteURL = __webpack_require__(25);
-var combineURLs = __webpack_require__(26);
 
 /**
  * Create a new instance of Axios
@@ -695,13 +693,8 @@ Axios.prototype.request = function request(config) {
     }, arguments[1]);
   }
 
-  config = utils.merge(defaults, this.defaults, { method: 'get' }, config);
+  config = utils.merge(defaults, {method: 'get'}, this.defaults, config);
   config.method = config.method.toLowerCase();
-
-  // Support baseURL config
-  if (config.baseURL && !isAbsoluteURL(config.url)) {
-    config.url = combineURLs(config.baseURL, config.url);
-  }
 
   // Hook up interceptors middleware
   var chain = [dispatchRequest, undefined];
@@ -879,9 +872,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
       if (utils.isArray(val)) {
         key = key + '[]';
-      }
-
-      if (!utils.isArray(val)) {
+      } else {
         val = [val];
       }
 
@@ -916,6 +907,15 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 var utils = __webpack_require__(0);
 
+// Headers whose duplicates are ignored by node
+// c.f. https://nodejs.org/api/http.html#http_message_headers
+var ignoreDuplicateOf = [
+  'age', 'authorization', 'content-length', 'content-type', 'etag',
+  'expires', 'from', 'host', 'if-modified-since', 'if-unmodified-since',
+  'last-modified', 'location', 'max-forwards', 'proxy-authorization',
+  'referer', 'retry-after', 'user-agent'
+];
+
 /**
  * Parse headers into an object
  *
@@ -943,7 +943,14 @@ module.exports = function parseHeaders(headers) {
     val = utils.trim(line.substr(i + 1));
 
     if (key) {
-      parsed[key] = parsed[key] ? parsed[key] + ', ' + val : val;
+      if (parsed[key] && ignoreDuplicateOf.indexOf(key) >= 0) {
+        return;
+      }
+      if (key === 'set-cookie') {
+        parsed[key] = (parsed[key] ? parsed[key] : []).concat([val]);
+      } else {
+        parsed[key] = parsed[key] ? parsed[key] + ', ' + val : val;
+      }
     }
   });
 
@@ -1215,10 +1222,11 @@ var vm = new Vue({
         // -- Form Validation
         validateForm: function validateForm(scope, ev) {
             console.log(vm.form.materialID);
+            vm.form._method = 'PUT';
             this.$validator.validateAll(scope).then(function (result) {
                 var errMassage = 'กรุณาระบุ ';
                 if (result) {
-                    axios.put('/admin/materials/items/' + vm.form.materialID, vm.form).then(function (result) {
+                    axios.post('/admin/materials/items/' + vm.form.materialID, vm.form).then(function (result) {
                         console.log(result);
                         // window.location = indexRoute + '/updated'
                     });
@@ -1285,8 +1293,11 @@ var vm = new Vue({
         deleteWaitingGlobalDetails: function deleteWaitingGlobalDetails(item) {
             var _this4 = this;
 
+            var deleteMethod = {
+                '_method': 'DELETE'
+            };
             if (confirm('ยืนยันการลบ')) {
-                axios.delete('/admin/materials/items/' + item.material_id + '/waiting_global_details/' + item.id).then(function (result) {
+                axios.post('/admin/materials/items/' + item.material_id + '/waiting_global_details/' + item.id, deleteMethod).then(function (result) {
                     console.log(result);
                     _this4.waitingGlobalDetails = null;
                     _this4.decreaseWaitingItemNumber(1);
@@ -1315,9 +1326,10 @@ var vm = new Vue({
                 var items = {
                     'waitingLocalPriceIDs': this.checkedWaitingLocalPrices.map(function (item) {
                         return item.id;
-                    })
+                    }),
+                    '_method': 'DELETE'
                 };
-                axios.delete('/admin/materials/items/local_price/' + this.material.id + '/waiting_local_prices', { data: items }).then(function (result) {
+                axios.post('/admin/materials/items/local_price/' + this.material.id + '/waiting_local_prices', items).then(function (result) {
                     _this6.getWaitingLocalPrices();
                     _this6.decreaseWaitingItemNumber(1);
                     toastr.success('การลบเสร็จสมบูรณ์');
@@ -1336,10 +1348,11 @@ var vm = new Vue({
 
             var inputs = {
                 'publishedStatus': 'approved',
-                'materialID': item.material_id
+                'materialID': item.material_id,
+                '_method': 'PUT'
             };
             if (confirm('ยืนยันการอนุมัติ')) {
-                axios.put('/admin/materials/items/update_global_details_status/' + item.id, inputs).then(function (result) {
+                axios.post('/admin/materials/items/update_global_details_status/' + item.id, inputs).then(function (result) {
                     console.log(result);
                     _this7.refreshData();
                     toastr.success('การอนุมัติเสร็จสมบูรณ์');
@@ -1359,9 +1372,10 @@ var vm = new Vue({
                     'waitingLocalPriceIDs': this.checkedWaitingLocalPrices.map(function (item) {
                         return item.id;
                     }),
-                    'publishedStatus': 'approved'
+                    'publishedStatus': 'approved',
+                    '_method': 'PUT'
                 };
-                axios.put('admin/materials/items/' + this.material.id + '/update_local_price', items).then(function (result) {
+                axios.post('admin/materials/items/' + this.material.id + '/update_local_price', items).then(function (result) {
                     console.log(result);
                     _this8.refreshData();
                     toastr.success('การอนุมัติเสร็จสมบูรณ์');
@@ -1694,6 +1708,8 @@ var utils = __webpack_require__(0);
 var transformData = __webpack_require__(24);
 var isCancel = __webpack_require__(7);
 var defaults = __webpack_require__(3);
+var isAbsoluteURL = __webpack_require__(25);
+var combineURLs = __webpack_require__(26);
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -1712,6 +1728,11 @@ function throwIfCancellationRequested(config) {
  */
 module.exports = function dispatchRequest(config) {
   throwIfCancellationRequested(config);
+
+  // Support baseURL config
+  if (config.baseURL && !isAbsoluteURL(config.url)) {
+    config.url = combineURLs(config.baseURL, config.url);
+  }
 
   // Ensure headers exist
   config.headers = config.headers || {};
@@ -2123,9 +2144,10 @@ var MaterialItem = function () {
     }, {
         key: 'updateGlobalDetails',
         value: function updateGlobalDetails(inputData) {
+            inputData._method = 'PUT';
             var url = this.url + '/admin/materials/items/update_global_details';
             return new Promise(function (resolve, reject) {
-                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.put(url, inputData).then(function (result) {
+                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post(url, inputData).then(function (result) {
                     resolve(result.data);
                 }).catch(function (err) {
                     reject(err);
@@ -2137,10 +2159,11 @@ var MaterialItem = function () {
     }, {
         key: 'updateLocalPriceDetails',
         value: function updateLocalPriceDetails(inputData, id) {
+            inputData._method = 'PUT';
             var url = this.url + '/admin/materials/items/update_local_price_details/' + id;
             // let url=this.url+'/test';
             return new Promise(function (resolve, reject) {
-                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.put(url, inputData).then(function (result) {
+                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post(url, inputData).then(function (result) {
                     resolve(result.data);
                 }).catch(function (err) {
                     reject(err);
@@ -2304,6 +2327,10 @@ var defaults = {
     return data;
   }],
 
+  /**
+   * A timeout in milliseconds to abort a request. If set to 0 (default) a
+   * timeout is not created.
+   */
   timeout: 0,
 
   xsrfCookieName: 'XSRF-TOKEN',
@@ -2669,7 +2696,7 @@ module.exports = function xhrAdapter(config) {
       var responseData = !config.responseType || config.responseType === 'text' ? request.responseText : request.response;
       var response = {
         data: responseData,
-        // IE sends 1223 instead of 204 (https://github.com/mzabriskie/axios/issues/201)
+        // IE sends 1223 instead of 204 (https://github.com/axios/axios/issues/201)
         status: request.status === 1223 ? 204 : request.status,
         statusText: request.status === 1223 ? 'No Content' : request.statusText,
         headers: responseHeaders,
