@@ -38,7 +38,7 @@ class ExportPorlor4Controller extends Controller
             'porlor4.part'
         ])->where('id', $root_job_id)->first();
         $rootJob->calculated_child_job = (new Porlor4JobController)->getAllChildJobs($porlor4_id, $root_job_id);
-        Excel::create('test', function (LaravelExcelWriter $excel) use ($rootJob) {
+        Excel::create('ปร.4 -'.$rootJob->name, function (LaravelExcelWriter $excel) use ($rootJob) {
             $excel->sheet($rootJob->name, function ($sheet) use ($rootJob) {
                 $row =1;
                 $this->setSheetStyles($sheet);
@@ -528,15 +528,15 @@ class ExportPorlor4Controller extends Controller
     }
     //Set Referee
     public function setReferees(LaravelExcelWorksheet $sheet,$rootJob,&$row){
-        $row++;
-        $sheet->mergeCells('A'.$row.':J'.$row);
-        $sheet->cell(function(CellWriter $cell){
-            $cell->setValue('คณะกรรมการราคากลาง');
-            $cell->setAlignment('center');
-        });
-        foreach ($rootJob->porlor4->projectDetails->referees as $referee){
-            
-        }
+//        $row++;
+//        $sheet->mergeCells('A'.$row.':J'.$row);
+//        $sheet->cell(function(CellWriter $cell){
+//            $cell->setValue('คณะกรรมการราคากลาง');
+//            $cell->setAlignment('center');
+//        });
+//        foreach ($rootJob->porlor4->projectDetails->referees as $referee){
+//
+//        }
     }
 
     public function setContentStylePerRow(LaravelExcelWorksheet $sheet,$startRow,$endRow){

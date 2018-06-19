@@ -132,34 +132,34 @@ Route::prefix('admin')->middleware('auth')
                 //Move To Previous Page
                 Route::put('porlor4/move_to_previous_page/{porlor4_id}', 'Admin\Project\Porlor5\Porlor5Controller@moveToPreviousPage');
                 //Move to Next Page
-                Route::put('porlor4/move_to_next_page/{porlor4_id}','Admin\Project\Porlor5\Porlor5Controller@moveToNextPage');
+                Route::put('porlor4/move_to_next_page/{porlor4_id}', 'Admin\Project\Porlor5\Porlor5Controller@moveToNextPage');
             });
             // -- -- -- Porlor 6
-            Route::prefix('{project_order_id}/porlor_6')->group(function(){
-               Route::get('/','Admin\Project\Porlor6\Porlor6Controller@getPorlor6');
+            Route::prefix('{project_order_id}/porlor_6')->group(function () {
+                Route::get('/', 'Admin\Project\Porlor6\Porlor6Controller@getPorlor6');
             });
             // -- -- -- Project Referee
-            Route::prefix('referee')->group(function(){
+            Route::prefix('referee')->group(function () {
                 // -- Add New Referee Referee
-                Route::post('add_referees/{project_order_id}','Admin\Project\ProjectRefereeController@addReferees');
+                Route::post('add_referees/{project_order_id}', 'Admin\Project\ProjectRefereeController@addReferees');
                 // -- Delete Referee
-                Route::delete('delete_referees/{project_order_id}','Admin\Project\ProjectRefereeController@deleteReferees');
+                Route::delete('delete_referees/{project_order_id}', 'Admin\Project\ProjectRefereeController@deleteReferees');
                 // -- Get Referees
-                Route::get('get_referees/{project_order_id}','Admin\Project\ProjectRefereeController@getReferees');
+                Route::get('get_referees/{project_order_id}', 'Admin\Project\ProjectRefereeController@getReferees');
                 // -- Update Referee
-                Route::put('update_referee/{project_order_id}','Admin\Project\ProjectRefereeController@updateReferee');
+                Route::put('update_referee/{project_order_id}', 'Admin\Project\ProjectRefereeController@updateReferee');
             });
         });
         // -- -- Referee
-        Route::prefix('referee_rank')->group(function(){
+        Route::prefix('referee_rank')->group(function () {
             //Get All Referee
-           Route::get('get_referee_ranks','Admin\Referee\RefereeRankController@getRefereeRanks');
-           //Add New Referee
-            Route::post('add_referee_ranks','Admin\Referee\RefereeRankController@addRanks');
+            Route::get('get_referee_ranks', 'Admin\Referee\RefereeRankController@getRefereeRanks');
+            //Add New Referee
+            Route::post('add_referee_ranks', 'Admin\Referee\RefereeRankController@addRanks');
             //Update Referee
-            Route::put('update_rank/{referee_id}','Admin\Referee\RefereeRankController@updateRank');
+            Route::put('update_rank/{referee_id}', 'Admin\Referee\RefereeRankController@updateRank');
             //Delete Referee
-            Route::delete('delete_rank/{referee_id}','Admin\Referee\RefereeRankController@deleteRank');
+            Route::delete('delete_rank/{referee_id}', 'Admin\Referee\RefereeRankController@deleteRank');
         });
 
         // -- -- Porlor 4 Part
@@ -298,10 +298,13 @@ Route::prefix('admin')->middleware('auth')
     });
 
 // -- All Web Method
-Route::prefix('project')->group(function(){
-    Route::prefix('export')->group(function(){
-       Route::get('porlor4/{porlor4_id}/job/{root_job_id}','Web\Export\Project\ExportPorlor4Controller@exportByRootID')
-       ->name('project.export.porlor4');
+Route::prefix('project')->group(function () {
+    Route::prefix('export')->group(function () {
+        //Porlor4
+        Route::get('porlor4/{porlor4_id}/job/{root_job_id}', 'Web\Export\Project\ExportPorlor4Controller@exportByRootID')
+            ->name('project.export.porlor4');
+        //Porlor 5
+        Route::get('porlor5/{project_order_id}', 'Web\Export\Project\ExportPorlor5Controller@exportExcel');
     });
 });
 

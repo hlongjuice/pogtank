@@ -137,7 +137,6 @@
     border:1px solid map_get($colors,dark-light) !important;
   }
 }
-
 .table-result-green{
   td{
     background-color:map_get($colors,table-result-green) !important;
@@ -153,6 +152,11 @@
 .td-result-green{
   background-color:map_get($colors,table-green);
   border:1px solid map_get($colors,dark-light) !important;
+}
+.table-row-th-center{
+  th{
+    text-align: center;
+  }
 }
 //-- --End Table
 //*** Text

@@ -1,4 +1,5 @@
 import ProjectOrderService from '../../../../assets/js/services/project_order/project_order_service';
+import Porlor5ExportServie from '../../../../assets/js/services/project_order/porlor_5/porlor_5_export_service';
 import WebUrl from '../../../../assets/js/services/webUrl';
 import {ProjectOrderEditModal} from '../project_order_edit';
 import {Porlor5Index} from "../porlor_5/porlor_5_index";
@@ -7,8 +8,10 @@ import {ProjectReferee} from "../referee/referee_index";
 import {ProjectRefereeAddModal} from "../referee/add_referee/add_referee";
 import {ProjectRefereeEditModal} from "../referee/edit_referee/edit_referee";
 
+
 let webUrl = new WebUrl();
 let projectOderService = new ProjectOrderService();
+let porlor5ExportService = new Porlor5ExportServie();
 new Vue({
     el: '#project-order-index',
     mixins: [
@@ -98,8 +101,7 @@ new Vue({
         //Before Close Project Referee Modal
         beforeCloseProjectRefereeModal(){
 
-        }
-        ,
+        },
         //Delete Project
         deleteProject(order) {
             this.$dialog.confirm('ยืนยันการลบ')
@@ -113,6 +115,10 @@ new Vue({
                     })
                 })
                 .catch();
+        },
+        //Export Porlor 5
+        exportPorlor5Excel(order){
+            porlor5ExportService.exportExcel(order.id);
         }
 
     }

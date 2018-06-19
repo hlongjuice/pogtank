@@ -49,7 +49,7 @@
                         <table class="table table-striped table-hover table-bordered">
                             {{-- -- Table Header--}}
                             <thead>
-                            <tr>
+                            <tr class="table-row-th-center">
                                 {{--<th>ID</th>--}}
                                 <th>โครงการ</th>
                                 <th>คณะกรรมการ</th>
@@ -62,14 +62,38 @@
                             </thead>
                             {{-- -- Table Content--}}
                             <tbody>
-                            <tr v-for="order in orders.data">
-                                {{--<td></td>--}}
-                                <td>@{{ order.project_name }}</td>
+                            <tr class="text-center" v-for="order in orders.data">
+                                {{--Project Name--}}
+                                <td class="text-left">@{{ order.project_name }}</td>
+                                {{--Referee--}}
                                 <td><a @click="openProjectReferee(order)" class="btn btn-info">คณะกรรมการ</a></td>
-                                <td><a @click="openPorlor4Page(order)" class="btn btn-info">ปร.4</a></td>
-                                <td><a @click="openPorlor5Modal(order)" class="btn btn-info">ปร.5</a></td>
-                                <td><a @click="openPorlor6Modal(order)" class="btn btn-info">ปร.6</a></td>
+                                {{--Porlor 4--}}
+                                <td>
+                                    <a @click="openPorlor4Page(order)" class="btn btn-info">ปร.4</a>
+                                    <a class="margin-left-5 btn btn-default">
+                                        Excel
+                                        <i class="far fa-download"></i>
+                                    </a>
+                                </td>
+                                {{--Porlor 5--}}
+                                <td>
+                                    <a @click="openPorlor5Modal(order)" class="btn btn-info">ปร.5</a>
+                                    <a @click="exportPorlor5Excel(order)" class="margin-left-5 btn btn-default">
+                                        Excel
+                                        <i class="far fa-download"></i>
+                                    </a>
+                                </td>
+                                {{--Porlor 6--}}
+                                <td>
+                                    <a @click="openPorlor6Modal(order)" class="btn btn-info">ปร.6</a>
+                                    <a class="margin-left-5 btn btn-default">
+                                        Excel
+                                        <i class="far fa-download"></i>
+                                    </a>
+                                </td>
+                                {{--Edit--}}
                                 <td><a class="btn btn-warning" @click="openProjectOrderEditModal(order)">แก้ไข</a></td>
+                                {{--Delete--}}
                                 <td><a class="btn btn-danger" @click="deleteProject(order)">ลบ</a></td>
                             </tr>
                             </tbody>

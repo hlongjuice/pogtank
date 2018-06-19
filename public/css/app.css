@@ -144,6 +144,10 @@ fieldset[disabled] .multiselect{pointer-events:none}.multiselect__spinner{positi
   border: 1px solid #a8a8a8 !important;
 }
 
+.table-row-th-center th {
+  text-align: center;
+}
+
 .label-status {
   font-size: 1.2em;
 }
