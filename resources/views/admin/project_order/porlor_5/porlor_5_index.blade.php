@@ -8,16 +8,16 @@
         width="99%"
         :adaptive="true"
         height="auto"
-        :scrollable="false"
+        :scrollable="true"
 >
     <div class="row">
         <loading :show="porlor5.is_loading"></loading>
         <div class="col-xs-12">
             <div class="panel panel-default">
-                <div class="panel-heading">
+                <div class="navbar-fixed-top panel-heading">
                     <button class="btn btn-danger" @click="closePorlor5Modal">Close</button>
                 </div>
-                <div style="height:1200px;overflow: auto" v-if="porlor5.project" class="panel-body">
+                <div v-if="porlor5.project" class="panel-body">
                     <template v-for="(porlor5_result) in porlor5.project.porlor5">
                         {{--Page Header--}}
                         <div class="panel">
@@ -212,8 +212,7 @@
                                                     {{--Factor F รอสูคตรคำรวน--}}
                                                     <td class="text-center">@{{ root_job.factor_f }}</td>
                                                     {{--ค่างานก่อสร้าง = ต่างานต้นทุน x factor F--}}
-                                                    <td class="text-right">@{{ root_job.construction_cost | currency('')
-                                                        }}
+                                                    <td class="text-right">@{{ root_job.construction_cost | currency('')}}
                                                     </td>
                                                     <td></td>
                                                 </tr>

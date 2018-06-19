@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web\Export\Project;
 
 use App\Http\Controllers\Admin\Project\Porlor5\Porlor5Controller;
+use App\Http\Controllers\Others\ExcelStyleController;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Excel;
@@ -55,49 +56,87 @@ class ExportPorlor5Controller extends Controller
         });
         $row++;
         //If Page == 1 Set Project Details
-        if ($porlor5['page'] == 1) {
-            //Project Name
-            $row++;
-            $sheet->cell('B'.$row,function(CellWriter $cell) use($project){
-                $cell->setValue('โครงการ : '.$project['project_name']);
-            });
-            //Project Address
-            $row++;
-            $sheet->cell('B'.$row,function(CellWriter $cell) use($project){
-                $cell->setValue('สถานที่ก่อสร้าง : '
-                    .$project->location
-                    .' ต.'.$project->district->name
-                    .' อ.'.$project->amphoe->name
-                    .' จ.'.$project->province->name
-                );
-            });
-            //Form Number
-            $row++;
-            $sheet->cell('B'.$row,function(CellWriter $cell) use ($project){
-               $cell->setValue('แบบเลขที่ : '.$project->form_number);
-            });
-            //Owner Name
-            $row++;
-            $sheet->cell('B'.$row,function(CellWriter $cell) use ($project){
-                $cell->setValue('หน่วยงานเจ้าของโครงการ : '.$project->owner_name);
-            });
-            //Agency Name
-            $row++;
-            $sheet->cell('B'.$row,function(CellWriter $cell) use ($project){
-                $cell->setValue('หน่วยงานประมาณการ : '.$project->agency_name);
-            });
-            //Total Porlor 4 Pages
-            $row++;
-            $sheet->cell('B'.$row,function(CellWriter $cell) use ($project){
-                $cell->setValue('แบบ ปร.4 ที่แนบ : '.'');
-            });
-            //Referee Approved Date
-            $row++;
-            $sheet->cell('B'.$row,function(CellWriter $cell) use ($project){
-                $cell->setValue('แบบ ปร.4 ที่แนบ : '.'');
-            });
+        //Project Details
+        //Project Name
+        $row++;
+        $sheet->cell('B' . $row, function (CellWriter $cell) use ($project) {
+            $cell->setValue('โครงการ : ' . $project['project_name']);
+        });
+        //Project Address
+        $row++;
+        $sheet->cell('B' . $row, function (CellWriter $cell) use ($project) {
+            $cell->setValue('สถานที่ก่อสร้าง : '
+                . $project->location
+                . ' ต.' . $project->district->name
+                . ' อ.' . $project->amphoe->name
+                . ' จ.' . $project->province->name
+            );
+        });
+        //Form Number
+        $row++;
+        $sheet->cell('B' . $row, function (CellWriter $cell) use ($project) {
+            $cell->setValue('แบบเลขที่ : ' . $project->form_number);
+        });
+        //Owner Name
+        $row++;
+        $sheet->cell('B' . $row, function (CellWriter $cell) use ($project) {
+            $cell->setValue('หน่วยงานเจ้าของโครงการ : ' . $project->owner_name);
+        });
+        //Agency Name
+        $row++;
+        $sheet->cell('B' . $row, function (CellWriter $cell) use ($project) {
+            $cell->setValue('หน่วยงานประมาณการ : ' . $project->agency_name);
+        });
+        //Total Porlor 4 Pages
+        $row++;
+        $sheet->cell('B' . $row, function (CellWriter $cell) use ($project) {
+            $cell->setValue('แบบ ปร.4 ที่แนบ : ' . '');
+        });
+        //Referee Calculated Date
+        $row++;
+        $sheet->cell('B' . $row, function (CellWriter $cell) use ($project) {
+            $cell->setValue('แบบ ปร.4 ที่แนบ : ' . $project->referee_calculated_date);
+        });
+        $this->setTableHeader($sheet, $project, $porlor5, $row);
+    }
 
-        }
+    public function setTableHeader(LaravelExcelWorksheet $sheet, $project, $porlor5, &$row)
+    {
+//        $row++;
+        //Order Number
+        $sheet->cell('A' . $row, 'ลำดับที่');
+        //Order Name
+        $sheet->cell('B' . $row, 'รายการ');
+        //Job Cost
+        $sheet->cell('C' . $row, 'ค่างานต้นทุน');
+        //Factor F
+        $sheet->cell('D' . $row, 'Factor F');
+        //Construction Cost
+        $sheet->cell('E' . $row, 'ค่าก่อสร้าง');
+        //Etc..
+        $sheet->cell('F' . $row, 'หมายเหตุ');
+        //Row Styles
+        $sheet->getStyle('A' . $row . ':F' . $row)
+            ->applyFromArray([
+                'alignment' => [
+                    'horizontal' => \PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+                    'vertical' => \PHPExcel_Style_Alignment::VERTICAL_CENTER
+                ],
+                'borders' => [
+                    'allborders' => ['style' => \PHPExcel_Style_Border::BORDER_THIN],
+                ],
+                'fill' => [
+                    'type' => \PHPExcel_Style_Fill::FILL_SOLID,
+                    'startcolor' => ['rgb' => ExcelStyleController::tableHeaderColor['green']]
+                ],
+                ''
+            ]);
+        $sheet->getRowDimension($row)->setRowHeight(36);
+    }
+    //Table Content
+    public function setTableContents(LaravelExcelWorksheet $sheet,$project,$porlor5,&$row){
+        $row++;
+
     }
 
     public function setSheetStyles(LaravelExcelWorksheet $sheet)
