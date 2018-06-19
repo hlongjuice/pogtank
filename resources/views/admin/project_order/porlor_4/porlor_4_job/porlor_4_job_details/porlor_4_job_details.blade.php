@@ -107,7 +107,7 @@
                                             <p>คำนวนราคากลางโดย : @{{ project_details.referee_name }}</p>
                                         </div>
                                         <div class="col-md-6">
-                                            <p>เมื่อวันที่ : @{{ project_details.updated_at| moment('DD/MM/YYYY')}}</p>
+                                            <p>เมื่อวันที่ : @{{ project_details.referee_calculated_date| moment('DD/MM/YYYY')}}</p>
                                         </div>
                                     </div>
                                 </div>

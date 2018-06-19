@@ -10,7 +10,7 @@
         height="auto"
         :scrollable="true"
 >
-    <div class="row">
+    <div style="overflow: auto;" class="row">
         <div class="col-xs-12">
             <!-- FORM-->
             <form
@@ -186,6 +186,15 @@
                                                        v-model="project_order_edit.form.referee_name" type="text" id="referee_name"
                                                        class="form-control"
                                                        placeholder="">
+                                            </div>
+                                        </div>
+                                        {{--  Referee Approved Date --}}
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label">เมื่อวันที่</label>
+                                                <datepicker language="th" v-model="project_order_edit.form.referee_calculated_date"
+                                                            :input-class="{'form-control':true,'input-error':errors.has('form.referee_calculated_date')}">
+                                                </datepicker>
                                             </div>
                                         </div>
                                     </div>

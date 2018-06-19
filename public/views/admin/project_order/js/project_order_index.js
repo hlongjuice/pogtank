@@ -374,6 +374,7 @@ var ProjectOrderEditModal = {
         projectOrderEditModal_updateDetails: function projectOrderEditModal_updateDetails(scope, event) {
             var _this2 = this;
 
+            console.log('Update Form :', this.project_order_edit.form);
             this.$validator.validateAll(scope).then(function (result) {
                 if (result) {
                     projectOrderService.updateProjectDetails(_this2.project_order_edit.form).then(function (result) {

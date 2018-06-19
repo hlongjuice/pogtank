@@ -96,7 +96,7 @@
                                                 <p>คำนวนราคากลางโดย : @{{ porlor5.project.referee_name }}</p>
                                             </div>
                                             <div class="col-md-6">
-                                                <p>เมื่อวันที่ : @{{ porlor5.project.updated_at|
+                                                <p>เมื่อวันที่ : @{{ porlor5.project.referee_calculated_date|
                                                     moment('DD/MM/YYYY')}}</p>
                                             </div>
                                         </div>

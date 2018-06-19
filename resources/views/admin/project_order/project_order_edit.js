@@ -37,6 +37,7 @@ export const ProjectOrderEditModal = {
             })
         },
         projectOrderEditModal_updateDetails(scope,event){
+            console.log('Update Form :',this.project_order_edit.form);
             this.$validator.validateAll(scope)
                 .then(result=>{
                     if(result){

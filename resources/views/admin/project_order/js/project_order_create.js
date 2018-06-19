@@ -25,6 +25,7 @@ new Vue({
             owner_name: '',
             agency_name: '',
             referee_name: '',
+            referee_calculated_date:new Date(),
             form_number: '',
             form_number_release:new Date()
         }
@@ -54,6 +55,7 @@ new Vue({
         },
         //Add New Order
         addNewOrder(scope,event){
+            console.log('Create Project Order Form :',this.form);
             this.$validator.validateAll(scope)
                 .then(result=>{
                     if(result){

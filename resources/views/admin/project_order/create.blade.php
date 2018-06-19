@@ -194,6 +194,14 @@
                                                placeholder="">
                                     </div>
                                 </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="control-label">เมื่อวันที่</label>
+                                        <datepicker language="th" v-model="form.referee_calculated_date"
+                                                    :input-class="{'form-control':true,'input-error':errors.has('form.referee_calculated_date')}">
+                                        </datepicker>
+                                    </div>
+                                </div>
                             </div>
 
                         </div>

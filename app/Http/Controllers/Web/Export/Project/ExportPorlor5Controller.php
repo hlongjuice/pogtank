@@ -91,7 +91,11 @@ class ExportPorlor5Controller extends Controller
             $sheet->cell('B'.$row,function(CellWriter $cell) use ($project){
                 $cell->setValue('แบบ ปร.4 ที่แนบ : '.'');
             });
-            //
+            //Referee Approved Date
+            $row++;
+            $sheet->cell('B'.$row,function(CellWriter $cell) use ($project){
+                $cell->setValue('แบบ ปร.4 ที่แนบ : '.'');
+            });
 
         }
     }

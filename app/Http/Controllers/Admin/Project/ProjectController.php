@@ -38,7 +38,7 @@ class ProjectController extends Controller
                 'owner_name' => $request->input('owner_name'),
                 'agency_name' => $request->input('agency_name'),
                 'referee_name' => $request->input('referee_name'),
-                'referee_approved_date'=>$request->input('referee_approved_date'),
+                'referee_calculated_date'=>$request->input('referee_calculated_date'),
                 'form_number' => $request->input('form_number'),
                 'form_number_release' => $request->input('form_number_release'),
             ]);
@@ -76,7 +76,7 @@ class ProjectController extends Controller
             'owner_name' => $request->input('owner_name'),
             'agency_name' => $request->input('agency_name'),
             'referee_name' => $request->input('referee_name'),
-            'referee_approved_date'=>$request->input('referee_approved_date'),
+            'referee_calculated_date'=>$request->input('referee_calculated_date'),
             'form_number' => $request->input('form_number'),
             'form_number_release' => $request->input('form_number_release'),
         ]);
