@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 197);
+/******/ 	return __webpack_require__(__webpack_require__.s = 198);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -1036,15 +1036,15 @@ module.exports = (
 
 /***/ }),
 
-/***/ 197:
+/***/ 198:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(198);
+module.exports = __webpack_require__(199);
 
 
 /***/ }),
 
-/***/ 198:
+/***/ 199:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1053,7 +1053,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_js_services_material_material_type_service__ = __webpack_require__(30);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__assets_js_services_city__ = __webpack_require__(32);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__item_edit_add_modal__ = __webpack_require__(39);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__item_edit_edit_modal__ = __webpack_require__(199);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__item_edit_edit_modal__ = __webpack_require__(200);
 
 
 
@@ -1418,79 +1418,6 @@ console.log('Master', vm);
 
 /***/ }),
 
-/***/ 199:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EditModal; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_material_material_item_service__ = __webpack_require__(29);
-
-var materialItemService = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_material_material_item_service__["a" /* default */]();
-var EditModal = {
-    data: function data() {
-        return {
-            form: {
-                'local_price_version_id': ''
-            }
-        };
-    },
-    mounted: function mounted() {},
-    methods: {
-        //Add Local Price
-        updateLocalPrice: function updateLocalPrice(scope, ev) {
-            var _this = this;
-
-            console.log('Update Local Price Details');
-            this.$validator.validateAll(scope).then(function (result) {
-                var errMassage = 'กรุณาระบุ ';
-                if (result) {
-                    _this.form.material_id = _this.material.id;
-                    materialItemService.updateLocalPriceDetails(_this.form, _this.form.local_price_version_id).then(function (result) {
-                        console.log('Update Local Price Result', result);
-                        _this.updateStatus = true;
-                        toastr.success('อัพเดทเสร็จสมบูรณ์');
-                        _this.closeEditPriceModal();
-                    }).catch(function (err) {
-                        alert(err);
-                    });
-                } else {
-                    _this.$validator.errors.items.forEach(function (error) {
-                        errMassage = errMassage + error.msg + ', ';
-                    });
-                    alert(errMassage);
-                }
-            });
-        },
-        // -- Edit more Local Price Input
-        beforeEditOpen: function beforeEditOpen(event) {
-            var data = event.params.local_price;
-            console.log('Edit Modal Data', data);
-            this.form = {
-                material_id: this.material.id, //Data from parent
-                local_price_id: data.local_price_id,
-                local_price_version_id: data.id,
-                cities: [{
-                    province: data.province,
-                    amphoe: data.amphoe,
-                    district: data.district,
-                    amphoes: data.province.amphoes,
-                    districts: data.amphoe.districts,
-                    localCost: data.cost,
-                    localPrice: data.price,
-                    wage: data.wage
-                }]
-            };
-            console.log('Form in Edit Modal', this.form);
-        },
-        // Close Add Price Modal
-        closeEditPriceModal: function closeEditPriceModal() {
-            this.$modal.hide('edit-local-price-modal');
-        }
-    }
-};
-
-/***/ }),
-
 /***/ 2:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1574,6 +1501,79 @@ function btoa(input) {
 
 module.exports = btoa;
 
+
+/***/ }),
+
+/***/ 200:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EditModal; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_material_material_item_service__ = __webpack_require__(29);
+
+var materialItemService = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_material_material_item_service__["a" /* default */]();
+var EditModal = {
+    data: function data() {
+        return {
+            form: {
+                'local_price_version_id': ''
+            }
+        };
+    },
+    mounted: function mounted() {},
+    methods: {
+        //Add Local Price
+        updateLocalPrice: function updateLocalPrice(scope, ev) {
+            var _this = this;
+
+            console.log('Update Local Price Details');
+            this.$validator.validateAll(scope).then(function (result) {
+                var errMassage = 'กรุณาระบุ ';
+                if (result) {
+                    _this.form.material_id = _this.material.id;
+                    materialItemService.updateLocalPriceDetails(_this.form, _this.form.local_price_version_id).then(function (result) {
+                        console.log('Update Local Price Result', result);
+                        _this.updateStatus = true;
+                        toastr.success('อัพเดทเสร็จสมบูรณ์');
+                        _this.closeEditPriceModal();
+                    }).catch(function (err) {
+                        alert(err);
+                    });
+                } else {
+                    _this.$validator.errors.items.forEach(function (error) {
+                        errMassage = errMassage + error.msg + ', ';
+                    });
+                    alert(errMassage);
+                }
+            });
+        },
+        // -- Edit more Local Price Input
+        beforeEditOpen: function beforeEditOpen(event) {
+            var data = event.params.local_price;
+            console.log('Edit Modal Data', data);
+            this.form = {
+                material_id: this.material.id, //Data from parent
+                local_price_id: data.local_price_id,
+                local_price_version_id: data.id,
+                cities: [{
+                    province: data.province,
+                    amphoe: data.amphoe,
+                    district: data.district,
+                    amphoes: data.province.amphoes,
+                    districts: data.amphoe.districts,
+                    localCost: data.cost,
+                    localPrice: data.price,
+                    wage: data.wage
+                }]
+            };
+            console.log('Form in Edit Modal', this.form);
+        },
+        // Close Add Price Modal
+        closeEditPriceModal: function closeEditPriceModal() {
+            this.$modal.hide('edit-local-price-modal');
+        }
+    }
+};
 
 /***/ }),
 

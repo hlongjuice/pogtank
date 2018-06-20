@@ -42,25 +42,25 @@
                                 </div>
                                 <!-- -- -- Products-->
                                 {{--<div class="col-md-4">--}}
-                                    {{--<div class="form-group">--}}
-                                        {{--<label for="province"--}}
-                                               {{--class="control-label">สินค้า</label>--}}
-                                        {{--<multiselect--}}
-                                                     {{--v-model="form.product"--}}
-                                                     {{--placeholder="" label="name" track-by="id"--}}
-                                                     {{--:options="products" :option-height="104"--}}
-                                                     {{--:allow-empty="false"--}}
-                                                     {{--:show-labels="false">--}}
-                                            {{--<template slot="option" slot-scope="props">--}}
-                                                {{--<div class="option__desc">--}}
-                                                    {{--<span class="option__title">@{{ props.option.name }}</span>--}}
-                                                {{--</div>--}}
-                                            {{--</template>--}}
-                                        {{--</multiselect>--}}
-                                        {{--<input v-validate="'required'"--}}
-                                               {{--v-model="form.product"--}}
-                                               {{--name="product" hidden>--}}
-                                    {{--</div>--}}
+                                {{--<div class="form-group">--}}
+                                {{--<label for="province"--}}
+                                {{--class="control-label">สินค้า</label>--}}
+                                {{--<multiselect--}}
+                                {{--v-model="form.product"--}}
+                                {{--placeholder="" label="name" track-by="id"--}}
+                                {{--:options="products" :option-height="104"--}}
+                                {{--:allow-empty="false"--}}
+                                {{--:show-labels="false">--}}
+                                {{--<template slot="option" slot-scope="props">--}}
+                                {{--<div class="option__desc">--}}
+                                {{--<span class="option__title">@{{ props.option.name }}</span>--}}
+                                {{--</div>--}}
+                                {{--</template>--}}
+                                {{--</multiselect>--}}
+                                {{--<input v-validate="'required'"--}}
+                                {{--v-model="form.product"--}}
+                                {{--name="product" hidden>--}}
+                                {{--</div>--}}
                                 {{--</div>--}}
                                 <div class="clearfix"></div>
                                 {{--Clear Fix--}}
@@ -213,5 +213,7 @@
     </div>
 @endsection
 @section('script')
+
+
     <script src="{{asset('views/admin/project_order/js/project_order_create.js')}}"></script>
 @endsection

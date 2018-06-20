@@ -19,6 +19,9 @@ import {Auth} from './services/auth';
 import Vue2Filters from 'vue2-filters';
 import VuejsDialog from 'vuejs-dialog';
 
+let thaiDatePicker = require('../../../public/js/thai_datepicker/js/bootstrap-datepicker');
+console.log('Thai Date Picker',thaiDatePicker);
+
 //Global Method
 Vue.mixin(Auth);
 window.Vue = Vue;
