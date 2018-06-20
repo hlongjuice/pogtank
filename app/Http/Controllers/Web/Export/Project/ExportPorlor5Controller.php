@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web\Export\Project;
 
 use App\Http\Controllers\Admin\Project\Porlor5\Porlor5Controller;
 use App\Http\Controllers\Others\ExcelStyleController;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Excel;
@@ -95,14 +96,17 @@ class ExportPorlor5Controller extends Controller
         //Referee Calculated Date
         $row++;
         $sheet->cell('B' . $row, function (CellWriter $cell) use ($project) {
-            $cell->setValue('แบบ ปร.4 ที่แนบ : ' . $project->referee_calculated_date);
+            $refereeCalculatedDate = Carbon::createFromFormat('Y-m-d',$project->referee_calculated_date)
+                ->format('d/m/Y');
+            $cell->setValue('คำนวนราคากลางเมื่อวันที่ : ' .$refereeCalculatedDate);
         });
+
         $this->setTableHeader($sheet, $project, $porlor5, $row);
     }
 
     public function setTableHeader(LaravelExcelWorksheet $sheet, $project, $porlor5, &$row)
     {
-//        $row++;
+        $row++;
         //Order Number
         $sheet->cell('A' . $row, 'ลำดับที่');
         //Order Name

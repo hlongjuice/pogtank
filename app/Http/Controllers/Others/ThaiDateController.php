@@ -86,5 +86,9 @@ class ThaiDateController extends Controller
         return $this->short_thai_days[$dayIndex];
     }
 
+    public function toBuddhistYear($christianYear){
+        return $christianYear+543;
+    }
+
 
 }
