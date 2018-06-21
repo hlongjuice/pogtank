@@ -66,8 +66,6 @@ License: You must have a valid license purchased only from themeforest(the above
     @yield('css')
     <link href="{{asset('css/app.css')}}" rel="stylesheet"/>
     <link href="{{asset('css/custom_spinner.css')}}" rel="stylesheet"/>
-    {{--Thai Date Picker--}}
-    <link href="{{asset('js/thai_datepicker/css/datepicker.css')}}" rel="stylesheet"/>
     {{--Font Awesome--}}
     <link rel="stylesheet" href="{{asset('css/font-awesome/css/fontawesome-all.min.css')}}">
 </head>
@@ -677,11 +675,6 @@ License: You must have a valid license purchased only from themeforest(the above
 <script src="{{asset('templates/admin/conquer/theme/assets/scripts/table-editable.js')}}"></script>
 <script src="{{asset('templates/admin/conquer/theme/assets/scripts/form-samples.js')}}"></script>
 <script src="{{asset('templates/admin/conquer/theme/assets/plugins/bootstrap-toastr/toastr.min.js')}}"></script>
-
-{{--Thai Date Picker--}}
-{{--<script src="{{asset('js/thai_datepicker/js/bootstrap-datepicker.js')}}"></script>--}}
-<script src="{{asset('js/thai_datepicker/js/bootstrap-datepicker-thai.js')}}"></script>
-{{--<script src="{{asset('js/thai_datepicker/js/locales/bootstrap-datepicker.th.js')}}"></script>--}}
 
 
 

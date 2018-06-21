@@ -25,18 +25,12 @@ new Vue({
             owner_name: '',
             agency_name: '',
             referee_name: '',
-            referee_calculated_date:'10/12/58',
+            referee_calculated_date:'',
             form_number: '',
             form_number_release:''
         }
     },
     mounted: function () {
-        $('#form-number-release-date-picker').datepicker().on(
-            'changeDate', () => { this.form.form_number_release = $('#form-number-release-date-picker').val() }
-        );
-        $('#referee-calculated-date-picker').datepicker().on(
-            'changeDate', () => { this.form.referee_calculated_date = $('#referee-calculated-date-picker').val() }
-        );
         this.showLoading=true;
         this.initialData();
     },

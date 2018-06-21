@@ -277,7 +277,7 @@ function forEach(obj, fn) {
   }
 
   // Force an array if not already something iterable
-  if (typeof obj !== 'object' && !isArray(obj)) {
+  if (typeof obj !== 'object') {
     /*eslint no-param-reassign:0*/
     obj = [obj];
   }
@@ -5026,6 +5026,10 @@ var defaults = {
     return data;
   }],
 
+  /**
+   * A timeout in milliseconds to abort a request. If set to 0 (default) a
+   * timeout is not created.
+   */
   timeout: 0,
 
   xsrfCookieName: 'XSRF-TOKEN',
@@ -5147,7 +5151,7 @@ module.exports = function xhrAdapter(config) {
       var responseData = !config.responseType || config.responseType === 'text' ? request.responseText : request.response;
       var response = {
         data: responseData,
-        // IE sends 1223 instead of 204 (https://github.com/mzabriskie/axios/issues/201)
+        // IE sends 1223 instead of 204 (https://github.com/axios/axios/issues/201)
         status: request.status === 1223 ? 204 : request.status,
         statusText: request.status === 1223 ? 'No Content' : request.statusText,
         headers: responseHeaders,
@@ -5617,8 +5621,6 @@ var defaults = __webpack_require__(3);
 var utils = __webpack_require__(0);
 var InterceptorManager = __webpack_require__(22);
 var dispatchRequest = __webpack_require__(23);
-var isAbsoluteURL = __webpack_require__(25);
-var combineURLs = __webpack_require__(26);
 
 /**
  * Create a new instance of Axios
@@ -5647,13 +5649,8 @@ Axios.prototype.request = function request(config) {
     }, arguments[1]);
   }
 
-  config = utils.merge(defaults, this.defaults, { method: 'get' }, config);
+  config = utils.merge(defaults, {method: 'get'}, this.defaults, config);
   config.method = config.method.toLowerCase();
-
-  // Support baseURL config
-  if (config.baseURL && !isAbsoluteURL(config.url)) {
-    config.url = combineURLs(config.baseURL, config.url);
-  }
 
   // Hook up interceptors middleware
   var chain = [dispatchRequest, undefined];
@@ -5827,9 +5824,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
       if (utils.isArray(val)) {
         key = key + '[]';
-      }
-
-      if (!utils.isArray(val)) {
+      } else {
         val = [val];
       }
 
@@ -5863,6 +5858,15 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 var utils = __webpack_require__(0);
 
+// Headers whose duplicates are ignored by node
+// c.f. https://nodejs.org/api/http.html#http_message_headers
+var ignoreDuplicateOf = [
+  'age', 'authorization', 'content-length', 'content-type', 'etag',
+  'expires', 'from', 'host', 'if-modified-since', 'if-unmodified-since',
+  'last-modified', 'location', 'max-forwards', 'proxy-authorization',
+  'referer', 'retry-after', 'user-agent'
+];
+
 /**
  * Parse headers into an object
  *
@@ -5890,7 +5894,14 @@ module.exports = function parseHeaders(headers) {
     val = utils.trim(line.substr(i + 1));
 
     if (key) {
-      parsed[key] = parsed[key] ? parsed[key] + ', ' + val : val;
+      if (parsed[key] && ignoreDuplicateOf.indexOf(key) >= 0) {
+        return;
+      }
+      if (key === 'set-cookie') {
+        parsed[key] = (parsed[key] ? parsed[key] : []).concat([val]);
+      } else {
+        parsed[key] = parsed[key] ? parsed[key] + ', ' + val : val;
+      }
     }
   });
 
@@ -6146,6 +6157,8 @@ var utils = __webpack_require__(0);
 var transformData = __webpack_require__(24);
 var isCancel = __webpack_require__(7);
 var defaults = __webpack_require__(3);
+var isAbsoluteURL = __webpack_require__(25);
+var combineURLs = __webpack_require__(26);
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -6164,6 +6177,11 @@ function throwIfCancellationRequested(config) {
  */
 module.exports = function dispatchRequest(config) {
   throwIfCancellationRequested(config);
+
+  // Support baseURL config
+  if (config.baseURL && !isAbsoluteURL(config.url)) {
+    config.url = combineURLs(config.baseURL, config.url);
+  }
 
   // Ensure headers exist
   config.headers = config.headers || {};
@@ -25206,8 +25224,8 @@ return zhTw;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(164);
-__webpack_require__(194);
-module.exports = __webpack_require__(195);
+__webpack_require__(193);
+module.exports = __webpack_require__(194);
 
 
 /***/ }),
@@ -25237,6 +25255,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_vue2_filters___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10_vue2_filters__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_vuejs_dialog__ = __webpack_require__(189);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_vuejs_dialog___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11_vuejs_dialog__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_vue_cleave_component__ = __webpack_require__(190);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12_vue_cleave_component___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12_vue_cleave_component__);
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -25258,15 +25278,13 @@ __webpack_require__(165);
 
 
 
-// let thaiDatePicker = require('../../../public/js/thai_datepicker/js/bootstrap-datepicker-thai');
 
 //Global Method
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.mixin(__WEBPACK_IMPORTED_MODULE_9__services_auth__["a" /* Auth */]);
 window.Vue = __WEBPACK_IMPORTED_MODULE_0_vue___default.a;
 window.VueRouter = __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */];
 window.ErrorBag = __WEBPACK_IMPORTED_MODULE_2_vee_validate__["a" /* ErrorBag */];
-// window.ThaiDatePicker = thaiDatePicker;
-// console.log('Window Thai Date Picker',ThaiDatePicke);
+
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_2_vee_validate__["b" /* default */]);
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_5_vue_js_modal___default.a);
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_8_vue_moment___default.a);
@@ -25278,11 +25296,12 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_11_vue
 });
 // Component
 
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('pagination', __webpack_require__(193));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('pagination', __webpack_require__(192));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('vue-numeric', __WEBPACK_IMPORTED_MODULE_4_vue_numeric___default.a);
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('multiselect', __WEBPACK_IMPORTED_MODULE_3_vue_multiselect___default.a);
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('loading', __WEBPACK_IMPORTED_MODULE_6_vue_full_loading___default.a);
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('datepicker', __WEBPACK_IMPORTED_MODULE_7_vuejs_datepicker___default.a);
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('cleave', __WEBPACK_IMPORTED_MODULE_12_vue_cleave_component___default.a);
 
 /***/ }),
 /* 165 */
@@ -57676,7 +57695,7 @@ var Component = __webpack_require__(181)(
   /* cssModules */
   null
 )
-Component.options.__file = "/Applications/XAMPP/xamppfiles/htdocs/pogtank/node_modules/vue-full-loading/src/Loading.vue"
+Component.options.__file = "C:\\xampp\\htdocs\\pogtank\\node_modules\\vue-full-loading\\src\\Loading.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Loading.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -59491,10 +59510,1615 @@ function pluralize (value) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(38).setImmediate, __webpack_require__(38).clearImmediate))
 
 /***/ }),
-/* 190 */,
-/* 191 */,
-/* 192 */,
-/* 193 */
+/* 190 */
+/***/ (function(module, exports, __webpack_require__) {
+
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(true)
+		module.exports = factory(__webpack_require__(191));
+	else if(typeof define === 'function' && define.amd)
+		define("VueCleave", ["cleave.js"], factory);
+	else if(typeof exports === 'object')
+		exports["VueCleave"] = factory(require("cleave.js"));
+	else
+		root["VueCleave"] = factory(root["Cleave"]);
+})(typeof self !== 'undefined' ? self : this, function(__WEBPACK_EXTERNAL_MODULE_1__) {
+return /******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./src/component.vue?vue&type=template&id=1bc01586
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('input',{attrs:{"type":_vm.type}})}
+var staticRenderFns = []
+
+// CONCATENATED MODULE: ./src/component.vue?vue&type=template&id=1bc01586
+
+// EXTERNAL MODULE: external {"commonjs":"cleave.js","commonjs2":"cleave.js","amd":"cleave.js","root":"Cleave"}
+var external___commonjs___cleave_js___commonjs2___cleave_js___amd___cleave_js___root___Cleave__ = __webpack_require__(1);
+var external___commonjs___cleave_js___commonjs2___cleave_js___amd___cleave_js___root___Cleave___default = /*#__PURE__*/__webpack_require__.n(external___commonjs___cleave_js___commonjs2___cleave_js___amd___cleave_js___root___Cleave__);
+
+// CONCATENATED MODULE: ./node_modules/babel-loader/lib!./node_modules/vue-loader/lib??vue-loader-options!./src/component.vue?vue&type=script&lang=js
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
+//
+//
+//
+
+
+
+/* harmony default export */ var componentvue_type_script_lang_js = ({
+  name: 'cleave',
+  props: {
+    value: {
+      default: null,
+      required: true,
+      validator: function validator(value) {
+        return value === null || typeof value === 'string' || value instanceof String || typeof value === 'number';
+      }
+    },
+    // https://github.com/nosir/cleave.js/blob/master/doc/options.md
+    options: {
+      type: Object,
+      default: function _default() {
+        return {};
+      }
+    },
+    // Set this prop to false to emit masked value
+    raw: {
+      type: Boolean,
+      default: true
+    },
+    type: {
+      type: String,
+      default: 'text'
+    }
+  },
+  data: function data() {
+    return {
+      // cleave.js instance
+      cleave: null,
+      // callback backup
+      onValueChangedFn: null
+    };
+  },
+  mounted: function mounted() {
+    /* istanbul ignore if */
+    if (this.cleave) return;
+
+    this.cleave = new external___commonjs___cleave_js___commonjs2___cleave_js___amd___cleave_js___root___Cleave___default.a(this.$el, this.getOptions(this.options));
+    this.cleave.setRawValue(this.value);
+  },
+
+  methods: {
+    /**
+     * Inject our method in config options
+     *
+     * @param options Object
+     */
+    getOptions: function getOptions(options) {
+      // Preserve original callback
+      this.onValueChangedFn = options.onValueChanged;
+
+      return _extends({}, options, {
+        onValueChanged: this.onValueChanged
+      });
+    },
+
+    /**
+     * Watch for value changed by cleave and notify parent component
+     *
+     * @param event
+     */
+    onValueChanged: function onValueChanged(event) {
+      var value = this.raw ? event.target.rawValue : event.target.value;
+      this.$emit('input', value);
+
+      // Call original callback method
+      if (typeof this.onValueChangedFn === 'function') {
+        this.onValueChangedFn.call(this, event);
+      }
+    }
+  },
+  watch: {
+    /**
+     * Watch for any changes in options and redraw
+     *
+     * @param newOptions Object
+     */
+    options: {
+      deep: true,
+      handler: function handler(newOptions) {
+        this.cleave.destroy();
+        this.cleave = new external___commonjs___cleave_js___commonjs2___cleave_js___amd___cleave_js___root___Cleave___default.a(this.$el, this.getOptions(newOptions));
+        this.cleave.setRawValue(this.value);
+      }
+    },
+
+    /**
+     * Watch for changes from parent component and notify cleave instance
+     *
+     * @param newValue
+     */
+    value: function value(newValue) {
+      /* istanbul ignore if */
+      if (!this.cleave) return;
+
+      // when v-model is not masked (raw)
+      if (this.raw && newValue === this.cleave.getRawValue()) return;
+      //  when v-model is masked (NOT raw)
+      if (!this.raw && newValue === this.$el.value) return;
+      // Lastly set newValue
+      this.cleave.setRawValue(newValue);
+    }
+  },
+  /**
+   * Free up memory
+   */
+  beforeDestroy: function beforeDestroy() {
+    /* istanbul ignore if */
+    if (!this.cleave) return;
+
+    this.cleave.destroy();
+    this.cleave = null;
+    this.onValueChangedFn = null;
+  }
+});
+// CONCATENATED MODULE: ./src/component.vue?vue&type=script&lang=js
+ /* harmony default export */ var src_componentvue_type_script_lang_js = (componentvue_type_script_lang_js); 
+// CONCATENATED MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
+/* globals __VUE_SSR_CONTEXT__ */
+
+// IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
+// This module is a runtime utility for cleaner component module output and will
+// be included in the final webpack user bundle.
+
+function normalizeComponent (
+  scriptExports,
+  render,
+  staticRenderFns,
+  functionalTemplate,
+  injectStyles,
+  scopeId,
+  moduleIdentifier, /* server only */
+  shadowMode /* vue-cli only */
+) {
+  // Vue.extend constructor export interop
+  var options = typeof scriptExports === 'function'
+    ? scriptExports.options
+    : scriptExports
+
+  // render functions
+  if (render) {
+    options.render = render
+    options.staticRenderFns = staticRenderFns
+    options._compiled = true
+  }
+
+  // functional template
+  if (functionalTemplate) {
+    options.functional = true
+  }
+
+  // scopedId
+  if (scopeId) {
+    options._scopeId = 'data-v-' + scopeId
+  }
+
+  var hook
+  if (moduleIdentifier) { // server build
+    hook = function (context) {
+      // 2.3 injection
+      context =
+        context || // cached call
+        (this.$vnode && this.$vnode.ssrContext) || // stateful
+        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
+      // 2.2 with runInNewContext: true
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__
+      }
+      // inject component styles
+      if (injectStyles) {
+        injectStyles.call(this, context)
+      }
+      // register component module identifier for async chunk inferrence
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier)
+      }
+    }
+    // used by ssr in case component is cached and beforeCreate
+    // never gets called
+    options._ssrRegister = hook
+  } else if (injectStyles) {
+    hook = shadowMode
+      ? function () { injectStyles.call(this, this.$root.$options.shadowRoot) }
+      : injectStyles
+  }
+
+  if (hook) {
+    if (options.functional) {
+      // for template-only hot-reload because in that case the render fn doesn't
+      // go through the normalizer
+      options._injectStyles = hook
+      // register for functioal component in vue file
+      var originalRender = options.render
+      options.render = function renderWithStyleInjection (h, context) {
+        hook.call(context)
+        return originalRender(h, context)
+      }
+    } else {
+      // inject component registration as beforeCreate hook
+      var existing = options.beforeCreate
+      options.beforeCreate = existing
+        ? [].concat(existing, hook)
+        : [hook]
+    }
+  }
+
+  return {
+    exports: scriptExports,
+    options: options
+  }
+}
+
+// CONCATENATED MODULE: ./src/component.vue
+
+
+
+
+
+/* normalize component */
+
+var component = normalizeComponent(
+  src_componentvue_type_script_lang_js,
+  render,
+  staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* harmony default export */ var src_component = (component.exports);
+// CONCATENATED MODULE: ./src/index.js
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "plugin", function() { return src_plugin; });
+/* concated harmony reexport */__webpack_require__.d(__webpack_exports__, "component", function() { return src_component; });
+
+
+var src_plugin = function plugin(Vue, params) {
+  var name = 'cleave';
+  /* istanbul ignore else */
+  if (typeof params === 'string') name = params;
+
+  Vue.component(name, src_component);
+};
+
+src_component.install = src_plugin;
+
+/* harmony default export */ var src = __webpack_exports__["default"] = (src_component);
+
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE_1__;
+
+/***/ })
+/******/ ])["default"];
+});
+
+/***/ }),
+/* 191 */
+/***/ (function(module, exports, __webpack_require__) {
+
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(true)
+		module.exports = factory();
+	else if(typeof define === 'function' && define.amd)
+		define([], factory);
+	else if(typeof exports === 'object')
+		exports["Cleave"] = factory();
+	else
+		root["Cleave"] = factory();
+})(this, function() {
+return /******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId])
+/******/ 			return installedModules[moduleId].exports;
+
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			exports: {},
+/******/ 			id: moduleId,
+/******/ 			loaded: false
+/******/ 		};
+
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+
+/******/ 		// Flag the module as loaded
+/******/ 		module.loaded = true;
+
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+
+
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(0);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
+
+	/**
+	 * Construct a new Cleave instance by passing the configuration object
+	 *
+	 * @param {String | HTMLElement} element
+	 * @param {Object} opts
+	 */
+	var Cleave = function (element, opts) {
+	    var owner = this;
+
+	    if (typeof element === 'string') {
+	        owner.element = document.querySelector(element);
+	    } else {
+	        owner.element = ((typeof element.length !== 'undefined') && element.length > 0) ? element[0] : element;
+	    }
+
+	    if (!owner.element) {
+	        throw new Error('[cleave.js] Please check the element');
+	    }
+
+	    opts.initValue = owner.element.value;
+
+	    owner.properties = Cleave.DefaultProperties.assign({}, opts);
+
+	    owner.init();
+	};
+
+	Cleave.prototype = {
+	    init: function () {
+	        var owner = this, pps = owner.properties;
+
+	        // no need to use this lib
+	        if (!pps.numeral && !pps.phone && !pps.creditCard && !pps.date && (pps.blocksLength === 0 && !pps.prefix)) {
+	            owner.onInput(pps.initValue);
+
+	            return;
+	        }
+
+	        pps.maxLength = Cleave.Util.getMaxLength(pps.blocks);
+
+	        owner.isAndroid = Cleave.Util.isAndroid();
+	        owner.lastInputValue = '';
+
+	        owner.onChangeListener = owner.onChange.bind(owner);
+	        owner.onKeyDownListener = owner.onKeyDown.bind(owner);
+	        owner.onFocusListener = owner.onFocus.bind(owner);
+	        owner.onCutListener = owner.onCut.bind(owner);
+	        owner.onCopyListener = owner.onCopy.bind(owner);
+
+	        owner.element.addEventListener('input', owner.onChangeListener);
+	        owner.element.addEventListener('keydown', owner.onKeyDownListener);
+	        owner.element.addEventListener('focus', owner.onFocusListener);
+	        owner.element.addEventListener('cut', owner.onCutListener);
+	        owner.element.addEventListener('copy', owner.onCopyListener);
+
+
+	        owner.initPhoneFormatter();
+	        owner.initDateFormatter();
+	        owner.initNumeralFormatter();
+
+	        // avoid touch input field if value is null
+	        // otherwise Firefox will add red box-shadow for <input required />
+	        if (pps.initValue || (pps.prefix && !pps.noImmediatePrefix)) {
+	            owner.onInput(pps.initValue);
+	        }
+	    },
+
+	    initNumeralFormatter: function () {
+	        var owner = this, pps = owner.properties;
+
+	        if (!pps.numeral) {
+	            return;
+	        }
+
+	        pps.numeralFormatter = new Cleave.NumeralFormatter(
+	            pps.numeralDecimalMark,
+	            pps.numeralIntegerScale,
+	            pps.numeralDecimalScale,
+	            pps.numeralThousandsGroupStyle,
+	            pps.numeralPositiveOnly,
+	            pps.stripLeadingZeroes,
+	            pps.delimiter
+	        );
+	    },
+
+	    initDateFormatter: function () {
+	        var owner = this, pps = owner.properties;
+
+	        if (!pps.date) {
+	            return;
+	        }
+
+	        pps.dateFormatter = new Cleave.DateFormatter(pps.datePattern);
+	        pps.blocks = pps.dateFormatter.getBlocks();
+	        pps.blocksLength = pps.blocks.length;
+	        pps.maxLength = Cleave.Util.getMaxLength(pps.blocks);
+	    },
+
+	    initPhoneFormatter: function () {
+	        var owner = this, pps = owner.properties;
+
+	        if (!pps.phone) {
+	            return;
+	        }
+
+	        // Cleave.AsYouTypeFormatter should be provided by
+	        // external google closure lib
+	        try {
+	            pps.phoneFormatter = new Cleave.PhoneFormatter(
+	                new pps.root.Cleave.AsYouTypeFormatter(pps.phoneRegionCode),
+	                pps.delimiter
+	            );
+	        } catch (ex) {
+	            throw new Error('[cleave.js] Please include phone-type-formatter.{country}.js lib');
+	        }
+	    },
+
+	    onKeyDown: function (event) {
+	        var owner = this, pps = owner.properties,
+	            charCode = event.which || event.keyCode,
+	            Util = Cleave.Util,
+	            currentValue = owner.element.value;
+
+	        if (Util.isAndroidBackspaceKeydown(owner.lastInputValue, currentValue)) {
+	            charCode = 8;
+	        }
+
+	        owner.lastInputValue = currentValue;
+
+	        // hit backspace when last character is delimiter
+	        if (charCode === 8 && Util.isDelimiter(currentValue.slice(-pps.delimiterLength), pps.delimiter, pps.delimiters)) {
+	            pps.backspace = true;
+
+	            return;
+	        }
+
+	        pps.backspace = false;
+	    },
+
+	    onChange: function () {
+	        this.onInput(this.element.value);
+	    },
+
+	    onFocus: function () {
+	        var owner = this,
+	            pps = owner.properties;
+
+	        Cleave.Util.fixPrefixCursor(owner.element, pps.prefix, pps.delimiter, pps.delimiters);
+	    },
+
+	    onCut: function (e) {
+	        this.copyClipboardData(e);
+	        this.onInput('');
+	    },
+
+	    onCopy: function (e) {
+	        this.copyClipboardData(e);
+	    },
+
+	    copyClipboardData: function (e) {
+	        var owner = this,
+	            pps = owner.properties,
+	            Util = Cleave.Util,
+	            inputValue = owner.element.value,
+	            textToCopy = '';
+
+	        if (!pps.copyDelimiter) {
+	            textToCopy = Util.stripDelimiters(inputValue, pps.delimiter, pps.delimiters);
+	        } else {
+	            textToCopy = inputValue;
+	        }
+
+	        try {
+	            if (e.clipboardData) {
+	                e.clipboardData.setData('Text', textToCopy);
+	            } else {
+	                window.clipboardData.setData('Text', textToCopy);
+	            }
+
+	            e.preventDefault();
+	        } catch (ex) {
+	            //  empty
+	        }
+	    },
+
+	    onInput: function (value) {
+	        var owner = this, pps = owner.properties,
+	            Util = Cleave.Util;
+
+	        // case 1: delete one more character "4"
+	        // 1234*| -> hit backspace -> 123|
+	        // case 2: last character is not delimiter which is:
+	        // 12|34* -> hit backspace -> 1|34*
+	        // note: no need to apply this for numeral mode
+	        if (!pps.numeral && pps.backspace && !Util.isDelimiter(value.slice(-pps.delimiterLength), pps.delimiter, pps.delimiters)) {
+	            value = Util.headStr(value, value.length - pps.delimiterLength);
+	        }
+
+	        // phone formatter
+	        if (pps.phone) {
+	            if (pps.prefix && (!pps.noImmediatePrefix || value.length)) {
+	                pps.result = pps.prefix + pps.phoneFormatter.format(value).slice(pps.prefix.length);
+	            } else {
+	                pps.result = pps.phoneFormatter.format(value);
+	            }
+	            owner.updateValueState();
+
+	            return;
+	        }
+
+	        // numeral formatter
+	        if (pps.numeral) {
+	            if (pps.prefix && (!pps.noImmediatePrefix || value.length)) {
+	                pps.result = pps.prefix + pps.numeralFormatter.format(value);
+	            } else {
+	                pps.result = pps.numeralFormatter.format(value);
+	            }
+	            owner.updateValueState();
+
+	            return;
+	        }
+
+	        // date
+	        if (pps.date) {
+	            value = pps.dateFormatter.getValidatedDate(value);
+	        }
+
+	        // strip delimiters
+	        value = Util.stripDelimiters(value, pps.delimiter, pps.delimiters);
+
+	        // strip prefix
+	        value = Util.getPrefixStrippedValue(value, pps.prefix, pps.prefixLength, pps.result);
+
+	        // strip non-numeric characters
+	        value = pps.numericOnly ? Util.strip(value, /[^\d]/g) : value;
+
+	        // convert case
+	        value = pps.uppercase ? value.toUpperCase() : value;
+	        value = pps.lowercase ? value.toLowerCase() : value;
+
+	        // prefix
+	        if (pps.prefix && (!pps.noImmediatePrefix || value.length)) {
+	            value = pps.prefix + value;
+
+	            // no blocks specified, no need to do formatting
+	            if (pps.blocksLength === 0) {
+	                pps.result = value;
+	                owner.updateValueState();
+
+	                return;
+	            }
+	        }
+
+	        // update credit card props
+	        if (pps.creditCard) {
+	            owner.updateCreditCardPropsByValue(value);
+	        }
+
+	        // strip over length characters
+	        value = Util.headStr(value, pps.maxLength);
+
+	        // apply blocks
+	        pps.result = Util.getFormattedValue(
+	            value,
+	            pps.blocks, pps.blocksLength,
+	            pps.delimiter, pps.delimiters, pps.delimiterLazyShow
+	        );
+
+	        owner.updateValueState();
+	    },
+
+	    updateCreditCardPropsByValue: function (value) {
+	        var owner = this, pps = owner.properties,
+	            Util = Cleave.Util,
+	            creditCardInfo;
+
+	        // At least one of the first 4 characters has changed
+	        if (Util.headStr(pps.result, 4) === Util.headStr(value, 4)) {
+	            return;
+	        }
+
+	        creditCardInfo = Cleave.CreditCardDetector.getInfo(value, pps.creditCardStrictMode);
+
+	        pps.blocks = creditCardInfo.blocks;
+	        pps.blocksLength = pps.blocks.length;
+	        pps.maxLength = Util.getMaxLength(pps.blocks);
+
+	        // credit card type changed
+	        if (pps.creditCardType !== creditCardInfo.type) {
+	            pps.creditCardType = creditCardInfo.type;
+
+	            pps.onCreditCardTypeChanged.call(owner, pps.creditCardType);
+	        }
+	    },
+
+	    updateValueState: function () {
+	        var owner = this,
+	            Util = Cleave.Util,
+	            pps = owner.properties;
+
+	        if (!owner.element) {
+	            return;
+	        }
+
+	        var endPos = owner.element.selectionEnd;
+	        var oldValue = owner.element.value;
+	        var newValue = pps.result;
+
+	        endPos = Util.getNextCursorPosition(endPos, oldValue, newValue, pps.delimiter, pps.delimiters);
+
+	        // fix Android browser type="text" input field
+	        // cursor not jumping issue
+	        if (owner.isAndroid) {
+	            window.setTimeout(function () {
+	                owner.element.value = newValue;
+	                Util.setSelection(owner.element, endPos, pps.document, false);
+	                owner.callOnValueChanged();
+	            }, 1);
+
+	            return;
+	        }
+
+	        owner.element.value = newValue;
+	        Util.setSelection(owner.element, endPos, pps.document, false);
+	        owner.callOnValueChanged();
+	    },
+
+	    callOnValueChanged: function () {
+	        var owner = this,
+	            pps = owner.properties;
+
+	        pps.onValueChanged.call(owner, {
+	            target: {
+	                value: pps.result,
+	                rawValue: owner.getRawValue()
+	            }
+	        });
+	    },
+
+	    setPhoneRegionCode: function (phoneRegionCode) {
+	        var owner = this, pps = owner.properties;
+
+	        pps.phoneRegionCode = phoneRegionCode;
+	        owner.initPhoneFormatter();
+	        owner.onChange();
+	    },
+
+	    setRawValue: function (value) {
+	        var owner = this, pps = owner.properties;
+
+	        value = value !== undefined && value !== null ? value.toString() : '';
+
+	        if (pps.numeral) {
+	            value = value.replace('.', pps.numeralDecimalMark);
+	        }
+
+	        pps.backspace = false;
+
+	        owner.element.value = value;
+	        owner.onInput(value);
+	    },
+
+	    getRawValue: function () {
+	        var owner = this,
+	            pps = owner.properties,
+	            Util = Cleave.Util,
+	            rawValue = owner.element.value;
+
+	        if (pps.rawValueTrimPrefix) {
+	            rawValue = Util.getPrefixStrippedValue(rawValue, pps.prefix, pps.prefixLength, pps.result);
+	        }
+
+	        if (pps.numeral) {
+	            rawValue = pps.numeralFormatter.getRawValue(rawValue);
+	        } else {
+	            rawValue = Util.stripDelimiters(rawValue, pps.delimiter, pps.delimiters);
+	        }
+
+	        return rawValue;
+	    },
+
+	    getISOFormatDate: function () {
+	        var owner = this,
+	            pps = owner.properties;
+
+	        return pps.date ? pps.dateFormatter.getISOFormatDate() : '';
+	    },
+
+	    getFormattedValue: function () {
+	        return this.element.value;
+	    },
+
+	    destroy: function () {
+	        var owner = this;
+
+	        owner.element.removeEventListener('input', owner.onChangeListener);
+	        owner.element.removeEventListener('keydown', owner.onKeyDownListener);
+	        owner.element.removeEventListener('focus', owner.onFocusListener);
+	        owner.element.removeEventListener('cut', owner.onCutListener);
+	        owner.element.removeEventListener('copy', owner.onCopyListener);
+	    },
+
+	    toString: function () {
+	        return '[Cleave Object]';
+	    }
+	};
+
+	Cleave.NumeralFormatter = __webpack_require__(1);
+	Cleave.DateFormatter = __webpack_require__(2);
+	Cleave.PhoneFormatter = __webpack_require__(3);
+	Cleave.CreditCardDetector = __webpack_require__(4);
+	Cleave.Util = __webpack_require__(5);
+	Cleave.DefaultProperties = __webpack_require__(6);
+
+	// for angular directive
+	((typeof global === 'object' && global) ? global : window)['Cleave'] = Cleave;
+
+	// CommonJS
+	module.exports = Cleave;
+
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	var NumeralFormatter = function (numeralDecimalMark,
+	                                 numeralIntegerScale,
+	                                 numeralDecimalScale,
+	                                 numeralThousandsGroupStyle,
+	                                 numeralPositiveOnly,
+	                                 stripLeadingZeroes,
+	                                 delimiter) {
+	    var owner = this;
+
+	    owner.numeralDecimalMark = numeralDecimalMark || '.';
+	    owner.numeralIntegerScale = numeralIntegerScale > 0 ? numeralIntegerScale : 0;
+	    owner.numeralDecimalScale = numeralDecimalScale >= 0 ? numeralDecimalScale : 2;
+	    owner.numeralThousandsGroupStyle = numeralThousandsGroupStyle || NumeralFormatter.groupStyle.thousand;
+	    owner.numeralPositiveOnly = !!numeralPositiveOnly;
+	    owner.stripLeadingZeroes = stripLeadingZeroes !== false;
+	    owner.delimiter = (delimiter || delimiter === '') ? delimiter : ',';
+	    owner.delimiterRE = delimiter ? new RegExp('\\' + delimiter, 'g') : '';
+	};
+
+	NumeralFormatter.groupStyle = {
+	    thousand: 'thousand',
+	    lakh:     'lakh',
+	    wan:      'wan',
+	    none:     'none'    
+	};
+
+	NumeralFormatter.prototype = {
+	    getRawValue: function (value) {
+	        return value.replace(this.delimiterRE, '').replace(this.numeralDecimalMark, '.');
+	    },
+
+	    format: function (value) {
+	        var owner = this, parts, partInteger, partDecimal = '';
+
+	        // strip alphabet letters
+	        value = value.replace(/[A-Za-z]/g, '')
+	            // replace the first decimal mark with reserved placeholder
+	            .replace(owner.numeralDecimalMark, 'M')
+
+	            // strip non numeric letters except minus and "M"
+	            // this is to ensure prefix has been stripped
+	            .replace(/[^\dM-]/g, '')
+
+	            // replace the leading minus with reserved placeholder
+	            .replace(/^\-/, 'N')
+
+	            // strip the other minus sign (if present)
+	            .replace(/\-/g, '')
+
+	            // replace the minus sign (if present)
+	            .replace('N', owner.numeralPositiveOnly ? '' : '-')
+
+	            // replace decimal mark
+	            .replace('M', owner.numeralDecimalMark);
+
+	        // strip any leading zeros
+	        if (owner.stripLeadingZeroes) {
+	            value = value.replace(/^(-)?0+(?=\d)/, '$1');
+	        }
+
+	        partInteger = value;
+
+	        if (value.indexOf(owner.numeralDecimalMark) >= 0) {
+	            parts = value.split(owner.numeralDecimalMark);
+	            partInteger = parts[0];
+	            partDecimal = owner.numeralDecimalMark + parts[1].slice(0, owner.numeralDecimalScale);
+	        }
+
+	        if (owner.numeralIntegerScale > 0) {
+	          partInteger = partInteger.slice(0, owner.numeralIntegerScale + (value.slice(0, 1) === '-' ? 1 : 0));
+	        }
+
+	        switch (owner.numeralThousandsGroupStyle) {
+	        case NumeralFormatter.groupStyle.lakh:
+	            partInteger = partInteger.replace(/(\d)(?=(\d\d)+\d$)/g, '$1' + owner.delimiter);
+
+	            break;
+
+	        case NumeralFormatter.groupStyle.wan:
+	            partInteger = partInteger.replace(/(\d)(?=(\d{4})+$)/g, '$1' + owner.delimiter);
+
+	            break;
+
+	        case NumeralFormatter.groupStyle.thousand:
+	            partInteger = partInteger.replace(/(\d)(?=(\d{3})+$)/g, '$1' + owner.delimiter);
+
+	            break;
+	        }
+
+	        return partInteger.toString() + (owner.numeralDecimalScale > 0 ? partDecimal.toString() : '');
+	    }
+	};
+
+	module.exports = NumeralFormatter;
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	var DateFormatter = function (datePattern) {
+	    var owner = this;
+
+	    owner.date = [];
+	    owner.blocks = [];
+	    owner.datePattern = datePattern;
+	    owner.initBlocks();
+	};
+
+	DateFormatter.prototype = {
+	    initBlocks: function () {
+	        var owner = this;
+	        owner.datePattern.forEach(function (value) {
+	            if (value === 'Y') {
+	                owner.blocks.push(4);
+	            } else {
+	                owner.blocks.push(2);
+	            }
+	        });
+	    },
+
+	    getISOFormatDate: function () {
+	        var owner = this,
+	            date = owner.date;
+
+	        return date[2] ? (
+	            date[2] + '-' + owner.addLeadingZero(date[1]) + '-' + owner.addLeadingZero(date[0])
+	        ) : '';
+	    },
+
+	    getBlocks: function () {
+	        return this.blocks;
+	    },
+
+	    getValidatedDate: function (value) {
+	        var owner = this, result = '';
+
+	        value = value.replace(/[^\d]/g, '');
+
+	        owner.blocks.forEach(function (length, index) {
+	            if (value.length > 0) {
+	                var sub = value.slice(0, length),
+	                    sub0 = sub.slice(0, 1),
+	                    rest = value.slice(length);
+
+	                switch (owner.datePattern[index]) {
+	                case 'd':
+	                    if (sub === '00') {
+	                        sub = '01';
+	                    } else if (parseInt(sub0, 10) > 3) {
+	                        sub = '0' + sub0;
+	                    } else if (parseInt(sub, 10) > 31) {
+	                        sub = '31';
+	                    }
+
+	                    break;
+
+	                case 'm':
+	                    if (sub === '00') {
+	                        sub = '01';
+	                    } else if (parseInt(sub0, 10) > 1) {
+	                        sub = '0' + sub0;
+	                    } else if (parseInt(sub, 10) > 12) {
+	                        sub = '12';
+	                    }
+
+	                    break;
+	                }
+
+	                result += sub;
+
+	                // update remaining string
+	                value = rest;
+	            }
+	        });
+
+	        return this.getFixedDateString(result);
+	    },
+
+	    getFixedDateString: function (value) {
+	        var owner = this, datePattern = owner.datePattern, date = [],
+	            dayIndex = 0, monthIndex = 0, yearIndex = 0,
+	            dayStartIndex = 0, monthStartIndex = 0, yearStartIndex = 0,
+	            day, month, year, fullYearDone = false;
+
+	        // mm-dd || dd-mm
+	        if (value.length === 4 && datePattern[0].toLowerCase() !== 'y' && datePattern[1].toLowerCase() !== 'y') {
+	            dayStartIndex = datePattern[0] === 'd' ? 0 : 2;
+	            monthStartIndex = 2 - dayStartIndex;
+	            day = parseInt(value.slice(dayStartIndex, dayStartIndex + 2), 10);
+	            month = parseInt(value.slice(monthStartIndex, monthStartIndex + 2), 10);
+
+	            date = this.getFixedDate(day, month, 0);
+	        }
+
+	        // yyyy-mm-dd || yyyy-dd-mm || mm-dd-yyyy || dd-mm-yyyy || dd-yyyy-mm || mm-yyyy-dd
+	        if (value.length === 8) {
+	            datePattern.forEach(function (type, index) {
+	                switch (type) {
+	                case 'd':
+	                    dayIndex = index;
+	                    break;
+	                case 'm':
+	                    monthIndex = index;
+	                    break;
+	                default:
+	                    yearIndex = index;
+	                    break;
+	                }
+	            });
+
+	            yearStartIndex = yearIndex * 2;
+	            dayStartIndex = (dayIndex <= yearIndex) ? dayIndex * 2 : (dayIndex * 2 + 2);
+	            monthStartIndex = (monthIndex <= yearIndex) ? monthIndex * 2 : (monthIndex * 2 + 2);
+
+	            day = parseInt(value.slice(dayStartIndex, dayStartIndex + 2), 10);
+	            month = parseInt(value.slice(monthStartIndex, monthStartIndex + 2), 10);
+	            year = parseInt(value.slice(yearStartIndex, yearStartIndex + 4), 10);
+
+	            fullYearDone = value.slice(yearStartIndex, yearStartIndex + 4).length === 4;
+
+	            date = this.getFixedDate(day, month, year);
+	        }
+
+	        owner.date = date;
+
+	        return date.length === 0 ? value : datePattern.reduce(function (previous, current) {
+	            switch (current) {
+	            case 'd':
+	                return previous + owner.addLeadingZero(date[0]);
+	            case 'm':
+	                return previous + owner.addLeadingZero(date[1]);
+	            default:
+	                return previous + (fullYearDone ? owner.addLeadingZeroForYear(date[2]) : '');
+	            }
+	        }, '');
+	    },
+
+	    getFixedDate: function (day, month, year) {
+	        day = Math.min(day, 31);
+	        month = Math.min(month, 12);
+	        year = parseInt((year || 0), 10);
+
+	        if ((month < 7 && month % 2 === 0) || (month > 8 && month % 2 === 1)) {
+	            day = Math.min(day, month === 2 ? (this.isLeapYear(year) ? 29 : 28) : 30);
+	        }
+
+	        return [day, month, year];
+	    },
+
+	    isLeapYear: function (year) {
+	        return ((year % 4 === 0) && (year % 100 !== 0)) || (year % 400 === 0);
+	    },
+
+	    addLeadingZero: function (number) {
+	        return (number < 10 ? '0' : '') + number;
+	    },
+
+	    addLeadingZeroForYear: function (number) {
+	        return (number < 10 ? '000' : (number < 100 ? '00' : (number < 1000 ? '0' : ''))) + number;
+	    }
+	};
+
+	module.exports = DateFormatter;
+
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	var PhoneFormatter = function (formatter, delimiter) {
+	    var owner = this;
+
+	    owner.delimiter = (delimiter || delimiter === '') ? delimiter : ' ';
+	    owner.delimiterRE = delimiter ? new RegExp('\\' + delimiter, 'g') : '';
+
+	    owner.formatter = formatter;
+	};
+
+	PhoneFormatter.prototype = {
+	    setFormatter: function (formatter) {
+	        this.formatter = formatter;
+	    },
+
+	    format: function (phoneNumber) {
+	        var owner = this;
+
+	        owner.formatter.clear();
+
+	        // only keep number and +
+	        phoneNumber = phoneNumber.replace(/[^\d+]/g, '');
+
+	        // strip delimiter
+	        phoneNumber = phoneNumber.replace(owner.delimiterRE, '');
+
+	        var result = '', current, validated = false;
+
+	        for (var i = 0, iMax = phoneNumber.length; i < iMax; i++) {
+	            current = owner.formatter.inputDigit(phoneNumber.charAt(i));
+
+	            // has ()- or space inside
+	            if (/[\s()-]/g.test(current)) {
+	                result = current;
+
+	                validated = true;
+	            } else {
+	                if (!validated) {
+	                    result = current;
+	                }
+	                // else: over length input
+	                // it turns to invalid number again
+	            }
+	        }
+
+	        // strip ()
+	        // e.g. US: 7161234567 returns (716) 123-4567
+	        result = result.replace(/[()]/g, '');
+	        // replace library delimiter with user customized delimiter
+	        result = result.replace(/[\s-]/g, owner.delimiter);
+
+	        return result;
+	    }
+	};
+
+	module.exports = PhoneFormatter;
+
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	var CreditCardDetector = {
+	    blocks: {
+	        uatp:          [4, 5, 6],
+	        amex:          [4, 6, 5],
+	        diners:        [4, 6, 4],
+	        discover:      [4, 4, 4, 4],
+	        mastercard:    [4, 4, 4, 4],
+	        dankort:       [4, 4, 4, 4],
+	        instapayment:  [4, 4, 4, 4],
+	        jcb15:         [4, 6, 5],
+	        jcb:           [4, 4, 4, 4],
+	        maestro:       [4, 4, 4, 4],
+	        visa:          [4, 4, 4, 4],
+	        mir:           [4, 4, 4, 4],
+	        unionPay:      [4, 4, 4, 4],
+	        general:       [4, 4, 4, 4],
+	        generalStrict: [4, 4, 4, 7]
+	    },
+
+	    re: {
+	        // starts with 1; 15 digits, not starts with 1800 (jcb card)
+	        uatp: /^(?!1800)1\d{0,14}/,
+
+	        // starts with 34/37; 15 digits
+	        amex: /^3[47]\d{0,13}/,
+
+	        // starts with 6011/65/644-649; 16 digits
+	        discover: /^(?:6011|65\d{0,2}|64[4-9]\d?)\d{0,12}/,
+
+	        // starts with 300-305/309 or 36/38/39; 14 digits
+	        diners: /^3(?:0([0-5]|9)|[689]\d?)\d{0,11}/,
+
+	        // starts with 51-55/2221–2720; 16 digits
+	        mastercard: /^(5[1-5]\d{0,2}|22[2-9]\d{0,1}|2[3-7]\d{0,2})\d{0,12}/,
+
+	        // starts with 5019/4175/4571; 16 digits
+	        dankort: /^(5019|4175|4571)\d{0,12}/,
+
+	        // starts with 637-639; 16 digits
+	        instapayment: /^63[7-9]\d{0,13}/,
+
+	        // starts with 2131/1800; 15 digits
+	        jcb15: /^(?:2131|1800)\d{0,11}/,
+
+	        // starts with 2131/1800/35; 16 digits
+	        jcb: /^(?:35\d{0,2})\d{0,12}/,
+
+	        // starts with 50/56-58/6304/67; 16 digits
+	        maestro: /^(?:5[0678]\d{0,2}|6304|67\d{0,2})\d{0,12}/,
+
+	        // starts with 22; 16 digits
+	        mir: /^220[0-4]\d{0,12}/,
+
+	        // starts with 4; 16 digits
+	        visa: /^4\d{0,15}/,
+
+	        // starts with 62; 16 digits
+	        unionPay: /^62\d{0,14}/
+	    },
+
+	    getInfo: function (value, strictMode) {
+	        var blocks = CreditCardDetector.blocks,
+	            re = CreditCardDetector.re;
+
+	        // Some credit card can have up to 19 digits number.
+	        // Set strictMode to true will remove the 16 max-length restrain,
+	        // however, I never found any website validate card number like
+	        // this, hence probably you don't want to enable this option.
+	        strictMode = !!strictMode;
+
+	        for (var key in re) {
+	            if (re[key].test(value)) {
+	                var block;
+
+	                if (strictMode) {
+	                    block = blocks.generalStrict;
+	                } else {
+	                    block = blocks[key];
+	                }
+
+	                return {
+	                    type: key,
+	                    blocks: block
+	                };
+	            }
+	        }
+
+	        return {
+	            type:   'unknown',
+	            blocks: strictMode ? blocks.generalStrict : blocks.general
+	        };
+	    }
+	};
+
+	module.exports = CreditCardDetector;
+
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	var Util = {
+	    noop: function () {
+	    },
+
+	    strip: function (value, re) {
+	        return value.replace(re, '');
+	    },
+
+	    isDelimiter: function (letter, delimiter, delimiters) {
+	        // single delimiter
+	        if (delimiters.length === 0) {
+	            return letter === delimiter;
+	        }
+
+	        // multiple delimiters
+	        return delimiters.some(function (current) {
+	            if (letter === current) {
+	                return true;
+	            }
+	        });
+	    },
+
+	    getDelimiterREByDelimiter: function (delimiter) {
+	        return new RegExp(delimiter.replace(/([.?*+^$[\]\\(){}|-])/g, '\\$1'), 'g');
+	    },
+
+	    getNextCursorPosition: function (prevPos, oldValue, newValue, delimiter, delimiters) {
+	      // If cursor was at the end of value, just place it back.
+	      // Because new value could contain additional chars.
+	      if (oldValue.length === prevPos) {
+	          return newValue.length;
+	      }
+
+	      return prevPos + this.getPositionOffset(prevPos, oldValue, newValue, delimiter ,delimiters);
+	    },
+
+	    getPositionOffset: function (prevPos, oldValue, newValue, delimiter, delimiters) {
+	        var oldRawValue, newRawValue, lengthOffset;
+
+	        oldRawValue = this.stripDelimiters(oldValue.slice(0, prevPos), delimiter, delimiters);
+	        newRawValue = this.stripDelimiters(newValue.slice(0, prevPos), delimiter, delimiters);
+	        lengthOffset = oldRawValue.length - newRawValue.length;
+
+	        return (lengthOffset !== 0) ? (lengthOffset / Math.abs(lengthOffset)) : 0;
+	    },
+
+	    stripDelimiters: function (value, delimiter, delimiters) {
+	        var owner = this;
+
+	        // single delimiter
+	        if (delimiters.length === 0) {
+	            var delimiterRE = delimiter ? owner.getDelimiterREByDelimiter(delimiter) : '';
+
+	            return value.replace(delimiterRE, '');
+	        }
+
+	        // multiple delimiters
+	        delimiters.forEach(function (current) {
+	            value = value.replace(owner.getDelimiterREByDelimiter(current), '');
+	        });
+
+	        return value;
+	    },
+
+	    headStr: function (str, length) {
+	        return str.slice(0, length);
+	    },
+
+	    getMaxLength: function (blocks) {
+	        return blocks.reduce(function (previous, current) {
+	            return previous + current;
+	        }, 0);
+	    },
+
+	    // strip value by prefix length
+	    // for prefix: PRE
+	    // (PRE123, 3) -> 123
+	    // (PR123, 3) -> 23 this happens when user hits backspace in front of "PRE"
+	    getPrefixStrippedValue: function (value, prefix, prefixLength, prevValue) {
+	        if (value.slice(0, prefixLength) !== prefix) {
+
+	            // Check whether if it is a deletion
+	            if (value.length < prevValue.length) {
+	                value = value.length > prefixLength ? prevValue : prefix;
+	            } else {
+	                var diffIndex = this.getFirstDiffIndex(prefix, value.slice(0, prefixLength));
+	                value = prefix + value.slice(diffIndex, diffIndex + 1) + value.slice(prefixLength + 1);
+	            }
+	        }
+
+	        return value.slice(prefixLength);
+	    },
+
+	    getFirstDiffIndex: function (prev, current) {
+	        var index = 0;
+
+	        while (prev.charAt(index) === current.charAt(index)) {
+	            if (prev.charAt(index++) === '') {
+	                return -1;
+	            }
+	        }
+
+	        return index;
+	    },
+
+	    getFormattedValue: function (value, blocks, blocksLength, delimiter, delimiters, delimiterLazyShow) {
+	        var result = '',
+	            multipleDelimiters = delimiters.length > 0,
+	            currentDelimiter;
+
+	        // no options, normal input
+	        if (blocksLength === 0) {
+	            return value;
+	        }
+
+	        blocks.forEach(function (length, index) {
+	            if (value.length > 0) {
+	                var sub = value.slice(0, length),
+	                    rest = value.slice(length);
+
+	                if (multipleDelimiters) {
+	                    currentDelimiter = delimiters[delimiterLazyShow ? (index - 1) : index] || currentDelimiter;
+	                } else {
+	                    currentDelimiter = delimiter;
+	                }
+
+	                if (delimiterLazyShow) {
+	                    if (index > 0) {
+	                        result += currentDelimiter;
+	                    }
+
+	                    result += sub;
+	                } else {
+	                    result += sub;
+
+	                    if (sub.length === length && index < blocksLength - 1) {
+	                        result += currentDelimiter;
+	                    }
+	                }
+
+	                // update remaining string
+	                value = rest;
+	            }
+	        });
+
+	        return result;
+	    },
+
+	    // move cursor to the end
+	    // the first time user focuses on an input with prefix
+	    fixPrefixCursor: function (el, prefix, delimiter, delimiters) {
+	        if (!el) {
+	            return;
+	        }
+
+	        var val = el.value,
+	            appendix = delimiter || (delimiters[0] || ' ');
+
+	        if (!el.setSelectionRange || !prefix || (prefix.length + appendix.length) < val.length) {
+	            return;
+	        }
+
+	        var len = val.length * 2;
+
+	        // set timeout to avoid blink
+	        setTimeout(function () {
+	            el.setSelectionRange(len, len);
+	        }, 1);
+	    },
+
+	    setSelection: function (element, position, doc) {
+	        if (element !== doc.activeElement) {
+	            return;
+	        }
+
+	        // cursor is already in the end
+	        if (element && element.value.length <= position) {
+	          return;
+	        }
+
+	        if (element.createTextRange) {
+	            var range = element.createTextRange();
+
+	            range.move('character', position);
+	            range.select();
+	        } else {
+	            try {
+	                element.setSelectionRange(position, position);
+	            } catch (e) {
+	                // eslint-disable-next-line
+	                console.warn('The input element type does not support selection');
+	            }
+	        }
+	    },
+
+	    isAndroid: function () {
+	        return navigator && /android/i.test(navigator.userAgent);
+	    },
+
+	    // On Android chrome, the keyup and keydown events
+	    // always return key code 229 as a composition that
+	    // buffers the user’s keystrokes
+	    // see https://github.com/nosir/cleave.js/issues/147
+	    isAndroidBackspaceKeydown: function (lastInputValue, currentInputValue) {
+	        if (!this.isAndroid() || !lastInputValue || !currentInputValue) {
+	            return false;
+	        }
+
+	        return currentInputValue === lastInputValue.slice(0, -1);
+	    }
+	};
+
+	module.exports = Util;
+
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports) {
+
+	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
+
+	/**
+	 * Props Assignment
+	 *
+	 * Separate this, so react module can share the usage
+	 */
+	var DefaultProperties = {
+	    // Maybe change to object-assign
+	    // for now just keep it as simple
+	    assign: function (target, opts) {
+	        target = target || {};
+	        opts = opts || {};
+
+	        // credit card
+	        target.creditCard = !!opts.creditCard;
+	        target.creditCardStrictMode = !!opts.creditCardStrictMode;
+	        target.creditCardType = '';
+	        target.onCreditCardTypeChanged = opts.onCreditCardTypeChanged || (function () {});
+
+	        // phone
+	        target.phone = !!opts.phone;
+	        target.phoneRegionCode = opts.phoneRegionCode || 'AU';
+	        target.phoneFormatter = {};
+
+	        // date
+	        target.date = !!opts.date;
+	        target.datePattern = opts.datePattern || ['d', 'm', 'Y'];
+	        target.dateFormatter = {};
+
+	        // numeral
+	        target.numeral = !!opts.numeral;
+	        target.numeralIntegerScale = opts.numeralIntegerScale > 0 ? opts.numeralIntegerScale : 0;
+	        target.numeralDecimalScale = opts.numeralDecimalScale >= 0 ? opts.numeralDecimalScale : 2;
+	        target.numeralDecimalMark = opts.numeralDecimalMark || '.';
+	        target.numeralThousandsGroupStyle = opts.numeralThousandsGroupStyle || 'thousand';
+	        target.numeralPositiveOnly = !!opts.numeralPositiveOnly;
+	        target.stripLeadingZeroes = opts.stripLeadingZeroes !== false;
+
+	        // others
+	        target.numericOnly = target.creditCard || target.date || !!opts.numericOnly;
+
+	        target.uppercase = !!opts.uppercase;
+	        target.lowercase = !!opts.lowercase;
+
+	        target.prefix = (target.creditCard || target.date) ? '' : (opts.prefix || '');
+	        target.noImmediatePrefix = !!opts.noImmediatePrefix;
+	        target.prefixLength = target.prefix.length;
+	        target.rawValueTrimPrefix = !!opts.rawValueTrimPrefix;
+	        target.copyDelimiter = !!opts.copyDelimiter;
+
+	        target.initValue = (opts.initValue !== undefined && opts.initValue !== null) ? opts.initValue.toString() : '';
+
+	        target.delimiter =
+	            (opts.delimiter || opts.delimiter === '') ? opts.delimiter :
+	                (opts.date ? '/' :
+	                    (opts.numeral ? ',' :
+	                        (opts.phone ? ' ' :
+	                            ' ')));
+	        target.delimiterLength = target.delimiter.length;
+	        target.delimiterLazyShow = !!opts.delimiterLazyShow;
+	        target.delimiters = opts.delimiters || [];
+
+	        target.blocks = opts.blocks || [];
+	        target.blocksLength = target.blocks.length;
+	        
+	        target.document = opts.document || document;
+	        target.root = (typeof global === 'object' && global) ? global : window;
+
+	        target.maxLength = 0;
+
+	        target.backspace = false;
+	        target.result = '';
+
+	        target.onValueChanged = opts.onValueChanged || (function () {});
+
+	        return target;
+	    }
+	};
+
+	module.exports = DefaultProperties;
+
+
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+
+/***/ })
+/******/ ])
+});
+;
+
+/***/ }),
+/* 192 */
 /***/ (function(module, exports) {
 
 module.exports = {
@@ -59594,13 +61218,13 @@ module.exports = {
 
 
 /***/ }),
-/* 194 */
+/* 193 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 195 */
+/* 194 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

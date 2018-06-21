@@ -18,16 +18,15 @@ import VueMoment from 'vue-moment';
 import {Auth} from './services/auth';
 import Vue2Filters from 'vue2-filters';
 import VuejsDialog from 'vuejs-dialog';
+import Cleave from 'vue-cleave-component';
 
-// let thaiDatePicker = require('../../../public/js/thai_datepicker/js/bootstrap-datepicker-thai');
 
 //Global Method
 Vue.mixin(Auth);
 window.Vue = Vue;
 window.VueRouter = VueRouter;
 window.ErrorBag = ErrorBag;
-// window.ThaiDatePicker = thaiDatePicker;
-// console.log('Window Thai Date Picker',ThaiDatePicke);
+
 Vue.use(VeeValidate);
 Vue.use(VModal);
 Vue.use(VueMoment);
@@ -44,3 +43,4 @@ Vue.component('vue-numeric', VueNumeric);
 Vue.component('multiselect', Multiselect);
 Vue.component('loading', loading);
 Vue.component('datepicker', Datepicker);
+Vue.component('cleave',Cleave);

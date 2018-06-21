@@ -78,21 +78,16 @@
                                 {{-- Form Number --}}
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="control-label">ออกเมื่อวันที่</label>
-                                        {{--<datepicker language="th" v-model="form.form_number_release"--}}
-                                                    {{--:input-class="{'form-control':true,'input-error':errors.has('form.form_number_release')}">--}}
-                                        {{--</datepicker>--}}
-                                        <input
-                                                readonly
-                                                id="form-number-release-date-picker"
-                                                data-date-language="th-th"
-                                                data-date-autoclose = "true"
-                                                data-provide="datepicker"
-                                                name="form_number_release"
-                                                v-model="form.form_number_release"
-                                                class="form-control date-picker"
-                                                type="text"
-                                        >
+                                        <label class="control-label">ออกเมื่อวันที่ (ระบุเฉพาะตัวเลข)</label>
+                                        <cleave v-model="form.form_number_release" class="form-control"
+                                                :raw="false"
+                                                :options=" {
+                                                        date: true,
+                                                        datePattern: ['d', 'm', 'Y'],
+                                                        delimiter: '/',
+                                                    }"
+                                                placeholder="ว/ด/ป">
+                                        </cleave>
                                     </div>
                                 </div>
                                 <!-- -- -- Provinces-->
@@ -207,21 +202,16 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="control-label">เมื่อวันที่</label>
-                                        {{--<datepicker language="th" v-model="form.referee_calculated_date"--}}
-                                        {{--:input-class="{'form-control':true,'input-error':errors.has('form.referee_calculated_date')}">--}}
-                                        {{--</datepicker>--}}
-                                        <input
-                                                readonly
-                                                id="referee-calculated-date-picker"
-                                                data-date-language="th-th"
-                                                data-provide="datepicker"
-                                                data-date-autoclose = "true"
-                                                name="referee_calculated_date"
-                                                v-model="form.referee_calculated_date"
-                                                class="form-control date-picker"
-                                                type="text"
-                                        >
+                                        <label class="control-label">เมื่อวันที่ (ระบุเฉพาะตัวเลข)</label>
+                                        <cleave v-model="form.referee_calculated_date" class="form-control"
+                                                :raw="false"
+                                                :options=" {
+                                                        date: true,
+                                                        datePattern: ['d', 'm', 'Y'],
+                                                        delimiter: '/',
+                                                    }"
+                                                placeholder="ว/ด/ป">
+                                        </cleave>
                                     </div>
                                 </div>
                             </div>
@@ -235,11 +225,4 @@
 @endsection
 @section('script')
     <script src="{{asset('views/admin/project_order/js/project_order_create.js')}}"></script>
-    <script>
-        $('.date-picker').datepicker({
-            language: "th-th",
-            autoclose: true,
-            todayHighlight: true
-        });
-    </script>
 @endsection

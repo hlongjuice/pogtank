@@ -70,10 +70,16 @@
                                         {{-- Form Number --}}
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label class="control-label">ออกเมื่อวันที่</label>
-                                                <datepicker language="th" v-model="project_order_edit.form.form_number_release"
-                                                            :input-class="{'form-control':true,'input-error':errors.has('form.form_number_release')}">
-                                                </datepicker>
+                                                <label class="control-label">ออกเมื่อวันที่ (ระบุเฉพาะตัวเลข)</label>
+                                                <cleave v-model="project_order_edit.form.form_number_release" class="form-control"
+                                                        :raw="false"
+                                                        :options=" {
+                                                        date: true,
+                                                        datePattern: ['d', 'm', 'Y'],
+                                                        delimiter: '/',
+                                                    }"
+                                                        placeholder="ว/ด/ป">
+                                                </cleave>
                                             </div>
                                         </div>
                                         <!-- -- -- Provinces-->
@@ -191,10 +197,16 @@
                                         {{--  Referee Approved Date --}}
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label class="control-label">เมื่อวันที่</label>
-                                                <datepicker language="th" v-model="project_order_edit.form.referee_calculated_date"
-                                                            :input-class="{'form-control':true,'input-error':errors.has('form.referee_calculated_date')}">
-                                                </datepicker>
+                                                <label class="control-label">เมื่อวันที่ (ระบุเฉพาะตัวเลข)</label>
+                                                <cleave v-model="project_order_edit.form.referee_calculated_date" class="form-control"
+                                                        :raw="false"
+                                                        :options=" {
+                                                        date: true,
+                                                        datePattern: ['d', 'm', 'Y'],
+                                                        delimiter: '/',
+                                                    }"
+                                                        placeholder="ว/ด/ป">
+                                                </cleave>
                                             </div>
                                         </div>
                                     </div>
