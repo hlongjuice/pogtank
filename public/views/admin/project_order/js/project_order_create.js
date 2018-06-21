@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 221);
+/******/ 	return __webpack_require__(__webpack_require__.s = 223);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -278,7 +278,7 @@ function forEach(obj, fn) {
   }
 
   // Force an array if not already something iterable
-  if (typeof obj !== 'object') {
+  if (typeof obj !== 'object' && !isArray(obj)) {
     /*eslint no-param-reassign:0*/
     obj = [obj];
   }
@@ -665,6 +665,8 @@ var defaults = __webpack_require__(3);
 var utils = __webpack_require__(0);
 var InterceptorManager = __webpack_require__(22);
 var dispatchRequest = __webpack_require__(23);
+var isAbsoluteURL = __webpack_require__(25);
+var combineURLs = __webpack_require__(26);
 
 /**
  * Create a new instance of Axios
@@ -693,8 +695,13 @@ Axios.prototype.request = function request(config) {
     }, arguments[1]);
   }
 
-  config = utils.merge(defaults, {method: 'get'}, this.defaults, config);
+  config = utils.merge(defaults, this.defaults, { method: 'get' }, config);
   config.method = config.method.toLowerCase();
+
+  // Support baseURL config
+  if (config.baseURL && !isAbsoluteURL(config.url)) {
+    config.url = combineURLs(config.baseURL, config.url);
+  }
 
   // Hook up interceptors middleware
   var chain = [dispatchRequest, undefined];
@@ -872,7 +879,9 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
       if (utils.isArray(val)) {
         key = key + '[]';
-      } else {
+      }
+
+      if (!utils.isArray(val)) {
         val = [val];
       }
 
@@ -907,15 +916,6 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 var utils = __webpack_require__(0);
 
-// Headers whose duplicates are ignored by node
-// c.f. https://nodejs.org/api/http.html#http_message_headers
-var ignoreDuplicateOf = [
-  'age', 'authorization', 'content-length', 'content-type', 'etag',
-  'expires', 'from', 'host', 'if-modified-since', 'if-unmodified-since',
-  'last-modified', 'location', 'max-forwards', 'proxy-authorization',
-  'referer', 'retry-after', 'user-agent'
-];
-
 /**
  * Parse headers into an object
  *
@@ -943,14 +943,7 @@ module.exports = function parseHeaders(headers) {
     val = utils.trim(line.substr(i + 1));
 
     if (key) {
-      if (parsed[key] && ignoreDuplicateOf.indexOf(key) >= 0) {
-        return;
-      }
-      if (key === 'set-cookie') {
-        parsed[key] = (parsed[key] ? parsed[key] : []).concat([val]);
-      } else {
-        parsed[key] = parsed[key] ? parsed[key] + ', ' + val : val;
-      }
+      parsed[key] = parsed[key] ? parsed[key] + ', ' + val : val;
     }
   });
 
@@ -1243,15 +1236,15 @@ module.exports = InterceptorManager;
 
 /***/ }),
 
-/***/ 221:
+/***/ 223:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(222);
+module.exports = __webpack_require__(224);
 
 
 /***/ }),
 
-/***/ 222:
+/***/ 224:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1287,46 +1280,54 @@ new Vue({
             owner_name: '',
             agency_name: '',
             referee_name: '',
-            referee_calculated_date: new Date(),
+            referee_calculated_date: '10/12/58',
             form_number: '',
-            form_number_release: new Date()
+            form_number_release: ''
         }
     },
     mounted: function mounted() {
+        var _this = this;
+
+        $('#form-number-release-date-picker').datepicker().on('changeDate', function () {
+            _this.form.form_number_release = $('#form-number-release-date-picker').val();
+        });
+        $('#referee-calculated-date-picker').datepicker().on('changeDate', function () {
+            _this.form.referee_calculated_date = $('#referee-calculated-date-picker').val();
+        });
         this.showLoading = true;
         this.initialData();
     },
     methods: {
         initialData: function initialData() {
-            var _this = this;
+            var _this2 = this;
 
             Promise.all([
             //Get Provinces
             cityService.getProvinces().then(function (result) {
-                _this.provinces = result;
+                _this2.provinces = result;
             }).catch(function (err) {
                 alert(err);
             }),
             //Get Products
             productService.getAllProducts().then(function (result) {
-                _this.products = result;
+                _this2.products = result;
             }).catch(function (err) {
                 alert(err);
             })]).then(function () {
-                _this.showLoading = false;
+                _this2.showLoading = false;
             }).catch(function () {});
         },
 
         //Add New Order
         addNewOrder: function addNewOrder(scope, event) {
-            var _this2 = this;
+            var _this3 = this;
 
             console.log('Create Project Order Form :', this.form);
             this.$validator.validateAll(scope).then(function (result) {
                 if (result) {
-                    _this2.showLoading = true;
-                    console.log('Form Input :', _this2.form);
-                    projectOrderService.addNewOrder(_this2.form).then(function () {
+                    _this3.showLoading = true;
+                    console.log('Form Input :', _this3.form);
+                    projectOrderService.addNewOrder(_this3.form).then(function () {
                         window.location = webUrlService.getRoute('/admin/project_order');
                         // this.showLoading=false;
                     }).catch(function (err) {
@@ -1348,11 +1349,11 @@ new Vue({
 
         // -- Get District
         getDistricts: function getDistricts() {
-            var _this3 = this;
+            var _this4 = this;
 
             this.form.district = ''; // clear old district
             cityService.getDistricts(this.form.amphoe.id).then(function (result) {
-                _this3.districts = result;
+                _this4.districts = result;
             }).catch(function (err) {
                 alert(err);
             });
@@ -1372,8 +1373,6 @@ var utils = __webpack_require__(0);
 var transformData = __webpack_require__(24);
 var isCancel = __webpack_require__(7);
 var defaults = __webpack_require__(3);
-var isAbsoluteURL = __webpack_require__(25);
-var combineURLs = __webpack_require__(26);
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -1392,11 +1391,6 @@ function throwIfCancellationRequested(config) {
  */
 module.exports = function dispatchRequest(config) {
   throwIfCancellationRequested(config);
-
-  // Support baseURL config
-  if (config.baseURL && !isAbsoluteURL(config.url)) {
-    config.url = combineURLs(config.baseURL, config.url);
-  }
 
   // Ensure headers exist
   config.headers = config.headers || {};
@@ -1697,10 +1691,6 @@ var defaults = {
     return data;
   }],
 
-  /**
-   * A timeout in milliseconds to abort a request. If set to 0 (default) a
-   * timeout is not created.
-   */
   timeout: 0,
 
   xsrfCookieName: 'XSRF-TOKEN',
@@ -2093,7 +2083,7 @@ module.exports = function xhrAdapter(config) {
       var responseData = !config.responseType || config.responseType === 'text' ? request.responseText : request.response;
       var response = {
         data: responseData,
-        // IE sends 1223 instead of 204 (https://github.com/axios/axios/issues/201)
+        // IE sends 1223 instead of 204 (https://github.com/mzabriskie/axios/issues/201)
         status: request.status === 1223 ? 204 : request.status,
         statusText: request.status === 1223 ? 'No Content' : request.statusText,
         headers: responseHeaders,

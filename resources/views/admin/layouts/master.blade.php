@@ -679,9 +679,9 @@ License: You must have a valid license purchased only from themeforest(the above
 <script src="{{asset('templates/admin/conquer/theme/assets/plugins/bootstrap-toastr/toastr.min.js')}}"></script>
 
 {{--Thai Date Picker--}}
-<script src="{{asset('js/thai_datepicker/js/bootstrap-datepicker.js')}}"></script>
+{{--<script src="{{asset('js/thai_datepicker/js/bootstrap-datepicker.js')}}"></script>--}}
 <script src="{{asset('js/thai_datepicker/js/bootstrap-datepicker-thai.js')}}"></script>
-<script src="{{asset('js/thai_datepicker/js/locales/bootstrap-datepicker.th.js')}}"></script>
+{{--<script src="{{asset('js/thai_datepicker/js/locales/bootstrap-datepicker.th.js')}}"></script>--}}
 
 
 
