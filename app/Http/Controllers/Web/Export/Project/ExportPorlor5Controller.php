@@ -24,6 +24,7 @@ class ExportPorlor5Controller extends Controller
                 $this->setSheetStyles($sheet);
                 foreach ($project['porlor5'] as $porlor5) {
                     $this->setHeaders($sheet, $project, $porlor5, $row);
+                    $this->setTableContents($sheet, $project, $porlor5, $row);
                     $row++;
                 }
             });
@@ -96,9 +97,7 @@ class ExportPorlor5Controller extends Controller
         //Referee Calculated Date
         $row++;
         $sheet->cell('B' . $row, function (CellWriter $cell) use ($project) {
-            $refereeCalculatedDate = Carbon::createFromFormat('Y-m-d',$project->referee_calculated_date)
-                ->format('d/m/Y');
-            $cell->setValue('คำนวนราคากลางเมื่อวันที่ : ' .$refereeCalculatedDate);
+            $cell->setValue('คำนวนราคากลางเมื่อวันที่ : ' . $project->referee_calculated_date);
         });
 
         $this->setTableHeader($sheet, $project, $porlor5, $row);
@@ -131,19 +130,114 @@ class ExportPorlor5Controller extends Controller
                 ],
                 'fill' => [
                     'type' => \PHPExcel_Style_Fill::FILL_SOLID,
-                    'startcolor' => ['rgb' => ExcelStyleController::tableHeaderColor['green']]
+                    'startcolor' => ['rgb' => ExcelStyleController::tableHeaderColor]
                 ],
                 ''
             ]);
         $sheet->getRowDimension($row)->setRowHeight(36);
     }
-    //Table Content
-    public function setTableContents(LaravelExcelWorksheet $sheet,$project,$porlor5,&$row){
-        $row++;
 
+    //Table Content
+    public function setTableContents(LaravelExcelWorksheet $sheet, $project, $porlor5, &$row)
+    {
+        foreach ($porlor5['parts'] as $part_index => $porlor4) {
+            //ถ้าไม่ใช่หน้าแรก(ก.) และ เป็นรายการแรก ให้แสดงยอดยกมา
+            //ยอดยกมา
+            if ($porlor5['page'] > 1 && $part_index == 0) {
+                $row++;
+                //B ยอดยกมา
+                $sheet->cell('B' . $row, function (CellWriter $cell) use ($porlor5, $porlor4) {
+                    // -- กรณีเป็นหน้า ข.
+                    if ($porlor5['page'] == 2) {
+                        $cell->setValue('ยอดยกมา ส่วนที่ 1');
+                        $cell->setAlignment('right');
+                    } elseif ($porlor5['page'] > 2) {
+                        $cell->setValue('ยอดยกมา ส่วนที่ 1 - ' . $porlor4['position']);
+                        $cell->setAlignment('right');
+                    }
+                });
+                //E Previous Sum Construction Cost
+                $sheet->cell('E' . $row, function (CellWriter $cell) use ($porlor4) {
+                    $cell->setValue($porlor4['previous_sum_construction_cost']);
+                    $cell->setAlignment('right');
+                });
+            }
+            //หัวข้อ Part
+            $row++;
+            $sheet->cell('B' . $row, function (CellWriter $cell) use ($porlor4) {
+                $cell->setValue('ส่วนที่ ' . $porlor4['position'] . ' ' . $porlor4['part']['name']);
+                $cell->setAlignment('center');
+            });
+            //Part Jobs
+            foreach ($porlor4['root_jobs'] as $index => $root_job) {
+                $row++;
+                //Number
+                $sheet->cell('A' . $row, function (CellWriter $cell) use ($index) {
+                    $cell->setValue($index + 1);
+                    $cell->setAlignment('center');
+                });
+                //Root Job Name
+                $sheet->cell('B' . $row, function (CellWriter $cell) use ($root_job) {
+                    $cell->setValue($root_job['name']);
+                });
+                //Job Cost
+                $sheet->cell('C' . $row, function (CellWriter $cell) use ($root_job) {
+                    $cell->setValue($root_job['job_cost']);
+                    $cell->setAlignment('right');
+                });
+                //Factor F
+                $sheet->cell('D'.$row,function(CellWriter $cell) use ($root_job){
+                   $cell->setValue($root_job['factor_f']);
+                   $cell->setAlignment('center');
+                });
+                //Construction Cost
+                $sheet->cell('E'.$row,function(CellWriter $cell) use ($root_job){
+                   $cell->setValue($root_job['construction_cost']);
+                   $cell->setAlignment('right');
+                });
+                //Etc...
+                $sheet->cell('F'.$row,function(CellWriter $cell) use ($root_job){
+
+                });
+            }
+            //Sum of Construction Cost
+            $row++;
+            $sheet->mergeCells('A'.$row.':D'.$row);
+            //A-D
+            $sheet->cell('A'.$row,function(CellWriter $cell) use($porlor4){
+                $cell->setValue('รวม'.$porlor4['part']['name']);
+                $cell->setAlignment('right');
+            });
+            //E
+            $sheet->cell('E'.$row,function(CellWriter $cell) use ($porlor4){
+                $cell->setValue($porlor4['sum_construction_cost']);
+                $cell->setAlignment('right');
+                $cell->setBackground('#'.ExcelStyleController::rowResultColor);
+            });
+            //Sum of Page
+            //ถ้าเป็น Part สุดท้ายของหน้า
+            if($part_index+1 == count( $porlor5['parts'])){
+                $row++;
+                //A-D
+                $sheet->mergeCells('A'.$row.':D'.$row);
+                $sheet->cell('A'.$row,function (CellWriter $cell) use ($porlor4){
+                    $cell->setValue('รวมส่วนที่ 1 - '.$porlor4['position']);
+                    $cell->setAlignment('right');
+                });
+                //E ผมรวม
+                $sheet->cell('E'.$row,function(CellWriter $cell) use ($porlor4){
+                   $cell->setValue($porlor4['total_sum_construction_cost']);
+                   $cell->setAlignment('right');
+                   $cell->setBackground('#'.ExcelStyleController::rowResultColor);
+                });
+            }
+        }
+
+        //
     }
 
-    public function setSheetStyles(LaravelExcelWorksheet $sheet)
+    public
+    function setSheetStyles(LaravelExcelWorksheet $sheet)
     {
 //        $rowHeight = collect([]);
 //        for ($i = 1; $i <= 8; $i++) {

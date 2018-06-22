@@ -19,9 +19,9 @@
         @include('admin.project_order.porlor_4.porlor_4_job.porlor_4_job_details.porlor_4_edit_child_job_item.porlor_4_edit_child_job_item')
         <div class="col-md-12">
             <!-- BEGIN EXAMPLE TABLE PORTLET-->
-            <div class="panel panel-default">
+            <div class="panel panel-default panel-modal-fix-top">
                 {{-- Close Button--}}
-                <div class="panel-heading">
+                <div class="navbar-fixed-top panel-heading">
                     <button class="btn btn-danger" @click="closePorlor4JobDetailsModal">Close</button>
                 </div>
                 <div class="panel-body">

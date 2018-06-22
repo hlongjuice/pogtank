@@ -127,9 +127,7 @@ class ExportPorlor4Controller extends Controller
                 $cell->setValue('ออกเมื่อวันที่ : ');
             });
             $sheet->cell('J'.$row,function(CellWriter $cell) use($rootJob){
-                $form_number_release = Carbon::createFromFormat('Y-m-d',$rootJob->porlor4->projectDetails->form_number_release)
-                    ->format('d/m/Y');
-                $cell->setValue($form_number_release);
+                $cell->setValue($rootJob->porlor4->projectDetails->form_number_release);
             });
             // -- Project Owner Name
             $row++;
@@ -155,9 +153,7 @@ class ExportPorlor4Controller extends Controller
                 $cell->setValue('เมื่อวันที่ : ');
             });
             $sheet->cell('F'.$row,function(CellWriter $cell) use($rootJob){
-                $updated_at= Carbon::createFromFormat('Y-m-d H:i:s',$rootJob->porlor4->projectDetails->updated_at)
-                    ->format('d/m/Y');
-                $cell->setValue($updated_at);
+                $cell->setValue($rootJob->porlor4->porjectDetails->referee_calculated_date);
             });
             //Global Unit
             $row++;
@@ -274,7 +270,7 @@ class ExportPorlor4Controller extends Controller
                     //Result Color Background
                     $sheet->getStyle('A'.$row.':J'.$row)
                         ->getFill()->setFillType(\PHPExcel_Style_Fill::FILL_SOLID)
-                        ->getStartColor()->setRGB(ExcelStyleController::tableTotalResultColor['green']);
+                        ->getStartColor()->setRGB(ExcelStyleController::tableTotalResultColor);
                 }
             }
             //3. รายการผลรวมกลุ่ม

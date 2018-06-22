@@ -13,7 +13,7 @@
     <div class="row">
         <loading :show="porlor5.is_loading"></loading>
         <div class="col-xs-12">
-            <div class="panel panel-default">
+            <div class="panel panel-default panel-modal-fix-top">
                 <div class="navbar-fixed-top panel-heading">
                     <button class="btn btn-danger" @click="closePorlor5Modal">Close</button>
                 </div>
@@ -137,36 +137,25 @@
                                             {{--ถ้าไม่ใช่หน้าแรก(ก.) และ เป็นรายการแรก ให้แสดงยอดยกมา--}}
                                             {{--ยอดยกมา--}}
                                             <template v-if="porlor5_result.page>1 && part_index==0">
-                                                {{--กรณีเป็นหน้า 2 (ข.)--}}
-                                                <template v-if="porlor5_result.page == 2">
-                                                    <tr>
-                                                        <td></td>
-                                                        <td class="text-right">
-                                                            ยอดยกมา ส่วนที่ 1
-                                                        </td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                    </tr>
-                                                </template>
-                                                {{--ตั้งแต่หน้า 3 (ค.)--}}
-                                                <template v-if="porlor5_result.page > 2">
-                                                    <tr>
-                                                        <td></td>
-                                                        <td class="text-right">
-                                                            ยอดยกมา ส่วนที่ 1 - @{{ porlor4.position }}
-                                                        </td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td class="text-right">@{{porlor4.previous_sum_construction_cost
-                                                            |
-                                                            currency('')}}
-                                                        </td>
-                                                        <td></td>
-                                                    </tr>
-                                                </template>
-                                                {{--Part Name--}}
+                                                <tr>
+                                                    <td></td>
+                                                    <td class="text-right">
+                                                        {{--กรณีเป็นหน้า 2 (ข.)--}}
+                                                        <template v-if="porlor5_result.page == 2"> ยอดยกมา ส่วนที่ 1
+                                                        </template>
+                                                        {{--ตั้งแต่หน้า 3 (ค.)--}}
+                                                        <template v-else-if="porlor5_result.page > 2"> ยอดยกมา ส่วนที่ 1
+                                                            -
+                                                            @{{ porlor4.position }}
+                                                        </template>
+                                                    </td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td class="text-right">
+                                                        @{{porlor4.previous_sum_construction_cost|currency('')}}
+                                                    </td>
+                                                    <td></td>
+                                                </tr>
                                             </template>
                                             {{--หัวข้อ Part--}}
                                             <template>
@@ -174,8 +163,9 @@
                                                     <td>
                                                     </td>
                                                     <td>
+                                                        {{--Part Name--}}
                                                         <h5>
-                                                               ส่วนที่ @{{ porlor4.position }} @{{
+                                                            ส่วนที่ @{{ porlor4.position }} @{{
                                                             porlor4.part.name }}
                                                             <span class="pull-right text-right">
                                                             <span v-if="porlor5_result.page>1 && part_index == 0 ||
@@ -212,7 +202,8 @@
                                                     {{--Factor F รอสูคตรคำรวน--}}
                                                     <td class="text-center">@{{ root_job.factor_f }}</td>
                                                     {{--ค่างานก่อสร้าง = ต่างานต้นทุน x factor F--}}
-                                                    <td class="text-right">@{{ root_job.construction_cost | currency('')}}
+                                                    <td class="text-right">@{{ root_job.construction_cost |
+                                                        currency('')}}
                                                     </td>
                                                     <td></td>
                                                 </tr>

@@ -110,6 +110,10 @@ fieldset[disabled] .multiselect{pointer-events:none}.multiselect__spinner{positi
   margin-left: 5px !important;
 }
 
+.panel-modal-fix-top {
+  padding-top: 30px;
+}
+
 .portlet-primary .portlet-title,
 .portlet-primary .tools {
   background-color: #007bff;

@@ -12,8 +12,8 @@
     <div class="row">
         <loading :show="porlor6.is_loading"></loading>
         <div class="col-xs-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">
+            <div class="panel panel-default panel-modal-fix-top">
+                <div class="navbar-fixed-top panel-heading">
                     <button class="btn btn-danger" @click="closePorlor6Modal">Close</button>
                 </div>
                 <div v-if="porlor6.project" class="panel-body">

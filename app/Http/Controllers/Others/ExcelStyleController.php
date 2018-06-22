@@ -8,14 +8,7 @@ use App\Http\Controllers\Controller;
 class ExcelStyleController extends Controller
 {
     //Green
-    const tableHeaderColor = [
-        'green' => 'CDD5B4'
-    ];
-    const tableTotalResultColor = [
-        'green' => 'CDD5B4'
-    ];
-
-    const rowResultColor = [
-        'green' => 'DAE3C0'
-    ];
+    const tableHeaderColor = 'CDD5B4';
+    const tableTotalResultColor ='CDD5B4';
+    const rowResultColor = 'DAE3C0';
 }
