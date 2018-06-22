@@ -99,6 +99,12 @@ class ExportPorlor5Controller extends Controller
         $sheet->cell('B' . $row, function (CellWriter $cell) use ($project) {
             $cell->setValue('คำนวนราคากลางเมื่อวันที่ : ' . $project->referee_calculated_date);
         });
+        //Unit
+        $row++;
+        $sheet->cell('F' . $row, function (CellWriter $cell) {
+            $cell->setValue('หน่วย : บาท');
+            $cell->setAlignment('right');
+        });
 
         $this->setTableHeader($sheet, $project, $porlor5, $row);
     }
@@ -140,6 +146,7 @@ class ExportPorlor5Controller extends Controller
     //Table Content
     public function setTableContents(LaravelExcelWorksheet $sheet, $project, $porlor5, &$row)
     {
+        $startRow = $row + 1;
         foreach ($porlor5['parts'] as $part_index => $porlor4) {
             //ถ้าไม่ใช่หน้าแรก(ก.) และ เป็นรายการแรก ให้แสดงยอดยกมา
             //ยอดยกมา
@@ -186,58 +193,73 @@ class ExportPorlor5Controller extends Controller
                     $cell->setAlignment('right');
                 });
                 //Factor F
-                $sheet->cell('D'.$row,function(CellWriter $cell) use ($root_job){
-                   $cell->setValue($root_job['factor_f']);
-                   $cell->setAlignment('center');
+                $sheet->cell('D' . $row, function (CellWriter $cell) use ($root_job) {
+                    $cell->setValue($root_job['factor_f']);
+                    $cell->setAlignment('center');
                 });
                 //Construction Cost
-                $sheet->cell('E'.$row,function(CellWriter $cell) use ($root_job){
-                   $cell->setValue($root_job['construction_cost']);
-                   $cell->setAlignment('right');
+                $sheet->cell('E' . $row, function (CellWriter $cell) use ($root_job) {
+                    $cell->setValue($root_job['construction_cost']);
+                    $cell->setAlignment('right');
                 });
                 //Etc...
-                $sheet->cell('F'.$row,function(CellWriter $cell) use ($root_job){
+                $sheet->cell('F' . $row, function (CellWriter $cell) use ($root_job) {
 
                 });
             }
             //Sum of Construction Cost
             $row++;
-            $sheet->mergeCells('A'.$row.':D'.$row);
+            $sheet->mergeCells('A' . $row . ':D' . $row);
             //A-D
-            $sheet->cell('A'.$row,function(CellWriter $cell) use($porlor4){
-                $cell->setValue('รวม'.$porlor4['part']['name']);
+            $sheet->cell('A' . $row, function (CellWriter $cell) use ($porlor4) {
+                $cell->setValue('รวม' . $porlor4['part']['name']);
                 $cell->setAlignment('right');
             });
             //E
-            $sheet->cell('E'.$row,function(CellWriter $cell) use ($porlor4){
+            $sheet->cell('E' . $row, function (CellWriter $cell) use ($porlor4) {
                 $cell->setValue($porlor4['sum_construction_cost']);
                 $cell->setAlignment('right');
-                $cell->setBackground('#'.ExcelStyleController::rowResultColor);
+                $cell->setBackground('#' . ExcelStyleController::rowResultColor);
             });
             //Sum of Page
             //ถ้าเป็น Part สุดท้ายของหน้า
-            if($part_index+1 == count( $porlor5['parts'])){
+            if ($part_index + 1 == count($porlor5['parts'])) {
                 $row++;
                 //A-D
-                $sheet->mergeCells('A'.$row.':D'.$row);
-                $sheet->cell('A'.$row,function (CellWriter $cell) use ($porlor4){
-                    $cell->setValue('รวมส่วนที่ 1 - '.$porlor4['position']);
+                $sheet->mergeCells('A' . $row . ':D' . $row);
+                $sheet->cell('A' . $row, function (CellWriter $cell) use ($porlor4) {
+                    $cell->setValue('รวมส่วนที่ 1 - ' . $porlor4['position']);
                     $cell->setAlignment('right');
                 });
                 //E ผมรวม
-                $sheet->cell('E'.$row,function(CellWriter $cell) use ($porlor4){
-                   $cell->setValue($porlor4['total_sum_construction_cost']);
-                   $cell->setAlignment('right');
-                   $cell->setBackground('#'.ExcelStyleController::rowResultColor);
+                $sheet->cell('E' . $row, function (CellWriter $cell) use ($porlor4) {
+                    $cell->setValue($porlor4['total_sum_construction_cost']);
+                    $cell->setAlignment('right');
+                    $cell->setBackground('#' . ExcelStyleController::rowResultColor);
                 });
             }
         }
+        $endRow = $row;
+        //Set Content Styles
+        $this->setContentStyles($sheet,$startRow,$endRow);
 
-        //
+    }
+    public function setContentStyles(LaravelExcelWorksheet $sheet,$startRow,$endRow){
+        $cellRange ='A'.$startRow.':F'.$endRow;
+        //Borders
+        $sheet->getStyle($cellRange)
+            ->getBorders()->getAllBorders()->setBorderStyle('thin');
+        //Cell Format
+        // -- Accounting
+        // -- C
+        $sheet->getStyle('C'.$startRow.':C'.$endRow)
+            ->getNumberFormat()->setFormatCode(ExcelStyleController::formatCode['accounting']);
+        // -- E
+        $sheet->getStyle('E'.$startRow.':E'.$endRow)
+            ->getNumberFormat()->setFormatCode(ExcelStyleController::formatCode['accounting']);
     }
 
-    public
-    function setSheetStyles(LaravelExcelWorksheet $sheet)
+    public function setSheetStyles(LaravelExcelWorksheet $sheet)
     {
 //        $rowHeight = collect([]);
 //        for ($i = 1; $i <= 8; $i++) {
