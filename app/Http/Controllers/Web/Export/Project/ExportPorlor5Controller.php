@@ -29,7 +29,6 @@ class ExportPorlor5Controller extends Controller
                 }
             });
         })->export('xls');
-//        return response()->json($project);
     }
 
     public function setHeaders(LaravelExcelWorksheet $sheet, $project, $porlor5, &$row)

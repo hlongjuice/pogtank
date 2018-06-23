@@ -81,11 +81,13 @@ class ExportPorlor4Controller extends Controller
             ->where('project_order_id',$project_order_id)->get();
         Excel::create('ปร.4',function(LaravelExcelWriter $excel) use($porlor4Parts){
             foreach ($porlor4Parts as $porlor4){
+                $this->setPartSheet($excel,$porlor4);
                 foreach ($porlor4->jobs as $rootJob ){
                     $rootJob->calculated_child_job = (new Porlor4JobController)->getAllChildJobs($porlor4->id, $rootJob->id);
                     $this->setExcel($excel,$rootJob);
                 }
             }
+            $excel->setActiveSheetIndex(0); // Set Active Sheet หน้าแรกชีทเมื่อเปิด
         })->export('xls');
     }
     //Set Excel
@@ -607,5 +609,16 @@ class ExportPorlor4Controller extends Controller
         $sheet->setPageMargin(array(
             0.25, 0.30, 0.25, 0.30
         ));
+    }
+
+    //Set Part Sheet
+    public function setPartSheet(LaravelExcelWriter $excel,$porlor4){
+        $excel->sheet('ส่วนที่ '. $porlor4->position .' '.$porlor4->part->name,function(LaravelExcelWorksheet $sheet) use ($porlor4){
+            $sheet->cell('C12',function(CellWriter $cell) use($porlor4){
+                $cell->setValue('ส่วนที่ '. $porlor4->position .' '.$porlor4->part->name);
+                $cell->setFontSize(48);
+                $cell->setFontWeight();
+            });
+        });
     }
 }

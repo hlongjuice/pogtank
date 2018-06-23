@@ -49,7 +49,7 @@
             <li class="{{$orderingMenu?'open':''}}">
                 <a href="javascript:;">
                     <i class="far fa-shopping-cart"></i>
-                    <span class="title">ระบบสั่งซื้อ</span>
+                    <span class="title">ระบบ ปร.4,5,6</span>
                     <span class="selected"></span>
                     <span class="arrow {{$orderingMenu?'open':''}}"></span>
                 </a>
@@ -63,7 +63,7 @@
                     {{--OrderingListMenu--}}
                     <li class="{{$orderingListMenu?'active':''}}">
                         <a href="{{route('admin.project_order.index')}}">
-                            <span class="title">- รายการสั่งซื้อ</span>
+                            <span class="title">- โครงการ</span>
                         </a>
                     </li>
                 </ul>
