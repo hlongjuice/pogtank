@@ -70,7 +70,7 @@
                                 {{--Porlor 4--}}
                                 <td>
                                     <a @click="openPorlor4Page(order)" class="btn btn-info">ปร.4</a>
-                                    <a class="margin-left-5 btn btn-default">
+                                    <a @click="exportPorlor4Excel(order.id)" class="margin-left-5 btn btn-default">
                                         Excel
                                         <i class="far fa-download"></i>
                                     </a>
@@ -78,7 +78,7 @@
                                 {{--Porlor 5--}}
                                 <td>
                                     <a @click="openPorlor5Modal(order)" class="btn btn-info">ปร.5</a>
-                                    <a @click="exportPorlor5Excel(order)" class="margin-left-5 btn btn-default">
+                                    <a @click="exportPorlor5Excel(order.id)" class="margin-left-5 btn btn-default">
                                         Excel
                                         <i class="far fa-download"></i>
                                     </a>
@@ -86,7 +86,7 @@
                                 {{--Porlor 6--}}
                                 <td>
                                     <a @click="openPorlor6Modal(order)" class="btn btn-info">ปร.6</a>
-                                    <a @click="exportPorlor6Excel(order)" class="margin-left-5 btn btn-default">
+                                    <a @click="exportPorlor6Excel(order.id)" class="margin-left-5 btn btn-default">
                                         Excel
                                         <i class="far fa-download"></i>
                                     </a>

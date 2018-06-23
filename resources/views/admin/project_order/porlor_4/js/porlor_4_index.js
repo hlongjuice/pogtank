@@ -1,10 +1,12 @@
 import Porlor4Service from '../../../../../assets/js/services/project_order/porlor_4_service';
+import Porlor4ExportService from '../../../../../assets/js/services/project_order/porlor_4_export_service';
 import {AddNewPartModal} from "./add_part_modal";
 import WebUrl from '../../../../../assets/js/services/webUrl';
 import {EditPartModal} from "../edit_part_modal";
 
 let webUrl = new WebUrl();
 let porlor4Service = new Porlor4Service();
+let porlor4ExportService = new Porlor4ExportService();
 new Vue({
     el:'#porlor-4-index',
     mixins:[
@@ -113,6 +115,11 @@ new Vue({
             if(data.params.is_updated){
                 this.refreshData();
             }
+        },
+        //Export Excel By PartID
+        porlor4_exportExcelByPartID(order_id){
+            porlor4ExportService.exportExcelByPartID(order_id);
         }
+
     }
 });

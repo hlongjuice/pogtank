@@ -102,9 +102,9 @@
                         <table class="table table-striped table-hover table-bordered">
                             {{-- -- Table Header--}}
                             <thead>
-                            <tr>
+                            <tr class="table-row-th-center">
                                 {{--<th>ID</th>--}}
-                                <th>ส่วน</th>
+                                <th width="60%">ส่วนงาน</th>
                                 <th>รายละเอียด</th>
                                 <th>แก้ไข</th>
                                 <th>Delete</th>
@@ -112,9 +112,16 @@
                             </thead>
                             {{-- -- Table Content--}}
                             <tbody>
-                                <tr v-for="(item,index) in project_porlor_4_parts">
-                                    <td>@{{ index+1 }}. @{{ item.part.name }}</td>
-                                    <td><a class="btn btn-primary" @click="openPorlor4JobsPage(item.id)">รายละเอียด</a></td>
+                                <tr class="text-center" v-for="(item,index) in project_porlor_4_parts">
+                                    <td class="text-left">@{{ index+1 }}. @{{ item.part.name }}</td>
+                                    <td>
+                                        <a class="btn btn-primary" @click="openPorlor4JobsPage(item.id)">รายละเอียด</a>
+                                        {{--Excel--}}
+                                        <a @click="porlor4_exportExcelByPartID(item.id)" class="margin-left-5 btn btn-default">
+                                            Excel
+                                            <i class="far fa-download"></i>
+                                        </a>
+                                    </td>
                                     <td><a class="btn btn-warning" @click="openEditPartModal(item)">แก้ไข</a> </td>
                                     <td><a class="btn btn-danger" @click="porlor4_deletePart(item)">ลบ</a></td>
                                 </tr>

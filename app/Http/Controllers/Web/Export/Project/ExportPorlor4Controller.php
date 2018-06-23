@@ -28,7 +28,8 @@ class ExportPorlor4Controller extends Controller
         $this->tableResultColor='DAE3C0';
     }
 
-    public function exportExcelByExRootID($porlor4_id, $root_job_id)
+    //Export Single Excel By Root ID
+    public function exportExcelByRootJobID($porlor4_id, $root_job_id)
     {
         $rootJob = Porlor4Job::with([
             'porlor4.projectDetails.province',
@@ -39,20 +40,67 @@ class ExportPorlor4Controller extends Controller
         ])->where('id', $root_job_id)->first();
         $rootJob->calculated_child_job = (new Porlor4JobController)->getAllChildJobs($porlor4_id, $root_job_id);
         Excel::create('ปร.4 -'.$rootJob->name, function (LaravelExcelWriter $excel) use ($rootJob) {
-            $excel->sheet($rootJob->name, function ($sheet) use ($rootJob) {
-                $row =1;
-                $this->setSheetStyles($sheet);
-                foreach ($rootJob->calculated_child_job as $childJob) {
-                    $this->setHeaders($sheet, $rootJob, $childJob,$row);
-                    $this->setContents($sheet,$rootJob,$childJob,$row);
-                    $row++;
-                }
-                $this->setReferees($sheet,$rootJob,$row);
-            });
+            $this->setExcel($excel,$rootJob);
         })->export('xls');
 //        return response()->json($rootJob);
     }
-
+    //Export By Part Group
+    public function exportExcelByPartID($porlor4_id){
+        $porlor4 = Porlor4::with([
+            'jobs'=>function($jobs){
+                $jobs->whereIsRoot();//Get Only Root Job
+            },
+            'jobs.porlor4.projectDetails.province',
+            'jobs.porlor4.projectDetails.amphoe',
+            'jobs.porlor4.projectDetails.district',
+            'jobs.porlor4.projectDetails.referees',
+            'jobs.porlor4.part',
+            'part'
+        ])
+        ->where('id',$porlor4_id)->first();
+        Excel::create('ปร.4 - ส่วน'.$porlor4->part->name,function(LaravelExcelWriter $excel) use($porlor4){
+            foreach ($porlor4->jobs as $rootJob ){
+                $rootJob->calculated_child_job = (new Porlor4JobController)->getAllChildJobs($porlor4->id, $rootJob->id);
+                $this->setExcel($excel,$rootJob);
+            }
+        })->export('xls');
+    }
+    //Export All Porlor4
+    public function exportExcelByProjectID($project_order_id){
+        $porlor4Parts = Porlor4::with([
+            'jobs'=>function($jobs){
+                $jobs->whereIsRoot();//Get Only Root Job
+            },
+            'jobs.porlor4.projectDetails.province',
+            'jobs.porlor4.projectDetails.amphoe',
+            'jobs.porlor4.projectDetails.district',
+            'jobs.porlor4.projectDetails.referees',
+            'jobs.porlor4.part',
+            'part'
+        ])
+            ->where('project_order_id',$project_order_id)->get();
+        Excel::create('ปร.4',function(LaravelExcelWriter $excel) use($porlor4Parts){
+            foreach ($porlor4Parts as $porlor4){
+                foreach ($porlor4->jobs as $rootJob ){
+                    $rootJob->calculated_child_job = (new Porlor4JobController)->getAllChildJobs($porlor4->id, $rootJob->id);
+                    $this->setExcel($excel,$rootJob);
+                }
+            }
+        })->export('xls');
+    }
+    //Set Excel
+    public function setExcel(LaravelExcelWriter $excel,$rootJob){
+        $excel->sheet($rootJob->name, function ($sheet) use ($rootJob) {
+            $row =1;
+            $this->setSheetStyles($sheet);
+            foreach ($rootJob->calculated_child_job as $childJob) {
+                $this->setHeaders($sheet, $rootJob, $childJob,$row);
+                $this->setContents($sheet,$rootJob,$childJob,$row);
+                $row++;
+            }
+            $this->setReferees($sheet,$rootJob,$row);
+        });
+    }
     //Porlor 4 Header
     public function setHeaders(LaravelExcelWorksheet $sheet,$rootJob,$childJob,&$row){
         //Header Table

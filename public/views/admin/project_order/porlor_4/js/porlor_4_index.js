@@ -121,19 +121,22 @@ module.exports = __webpack_require__(225);
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_service__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__add_part_modal__ = __webpack_require__(226);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__assets_js_services_webUrl__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__edit_part_modal__ = __webpack_require__(227);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_js_services_project_order_porlor_4_export_service__ = __webpack_require__(232);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__add_part_modal__ = __webpack_require__(226);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__assets_js_services_webUrl__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__edit_part_modal__ = __webpack_require__(227);
 
 
 
 
 
-var webUrl = new __WEBPACK_IMPORTED_MODULE_2__assets_js_services_webUrl__["a" /* default */]();
+
+var webUrl = new __WEBPACK_IMPORTED_MODULE_3__assets_js_services_webUrl__["a" /* default */]();
 var porlor4Service = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_service__["a" /* default */]();
+var porlor4ExportService = new __WEBPACK_IMPORTED_MODULE_1__assets_js_services_project_order_porlor_4_export_service__["a" /* default */]();
 new Vue({
     el: '#porlor-4-index',
-    mixins: [__WEBPACK_IMPORTED_MODULE_1__add_part_modal__["a" /* AddNewPartModal */], __WEBPACK_IMPORTED_MODULE_3__edit_part_modal__["a" /* EditPartModal */]],
+    mixins: [__WEBPACK_IMPORTED_MODULE_2__add_part_modal__["a" /* AddNewPartModal */], __WEBPACK_IMPORTED_MODULE_4__edit_part_modal__["a" /* EditPartModal */]],
     data: {
         addNewPartStatus: false,
         order_id: orderID,
@@ -232,6 +235,11 @@ new Vue({
             if (data.params.is_updated) {
                 this.refreshData();
             }
+        },
+
+        //Export Excel By PartID
+        porlor4_exportExcelByPartID: function porlor4_exportExcelByPartID(order_id) {
+            porlor4ExportService.exportExcelByPartID(order_id);
         }
     }
 });
@@ -385,6 +393,63 @@ var EditPartModal = {
         }
     }
 };
+
+/***/ }),
+
+/***/ 232:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__webUrl__ = __webpack_require__(2);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+
+var webUrl = new __WEBPACK_IMPORTED_MODULE_0__webUrl__["a" /* default */]();
+
+var Porlor4Service = function () {
+    function Porlor4Service() {
+        _classCallCheck(this, Porlor4Service);
+
+        this.url = webUrl.getUrl();
+        this._delete_method = {
+            _method: 'DELETE'
+        };
+    }
+
+    //Excel
+    // -- Export Single Job
+
+
+    _createClass(Porlor4Service, [{
+        key: 'exportExcelByRootID',
+        value: function exportExcelByRootID(porlor4_id, root_job_id) {
+            var url = this.url + '/project/export/porlor4/excel/by_root_job_id/' + porlor4_id + '/job/' + root_job_id;
+            window.open(url); //Open New Tab
+        }
+        // -- Export By Part ID
+
+    }, {
+        key: 'exportExcelByPartID',
+        value: function exportExcelByPartID(porlor4_id) {
+            var url = this.url + '/project/export/porlor4/excel/by_part_id/' + porlor4_id;
+            window.open(url); //Open New Tab
+        }
+        // -- Export By Project Order ID
+
+    }, {
+        key: 'exportExcelByProjectOrderID',
+        value: function exportExcelByProjectOrderID(project_order_id) {
+            var url = this.url + '/project/export/porlor4/excel/by_project_id/' + project_order_id;
+            window.open(url); //Open New Tab
+        }
+    }]);
+
+    return Porlor4Service;
+}();
+
+/* harmony default export */ __webpack_exports__["a"] = (Porlor4Service);
 
 /***/ }),
 

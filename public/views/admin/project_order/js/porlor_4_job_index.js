@@ -1795,7 +1795,23 @@ var Porlor4Service = function () {
     _createClass(Porlor4Service, [{
         key: 'exportExcelByRootID',
         value: function exportExcelByRootID(porlor4_id, root_job_id) {
-            var url = this.url + '/project/export/porlor4/excel/' + porlor4_id + '/job/' + root_job_id;
+            var url = this.url + '/project/export/porlor4/excel/by_root_job_id/' + porlor4_id + '/job/' + root_job_id;
+            window.open(url); //Open New Tab
+        }
+        // -- Export By Part ID
+
+    }, {
+        key: 'exportExcelByPartID',
+        value: function exportExcelByPartID(porlor4_id) {
+            var url = this.url + '/project/export/porlor4/excel/by_part_id/' + porlor4_id;
+            window.open(url); //Open New Tab
+        }
+        // -- Export By Project Order ID
+
+    }, {
+        key: 'exportExcelByProjectOrderID',
+        value: function exportExcelByProjectOrderID(project_order_id) {
+            var url = this.url + '/project/export/porlor4/excel/by_project_id/' + project_order_id;
             window.open(url); //Open New Tab
         }
     }]);

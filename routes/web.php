@@ -304,8 +304,13 @@ Route::prefix('project')->group(function () {
         Route::prefix('porlor4')->group(function(){
             //Export Single Porlor4 Job
             // -- Excel
-            Route::get('excel/{porlor4_id}/job/{root_job_id}', 'Web\Export\Project\ExportPorlor4Controller@exportExcelByExRootID')
+            Route::get('excel/by_root_job_id/{porlor4_id}/job/{root_job_id}', 'Web\Export\Project\ExportPorlor4Controller@exportExcelByRootJobID')
                 ->name('project.export.porlor4');
+            //Export By Part
+            // -- Excel
+            Route::get('excel/by_part_id/{porlor4_id}','Web\Export\Project\ExportPorlor4Controller@exportExcelByPartID');
+            //Export By Project Order ID
+            Route::get('excel/by_project_id/{project_order_id}','Web\Export\Project\ExportPorlor4Controller@exportExcelByProjectID');
         });
         //Porlor 5
         Route::prefix('porlor5')->group(function(){
