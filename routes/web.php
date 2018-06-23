@@ -301,10 +301,22 @@ Route::prefix('admin')->middleware('auth')
 Route::prefix('project')->group(function () {
     Route::prefix('export')->group(function () {
         //Porlor4
-        Route::get('porlor4/{porlor4_id}/job/{root_job_id}', 'Web\Export\Project\ExportPorlor4Controller@exportByRootID')
-            ->name('project.export.porlor4');
+        Route::prefix('porlor4')->group(function(){
+            //Export Single Porlor4 Job
+            // -- Excel
+            Route::get('excel/{porlor4_id}/job/{root_job_id}', 'Web\Export\Project\ExportPorlor4Controller@exportExcelByExRootID')
+                ->name('project.export.porlor4');
+        });
         //Porlor 5
-        Route::get('porlor5/{project_order_id}', 'Web\Export\Project\ExportPorlor5Controller@exportExcel');
+        Route::prefix('porlor5')->group(function(){
+            //Excel
+            Route::get('excel/{project_order_id}', 'Web\Export\Project\ExportPorlor5Controller@exportExcel');
+        });
+        //Porlor 6
+        Route::prefix('porlor6')->group(function(){
+            //Excel
+           Route::get('excel/{project_order_id}','Web\Export\Project\ExportPorlor6Controller@exportExcel');
+        });
     });
 });
 

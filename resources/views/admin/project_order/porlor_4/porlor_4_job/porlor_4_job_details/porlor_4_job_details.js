@@ -199,10 +199,8 @@ export const Porlor4JobDetails = {
         },
 
         //Export Porlor4
-        jobDetails_exportPorlor4ByRootID(){
-            // window.location = webUrlService.getRoute('/project/export/porlor4/'+this.porlor4.id+'/job/'+this.root_job.id);
-            let url = webUrlService.getRoute('/project/export/porlor4/'+this.porlor4.id+'/job/'+this.root_job.id);
-            window.open(url); //Open New Tab
+        jobDetails_exportPorlor4ExcelByRootID(){
+            porlor4ExportService.exportExcelByRootID(this.porlor4.id,this.root_job.id);
         }
     }
 };

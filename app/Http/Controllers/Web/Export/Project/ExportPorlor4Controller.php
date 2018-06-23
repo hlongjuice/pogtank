@@ -28,7 +28,7 @@ class ExportPorlor4Controller extends Controller
         $this->tableResultColor='DAE3C0';
     }
 
-    public function exportByRootID($porlor4_id, $root_job_id)
+    public function exportExcelByExRootID($porlor4_id, $root_job_id)
     {
         $rootJob = Porlor4Job::with([
             'porlor4.projectDetails.province',
@@ -153,7 +153,7 @@ class ExportPorlor4Controller extends Controller
                 $cell->setValue('เมื่อวันที่ : ');
             });
             $sheet->cell('F'.$row,function(CellWriter $cell) use($rootJob){
-                $cell->setValue($rootJob->porlor4->porjectDetails->referee_calculated_date);
+                $cell->setValue($rootJob->porlor4->projectDetails->referee_calculated_date);
             });
             //Global Unit
             $row++;

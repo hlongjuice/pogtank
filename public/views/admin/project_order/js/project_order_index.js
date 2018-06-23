@@ -196,13 +196,14 @@ module.exports = __webpack_require__(212);
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_project_order_service__ = __webpack_require__(36);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_js_services_project_order_porlor_5_porlor_5_export_service__ = __webpack_require__(213);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__assets_js_services_webUrl__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__project_order_edit__ = __webpack_require__(214);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__porlor_5_porlor_5_index__ = __webpack_require__(215);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__porlor_6_porlor_6_index__ = __webpack_require__(217);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__referee_referee_index__ = __webpack_require__(219);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__referee_add_referee_add_referee__ = __webpack_require__(220);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__referee_edit_referee_edit_referee__ = __webpack_require__(221);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__assets_js_services_project_order_porlor_6_porlor_6_export_service__ = __webpack_require__(248);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__assets_js_services_webUrl__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__project_order_edit__ = __webpack_require__(214);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__porlor_5_porlor_5_index__ = __webpack_require__(215);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__porlor_6_porlor_6_index__ = __webpack_require__(217);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__referee_referee_index__ = __webpack_require__(219);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__referee_add_referee_add_referee__ = __webpack_require__(220);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__referee_edit_referee_edit_referee__ = __webpack_require__(221);
 
 
 
@@ -213,12 +214,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-var webUrl = new __WEBPACK_IMPORTED_MODULE_2__assets_js_services_webUrl__["a" /* default */]();
+
+var webUrl = new __WEBPACK_IMPORTED_MODULE_3__assets_js_services_webUrl__["a" /* default */]();
 var projectOderService = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_project_order_service__["a" /* default */]();
 var porlor5ExportService = new __WEBPACK_IMPORTED_MODULE_1__assets_js_services_project_order_porlor_5_porlor_5_export_service__["a" /* default */]();
+var porlor6ExportService = new __WEBPACK_IMPORTED_MODULE_2__assets_js_services_project_order_porlor_6_porlor_6_export_service__["a" /* default */]();
 new Vue({
     el: '#project-order-index',
-    mixins: [__WEBPACK_IMPORTED_MODULE_3__project_order_edit__["a" /* ProjectOrderEditModal */], __WEBPACK_IMPORTED_MODULE_4__porlor_5_porlor_5_index__["a" /* Porlor5Index */], __WEBPACK_IMPORTED_MODULE_5__porlor_6_porlor_6_index__["a" /* Porlor6Index */], __WEBPACK_IMPORTED_MODULE_6__referee_referee_index__["a" /* ProjectReferee */], __WEBPACK_IMPORTED_MODULE_7__referee_add_referee_add_referee__["a" /* ProjectRefereeAddModal */], __WEBPACK_IMPORTED_MODULE_8__referee_edit_referee_edit_referee__["a" /* ProjectRefereeEditModal */]],
+    mixins: [__WEBPACK_IMPORTED_MODULE_4__project_order_edit__["a" /* ProjectOrderEditModal */], __WEBPACK_IMPORTED_MODULE_5__porlor_5_porlor_5_index__["a" /* Porlor5Index */], __WEBPACK_IMPORTED_MODULE_6__porlor_6_porlor_6_index__["a" /* Porlor6Index */], __WEBPACK_IMPORTED_MODULE_7__referee_referee_index__["a" /* ProjectReferee */], __WEBPACK_IMPORTED_MODULE_8__referee_add_referee_add_referee__["a" /* ProjectRefereeAddModal */], __WEBPACK_IMPORTED_MODULE_9__referee_edit_referee_edit_referee__["a" /* ProjectRefereeEditModal */]],
     data: {
         showLoading: '',
         orders: {}
@@ -317,6 +320,11 @@ new Vue({
         //Export Porlor 5
         exportPorlor5Excel: function exportPorlor5Excel(order) {
             porlor5ExportService.exportExcel(order.id);
+        },
+
+        //Export Porlor 6
+        exportPorlor6Excel: function exportPorlor6Excel(order) {
+            porlor6ExportService.exportExcel(order.id);
         }
     }
 });
@@ -348,7 +356,7 @@ var Porlor5ExportService = function () {
     _createClass(Porlor5ExportService, [{
         key: 'exportExcel',
         value: function exportExcel(project_order_id) {
-            var url = this.url + '/project/export/porlor5/' + project_order_id;
+            var url = this.url + '/project/export/porlor5/excel/' + project_order_id;
             window.open(url);
         }
     }]);
@@ -1074,6 +1082,45 @@ var ProjectRefereeEditModal = {
         }
     }
 };
+
+/***/ }),
+
+/***/ 248:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__webUrl__ = __webpack_require__(2);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+
+var webUrl = new __WEBPACK_IMPORTED_MODULE_0__webUrl__["a" /* default */]();
+
+var Porlor6ExportService = function () {
+    function Porlor6ExportService() {
+        _classCallCheck(this, Porlor6ExportService);
+
+        this.url = webUrl.getUrl();
+        this._put_method = {
+            _method: 'PUT'
+        };
+    }
+    //Get Porlor6
+
+
+    _createClass(Porlor6ExportService, [{
+        key: 'exportExcel',
+        value: function exportExcel(project_order_id) {
+            var url = this.url + '/project/export/porlor6/excel/' + project_order_id;
+            window.open(url);
+        }
+    }]);
+
+    return Porlor6ExportService;
+}();
+
+/* harmony default export */ __webpack_exports__["a"] = (Porlor6ExportService);
 
 /***/ }),
 

@@ -86,7 +86,7 @@
                                 {{--Porlor 6--}}
                                 <td>
                                     <a @click="openPorlor6Modal(order)" class="btn btn-info">ปร.6</a>
-                                    <a class="margin-left-5 btn btn-default">
+                                    <a @click="exportPorlor6Excel(order)" class="margin-left-5 btn btn-default">
                                         Excel
                                         <i class="far fa-download"></i>
                                     </a>

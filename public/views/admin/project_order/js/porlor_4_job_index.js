@@ -1758,10 +1758,8 @@ var Porlor4JobDetails = {
 
 
         //Export Porlor4
-        jobDetails_exportPorlor4ByRootID: function jobDetails_exportPorlor4ByRootID() {
-            // window.location = webUrlService.getRoute('/project/export/porlor4/'+this.porlor4.id+'/job/'+this.root_job.id);
-            var url = webUrlService.getRoute('/project/export/porlor4/' + this.porlor4.id + '/job/' + this.root_job.id);
-            window.open(url); //Open New Tab
+        jobDetails_exportPorlor4ExcelByRootID: function jobDetails_exportPorlor4ExcelByRootID() {
+            porlor4ExportService.exportExcelByRootID(this.porlor4.id, this.root_job.id);
         }
     }
 };
@@ -1790,17 +1788,15 @@ var Porlor4Service = function () {
         };
     }
 
+    //Excel
+    // -- Export Single Job
+
+
     _createClass(Porlor4Service, [{
-        key: 'exportByRootID',
-        value: function exportByRootID(porlor4_id, root_job_id) {
-            var url = this.url + '/project/export/porlor4/' + porlor4_id + '/job/' + root_job_id;
-            return new Promise(function (resolve, reject) {
-                axios.get(url).then(function (result) {
-                    resolve(result.data);
-                }).catch(function (err) {
-                    reject(err);
-                });
-            });
+        key: 'exportExcelByRootID',
+        value: function exportExcelByRootID(porlor4_id, root_job_id) {
+            var url = this.url + '/project/export/porlor4/excel/' + porlor4_id + '/job/' + root_job_id;
+            window.open(url); //Open New Tab
         }
     }]);
 

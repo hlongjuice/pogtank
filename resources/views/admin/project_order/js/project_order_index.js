@@ -1,5 +1,6 @@
 import ProjectOrderService from '../../../../assets/js/services/project_order/project_order_service';
-import Porlor5ExportServie from '../../../../assets/js/services/project_order/porlor_5/porlor_5_export_service';
+import Porlor5ExportService from '../../../../assets/js/services/project_order/porlor_5/porlor_5_export_service';
+import Porlor6ExportService from '../../../../assets/js/services/project_order/porlor_6/porlor_6_export_service';
 import WebUrl from '../../../../assets/js/services/webUrl';
 import {ProjectOrderEditModal} from '../project_order_edit';
 import {Porlor5Index} from "../porlor_5/porlor_5_index";
@@ -11,7 +12,8 @@ import {ProjectRefereeEditModal} from "../referee/edit_referee/edit_referee";
 
 let webUrl = new WebUrl();
 let projectOderService = new ProjectOrderService();
-let porlor5ExportService = new Porlor5ExportServie();
+let porlor5ExportService = new Porlor5ExportService();
+let porlor6ExportService = new Porlor6ExportService();
 new Vue({
     el: '#project-order-index',
     mixins: [
@@ -119,6 +121,10 @@ new Vue({
         //Export Porlor 5
         exportPorlor5Excel(order){
             porlor5ExportService.exportExcel(order.id);
+        },
+        //Export Porlor 6
+        exportPorlor6Excel(order){
+            porlor6ExportService.exportExcel(order.id);
         }
 
     }
