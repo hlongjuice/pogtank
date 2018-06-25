@@ -21,12 +21,15 @@ class ExportPorlor5Controller extends Controller
         Excel::create('ปร.5', function (LaravelExcelWriter $excel) use ($project) {
             $excel->sheet('ปร.5', function (LaravelExcelWorksheet $sheet) use ($project) {
                 $row = 1;
-                $this->setSheetStyles($sheet);
+                $startRow = $row;
                 foreach ($project['porlor5'] as $porlor5) {
                     $this->setHeaders($sheet, $project, $porlor5, $row);
                     $this->setTableContents($sheet, $project, $porlor5, $row);
-                    $row++;
+//                    $row++;
+                    $row+=2;
                 }
+                $endRow = $row;
+                $this->setSheetStyles($sheet,$startRow,$endRow);
             });
         })->export('xls');
     }
@@ -258,11 +261,11 @@ class ExportPorlor5Controller extends Controller
             ->getNumberFormat()->setFormatCode(ExcelStyleController::formatCode['accounting']);
     }
 
-    public function setSheetStyles(LaravelExcelWorksheet $sheet)
+    public function setSheetStyles(LaravelExcelWorksheet $sheet,$startRow,$endRow)
     {
 //        $rowHeight = collect([]);
-//        for ($i = 1; $i <= 8; $i++) {
-//            $rowHeight->push(25);
+//        for ($i = 1; $i <= $endRow; $i++) {
+//            $rowHeight->push(18);
 //        }
 //        $sheet->setHeight($rowHeight->toArray());
         //Sheet Setting
