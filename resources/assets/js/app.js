@@ -44,6 +44,7 @@ Vue.component('multiselect', Multiselect);
 Vue.component('loading', loading);
 Vue.component('datepicker', Datepicker);
 Vue.component('cleave',Cleave);
+Vue.component('app-table',require('./components/Table.vue'));
 
 console.log('Router :',router);
 new Vue({

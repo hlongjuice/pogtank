@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 233);
+/******/ 	return __webpack_require__(__webpack_require__.s = 240);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -1337,28 +1337,56 @@ module.exports = function dispatchRequest(config) {
 
 /***/ }),
 
-/***/ 233:
+/***/ 24:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(234);
+"use strict";
+
+
+var utils = __webpack_require__(0);
+
+/**
+ * Transform the data for a request or a response
+ *
+ * @param {Object|String} data The data to be transformed
+ * @param {Array} headers The headers for the request or response
+ * @param {Array|Function} fns A single function or Array of functions
+ * @returns {*} The resulting transformed data
+ */
+module.exports = function transformData(data, headers, fns) {
+  /*eslint no-param-reassign:0*/
+  utils.forEach(fns, function transform(fn) {
+    data = fn(data, headers);
+  });
+
+  return data;
+};
 
 
 /***/ }),
 
-/***/ 234:
+/***/ 240:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(241);
+
+
+/***/ }),
+
+/***/ 241:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_job_service__ = __webpack_require__(31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_js_services_project_order_porlor_4_service__ = __webpack_require__(35);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__porlor_4_job_add_root_porlor_4_job_add_root__ = __webpack_require__(235);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__porlor_4_job_details_porlor_4_job_details__ = __webpack_require__(236);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__porlor_4_job_details_porlor_4_add_child_job_porlor_4_add_child_job__ = __webpack_require__(237);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__porlor_4_job_details_porlor_4_add_child_job_item_porlor_4_add_child_job_item__ = __webpack_require__(238);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__porlor_4_job_details_porlor_4_edit_child_job_porlor_4_edit_child_job__ = __webpack_require__(239);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__porlor_4_job_details_porlor_4_edit_child_job_item_porlor_4_edit_child_job_item__ = __webpack_require__(240);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__porlor_4_job_edit_root_job_polor_4_job_edit_root_job__ = __webpack_require__(241);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__porlor_4_job_add_root_porlor_4_job_add_root__ = __webpack_require__(242);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__porlor_4_job_details_porlor_4_job_details__ = __webpack_require__(243);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__porlor_4_job_details_porlor_4_add_child_job_porlor_4_add_child_job__ = __webpack_require__(244);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__porlor_4_job_details_porlor_4_add_child_job_item_porlor_4_add_child_job_item__ = __webpack_require__(245);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__porlor_4_job_details_porlor_4_edit_child_job_porlor_4_edit_child_job__ = __webpack_require__(246);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__porlor_4_job_details_porlor_4_edit_child_job_item_porlor_4_edit_child_job_item__ = __webpack_require__(247);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__porlor_4_job_edit_root_job_polor_4_job_edit_root_job__ = __webpack_require__(248);
 
 
 
@@ -1501,7 +1529,7 @@ new Vue({
 
 /***/ }),
 
-/***/ 235:
+/***/ 242:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1547,7 +1575,7 @@ var Porlor4JobAddRoot = {
 
 /***/ }),
 
-/***/ 236:
+/***/ 243:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1766,7 +1794,7 @@ var Porlor4JobDetails = {
 
 /***/ }),
 
-/***/ 237:
+/***/ 244:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1862,7 +1890,7 @@ var Porlor4AddChildJob = {
 
 /***/ }),
 
-/***/ 238:
+/***/ 245:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2135,7 +2163,7 @@ var Porlor4AddChildJobItem = {
 
 /***/ }),
 
-/***/ 239:
+/***/ 246:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2238,35 +2266,7 @@ var Porlor4EditChildJob = {
 
 /***/ }),
 
-/***/ 24:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var utils = __webpack_require__(0);
-
-/**
- * Transform the data for a request or a response
- *
- * @param {Object|String} data The data to be transformed
- * @param {Array} headers The headers for the request or response
- * @param {Array|Function} fns A single function or Array of functions
- * @returns {*} The resulting transformed data
- */
-module.exports = function transformData(data, headers, fns) {
-  /*eslint no-param-reassign:0*/
-  utils.forEach(fns, function transform(fn) {
-    data = fn(data, headers);
-  });
-
-  return data;
-};
-
-
-/***/ }),
-
-/***/ 240:
+/***/ 247:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2472,7 +2472,7 @@ var Porlor4EditChildJobItem = {
 
 /***/ }),
 
-/***/ 241:
+/***/ 248:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

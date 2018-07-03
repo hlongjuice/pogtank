@@ -27,17 +27,28 @@
                 </div>
             </div>
         </div>
+        <div class="col-xs-12">
+            <app-table
+                    :headers="headers"
+                    :hasCheckBox="true"
+            ></app-table>
+        </div>
     </div>
 </template>
 <script>
+    import MyTable from '../../../components/Table.vue';
     export default {
         data(){
             return {
-
+                headers:[]
             }
         },
         created(){
-
+            this.headers=[
+                {name:'AAAA'},
+                {name:'BBBB'},
+                {name:'CCCC'}
+            ]
         }
     }
 </script>
