@@ -296,6 +296,11 @@ Route::prefix('admin')->middleware('auth')
                 Route::get('/provinces', 'Admin\City\CityController@getProvinces');
             });
         });
+
+        // -- -- Contents
+        Route::prefix('contents')->group(function(){
+           Route::get('/','Admin\Content\ContentController@index');
+        });
     });
 
 // -- All Web Method

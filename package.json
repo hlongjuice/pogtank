@@ -25,6 +25,7 @@
         "vue": "2.5.16"
     },
     "dependencies": {
+        "@tinymce/tinymce-vue": "^1.0.8",
         "laravel-vue-pagination": "1.2.0",
         "raven-js": "3.24.0",
         "vee-validate": "2.0.6",

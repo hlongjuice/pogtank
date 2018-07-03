@@ -56,7 +56,7 @@ Breadcrumbs::register('productCreate',function($breadcrumbs){
 //***Project Order
 Breadcrumbs::register('projectOrder',function($breadcrumbs){
    $breadcrumbs->parent('dashboard');
-   $breadcrumbs->push('รายการสั่งซื้อ',route ('admin.project_order.index'));
+   $breadcrumbs->push('โครงการ',route ('admin.project_order.index'));
 });
 // --create
 Breadcrumbs::register('projectOrderCreate',function($breadcrumbs){

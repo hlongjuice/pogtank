@@ -4,6 +4,7 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
+
 require('./bootstrap');
 import Vue from 'vue';
 import VueRouter from 'vue-router';
@@ -19,14 +20,14 @@ import {Auth} from './services/auth';
 import Vue2Filters from 'vue2-filters';
 import VuejsDialog from 'vuejs-dialog';
 import Cleave from 'vue-cleave-component';
-
-
+//After Use Vue Component Build Web
+import {router} from "./routes";
 //Global Method
 Vue.mixin(Auth);
 window.Vue = Vue;
-window.VueRouter = VueRouter;
 window.ErrorBag = ErrorBag;
-
+//Global Plugin
+Vue.use(VueRouter);
 Vue.use(VeeValidate);
 Vue.use(VModal);
 Vue.use(VueMoment);
@@ -36,11 +37,16 @@ Vue.use(VuejsDialog,{
     okText: 'ยืนยัน',
     cancelText: 'ยกเลิก',
 });
-// Component
-
+// Global Component
 Vue.component('pagination', require('laravel-vue-pagination'));
 Vue.component('vue-numeric', VueNumeric);
 Vue.component('multiselect', Multiselect);
 Vue.component('loading', loading);
 Vue.component('datepicker', Datepicker);
 Vue.component('cleave',Cleave);
+
+console.log('Router :',router);
+new Vue({
+    el:'#my-root-vue',
+    router // router for vue components
+});

@@ -537,72 +537,6 @@ License: You must have a valid license purchased only from themeforest(the above
                 <!-- /.modal-dialog -->
             </div>
             <!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
-            <!-- BEGIN STYLE CUSTOMIZER -->
-            <div class="theme-panel hidden-xs hidden-sm">
-                <div class="toggler">
-                    <i class="fa fa-gear"></i>
-                </div>
-                <div class="theme-options">
-                    <div class="theme-option theme-colors clearfix">
-						<span>
-						Theme Color </span>
-                        <ul>
-                            <li class="color-black current color-default tooltips" data-style="default"
-                                data-original-title="Default">
-                            </li>
-                            <li class="color-grey tooltips" data-style="grey" data-original-title="Grey">
-                            </li>
-                            <li class="color-blue tooltips" data-style="blue" data-original-title="Blue">
-                            </li>
-                            <li class="color-red tooltips" data-style="red" data-original-title="Red">
-                            </li>
-                            <li class="color-light tooltips" data-style="light" data-original-title="Light">
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="theme-option">
-						<span>
-						Layout </span>
-                        <select class="layout-option form-control input-small">
-                            <option value="fluid" selected="selected">Fluid</option>
-                            <option value="boxed">Boxed</option>
-                        </select>
-                    </div>
-                    <div class="theme-option">
-						<span>
-						Header </span>
-                        <select class="header-option form-control input-small">
-                            <option value="fixed" selected="selected">Fixed</option>
-                            <option value="default">Default</option>
-                        </select>
-                    </div>
-                    <div class="theme-option">
-						<span>
-						Sidebar </span>
-                        <select class="sidebar-option form-control input-small">
-                            <option value="fixed">Fixed</option>
-                            <option value="default" selected="selected">Default</option>
-                        </select>
-                    </div>
-                    <div class="theme-option">
-						<span>
-						Sidebar Position </span>
-                        <select class="sidebar-pos-option form-control input-small">
-                            <option value="left" selected="selected">Left</option>
-                            <option value="right">Right</option>
-                        </select>
-                    </div>
-                    <div class="theme-option">
-						<span>
-						Footer </span>
-                        <select class="footer-option form-control input-small">
-                            <option value="fixed">Fixed</option>
-                            <option value="default" selected="selected">Default</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <!-- END BEGIN STYLE CUSTOMIZER -->
             <!-- BEGIN PAGE HEADER-->
             {{--<h3 class="page-title">--}}
             {{--Blank Page--}}
@@ -617,6 +551,12 @@ License: You must have a valid license purchased only from themeforest(the above
             <div id="start-app" class="row">
                 <div class="col-md-12">
                     @yield('content')
+                </div>
+            </div>
+            {{--Start Vue Component--}}
+            <div id="my-root-vue" class="row">
+                <div class="col-xs-12">
+                    <router-view></router-view>
                 </div>
             </div>
             <!-- END PAGE CONTENT-->

@@ -56,6 +56,8 @@ mix.js(srAdminDir+'project_order/porlor_4/porlor_4_job/porlor_4_job_index.js',di
 //Porlor 4 Part
 //-- --Index
 mix.js(srAdminDir+'porlor_4_part/js/porlor_4_part_index.js',distAdminDir+'porlor_4_part/js');
+//Contents
+mix.js(srAdminDir+'content/js/content.js',distAdminDir+'content/js');
 
 
 //Test Api
