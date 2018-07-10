@@ -20,16 +20,17 @@ const router = new VueRouter({
     routes
 });
 // Set Middleware Guard
-router.beforeEach((to,from,next)=>{
-    let base_path = window.location.pathname;
-    console.log('Before Route');
-    console.log('Window location path',base_path);
-    if(base_path == '/admin' || base_path == '/public/admin'){
-        next();
-    }else{
-        console.log('Not Found route')
-    }
-});
+//รอเปิดใช้ตอนใช้งานจริง
+// router.beforeEach((to,from,next)=>{
+//     let base_path = window.location.pathname;
+//     console.log('Before Route');
+//     console.log('Window location path',base_path);
+//     if(base_path == '/admin' || base_path == '/public/admin'){
+//         next();
+//     }else{
+//         console.log('Not Found route')
+//     }
+// });
 export {
     router
 };

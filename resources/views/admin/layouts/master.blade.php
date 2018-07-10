@@ -43,8 +43,8 @@ License: You must have a valid license purchased only from themeforest(the above
           rel="stylesheet" type="text/css"/>
     <!-- END GLOBAL MANDATORY STYLES -->
     <!-- BEGIN PAGE LEVEL STYLES -->
-    <link rel="stylesheet" type="text/css"
-          href="{{asset('templates/admin/conquer/theme/assets/plugins/select2/select2.css')}}"/>
+    {{--<link rel="stylesheet" type="text/css"--}}
+          {{--href="{{asset('templates/admin/conquer/theme/assets/plugins/select2/select2.css')}}"/>--}}
     <link rel="stylesheet" type="text/css"
           href="{{asset('templates/admin/conquer/theme/assets/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.css')}}"/>
     <!-- END PAGE LEVEL STYLES -->
@@ -602,10 +602,10 @@ License: You must have a valid license purchased only from themeforest(the above
         type="text/javascript"></script>
 
 <!-- BEGIN PAGE LEVEL PLUGINS -->
-<script type="text/javascript"
-        src="{{asset('templates/admin/conquer/theme/assets/plugins/ckeditor/ckeditor.js')}}"></script>
-<script type="text/javascript"
-        src="{{asset('templates/admin/conquer/theme/assets/plugins/select2/select2.min.js')}}"></script>
+{{--<script type="text/javascript"--}}
+        {{--src="{{asset('templates/admin/conquer/theme/assets/plugins/ckeditor/ckeditor.js')}}"></script>--}}
+{{--<script type="text/javascript"--}}
+        {{--src="{{asset('templates/admin/conquer/theme/assets/plugins/select2/select2.min.js')}}"></script>--}}
 <script type="text/javascript"
         src="{{asset('templates/admin/conquer/theme/assets/plugins/datatables/media/js/jquery.dataTables.min.js')}}"></script>
 <script type="text/javascript"
@@ -613,8 +613,10 @@ License: You must have a valid license purchased only from themeforest(the above
 <!-- END CORE PLUGINS -->
 <script src="{{asset('templates/admin/conquer/theme/assets/scripts/app.js')}}"></script>
 <script src="{{asset('templates/admin/conquer/theme/assets/scripts/table-editable.js')}}"></script>
-<script src="{{asset('templates/admin/conquer/theme/assets/scripts/form-samples.js')}}"></script>
+{{--<script src="{{asset('templates/admin/conquer/theme/assets/scripts/form-samples.js')}}"></script>--}}
 <script src="{{asset('templates/admin/conquer/theme/assets/plugins/bootstrap-toastr/toastr.min.js')}}"></script>
+
+
 
 
 
@@ -626,7 +628,7 @@ License: You must have a valid license purchased only from themeforest(the above
     jQuery(document).ready(function () {
         App.init();
 //        TableEditable.init();
-        FormSamples.init();
+//         FormSamples.init();
         toastr.options = {
             "closeButton": false,
             "debug": false,

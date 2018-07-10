@@ -452,20 +452,20 @@ var App = function () {
     }
 
     // Handles custom checkboxes & radios using jQuery Uniform plugin
-    var handleUniform = function () {
-        if (!jQuery().uniform) {
-            return;
-        }
-        var test = $("input[type=checkbox]:not(.toggle, .make-switch), input[type=radio]:not(.toggle, .star, .make-switch)");
-        if (test.size() > 0) {
-            test.each(function () {
-                if ($(this).parents(".checker").size() == 0) {
-                    $(this).show();
-                    $(this).uniform();
-                }
-            });
-        }
-    }
+    // var handleUniform = function () {
+    //     if (!jQuery().uniform) {
+    //         return;
+    //     }
+    //     var test = $("input[type=checkbox]:not(.toggle, .make-switch), input[type=radio]:not(.toggle, .star, .make-switch)");
+    //     if (test.size() > 0) {
+    //         test.each(function () {
+    //             if ($(this).parents(".checker").size() == 0) {
+    //                 $(this).show();
+    //                 $(this).uniform();
+    //             }
+    //         });
+    //     }
+    // }
 
     var handleBootstrapSwitch = function () {
         if (!$().bootstrapSwitch) {
@@ -826,7 +826,7 @@ var App = function () {
             //core handlers
             handleInit(); // initialize core variables
             handleResponsiveOnResize(); // set and handle responsive    
-            handleUniform(); // hanfle custom radio & checkboxes
+            // handleUniform(); // handle custom radio & checkboxes
             handleScrollers(); // handles slim scrolling contents 
             handleResponsiveOnInit(); // handler responsive elements on page load
 
@@ -861,7 +861,7 @@ var App = function () {
             handleTooltips(); // handle bootstrap tooltips
             handlePopovers(); // handles bootstrap popovers
             handleAccordions(); //handles accordions 
-            handleUniform(); // hanfle custom radio & checkboxes     
+            // handleUniform(); // hanfle custom radio & checkboxes
             handleDropdownHover(); // handles dropdown hover     
             handleBootstrapSwitch(); // handles bootstrap switch plugin  
         },
@@ -1036,7 +1036,7 @@ var App = function () {
                     }
                 });
             } else {
-                handleUniform();
+                // handleUniform();
             }
 
         },

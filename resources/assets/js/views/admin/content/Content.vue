@@ -1,54 +1,47 @@
 <template>
-    <div class="row">
+    <div v-cloak class="row">
         <div class="col-xs-12">
             <div class="portlet">
                 <div class="portlet-title">
                     <div class="caption">
-                      Contents
+                        Contents
                     </div>
                 </div>
                 <div class="portlet-body">
-                    <div class="table-responsive">
-                        <table class="table table-striped table-hover table-bordered">
-                            <thead>
-                            <tr>
-                                <th>ลำดับ</th>
-                                <th>รายการ</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                    <app-table
+                            :columns="['ลำดับ','รายการ','แก้ไข']"
+                            :columnWidths="[10,40,30]"
+                            :hasCheckBox="true"
+                            :items="tableItems"
+                            itemRowClass="text-center"
+                            @checkedItems="testEmit"
+                    >
+                        <template slot="itemColumn" slot-scope="props">
+                            <td>{{props.index +1 }}</td>
+                            <td>{{props.item}}</td>
+                            <td></td>
+                        </template>
+                    </app-table>
                 </div>
             </div>
-        </div>
-        <div class="col-xs-12">
-            <app-table
-                    :headers="headers"
-                    :hasCheckBox="true"
-            ></app-table>
         </div>
     </div>
 </template>
 <script>
-    import MyTable from '../../../components/Table.vue';
     export default {
-        data(){
+        data() {
             return {
-                headers:[]
+                tableItems: ['A','B','C']
             }
         },
-        created(){
-            this.headers=[
-                {name:'AAAA'},
-                {name:'BBBB'},
-                {name:'CCCC'}
-            ]
+        created() {
+        },
+        mounted() {
+        },
+        methods:{
+            testEmit(event){
+                console.log(event)
+            }
         }
     }
 </script>
