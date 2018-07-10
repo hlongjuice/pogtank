@@ -1,8 +1,9 @@
 # Components
 ## Table
 ### Props
+
 |name|Type|default|description|
-|---|---|---|---|
+|:---:|---|:---:|---|
 |columns|Type : Array|[]|หัวตาราง,exam ['A','B','C']|
 |columnWidth|Type : String|[]|Custom Column Width,example [10,20,30]  |
 |columnClass|Type : String|table-row-th-center|ขนาด Column |
