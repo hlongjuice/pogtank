@@ -546,6 +546,7 @@ License: You must have a valid license purchased only from themeforest(the above
                 <div class="page-bar">
                     {{--Bread Crumb--}}
                     @yield('breadcrumb')
+                    <breadcrumbs v-if="$breadcrumbs.length > 1"></breadcrumbs>
                 </div>
                 <!-- END PAGE HEADER-->
                 {{--Start Vue Component--}}

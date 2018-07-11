@@ -23,6 +23,7 @@ import VuejsDialog from 'vuejs-dialog';
 import Cleave from 'vue-cleave-component';
 //After Use Vue Component Build Web
 import {router} from "./routes";
+import VueBreadcrumbs from 'vue-breadcrumbs';
 //Global Method
 Vue.mixin(Auth);
 window.Vue = Vue;
@@ -38,6 +39,7 @@ Vue.use(VuejsDialog,{
     okText: 'ยืนยัน',
     cancelText: 'ยกเลิก',
 });
+Vue.use(VueBreadcrumbs,require('../js/components/Breadcrumbs'));
 // Global Component
 Vue.component('pagination', require('laravel-vue-pagination'));
 Vue.component('vue-numeric', VueNumeric);

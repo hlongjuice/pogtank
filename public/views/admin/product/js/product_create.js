@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 228);
+/******/ 	return __webpack_require__(__webpack_require__.s = 232);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -1243,58 +1243,6 @@ module.exports = InterceptorManager;
 
 /***/ }),
 
-/***/ 228:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(229);
-
-
-/***/ }),
-
-/***/ 229:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_product_product_service__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_js_services_webUrl__ = __webpack_require__(2);
-
-
-
-var webUrl = new __WEBPACK_IMPORTED_MODULE_1__assets_js_services_webUrl__["a" /* default */]();
-var productService = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_product_product_service__["a" /* default */]();
-new Vue({
-    el: '#product-create',
-    data: {
-        form: {
-            name: ''
-        }
-    },
-    methods: {
-        addNewProduct: function addNewProduct(scope, ev) {
-            var _this = this;
-
-            this.$validator.validateAll(scope).then(function (result) {
-                if (result) {
-                    productService.addNewProduct(_this.form).then(function (result) {
-                        var route = webUrl.getRoute('/admin/product');
-                        window.location = route;
-                    }).catch(function (err) {
-                        alert(err);
-                    });
-                } else {
-                    vm.$validator.errors.items.forEach(function (error) {
-                        errMassage = errMassage + error.msg + ', ';
-                    });
-                    alert(errMassage);
-                }
-            });
-        }
-    }
-});
-
-/***/ }),
-
 /***/ 23:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1386,6 +1334,58 @@ module.exports = function dispatchRequest(config) {
   });
 };
 
+
+/***/ }),
+
+/***/ 232:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(233);
+
+
+/***/ }),
+
+/***/ 233:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_product_product_service__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_js_services_webUrl__ = __webpack_require__(2);
+
+
+
+var webUrl = new __WEBPACK_IMPORTED_MODULE_1__assets_js_services_webUrl__["a" /* default */]();
+var productService = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_product_product_service__["a" /* default */]();
+new Vue({
+    el: '#product-create',
+    data: {
+        form: {
+            name: ''
+        }
+    },
+    methods: {
+        addNewProduct: function addNewProduct(scope, ev) {
+            var _this = this;
+
+            this.$validator.validateAll(scope).then(function (result) {
+                if (result) {
+                    productService.addNewProduct(_this.form).then(function (result) {
+                        var route = webUrl.getRoute('/admin/product');
+                        window.location = route;
+                    }).catch(function (err) {
+                        alert(err);
+                    });
+                } else {
+                    vm.$validator.errors.items.forEach(function (error) {
+                        errMassage = errMassage + error.msg + ', ';
+                    });
+                    alert(errMassage);
+                }
+            });
+        }
+    }
+});
 
 /***/ }),
 

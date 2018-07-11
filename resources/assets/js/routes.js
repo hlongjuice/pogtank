@@ -7,10 +7,10 @@ import ContentCategory from './views/admin/content_category/ContentCategory.vue'
 let pathName = window.location.pathname;
 const routes = [
     {
-        path: '/contents',component: Content,meta:{breadcrumb:'Contents'},
+        path: '/contents',component: Content,meta:{breadcrumb:'เนื้อหา'},
         children:[
             {path:'',name: 'contents',component:ContentList},
-            {path:'create', name:'contents-create', component:ContentCreate,meta:{breadcrumb:'Create'}},
+            {path:'create', name:'contents-create', component:ContentCreate,meta:{breadcrumb:'สร้างใหม่'}},
         ]
     },
     {path:'/content/create',name:'create-content',component:ContentCreate},
