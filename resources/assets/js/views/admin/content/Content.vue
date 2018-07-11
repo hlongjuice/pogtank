@@ -8,10 +8,8 @@
 
 </template>
 <script>
-    import Breadcrumbs from "../../../components/Breadcrumbs";
     export default {
         name: "Content",
-        components: {Breadcrumbs},
         mounted(){
             console.log('Home Routes :',this.$route)
         }
