@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 218);
+/******/ 	return __webpack_require__(__webpack_require__.s = 226);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -1183,77 +1183,6 @@ module.exports = (
 
 /***/ }),
 
-/***/ 218:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(219);
-
-
-/***/ }),
-
-/***/ 219:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_product_product_service__ = __webpack_require__(33);
-
-
-var productService = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_product_product_service__["a" /* default */]();
-new Vue({
-    el: '#product-index',
-    data: {
-        showLoading: '',
-        products: {}
-    },
-    mounted: function mounted() {
-        this.showLoading = true;
-        this.initialData();
-    },
-    methods: {
-        //Initial
-        initialData: function initialData() {
-            var _this = this;
-
-            Promise.all([productService.getAllProductsWithPages().then(function (result) {
-                console.log('Products :', result);
-                _this.products = result;
-            }).catch(function (err) {
-                alert(err);
-            })]).then(function () {
-                _this.showLoading = false;
-            }).catch(function () {});
-        },
-
-        //Get All Product
-        refreshData: function refreshData() {
-            var _this2 = this;
-
-            productService.getAllProducts().then(function (result) {
-                _this2.products = result;
-            }).catch(function (err) {
-                alert(err);
-            });
-        },
-
-        //Get Selected Product Page
-        getSelectedProductPage: function getSelectedProductPage(page) {
-            var _this3 = this;
-
-            if (typeof page === 'undefined') {
-                page = 1;
-            }
-            productService.getSelectedProductPage(page).then(function (result) {
-                _this3.products = result;
-            }).catch(function (err) {
-                alert(err);
-            });
-        }
-    }
-});
-
-/***/ }),
-
 /***/ 22:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1311,6 +1240,77 @@ InterceptorManager.prototype.forEach = function forEach(fn) {
 
 module.exports = InterceptorManager;
 
+
+/***/ }),
+
+/***/ 226:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(227);
+
+
+/***/ }),
+
+/***/ 227:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_product_product_service__ = __webpack_require__(34);
+
+
+var productService = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_product_product_service__["a" /* default */]();
+new Vue({
+    el: '#product-index',
+    data: {
+        showLoading: '',
+        products: {}
+    },
+    mounted: function mounted() {
+        this.showLoading = true;
+        this.initialData();
+    },
+    methods: {
+        //Initial
+        initialData: function initialData() {
+            var _this = this;
+
+            Promise.all([productService.getAllProductsWithPages().then(function (result) {
+                console.log('Products :', result);
+                _this.products = result;
+            }).catch(function (err) {
+                alert(err);
+            })]).then(function () {
+                _this.showLoading = false;
+            }).catch(function () {});
+        },
+
+        //Get All Product
+        refreshData: function refreshData() {
+            var _this2 = this;
+
+            productService.getAllProducts().then(function (result) {
+                _this2.products = result;
+            }).catch(function (err) {
+                alert(err);
+            });
+        },
+
+        //Get Selected Product Page
+        getSelectedProductPage: function getSelectedProductPage(page) {
+            var _this3 = this;
+
+            if (typeof page === 'undefined') {
+                page = 1;
+            }
+            productService.getSelectedProductPage(page).then(function (result) {
+                _this3.products = result;
+            }).catch(function (err) {
+                alert(err);
+            });
+        }
+    }
+});
 
 /***/ }),
 
@@ -1685,7 +1685,7 @@ module.exports = defaults;
 
 /***/ }),
 
-/***/ 33:
+/***/ 34:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

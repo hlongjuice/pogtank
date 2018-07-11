@@ -1,14 +1,19 @@
 import VueRouter from 'vue-router';
 import Content from './views/admin/content/Content.vue';
+import ContentList from './views/admin/content/ContentList';
+import ContentCreate from './views/admin/content/ContentCreate.vue';
 import ContentCategory from './views/admin/content_category/ContentCategory.vue';
 // window.VueRouter = VueRouter;
 let pathName = window.location.pathname;
 const routes = [
     {
-        path: '/contents',
-        name: 'contents',
-        component: Content,
+        path: '/contents',component: Content,meta:{breadcrumb:'Contents'},
+        children:[
+            {path:'',name: 'contents',component:ContentList},
+            {path:'create', name:'contents-create', component:ContentCreate,meta:{breadcrumb:'Create'}},
+        ]
     },
+    {path:'/content/create',name:'create-content',component:ContentCreate},
     {
         path: '/content_categories',
         name: 'content_categories',

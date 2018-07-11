@@ -542,24 +542,26 @@ License: You must have a valid license purchased only from themeforest(the above
             {{--Blank Page--}}
             {{--<small>blank page</small>--}}
             {{--</h3>--}}
-            <div class="page-bar">
-                {{--Bread Crumb--}}
-                @yield('breadcrumb')
+            <div id="my-root-vue">
+                <div class="page-bar">
+                    {{--Bread Crumb--}}
+                    @yield('breadcrumb')
+                </div>
+                <!-- END PAGE HEADER-->
+                {{--Start Vue Component--}}
+                <div class="row">
+                    <div class="col-xs-12">
+                        <router-view></router-view>
+                    </div>
+                </div>
             </div>
-            <!-- END PAGE HEADER-->
+            <!-- END PAGE CONTENT-->
             <!-- BEGIN PAGE CONTENT-->
             <div id="start-app" class="row">
                 <div class="col-md-12">
                     @yield('content')
                 </div>
             </div>
-            {{--Start Vue Component--}}
-            <div id="my-root-vue" class="row">
-                <div class="col-xs-12">
-                    <router-view></router-view>
-                </div>
-            </div>
-            <!-- END PAGE CONTENT-->
         </div>
     </div>
     <!-- END CONTENT -->

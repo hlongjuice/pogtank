@@ -6,6 +6,7 @@
 
 
 require('./bootstrap');
+//Core Libraries
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import VeeValidate from 'vee-validate';
@@ -46,7 +47,6 @@ Vue.component('datepicker', Datepicker);
 Vue.component('cleave',Cleave);
 Vue.component('app-table',require('./components/Table.vue'));
 
-console.log('Router :',router);
 new Vue({
     el:'#my-root-vue',
     router // router for vue components

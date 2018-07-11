@@ -1,9 +1,11 @@
 <template>
     <div>
         <div class="row">
-            <div class="col-md-6"></div>
-            <div class="col-md-6">
-                <!--<a @click="" v-if="hasCheckBox" class="btn btn-danger">ลบหลายรายการ</a>-->
+            <slot name="customTopBtn">
+
+            </slot>
+            <div class="col-md-6 pull-right text-right margin-bottom-10">
+                <a @click="deleteItems" v-if="hasCheckBox" class="btn btn-danger">ลบหลายรายการ</a>
             </div>
         </div>
         <div class="row">
@@ -16,7 +18,7 @@
                             <!--Has Checkbox ?-->
                             <th v-if="hasCheckBox" class="text-center" width="5%">
                                 <label>
-                                    <input v-model="chkAllItems" type="checkbox">
+                                    <input v-model="checkedAllItems" type="checkbox">
                                 </label>
                             </th>
                             <template v-for="(column,index) in columns">
@@ -31,6 +33,7 @@
                                     </th>
                                 </template>
                             </template>
+                            <th v-if="hasDeleteSingleItemBtn">ลบ</th>
                             <!--Custom Header Slot-->
                             <slot v-if="customHeaderColumn" name="customHeaderColumn">
                             </slot>
@@ -41,11 +44,14 @@
                         <!--Table Items-->
                         <tr  :class="itemRowClass" v-for="(item,index) in items">
                             <td class="text-center" v-if="hasCheckBox">
-                                <label><input :value="item" v-model="chkItems" type="checkbox"/></label>
+                                <label><input :value="item" v-model="checkedItems" type="checkbox"/></label>
                             </td>
                             <slot name="itemColumn" :item="item" :index="index">
 
                             </slot>
+                            <td v-if="hasDeleteSingleItemBtn" class="text-center">
+                                <a class="btn btn-danger" @click="deleteSingleItem(item)">ลบ</a>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
@@ -87,6 +93,10 @@
                 type: Boolean,
                 default: false
             },
+            hasDeleteSingleItemBtn:{
+                type:Boolean,
+                default:true
+            },
             colSpan: {
                 type: Number,
                 default: null
@@ -105,8 +115,8 @@
         },
         data(){
             return{
-                chkAllItems:false,
-                chkItems: []
+                checkedAllItems:false,
+                checkedItems: []
             }
         },
         computed: {
@@ -115,26 +125,33 @@
             'pagination': Pagination
         },
         watch: {
-            chkAllItems(state) {
-                this.chkItems.splice(0);
+            checkedAllItems(state) {
+                this.checkedItems.splice(0);
                 if(state)
                 this.items.forEach(item => {
-                    this.chkItems.push(item);
+                    this.checkedItems.push(item);
                 });
             },
-            chkItems(){
-                //Call CheckedItems Method to send checkedItems back to parent
-                this.checkedItems()
+            items(){
+                if(this.items.length===0){
+                    this.checkedAllItems = false;
+                }
             }
         },
         methods: {
             //send checkedItems back to parent
-            checkedItems(){
-                this.$emit('checkedItems',{
-                    items:this.chkItems
+            deleteSingleItem(item){
+                this.checkedAllItems=false;
+                this.checkedItems.splice(0);
+                this.checkedItems.push(item);
+                this.deleteItems();
+            }
+            ,
+            deleteItems(){
+                this.$emit('deleteItems',{
+                    checkedItems:this.checkedItems
                 })
             }
         }
-
     }
 </script>
