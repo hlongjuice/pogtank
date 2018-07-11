@@ -61605,6 +61605,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -61650,7 +61660,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             type: Number,
             default: null
         },
-        customColumn: {
+        customHeaderColumn: {
             type: Boolean,
             default: false
         },
@@ -61699,7 +61709,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_c('div', {
+  return _c('div', [_vm._m(0), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-xs-12"
+  }, [_c('div', {
     staticClass: "table-responsive"
   }, [_c('table', {
     staticClass: "table table-hover table-bordered"
@@ -61742,17 +61756,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }
   })])]) : _vm._e(), _vm._v(" "), _vm._l((_vm.columns), function(column, index) {
-    return [(!_vm.customColumn) ? [_c('th', {
+    return [(!_vm.customHeaderColumn) ? [_c('th', {
       class: _vm.columnClass[index] || '',
       attrs: {
         "width": (_vm.columnWidths[index] || '') + '%',
         "colspan": _vm.colSpan,
         "rowspan": _vm.rowSpan
       }
-    }, [_vm._v("\n                            " + _vm._s(column) + "\n                        ")])] : _vm._e(), _vm._v(" "), (_vm.customColumn) ? _vm._t("customColumn", null, {
-      column: column
-    }) : _vm._e()]
-  })], 2)]), _vm._v(" "), _c('tbody', _vm._l((_vm.items), function(item, index) {
+    }, [_vm._v("\n                                    " + _vm._s(column) + "\n                                ")])] : _vm._e()]
+  }), _vm._v(" "), (_vm.customHeaderColumn) ? _vm._t("customHeaderColumn") : _vm._e()], 2)]), _vm._v(" "), _c('tbody', _vm._l((_vm.items), function(item, index) {
     return _c('tr', {
       class: _vm.itemRowClass
     }, [(_vm.hasCheckBox) ? _c('td', {
@@ -61793,8 +61805,16 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       item: item,
       index: index
     })], 2)
-  }))])])])
-},staticRenderFns: []}
+  }))])])])])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-md-6"
+  }), _vm._v(" "), _c('div', {
+    staticClass: "col-md-6"
+  })])
+}]}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()

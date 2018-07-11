@@ -1,46 +1,56 @@
 <template>
     <div>
-        <div class="table-responsive">
-            <table class="table table-hover table-bordered">
-                <!-- -- -- --Table Header -->
-                <thead>
-                <tr :class="headerRowClass">
-                    <!--Has Checkbox ?-->
-                    <th v-if="hasCheckBox" class="text-center" width="5%">
-                        <label>
-                            <input v-model="chkAllItems" type="checkbox">
-                        </label>
-                    </th>
-                    <template v-for="(column,index) in columns">
-                        <!--ถ้ามี custom Header จะไม่แสดงส่วนนี้-->
-                        <template v-if="!customColumn">
-                            <th
-                                    :class="columnClass[index] || ''"
-                                    :width="(columnWidths[index] || '') +'%'"
-                                    :colspan="colSpan"
-                                    :rowspan="rowSpan">
-                                {{column}}
+        <div class="row">
+            <div class="col-md-6"></div>
+            <div class="col-md-6">
+                <!--<a @click="" v-if="hasCheckBox" class="btn btn-danger">ลบหลายรายการ</a>-->
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered">
+                        <!-- -- -- --Table Header -->
+                        <thead>
+                        <tr :class="headerRowClass">
+                            <!--Has Checkbox ?-->
+                            <th v-if="hasCheckBox" class="text-center" width="5%">
+                                <label>
+                                    <input v-model="chkAllItems" type="checkbox">
+                                </label>
                             </th>
-                        </template>
-                        <!--Custom Header Slot-->
-                        <slot v-if="customColumn" name="customColumn" :column="column">
-                        </slot>
-                    </template>
-                </tr>
-                </thead>
-                <!-- -- -- --Table Body -->
-                <tbody>
-                <!--Table Items-->
-                <tr  :class="itemRowClass" v-for="(item,index) in items">
-                    <td class="text-center" v-if="hasCheckBox">
-                        <label><input :value="item" v-model="chkItems" type="checkbox"/></label>
-                    </td>
-                    <slot name="itemColumn" :item="item" :index="index">
+                            <template v-for="(column,index) in columns">
+                                <!--ถ้ามี custom Header จะไม่แสดงส่วนนี้-->
+                                <template v-if="!customHeaderColumn">
+                                    <th
+                                            :class="columnClass[index] || ''"
+                                            :width="(columnWidths[index] || '') +'%'"
+                                            :colspan="colSpan"
+                                            :rowspan="rowSpan">
+                                        {{column}}
+                                    </th>
+                                </template>
+                            </template>
+                            <!--Custom Header Slot-->
+                            <slot v-if="customHeaderColumn" name="customHeaderColumn">
+                            </slot>
+                        </tr>
+                        </thead>
+                        <!-- -- -- --Table Body -->
+                        <tbody>
+                        <!--Table Items-->
+                        <tr  :class="itemRowClass" v-for="(item,index) in items">
+                            <td class="text-center" v-if="hasCheckBox">
+                                <label><input :value="item" v-model="chkItems" type="checkbox"/></label>
+                            </td>
+                            <slot name="itemColumn" :item="item" :index="index">
 
-                    </slot>
-                </tr>
-                </tbody>
-            </table>
+                            </slot>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -85,7 +95,7 @@
                 type: Number,
                 default: null
             },
-            customColumn: {
+            customHeaderColumn: {
                 type: Boolean,
                 default: false
             },
