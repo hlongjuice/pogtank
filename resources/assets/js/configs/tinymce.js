@@ -35,7 +35,6 @@ export const tinyMceConfig = {
     imagetools_toolbar: "imageoptions", // Tools that show on inline Image
     file_picker_types: 'image',
     images_reuse_filename: true, // Use Original File Name
-    // images_upload_url: "http://localhost:3000/pogtank/public/my_test",
     images_upload_handler: function (blobInfo, success, failure) {
         let formData = new FormData();
         // formData.append('file', blobInfo.blob(), blobInfo.filename());

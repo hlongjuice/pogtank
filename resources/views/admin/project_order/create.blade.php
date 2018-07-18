@@ -78,7 +78,7 @@
                                 {{-- Form Number --}}
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="control-label">ออกเมื่อวันที่ (ระบุเฉพาะตัวเลข)</label>
+                                        <label class="control-label">ออกเมื่อวันที่ (เช่น 01/12/61)</label>
                                         <cleave v-model="form.form_number_release" class="form-control"
                                                 :raw="false"
                                                 :options=" {
@@ -202,7 +202,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="control-label">เมื่อวันที่ (ระบุเฉพาะตัวเลข)</label>
+                                        <label class="control-label">เมื่อวันที่  (เช่น 01/12/61)</label>
                                         <cleave v-model="form.referee_calculated_date" class="form-control"
                                                 :raw="false"
                                                 :options=" {

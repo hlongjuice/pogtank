@@ -75,7 +75,6 @@
                     title: '',
                     details:''
                 },
-
                 tinyMceInit: tinyMceConfig,
             }
         },

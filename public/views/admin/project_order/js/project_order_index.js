@@ -65,7 +65,7 @@
 /************************************************************************/
 /******/ ({
 
-/***/ 170:
+/***/ 169:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -153,13 +153,12 @@ var WebUrl = function () {
     {
         _classCallCheck(this, WebUrl);
 
-        // this.url='http://localhost:3000/pogtank/public';
+        this.url = 'http://localhost:3000/pogtank/public';
         // this.url='http://localhost/pogtank/public';
         // this.url=':2720';
         // this.url='http://www.ggdemo.com/public';
         // this.url='http://ggdemo.thddns.net:2720/pogtank/public'
-        this.url = '';
-        // this.url='/public';
+        // this.url='';
     }
 
     _createClass(WebUrl, [{
@@ -923,7 +922,7 @@ var ProjectReferee = {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ProjectRefereeAddModal; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_referee_referee_rank_service__ = __webpack_require__(170);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_referee_referee_rank_service__ = __webpack_require__(169);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_js_services_project_order_project_referee_service__ = __webpack_require__(42);
 
 
@@ -1041,7 +1040,7 @@ var ProjectRefereeAddModal = {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ProjectRefereeEditModal; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_referee_referee_rank_service__ = __webpack_require__(170);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_referee_referee_rank_service__ = __webpack_require__(169);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_js_services_project_order_project_referee_service__ = __webpack_require__(42);
 
 
