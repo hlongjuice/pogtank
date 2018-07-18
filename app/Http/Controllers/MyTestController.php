@@ -7,7 +7,9 @@ use Illuminate\Http\Request;
 class MyTestController extends Controller
 {
     public function getText(){
-        $text = 'Yooo!';
-        return response()->json($text);
+        $text = collect([
+            "location" => '/your/uploaded/image/file'
+        ]);
+        return json_encode(['location' => '/uploaded/image/path/image.png']);
     }
 }

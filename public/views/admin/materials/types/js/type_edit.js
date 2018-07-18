@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 228);
+/******/ 	return __webpack_require__(__webpack_require__.s = 235);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -1243,106 +1243,6 @@ module.exports = InterceptorManager;
 
 /***/ }),
 
-/***/ 228:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(229);
-
-
-/***/ }),
-
-/***/ 229:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_material_material_type_service__ = __webpack_require__(30);
-
-var dict = {
-    custom: {
-        typeName: { required: 'ชื่อหมวดหมู่' },
-        parentTypeID: { required: 'ลำดับหมวดหมู่' },
-        codePrefix: { required: 'รหัสหมวดหมู่' }
-    }
-};
-var path = window.location.pathname;
-var typeID = path.split("/").slice(-1);
-var materialType = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_material_material_type_service__["a" /* default */]();
-var oldType = {};
-var vm = new Vue({
-    el: '#material-type-edit',
-    //Created
-    created: function created() {
-        this.$validator.localize('en', dict);
-    },
-    //Data
-    data: {
-        showLoading: '',
-        parentTypes: [],
-        form: {
-            name: '',
-            parentType: {
-                id: '',
-                name: ''
-            },
-            details: '',
-            codePrefix: '',
-            parentTypeID: ''
-        }
-    },
-    mounted: function mounted() {
-        this.showLoading = true;
-
-        Promise.all([
-        //Get Old Types
-        materialType.getMaterialType(typeID).then(function (oldType) {
-            console.log(oldType);
-            vm.form = {
-                name: oldType.name,
-                parentType: {
-                    id: oldType.ancestors[0] ? oldType.ancestors[0].id : 0,
-                    name: oldType.ancestors[0] ? oldType.ancestors[0].name : 'หมวดหมู่หลัก'
-                },
-                details: oldType.details,
-                codePrefix: oldType.code_prefix,
-                parentTypeID: oldType.ancestors[0] ? oldType.ancestors[0].id : 0
-            };
-        }).catch(function (err) {
-            console.log(err);
-        }),
-        //Get all Parent and Sibling Types
-        materialType.getMaterialParentSiblingTypes(typeID).then(function (result) {
-            vm.parentTypes = result;
-            console.log(result);
-        }).catch(function (err) {
-            console.log(err);
-        })]).then(function () {
-            vm.showLoading = false;
-        });
-    },
-    methods: {
-        validateForm: function validateForm(scope) {
-            this.$validator.validateAll(scope).then(function (result) {
-                if (result) {
-                    axios.put('/admin/materials/types/' + oldType.id, vm.form).then(function (result) {
-                        window.location = indexRoute;
-                    }).catch(function (err) {
-                        console.log(err);
-                        alert('ไม่สามารถเพิ่มข้อมูลได้กรุณารองใหม่อีกครั้ง');
-                    });
-                }
-            });
-        }
-    },
-    watch: {
-        'form.parentType': function formParentType() {
-            this.form.parentTypeID = this.form.parentType.id;
-        }
-    }
-});
-
-/***/ }),
-
 /***/ 23:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1434,6 +1334,106 @@ module.exports = function dispatchRequest(config) {
   });
 };
 
+
+/***/ }),
+
+/***/ 235:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(236);
+
+
+/***/ }),
+
+/***/ 236:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_material_material_type_service__ = __webpack_require__(30);
+
+var dict = {
+    custom: {
+        typeName: { required: 'ชื่อหมวดหมู่' },
+        parentTypeID: { required: 'ลำดับหมวดหมู่' },
+        codePrefix: { required: 'รหัสหมวดหมู่' }
+    }
+};
+var path = window.location.pathname;
+var typeID = path.split("/").slice(-1);
+var materialType = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_material_material_type_service__["a" /* default */]();
+var oldType = {};
+var vm = new Vue({
+    el: '#material-type-edit',
+    //Created
+    created: function created() {
+        this.$validator.localize('en', dict);
+    },
+    //Data
+    data: {
+        showLoading: '',
+        parentTypes: [],
+        form: {
+            name: '',
+            parentType: {
+                id: '',
+                name: ''
+            },
+            details: '',
+            codePrefix: '',
+            parentTypeID: ''
+        }
+    },
+    mounted: function mounted() {
+        this.showLoading = true;
+
+        Promise.all([
+        //Get Old Types
+        materialType.getMaterialType(typeID).then(function (oldType) {
+            console.log(oldType);
+            vm.form = {
+                name: oldType.name,
+                parentType: {
+                    id: oldType.ancestors[0] ? oldType.ancestors[0].id : 0,
+                    name: oldType.ancestors[0] ? oldType.ancestors[0].name : 'หมวดหมู่หลัก'
+                },
+                details: oldType.details,
+                codePrefix: oldType.code_prefix,
+                parentTypeID: oldType.ancestors[0] ? oldType.ancestors[0].id : 0
+            };
+        }).catch(function (err) {
+            console.log(err);
+        }),
+        //Get all Parent and Sibling Types
+        materialType.getMaterialParentSiblingTypes(typeID).then(function (result) {
+            vm.parentTypes = result;
+            console.log(result);
+        }).catch(function (err) {
+            console.log(err);
+        })]).then(function () {
+            vm.showLoading = false;
+        });
+    },
+    methods: {
+        validateForm: function validateForm(scope) {
+            this.$validator.validateAll(scope).then(function (result) {
+                if (result) {
+                    axios.put('/admin/materials/types/' + oldType.id, vm.form).then(function (result) {
+                        window.location = indexRoute;
+                    }).catch(function (err) {
+                        console.log(err);
+                        alert('ไม่สามารถเพิ่มข้อมูลได้กรุณารองใหม่อีกครั้ง');
+                    });
+                }
+            });
+        }
+    },
+    watch: {
+        'form.parentType': function formParentType() {
+            this.form.parentTypeID = this.form.parentType.id;
+        }
+    }
+});
 
 /***/ }),
 

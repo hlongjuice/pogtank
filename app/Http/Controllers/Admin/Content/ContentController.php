@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 
 class ContentController extends Controller
 {
-    public function index(){
-        return view('admin.content.content');
+    public function addContent(){
+
     }
 }

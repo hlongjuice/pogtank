@@ -39,12 +39,15 @@ Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 // -- Add new Admin
 Route::post('register_admin', 'AdminController@store')
     ->name('register_admin.store');
-// -- Admin All Method
+
+//region  Admin All Methods
 Route::prefix('admin')->middleware('auth')
     ->group(function () {
+        //region -- Dashboard
         Route::get('/', 'Admin\DashboardController@index')
             ->name('admin.dashboard');
-        //-- -- Product
+        //endregion
+        //region -- Product
         Route::prefix('product')->group(function () {
             // -- --Index
             Route::get('/', 'Admin\Product\ProductController@index')->name('admin.product.index');
@@ -57,7 +60,8 @@ Route::prefix('admin')->middleware('auth')
             // -- --Get All Product with Page
             Route::get('/get_all_products_with_pages', 'Admin\Product\ProductController@getAllProductsWithPages');
         });
-        //-- -- Project Order
+        //endregion
+        //region -- Project Order
         Route::prefix('project_order')->group(function () {
             // -- -- --Index
             Route::get('/', 'Admin\Project\ProjectController@index')->name('admin.project_order.index');
@@ -151,7 +155,8 @@ Route::prefix('admin')->middleware('auth')
                 Route::put('update_referee/{project_order_id}', 'Admin\Project\ProjectRefereeController@updateReferee');
             });
         });
-        // -- -- Referee
+        //endregion
+        //region -- Referee
         Route::prefix('referee_rank')->group(function () {
             //Get All Referee
             Route::get('get_referee_ranks', 'Admin\Referee\RefereeRankController@getRefereeRanks');
@@ -162,8 +167,8 @@ Route::prefix('admin')->middleware('auth')
             //Delete Referee
             Route::delete('delete_rank/{referee_id}', 'Admin\Referee\RefereeRankController@deleteRank');
         });
-
-        // -- -- Porlor 4 Part
+        //endregion
+        //region -- Porlor 4 Part
         Route::prefix('porlor_4_parts')->group(function () {
             //index
             Route::get('/', 'Admin\Project\Porlor4PartController@index')->name('admin.porlor_4_part.index');
@@ -174,7 +179,8 @@ Route::prefix('admin')->middleware('auth')
             //Get Available Parts
             Route::get('/get_available_parts/{project_order_id}/porlor_4/{porlor_4_id}', 'Admin\Project\Porlor4PartController@getAvailablePart');
         });
-        //-- --Material
+        //endregion
+        //region -- Material
         Route::prefix('materials')->group(function () {
             //-- -- --  Material Types
             Route::prefix('types')->group(function () {
@@ -296,12 +302,14 @@ Route::prefix('admin')->middleware('auth')
                 Route::get('/provinces', 'Admin\City\CityController@getProvinces');
             });
         });
-
-        // -- -- Contents
+        //endregion
+        //region -- Contents
         Route::prefix('contents')->group(function(){
-           Route::get('/','Admin\Content\ContentController@index');
+            Route::post('upload_image','Admin\Content\ContentImageController@uploadImage');
         });
+        //endregion
     });
+//endregion
 
 // -- All Web Method
 Route::prefix('project')->group(function () {

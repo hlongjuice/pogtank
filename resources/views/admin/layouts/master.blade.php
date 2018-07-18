@@ -586,6 +586,9 @@ License: You must have a valid license purchased only from themeforest(the above
         type="text/javascript"></script>
 <script src="{{asset('templates/admin/conquer/theme/assets/plugins/jquery-migrate-1.2.1.min.js')}}"
         type="text/javascript"></script>
+<script src="{{asset('plugins/tinymce/tinymce.min.js')}}"
+        type="text/javascript"></script>
+
 
 <!-- Build in Scripts -->
 {{--Main Script--}}

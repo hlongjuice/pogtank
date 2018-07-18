@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 226);
+/******/ 	return __webpack_require__(__webpack_require__.s = 233);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -1243,96 +1243,6 @@ module.exports = InterceptorManager;
 
 /***/ }),
 
-/***/ 226:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(227);
-
-
-/***/ }),
-
-/***/ 227:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_material_material_type_service__ = __webpack_require__(30);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_js_services_webUrl__ = __webpack_require__(2);
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-
-
-//Custom Error Message
-var dict = {
-    custom: {
-        typeName: { required: 'ชื่อหมวดหมู่' },
-        parentTypeID: { required: 'ลำดับหมวดหมู่' },
-        codePrefix: { required: 'รหัสหมวดหมู่' }
-    }
-};
-var webUrl = new __WEBPACK_IMPORTED_MODULE_1__assets_js_services_webUrl__["a" /* default */]();
-var indexRoute = webUrl.getRoute('/admin/materials/types/submitted');
-var materialTypes = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_material_material_type_service__["a" /* default */]();
-var vm = new Vue(_defineProperty({
-    el: '#material-type-create',
-    //Created
-    created: function created() {
-        this.$validator.localize('en', dict);
-    },
-    //Data
-    data: {
-        showLoading: '',
-        parentTypes: [],
-        form: {
-            typeName: '',
-            parentType: {
-                id: 0,
-                name: 'หมวดหมู่หลัก'
-            },
-            details: '',
-            codePrefix: '',
-            parentTypeID: 0
-        }
-    },
-    //End Data
-    mounted: function mounted() {
-        var _this = this;
-
-        this.showLoading = true;
-        materialTypes.getMaterialParentTypes().then(function (result) {
-            vm.parentTypes = result;
-            _this.showLoading = false;
-        }).catch(function (err) {
-            console.log(err);
-            _this.showLoading = false;
-        });
-    },
-    //Method
-    methods: {
-        validateForm: function validateForm(scope, ev) {
-            this.$validator.validateAll(scope).then(function (result) {
-                if (result) {
-                    axios.post('/admin/materials/types', vm.form).then(function (result) {
-                        window.location = indexRoute;
-                    }).catch(function (err) {
-                        alert("ไม่สามารถเพิ่มข้อมูลได้ลองใหม่อีกครั้ง");
-                        console.log(err);
-                    });
-                } else {
-                    alert('Error');
-                }
-            });
-        }
-    },
-    watch: {
-        'form.parentType': function formParentType() {
-            this.form.parentTypeID = this.form.parentType.id;
-        }
-    }
-}, 'created', function created() {}));
-
-/***/ }),
-
 /***/ 23:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1424,6 +1334,96 @@ module.exports = function dispatchRequest(config) {
   });
 };
 
+
+/***/ }),
+
+/***/ 233:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(234);
+
+
+/***/ }),
+
+/***/ 234:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_material_material_type_service__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_js_services_webUrl__ = __webpack_require__(2);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+//Custom Error Message
+var dict = {
+    custom: {
+        typeName: { required: 'ชื่อหมวดหมู่' },
+        parentTypeID: { required: 'ลำดับหมวดหมู่' },
+        codePrefix: { required: 'รหัสหมวดหมู่' }
+    }
+};
+var webUrl = new __WEBPACK_IMPORTED_MODULE_1__assets_js_services_webUrl__["a" /* default */]();
+var indexRoute = webUrl.getRoute('/admin/materials/types/submitted');
+var materialTypes = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_material_material_type_service__["a" /* default */]();
+var vm = new Vue(_defineProperty({
+    el: '#material-type-create',
+    //Created
+    created: function created() {
+        this.$validator.localize('en', dict);
+    },
+    //Data
+    data: {
+        showLoading: '',
+        parentTypes: [],
+        form: {
+            typeName: '',
+            parentType: {
+                id: 0,
+                name: 'หมวดหมู่หลัก'
+            },
+            details: '',
+            codePrefix: '',
+            parentTypeID: 0
+        }
+    },
+    //End Data
+    mounted: function mounted() {
+        var _this = this;
+
+        this.showLoading = true;
+        materialTypes.getMaterialParentTypes().then(function (result) {
+            vm.parentTypes = result;
+            _this.showLoading = false;
+        }).catch(function (err) {
+            console.log(err);
+            _this.showLoading = false;
+        });
+    },
+    //Method
+    methods: {
+        validateForm: function validateForm(scope, ev) {
+            this.$validator.validateAll(scope).then(function (result) {
+                if (result) {
+                    axios.post('/admin/materials/types', vm.form).then(function (result) {
+                        window.location = indexRoute;
+                    }).catch(function (err) {
+                        alert("ไม่สามารถเพิ่มข้อมูลได้ลองใหม่อีกครั้ง");
+                        console.log(err);
+                    });
+                } else {
+                    alert('Error');
+                }
+            });
+        }
+    },
+    watch: {
+        'form.parentType': function formParentType() {
+            this.form.parentTypeID = this.form.parentType.id;
+        }
+    }
+}, 'created', function created() {}));
 
 /***/ }),
 
