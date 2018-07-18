@@ -6,7 +6,7 @@ module.exports = {
             {
                 title: 'Components',
                 children: [
-                   'Table'//Page Name
+                   'Table','Breadcrumbs'//Page Name
                 ].map(item=>{return componentPath+item})
             }
         ]

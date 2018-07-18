@@ -1,6 +1,5 @@
 # Table
 ## Events
-
 |name|description|
 |---|---|
 |deleteItems|Delete Selected Items|
