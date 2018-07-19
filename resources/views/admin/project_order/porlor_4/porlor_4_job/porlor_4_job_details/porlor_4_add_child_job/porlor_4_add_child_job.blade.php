@@ -24,7 +24,7 @@
                         <div class="panel-title text-center">
                             <h4>เพิ่มกลุ่มงาน</h4>
                         </div>
-                        <button class="btn btn-danger" @click="closeAddChildJobModal">Close</button>
+                        <button type="button" class="btn btn-danger" @click="closeAddChildJobModal">Close</button>
                         <button type="submit" class="col-xs-3 pull-right btn btn-success margin-bottom-20">
                             บันทึก
                         </button>
@@ -54,7 +54,7 @@
                                                             :options="add_child_job.parents" :option-height="104"
                                                             :show-labels="false"
                                                             :allow-empty="false"
-                                                            :max-height="180"
+                                                            :max-height="150"
                                                             :custom-label="addChildJob_childJobCustomLabel"
                                                     >
                                                         <template slot="option" slot-scope="props">

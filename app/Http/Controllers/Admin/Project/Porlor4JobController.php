@@ -151,7 +151,6 @@ class Porlor4JobController extends Controller
 
     public function setPageNumber($jobParent, $page_number)
     {
-
         //Check Page Number
         //เช็คจำนวนลูกๆ
         if ($jobParent->children()->count() > 0) {
@@ -224,6 +223,7 @@ class Porlor4JobController extends Controller
         return response()->json($parents);
     }
 
+    //การคำนวน ปร.4 ต้องมีกลุ่มหลักอย่างน้อย 1 กลุ่ม (item Lv 1)
     //ใส่ข้อมูลผลรวมของกลุ่มต่างๆไว้ที่ item ตัวสุดท้ายของกลุ่มนั้น เพราะตอนนำไปใช้งาน ส่ง nested ที่แปลงเป็น flat เรีนบร้อยแล้ว
     public function getAllChildJobs($porlor_4_id, $root_job_id)
     {
@@ -237,25 +237,30 @@ class Porlor4JobController extends Controller
         $jobs = $this->calculatePorlor4ChildJob($root_job_id);
 
         //Recursive function เพื่อแปลงข้อมูลให้อยู่ใน Flat array คือทุก lv อยู่ในระดับเดียวกัน
-        $toFlatTree = function ($jobs, &$parent = '') use (&$toFlatTree, $jobsFlatTree) {
+        // -- และมีการจัดผลรวมของกลุ่มในขั้นตอนนี้
+        $toFlatTree = function ($jobs, &$parent = '',&$lastChildPage = 0) use (&$toFlatTree, $jobsFlatTree) {
             $count = 0;
             foreach ($jobs as $key => $job) {
                 $count++;
+                if($lastChildPage < $job->page_number){
+                    $lastChildPage = $job->page_number;
+                }
                 $jobsFlatTree->push($job);
-
-                $toFlatTree($job->children, $job);
-
+                //ถ้า Job ยังมี children ก็ Recursive ไป node ต่อไป
+                $toFlatTree($job->children, $job,$lastChildPage);
                 //นำหัวกลุ่มของแต่ละกลุ่มไปต่อท้ายลูกของตัวเอง เพื่อนใช้เป็น Row สำหรับสรุปผลการคำนวนเฉพาะกลุ่ม
                 if ($parent != null) {
-                    $parent->child_count = $count;
-                    if ($parent->child_count == $parent->total_children_number) {
+                    $parent->last_child_page = $lastChildPage;
+                    $parent->child_count = $count; // ลำดับของลูก
+                    if ($parent->child_count == $parent->total_children_number) { //ถ้าลำดับของลูก = จำนวนลูกทั้งหมด (item สุดท้ายในกลุ่ม)
                         $sumGroup = collect([]);
                         //กรณีเป็นกลุ่ม แยกต่อหน่วย
                         if ($parent->group_item_per_unit) {
                             $sumGroup = collect([
                                 'row_group_result' => 1,
                                 'group_item_per_unit'=>1,
-                                'page_number' => $job->page_number,
+                               // 'page_number' => $job->page_number, //แบบเก่าหน้าของกลุ่มเป็นไปตามของหัวกลุ่มซึ่งจะมีปัญหาหากลูกอยู่คนละหน้ากับหัว
+                                'page_number'=>$parent->last_child_page, //หน้าผลรวมจะเป็นหน้าของลูกตัวสุดท้ายในกลุ่มนะขณะนั้น
                                 'group_sum_total_price' => $parent->group_item_per_unit_sum_total_price,
                                 'group_sum_total_wage' => $parent->group_item_per_unit_sum_total_wage,
                                 'group_sum_total_price_wage' => $parent->group_item_per_unit_sum_total_price_wage,
@@ -267,7 +272,8 @@ class Porlor4JobController extends Controller
                             $sumGroup = collect([
                                 'row_group_result' => 1,
                                 'group_item_per_unit'=>0,
-                                'page_number' => $job->page_number,
+                              //  'page_number' => $job->page_number,//แบบเก่าหน้าของกลุ่มเป็นไปตามของหัวกลุ่มซึ่งจะมีปัญหาหากลูกอยู่คนละหน้ากับหัว
+                                'page_number'=>$parent->last_child_page, //หน้าผลรวมจะเป็นหน้าของลูกตัวสุดท้ายในกลุ่มนะขณะนั้น
                                 'group_sum_total_price' => $parent->sum_total_price,
                                 'group_sum_total_wage' => $parent->sum_total_wage,
                                 'group_sum_total_price_wage' => $parent->sum_total_price_wage,
@@ -281,8 +287,7 @@ class Porlor4JobController extends Controller
                 }
             }
         };
-
-        $toFlatTree($jobs);
+        $toFlatTree($jobs); // Call Recursive
 
         //จำนวนหน้าทั้งหมด
         $total_page = $jobsFlatTree->max('page_number');
@@ -291,9 +296,8 @@ class Porlor4JobController extends Controller
         //คำนวนผลรวมภายใน 1 หน้า
         foreach ($groupPages as $page => $allJobs) {
             $page_sum = collect([]);
-
             $bringForward = collect([]);//ยอดยกมา
-            $lastRowInPage = collect([]);
+            $lastRowInPage = collect([]);//ใช้เป็นยอดยกไป
             $lastRowInPage['row_page_result'] = 1;
             $lastRowInPage['page_sum_total_price'] = 0;
             $lastRowInPage['page_sum_total_wage'] = 0;
@@ -313,7 +317,7 @@ class Porlor4JobController extends Controller
                         $lastRowInPage['last_job_order_number'] = $job['job_order_number'];
                     }
                 }
-                //ถ้าเป็นกลุ่มเอาผมรวมของกลุ่ม level 2 มาคิด หรือ level ๅ ที่เป็นแถวผลรวมของ Group Unit Per Item
+                //ถ้าเป็นกลุ่มเอาผมรวมของกลุ่ม level 2 มาคิด หรือ level 1 ที่เป็นแถวผลรวมของ Group Unit Per Item
                 if (($job['group_depth'] == 2  && $job['row_group_result'] ==1) ||
                     ($job['group_item_per_unit'] == 1 && $job['group_depth']==1 && $job['row_group_result'] ==1)) {
                     $lastRowInPage['page_sum_total_price'] += $job['group_sum_total_price'];
@@ -530,6 +534,7 @@ class Porlor4JobController extends Controller
             $root = Porlor4Job::with('items')
                 ->withDepth()
                 ->descendantsAndSelf($child_job_id)->toTree()->first();
+            //ถ้าใช้ nextSiblings()->withDepth()->get() ,Siblings ทืี่ได้ Children จะไม่มี Depth ต้องเรียกใช้ withDepth()->get() ที่ Children อีกครั้ง
             $nextSiblings = $root->nextSiblings()->withDepth()->get();
             //ถ้า มี root มี items ลบ items ของ root
             $root->items()->delete();
@@ -561,25 +566,30 @@ class Porlor4JobController extends Controller
         $updateOrderNumber = function ($jobs, $parent_order_number = '') use (&$updateOrderNumber) {
             $new_order_number = 0;
             foreach ($jobs as $job) {
-
+                //ถ้าเป็น lv 1 ลบลำดับจากเดิมแล้ว save ลง DB ได้เลย
+                //จากนั้นก็เข้า Recursive ต่อหากว่ามี children
                 if ($job->depth == 1) {
                     $job->job_order_number = $job->job_order_number - 1;
                     $job->save();
-                } elseif ($job->depth > 1) {
+                }
+                // หาก lv มากกว่า 1
+                elseif ($job->depth > 1) {
+                    //-1 เฉพาะ sibling ที่ lv เดียวกับ item ที่โดนลบ
                     if ($parent_order_number == '') {
                         $beginningNumber = substr($job->job_order_number, 0, -1);
                         $arrayNumber = explode('.', $job->job_order_number);
                         $updateLastNumber = end($arrayNumber) - 1; //เอาตัวเลขสุดท้ายแล้วลบจากเดิมไป 1
                         $job->job_order_number = $beginningNumber . $updateLastNumber;
                         $job->save();
-                    } else {
+                    } else { //เงื่อนไขสำหรับลูกๆของ sibling โดยจะนำเอา job_order_number ของแม่ที่อยู่ที่ผ่านการแก้ไขแล้วแปกไว้ด้านหน้า lastNumber ของลูกๆไปตามลำดับ Lv
                         $arrayNumber = explode('.', $job->job_order_number);
                         $lastNumber = end($arrayNumber);
-                        $job->job_order_number = $parent_order_number . $lastNumber;
+                        $job->job_order_number = $parent_order_number .'.'. $lastNumber;
                         $job->save();
                     }
                 }
-                $updateOrderNumber($job->children, $job->job_order_number);
+                //ต้องใช้ $job->children()->withDepth()->get() เพราะ $job->children; children ที่ได้ไม่มี depth Props ติดมาด้วย
+                $updateOrderNumber($job->children()->withDepth()->get(), $job->job_order_number);
             }
         };
         $updateOrderNumber($nextSiblings);

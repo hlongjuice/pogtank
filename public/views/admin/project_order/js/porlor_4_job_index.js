@@ -1914,7 +1914,7 @@ var Porlor4AddChildJob = {
                         alert(err);
                     });
                 } else {
-                    console.log('Empty');
+                    alert('กรุณาระบบข้อมูล');
                 }
             });
         },

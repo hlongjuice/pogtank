@@ -68,7 +68,7 @@ export const Porlor4AddChildJob ={
                                 console.log(result);
                             }).catch(err=>{alert(err)})
                     }else{
-                        console.log('Empty')
+                       alert('กรุณาระบบข้อมูล')
                     }
                 })
         },
