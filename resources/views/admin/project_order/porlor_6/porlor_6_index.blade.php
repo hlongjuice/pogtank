@@ -76,8 +76,7 @@
                                             <p>แบบเลขที่ : @{{ porlor6.project.form_number }}</p>
                                         </div>
                                         <div class="col-md-6">
-                                            <p>ออกเมื่อวันที่ : @{{ porlor6.project.form_number_release |
-                                                moment('DD/MM/YYYY')}}</p>
+                                            <p>ออกเมื่อวันที่ : @{{ porlor6.project.form_number_release }}</p>
                                         </div>
                                     </div>
                                     {{--Owner and Agency--}}
@@ -95,8 +94,7 @@
                                             <p>คำนวนราคากลางโดย : @{{ porlor6.project.referee_name }}</p>
                                         </div>
                                         <div class="col-md-6">
-                                            <p>เมื่อวันที่ : @{{ porlor6.project.referee_calculated_date|
-                                                moment('DD/MM/YYYY')}}</p>
+                                            <p>เมื่อวันที่ : @{{ porlor6.project.referee_calculated_date }}</p>
                                         </div>
                                     </div>
                                 </div>

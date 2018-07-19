@@ -38,8 +38,9 @@ class ExportPorlor4Controller extends Controller
             'porlor4.projectDetails.referees',
             'porlor4.part'
         ])->where('id', $root_job_id)->first();
+        $excelName = iconv_substr('ปร4-'.$rootJob->name,0,30,'UTF-8');
         $rootJob->calculated_child_job = (new Porlor4JobController)->getAllChildJobs($porlor4_id, $root_job_id);
-        Excel::create('ปร.4 -'.$rootJob->name, function (LaravelExcelWriter $excel) use ($rootJob) {
+        Excel::create($excelName, function (LaravelExcelWriter $excel) use ($rootJob) {
             $this->setExcel($excel,$rootJob);
         })->export('xls');
 //        return response()->json($rootJob);
@@ -58,7 +59,8 @@ class ExportPorlor4Controller extends Controller
             'part'
         ])
         ->where('id',$porlor4_id)->first();
-        Excel::create('ปร.4 - ส่วน'.$porlor4->part->name,function(LaravelExcelWriter $excel) use($porlor4){
+        $excelName = iconv_substr('ปร4-ส่วน'.$porlor4->part->name,0,30,'UTF-8');
+        Excel::create($excelName,function(LaravelExcelWriter $excel) use($porlor4){
             foreach ($porlor4->jobs as $rootJob ){
                 $rootJob->calculated_child_job = (new Porlor4JobController)->getAllChildJobs($porlor4->id, $rootJob->id);
                 $this->setExcel($excel,$rootJob);
@@ -92,7 +94,8 @@ class ExportPorlor4Controller extends Controller
     }
     //Set Excel
     public function setExcel(LaravelExcelWriter $excel,$rootJob){
-        $excel->sheet($rootJob->name, function ($sheet) use ($rootJob) {
+        $sheetName = iconv_substr($rootJob->name,0,30,'UTF-8');
+        $excel->sheet($sheetName, function ($sheet) use ($rootJob) {
             $row =1;
             $this->setSheetStyles($sheet);
             foreach ($rootJob->calculated_child_job as $childJob) {
