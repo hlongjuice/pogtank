@@ -13,7 +13,7 @@
                 <div class="table-responsive">
                     <table class="table table-hover table-bordered">
                         <!-- -- -- --Table Header -->
-                        <thead>
+                        <thead v-if="columns.length > 0">
                         <tr :class="headerRowClass">
                             <!--Has Checkbox ?-->
                             <th v-if="hasCheckBox" class="text-center" width="5%">

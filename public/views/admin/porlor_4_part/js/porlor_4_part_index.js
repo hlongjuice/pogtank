@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 268);
+/******/ 	return __webpack_require__(__webpack_require__.s = 285);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -106,21 +106,21 @@ var WebUrl = function () {
 
 /***/ }),
 
-/***/ 268:
+/***/ 285:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(269);
+module.exports = __webpack_require__(286);
 
 
 /***/ }),
 
-/***/ 269:
+/***/ 286:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_part_service__ = __webpack_require__(37);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__porlor_4_part_add_new_part_modal__ = __webpack_require__(270);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_part_service__ = __webpack_require__(39);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__porlor_4_part_add_new_part_modal__ = __webpack_require__(287);
 
 
 var porlor4PartService = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_part_service__["a" /* default */]();
@@ -174,12 +174,12 @@ new Vue({
 
 /***/ }),
 
-/***/ 270:
+/***/ 287:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AddNewPartModal; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_part_service__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_part_service__ = __webpack_require__(39);
 
 var porlor4PartService = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_part_service__["a" /* default */]();
 var AddNewPartModal = {
@@ -209,7 +209,7 @@ var AddNewPartModal = {
 
 /***/ }),
 
-/***/ 37:
+/***/ 39:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

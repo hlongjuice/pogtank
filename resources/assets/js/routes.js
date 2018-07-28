@@ -1,24 +1,34 @@
 import VueRouter from 'vue-router';
+//Content
 import Content from './views/admin/content/Content.vue';
 import ContentList from './views/admin/content/ContentList';
 import ContentCreate from './views/admin/content/ContentCreate.vue';
-import ContentCategory from './views/admin/content_category/ContentCategory.vue';
+//Content Category
+import ContentCategory from './views/admin/content_category/ContentCategory';
+import ContentCategoryCreate from './views/admin/content_category/ContentCategoryCreate';
+import ContentCategoryList from './views/admin/content_category/ContentCategoryList';
+
 // window.VueRouter = VueRouter;
 let pathName = window.location.pathname;
 const routes = [
+    //region Content
     {
-        path: '/contents',component: Content,meta:{breadcrumb:'เนื้อหา'},
-        children:[
-            {path:'',name: 'contents',component:ContentList},
-            {path:'create', name:'contents-create', component:ContentCreate,meta:{breadcrumb:'สร้างใหม่'}},
+        path: '/content', component: Content, meta: {breadcrumb: 'เนื้อหา'},
+        children: [
+            {path: '', name: 'content', component: ContentList},
+            {path: 'create', name: 'content_create', component: ContentCreate, meta: {breadcrumb: 'สร้างใหม่'}},
         ]
     },
-    {path:'/content/create',name:'create-content',component:ContentCreate},
+    //endregion
+    //region Content Category
     {
-        path: '/content_categories',
-        name: 'content_categories',
-        component: ContentCategory
-    }
+        path: '/content_category', component: ContentCategory, meta: {breadcrumb: 'หมวดหมู่เนื้อหา'},
+        children:[
+            {path:'',name:'content_category',component:ContentCategoryList},
+            {path:'create',name:'content_category_create',component:ContentCategoryCreate}
+        ]
+    },
+    //endregion
 ];
 
 const router = new VueRouter({

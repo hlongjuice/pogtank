@@ -35,7 +35,7 @@
                                     <p>แบบเลขที่ : @{{ project_details.form_number }}</p>
                                 </div>
                                 <div class="col-md-6">
-                                    <p>ออกเมื่อวันที่ : @{{ project_details.form_number_release | moment('DD/MM/YYYY')}}</p>
+                                    <p>ออกเมื่อวันที่ : @{{ project_details.form_number_release }}</p>
                                 </div>
                             </div>
                             {{--Owner and Agency--}}
@@ -53,7 +53,7 @@
                                     <p>คำนวนราคากลางโดย : @{{ project_details.referee_name }}</p>
                                 </div>
                                 <div class="col-md-6">
-                                    <p>เมื่อวันที่ : @{{ project_details.referee_calculated_date| moment('DD/MM/YYYY')}}</p>
+                                    <p>เมื่อวันที่ : @{{ project_details.referee_calculated_date }}</p>
                                 </div>
                             </div>
                         </div>

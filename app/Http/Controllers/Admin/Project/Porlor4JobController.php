@@ -306,9 +306,10 @@ class Porlor4JobController extends Controller
             $lastRowInPage['total_page'] = $total_page;
             $lastRowInPage['page'] = $page;
 
-
+            //region Page Result Only Lv 2(Group Item Per Unit lv 1)
             foreach ($allJobs as $key => $job) {
                 //ถ้าเป้น item เอาเฉพาะ item lv 2 มาคิด
+                //Incomplete ถ้าในแต่ละหน้าไม่มี lv 2 inv Group Item Per Unit เสร็จในหน้าเลย ยอดยกไปจะกลายเป็น 0 ดังนั้นเลยต้องแก้เพื่อให้ใช้ผลรวมจาก lv ถัดไปแทน
                 if ($job['depth'] == 2) {
                     if ($job->is_item && $job->is_item_per_unit != 1)  {
                         $lastRowInPage['page_sum_total_price'] += $job['item']['total_price'];
@@ -318,6 +319,7 @@ class Porlor4JobController extends Controller
                     }
                 }
                 //ถ้าเป็นกลุ่มเอาผมรวมของกลุ่ม level 2 มาคิด หรือ level 1 ที่เป็นแถวผลรวมของ Group Unit Per Item
+                //สาเหคุที่ group per unit item ต้องเป็น lv 1 เพราะ ต้องเอาผมรวมจากกลุ่มมาใช้เท่านั้น ไม่แยกคำนวนเป็น item
                 if (($job['group_depth'] == 2  && $job['row_group_result'] ==1) ||
                     ($job['group_item_per_unit'] == 1 && $job['group_depth']==1 && $job['row_group_result'] ==1)) {
                     $lastRowInPage['page_sum_total_price'] += $job['group_sum_total_price'];
@@ -325,11 +327,13 @@ class Porlor4JobController extends Controller
                     $lastRowInPage['page_sum_total_price_wage'] += $job['group_sum_total_price_wage'];
                     $lastRowInPage['last_job_order_number'] = $job['group_order_number'];
                 }
-                if ($lastRowInPage['last_job_order_number'] == '') {
-                    $lastRowInPage['last_job_order_number'] = $job['job_order_number'];
-                }
+                //หากไม่เข้าเงื่อไขเลยให้หมายเลข last job order number เป็น number ของงานแรกในหน้า ซึ่งมันดูไม่ make sense เท่าไหร่เลยยกเลยไว้ก่อน
+//                if ($lastRowInPage['last_job_order_number'] == '') {
+//                    $lastRowInPage['last_job_order_number'] = $job['job_order_number'];
+//                }
             }
-            //ถ้าไม่ใช้หน้าแรก
+            //endregion
+            //ถ้าไม่ใช้หน้าแรก คำนวนยอดยกมา และ นำยอดยกมาไปรวมกับยอดยกไปเพื่อนส่งไปหน้าต่อไป
             if ($page > 1) {
                 $previousPageLastJob = $groupPages[$page - 1]->last();
                 $bringForward['bring_forward'] = 1;

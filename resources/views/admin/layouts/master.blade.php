@@ -542,6 +542,7 @@ License: You must have a valid license purchased only from themeforest(the above
             {{--Blank Page--}}
             {{--<small>blank page</small>--}}
             {{--</h3>--}}
+            {{--Root Vue--}}
             <div id="my-root-vue">
                 <div class="page-bar">
                     {{--Bread Crumb--}}
@@ -552,6 +553,7 @@ License: You must have a valid license purchased only from themeforest(the above
                 {{--Start Vue Component--}}
                 <div class="row">
                     <div class="col-xs-12">
+                        <app-sidebar></app-sidebar>
                         <router-view></router-view>
                     </div>
                 </div>

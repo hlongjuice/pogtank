@@ -8,6 +8,7 @@
 require('./bootstrap');
 //Core Libraries
 import Vue from 'vue';
+import Vuex from 'vuex';
 import VueRouter from 'vue-router';
 import VeeValidate from 'vee-validate';
 import {ErrorBag} from 'vee-validate';
@@ -23,13 +24,18 @@ import VuejsDialog from 'vuejs-dialog';
 import Cleave from 'vue-cleave-component';
 //After Use Vue Component Build Web
 import {router} from "./routes";
+import {store} from "./store";
 import VueBreadcrumbs from 'vue-breadcrumbs';
+//My Component
+import Table from './components/Table';
 //Global Method
 Vue.mixin(Auth);
 window.Vue = Vue;
 window.ErrorBag = ErrorBag;
 //Global Plugin
+// Vue.use(V)
 Vue.use(VueRouter);
+Vue.use(Vuex);
 Vue.use(VeeValidate);
 Vue.use(VModal);
 Vue.use(VueMoment);
@@ -47,9 +53,13 @@ Vue.component('multiselect', Multiselect);
 Vue.component('loading', loading);
 Vue.component('datepicker', Datepicker);
 Vue.component('cleave',Cleave);
-Vue.component('app-table',require('./components/Table.vue'));
+//My Component
+// Vue.component('app-table',require('./components/Table.vue'));
+Vue.component('app-table',Table);
+Vue.component('app-sidebar',require('./views/admin/layouts/SideBar'));
 
 new Vue({
     el:'#my-root-vue',
-    router // router for vue components
+    router, // router for vue components
+    store // Vuex
 });

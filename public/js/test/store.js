@@ -74,76 +74,25 @@ module.exports = __webpack_require__(289);
 /***/ }),
 
 /***/ 289:
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__views_admin_content_store_content__ = __webpack_require__(290);
 
 
-// import axios from 'axios';
+/***/ }),
 
+/***/ 290:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-// var config = {
-//     headers: {'X-CSRF-TOKEN':token}
-// };
-var token = $('meta[name="csrf-token"]').attr('content');
-console.log('Token', token);
-new Vue({
-    el: '#test-api-index',
-    data: {
-        token: token,
-        itemsThaiData: [],
-        urlThaiData: 'http://www.ggdemo.com/public/test_api/get_item',
-        urlThaiDelete: 'http://www.ggdemo.com/public/test_api/delete/10',
-        urlThaiDataPut: 'http://www.ggdemo.com/public/test_api/update_item/50',
-        urlHomePut: 'http://ggdemo.thddns.net:2720/pogtank/public/test_api/update_item/50',
-        urlHome: 'http://ggdemo.thddns.net:2720/pogtank/public/test_api/get_item',
-        urlSample: 'http://www.ggeverything.com',
-        urlPostSample: 'http://www.ggeverything.com/post_api.php',
-        urlLocalPut: 'http://localhost/pogtank/public/test_api/update_item/50',
-        itemsHome: []
-
-    },
-    mounted: function mounted() {
-
-        // axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
-        this.getItems();
-    },
-
-    methods: {
-        getItems: function getItems() {
-            var _this = this;
-
-            // axios.get('http://www.ggdemo.com/test_api/get_item')
-            //Home Server
-            axios.get(this.urlHome).then(function (result) {
-                _this.itemsHome = result.data;
-            }).catch(function (err) {
-                console.log('Error Api From Home Server');
-            });
-            //
-            // //Thai data
-            // axios.get(this.urlThaiData)
-            //     .then(result=>{
-            //         this.itemsThaiData=result.data
-            //     }).catch(err=>{
-            //     console.log('Error Api From Thaidatahosting Server')
-            //     });
-
-            var input = {
-                name: 'Yo!!'
-            };
-
-            axios.get(this.urlSample).then(function (result) {
-                console.log('GGEverything Put');
-                console.log(result);
-            }).catch(function (err) {
-                console.log(err);
-            });
-            // $.post(this.urlPostSample,input,function(data){
-            //     console.log('Normal Get');
-            //     console.log(data)
-            // })
-        }
-    }
-});
+"use strict";
+/* unused harmony export Content */
+var Content = {
+  state: {
+    test: 0
+  }
+};
 
 /***/ })
 
