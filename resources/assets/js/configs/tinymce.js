@@ -1,3 +1,5 @@
+import ContentImageService from '../services/content/image_upload';
+let contentImageService = new ContentImageService();
 export const tinyMceConfig = {
     height: 400,
     language: 'th_TH',
@@ -39,13 +41,10 @@ export const tinyMceConfig = {
         let formData = new FormData();
         // formData.append('file', blobInfo.blob(), blobInfo.filename());
         formData.append('file', blobInfo.blob(), blobInfo.filename());
-        axios.post('http://localhost:3000/pogtank/public/admin/contents/upload_image', formData)
-            .then(result => {
-                success(result.data.location);
-            })
-            .catch(err => {
-                console.log(err)
-            })
+        contentImageService.uploadImage(formData)
+            .then(result=>{
+                success(result.location)
+            }).catch(err=>{console.log(err)})
     },
     image_title: true
     //endregion

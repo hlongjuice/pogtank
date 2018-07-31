@@ -48,6 +48,7 @@
                                     <label for="content_details" class="control-label"></label>
                                     <div :class="{'input-error':errors.has('form.content_details')}">
                                         <tiny-mce @onProgressState="viewChange"
+                                                  @onShow="tinyChange"
                                                   model-event="change keyup selcetionchange" v-model="content.details"
                                                   :init="tinyMceInit"></tiny-mce>
                                     </div>
@@ -113,6 +114,9 @@
                 this.$store.commit('refreshParent');
                 // this.$store.dispatch('refreshParent');
                 this.$router.push({name: 'content'});
+            },
+            tinyChange(event){
+                console.log('exeCommand :',event);
             }
         },
         components: {

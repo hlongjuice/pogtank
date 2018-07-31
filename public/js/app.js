@@ -62791,6 +62791,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 // import tinymce from 'tinymce/tinymce'
 // import 'tinymce/themes/modern/theme'
@@ -62840,6 +62841,9 @@ var webUrl = new __WEBPACK_IMPORTED_MODULE_2__services_webUrl__["a" /* default *
             this.$store.commit('refreshParent');
             // this.$store.dispatch('refreshParent');
             this.$router.push({ name: 'content' });
+        },
+        tinyChange: function tinyChange(event) {
+            console.log('exeCommand :', event);
         }
     },
     components: {
@@ -63051,6 +63055,9 @@ var editorProps = {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return tinyMceConfig; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_content_image_upload__ = __webpack_require__(295);
+
+var contentImageService = new __WEBPACK_IMPORTED_MODULE_0__services_content_image_upload__["a" /* default */]();
 var tinyMceConfig = {
     height: 400,
     language: 'th_TH',
@@ -63084,8 +63091,8 @@ var tinyMceConfig = {
         var formData = new FormData();
         // formData.append('file', blobInfo.blob(), blobInfo.filename());
         formData.append('file', blobInfo.blob(), blobInfo.filename());
-        axios.post('http://localhost:3000/pogtank/public/admin/contents/upload_image', formData).then(function (result) {
-            success(result.data.location);
+        contentImageService.uploadImage(formData).then(function (result) {
+            success(result.location);
         }).catch(function (err) {
             console.log(err);
         });
@@ -63196,7 +63203,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "init": _vm.tinyMceInit
     },
     on: {
-      "onProgressState": _vm.viewChange
+      "onProgressState": _vm.viewChange,
+      "onShow": _vm.tinyChange
     },
     model: {
       value: (_vm.content.details),
@@ -64370,6 +64378,98 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 242 */,
+/* 243 */,
+/* 244 */,
+/* 245 */,
+/* 246 */,
+/* 247 */,
+/* 248 */,
+/* 249 */,
+/* 250 */,
+/* 251 */,
+/* 252 */,
+/* 253 */,
+/* 254 */,
+/* 255 */,
+/* 256 */,
+/* 257 */,
+/* 258 */,
+/* 259 */,
+/* 260 */,
+/* 261 */,
+/* 262 */,
+/* 263 */,
+/* 264 */,
+/* 265 */,
+/* 266 */,
+/* 267 */,
+/* 268 */,
+/* 269 */,
+/* 270 */,
+/* 271 */,
+/* 272 */,
+/* 273 */,
+/* 274 */,
+/* 275 */,
+/* 276 */,
+/* 277 */,
+/* 278 */,
+/* 279 */,
+/* 280 */,
+/* 281 */,
+/* 282 */,
+/* 283 */,
+/* 284 */,
+/* 285 */,
+/* 286 */,
+/* 287 */,
+/* 288 */,
+/* 289 */,
+/* 290 */,
+/* 291 */,
+/* 292 */,
+/* 293 */,
+/* 294 */,
+/* 295 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_webUrl__ = __webpack_require__(2);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+
+var webUrl = new __WEBPACK_IMPORTED_MODULE_0__services_webUrl__["a" /* default */]();
+
+var ContentImageUpload = function () {
+    function ContentImageUpload() {
+        _classCallCheck(this, ContentImageUpload);
+
+        this.webUrl = webUrl.getUrl();
+    }
+
+    _createClass(ContentImageUpload, [{
+        key: 'uploadImage',
+        value: function uploadImage(formData) {
+            var url = this.webUrl + '/admin/contents/upload_image';
+            return new Promise(function (resolve, reject) {
+                axios.post(url, formData).then(function (result) {
+                    resolve(result.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
+    }]);
+
+    return ContentImageUpload;
+}();
+
+/* harmony default export */ __webpack_exports__["a"] = (ContentImageUpload);
 
 /***/ })
 /******/ ]);
