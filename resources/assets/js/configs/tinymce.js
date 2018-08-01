@@ -37,8 +37,9 @@ export const tinyMceConfig = {
     imagetools_toolbar: "imageoptions", // Tools that show on inline Image
     file_picker_types: 'image',
     images_reuse_filename: true, // Use Original File Name
-    images_upload_handler: function (blobInfo, success, failure) {
+    images_upload_handler:function(blobInfo, success, failure){
         let formData = new FormData();
+        console.log('In side Image Upload Handler:',this);
         // formData.append('file', blobInfo.blob(), blobInfo.filename());
         formData.append('file', blobInfo.blob(), blobInfo.filename());
         contentImageService.uploadImage(formData)

@@ -25,7 +25,7 @@
                             </div>
                             <!--Save Button-->
                             <div class="col-md-3 pull-right text-right">
-                                <a @click="saveContent" class="margin-top-10 btn btn-success btn-block">บันทึก</a>
+                                <a @click="saveContent" class="margin-top-10 margin-bottom-10 btn btn-success btn-block">บันทึก</a>
                             </div>
                         </div>
                         <!--Form-->
@@ -33,7 +33,7 @@
                             <!-- --Tittle -->
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="content_title" class="control-label"></label>
+                                    <label for="content_title" class="control-label">หัวข้อ</label>
                                     <div :class="{'input-error':errors.has('form.content_title')}">
                                         <input v-model="content.title" id="content_title"
                                                name="content_title" class="form-control">
@@ -47,10 +47,10 @@
                                 <div class="form-group">
                                     <label for="content_details" class="control-label"></label>
                                     <div :class="{'input-error':errors.has('form.content_details')}">
-                                        <tiny-mce @onProgressState="viewChange"
-                                                  @onShow="tinyChange"
-                                                  model-event="change keyup selcetionchange" v-model="content.details"
-                                                  :init="tinyMceInit"></tiny-mce>
+                                        <tiny-mce
+                                                v-model="content.details"
+                                                :init="tinyMceInit"
+                                        ></tiny-mce>
                                     </div>
                                     <span v-show="errors.has('form.content_details')"
                                           class="text-error text-danger">กรุณากรอกข้อมูล</span>
@@ -82,8 +82,10 @@
                     title: '',
                     details: ''
                 },
-                tinyMceInit: tinyMceConfig,
+                tinyMceInit: tinyMceConfig
             }
+        },
+        computed:{
         },
         methods: {
             viewChange(event) {
@@ -115,8 +117,8 @@
                 // this.$store.dispatch('refreshParent');
                 this.$router.push({name: 'content'});
             },
-            tinyChange(event){
-                console.log('exeCommand :',event);
+            tinyChange(event) {
+                console.log('exeCommand :', event);
             }
         },
         components: {

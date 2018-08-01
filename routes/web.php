@@ -308,6 +308,14 @@ Route::prefix('admin')->middleware('auth')
             Route::post('upload_image','Admin\Content\ContentImageController@uploadImage');
         });
         //endregion
+        //region -- Content Categories
+        Route::prefix('content_categories')->group(function(){
+            // -- -- Add
+            Route::post('add_category','Admin\Content\Category\CategoryController@addCategory');
+            // -- -- Get All Categories
+            Route::get('get_all_categories','Admin\Content\Category\CategoryController@getAllCategories');
+        });
+        //endregion
     });
 //endregion
 

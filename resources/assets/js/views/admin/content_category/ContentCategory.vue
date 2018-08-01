@@ -1,10 +1,7 @@
 <template>
     <div>
         <keep-alive include="ContentCategoryList">
-            <router-view
-              @added="hey"
-            >
-
+            <router-view>
             </router-view>
         </keep-alive>
     </div>
@@ -20,9 +17,6 @@
 
         },
         methods:{
-            hey(){
-                console.log('Hey')
-            }
         }
     }
 </script>
