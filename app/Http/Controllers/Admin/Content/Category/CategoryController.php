@@ -48,6 +48,7 @@ class CategoryController extends Controller
             'id'=>0,
             'title'=>'หมวดหมู่หลัก'
         ]);
-        return response()->json($flatCategories);
+//        return response()->json($flatCategories);
+        return $flatCategories;
     }
 }

@@ -60,6 +60,6 @@ Vue.component('app-sidebar',require('./views/admin/layouts/SideBar'));
 
 new Vue({
     el:'#my-root-vue',
+    store, // Vuex
     router, // router for vue components
-    store // Vuex
 });

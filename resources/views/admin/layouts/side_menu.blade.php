@@ -11,14 +11,6 @@
                 </div>
                 <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
             </li>
-            <li class="sidebar-search-wrapper">
-                <form class="search-form" role="form" action="index.html" method="get">
-                    <div class="input-icon right">
-                        <i class="fa fa-search"></i>
-                        <input type="text" class="form-control input-sm" name="query" placeholder="Search...">
-                    </div>
-                </form>
-            </li>
             {{--Dashboard--}}
             <li class="start {{Request::path()=='admin'?'active':''}}">
                 <a href="{{route('admin.dashboard')}}">

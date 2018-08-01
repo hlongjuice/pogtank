@@ -44,7 +44,7 @@ License: You must have a valid license purchased only from themeforest(the above
     <!-- END GLOBAL MANDATORY STYLES -->
     <!-- BEGIN PAGE LEVEL STYLES -->
     {{--<link rel="stylesheet" type="text/css"--}}
-          {{--href="{{asset('templates/admin/conquer/theme/assets/plugins/select2/select2.css')}}"/>--}}
+    {{--href="{{asset('templates/admin/conquer/theme/assets/plugins/select2/select2.css')}}"/>--}}
     <link rel="stylesheet" type="text/css"
           href="{{asset('templates/admin/conquer/theme/assets/plugins/datatables/plugins/bootstrap/dataTables.bootstrap.css')}}"/>
     <!-- END PAGE LEVEL STYLES -->
@@ -78,22 +78,22 @@ License: You must have a valid license purchased only from themeforest(the above
     <div class="header-inner">
         <!-- BEGIN LOGO -->
         {{--<div class="page-logo">--}}
-            {{--<a href="index.html">--}}
-                {{--<img src="{{asset('templates/admin/conquer/theme/assets/img/logo.png')}}" alt="logo"/>--}}
-               {{----}}
-            {{--</a>--}}
+        {{--<a href="index.html">--}}
+        {{--<img src="{{asset('templates/admin/conquer/theme/assets/img/logo.png')}}" alt="logo"/>--}}
+        {{----}}
+        {{--</a>--}}
 
         {{--</div>--}}
         <div class="col-xs-5">
             <h4 class="text-light">Dashboard</h4>
         </div>
-        {{--<form class="search-form search-form-header" role="form" action="index.html">--}}
-            {{--<div class="input-icon right">--}}
-                {{--<i class="icon-magnifier"></i>--}}
-                {{--<input type="text" class="form-control input-sm" name="query" placeholder="Search...">--}}
-            {{--</div>--}}
-        {{--</form>--}}
-        <!-- END LOGO -->
+    {{--<form class="search-form search-form-header" role="form" action="index.html">--}}
+    {{--<div class="input-icon right">--}}
+    {{--<i class="icon-magnifier"></i>--}}
+    {{--<input type="text" class="form-control input-sm" name="query" placeholder="Search...">--}}
+    {{--</div>--}}
+    {{--</form>--}}
+    <!-- END LOGO -->
         <!-- BEGIN RESPONSIVE MENU TOGGLER -->
         <a href="javascript:;" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
             <img src="{{asset('templates/admin/conquer/theme/assets/img/menu-toggler.png')}}" alt=""/>
@@ -483,7 +483,7 @@ License: You must have a valid license purchased only from themeforest(the above
                     </li>
                     <li>
                         <a
-                           onclick="event.preventDefault();
+                                onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();"
                         >
                             Logout</a>
@@ -492,10 +492,10 @@ License: You must have a valid license purchased only from themeforest(the above
                         </form>
                     </li>
                     {{--<form method="POST" action="{{route('logout')}}">--}}
-                        {{--<li>--}}
-                            {{--{{csrf_field()}}--}}
-                            {{--<button class="btn btn-navbar" type="submit"><i class="fa fa-key"></i> Log Out</button>--}}
-                        {{--</li>--}}
+                    {{--<li>--}}
+                    {{--{{csrf_field()}}--}}
+                    {{--<button class="btn btn-navbar" type="submit"><i class="fa fa-key"></i> Log Out</button>--}}
+                    {{--</li>--}}
                     {{--</form>--}}
 
                 </ul>
@@ -511,55 +511,42 @@ License: You must have a valid license purchased only from themeforest(the above
 </div>
 <!-- BEGIN CONTAINER -->
 <div class="page-container">
-@include('admin.layouts.side_menu')
-<!-- BEGIN CONTENT -->
+    <div id="my-root-vue">
+        {{--@include('admin.layouts.side_menu')--}}
+        <app-sidebar></app-sidebar>
+        <div :class="{'hidden':$store.getters.vuePageStatus}" class="page-content-wrapper">
+            <div class="page-content">
+                {{--Root Vue--}}
+                {{--Start Vue Component--}}
+                <div>
+                    <!-- BEGIN PAGE HEADER-->
+                    <h3 class="page-title">
+                        Blank Page
+                        <small>blank page</small>
+                    </h3>
+                    <div class="page-bar">
+                        {{--Bread Crumb--}}
+                        <breadcrumbs v-if="$breadcrumbs.length > 1"></breadcrumbs>
+                    </div>
+                    <!-- END PAGE HEADER-->
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <router-view></router-view>
+                        </div>
+                    </div>
+                </div>
+                <!-- END PAGE CONTENT-->
+                <!-- BEGIN PAGE CONTENT-->
+            </div>
+        </div>
+    </div>
+    <!-- BEGIN CONTENT -->
     <div class="page-content-wrapper">
         <div class="page-content">
-            <!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
-            <div class="modal fade" id="portlet-config" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-                 aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                            <h4 class="modal-title">Modal title</h4>
-                        </div>
-                        <div class="modal-body">
-                            Widget settings form goes here
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-success">Save changes</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-                    <!-- /.modal-content -->
-                </div>
-                <!-- /.modal-dialog -->
+            <div class="page-bar">
+                {{--Bread Crumb--}}
+                @yield('breadcrumb')
             </div>
-            <!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
-            <!-- BEGIN PAGE HEADER-->
-            {{--<h3 class="page-title">--}}
-            {{--Blank Page--}}
-            {{--<small>blank page</small>--}}
-            {{--</h3>--}}
-            {{--Root Vue--}}
-            <div id="my-root-vue">
-                <div class="page-bar">
-                    {{--Bread Crumb--}}
-                    @yield('breadcrumb')
-                    <breadcrumbs v-if="$breadcrumbs.length > 1"></breadcrumbs>
-                </div>
-                <!-- END PAGE HEADER-->
-                {{--Start Vue Component--}}
-                <div class="row">
-                    <div class="col-xs-12">
-                        <app-sidebar></app-sidebar>
-                        <router-view></router-view>
-                    </div>
-                </div>
-            </div>
-            <!-- END PAGE CONTENT-->
-            <!-- BEGIN PAGE CONTENT-->
             <div id="start-app" class="row">
                 <div class="col-md-12">
                     @yield('content')
@@ -611,9 +598,9 @@ License: You must have a valid license purchased only from themeforest(the above
 
 <!-- BEGIN PAGE LEVEL PLUGINS -->
 {{--<script type="text/javascript"--}}
-        {{--src="{{asset('templates/admin/conquer/theme/assets/plugins/ckeditor/ckeditor.js')}}"></script>--}}
+{{--src="{{asset('templates/admin/conquer/theme/assets/plugins/ckeditor/ckeditor.js')}}"></script>--}}
 {{--<script type="text/javascript"--}}
-        {{--src="{{asset('templates/admin/conquer/theme/assets/plugins/select2/select2.min.js')}}"></script>--}}
+{{--src="{{asset('templates/admin/conquer/theme/assets/plugins/select2/select2.min.js')}}"></script>--}}
 <script type="text/javascript"
         src="{{asset('templates/admin/conquer/theme/assets/plugins/datatables/media/js/jquery.dataTables.min.js')}}"></script>
 <script type="text/javascript"
@@ -623,9 +610,6 @@ License: You must have a valid license purchased only from themeforest(the above
 <script src="{{asset('templates/admin/conquer/theme/assets/scripts/table-editable.js')}}"></script>
 {{--<script src="{{asset('templates/admin/conquer/theme/assets/scripts/form-samples.js')}}"></script>--}}
 <script src="{{asset('templates/admin/conquer/theme/assets/plugins/bootstrap-toastr/toastr.min.js')}}"></script>
-
-
-
 
 
 {{--All Vue Js--}}

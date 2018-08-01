@@ -1,4 +1,6 @@
+import {store} from "./store";
 import VueRouter from 'vue-router';
+import WebUrl from '../js/services/webUrl';
 //Content
 import Content from './views/admin/content/Content.vue';
 import ContentList from './views/admin/content/ContentList';
@@ -8,8 +10,10 @@ import ContentCategory from './views/admin/content_category/ContentCategory';
 import ContentCategoryCreate from './views/admin/content_category/ContentCategoryCreate';
 import ContentCategoryList from './views/admin/content_category/ContentCategoryList';
 
+
 // window.VueRouter = VueRouter;
 let pathName = window.location.pathname;
+let webUrl = new WebUrl();
 const routes = [
     //region Content
     {
@@ -36,16 +40,22 @@ const router = new VueRouter({
 });
 // Set Middleware Guard
 //รอเปิดใช้ตอนใช้งานจริง
-// router.beforeEach((to,from,next)=>{
-//     let base_path = window.location.pathname;
-//     console.log('Before Route');
-//     console.log('Window location path',base_path);
-//     if(base_path == '/admin' || base_path == '/public/admin'){
-//         next();
-//     }else{
-//         console.log('Not Found route')
-//     }
-// });
+router.beforeEach((to,from,next)=>{
+    let base_path = window.location.pathname;
+    console.log('Before Route');
+    console.log('to',to);
+    console.log('from :',from);
+    console.log('next :',next);
+    console.log('Window location path',base_path);
+    if(base_path == '/admin' || base_path == '/public/admin' ||  base_path =='/pogtank/public/admin'){
+        store.dispatch('vuePageShow');
+        next();
+    }else{
+        if(to.fullPath !== '/'){
+            window.location = webUrl.getRoute('/admin#'+to.fullPath);
+        }
+    }
+});
 export {
     router
 };

@@ -39,7 +39,6 @@
                                     <span v-show="errors.has('form.title')"
                                           class="text-error text-danger">กรุณากรอกข้อมูล</span>
                                 </div>
-                                {{errors}}
                             </div>
                             <!-- Parent Categories -->
                             <div class="col-md-4">
@@ -49,10 +48,10 @@
                                         <multiselect
                                                 v-model="form.parentCategory"
                                                 placeholder="" label="title" track-by="id"
-                                                :options="parentCategoryList" :option-height="104"
+                                                :options="parentCategoryList" :option-height="120"
                                                 :show-labels="false"
                                                 :allow-empty="false"
-                                                :max-height="150"
+                                                :max-height="180"
                                         >
                                             <template slot="option" slot-scope="props">
                                                 <div class="option__desc">
