@@ -305,6 +305,13 @@ Route::prefix('admin')->middleware('auth')
         //endregion
         //region -- Contents
         Route::prefix('contents')->group(function(){
+            // -- Add Content
+            Route::post('add_content','Admin\Content\ContentController@addContent');
+            // -- Delete Content
+            Route::delete('delete_content','Admin\Content\ContentController@deleteContent');
+            // -- Update Content
+            Route::put('update_content','Admin\Content\ContentController@updateContent');
+            // -- Upload Image
             Route::post('upload_image','Admin\Content\ContentImageController@uploadImage');
         });
         //endregion
@@ -314,6 +321,11 @@ Route::prefix('admin')->middleware('auth')
             Route::post('add_category','Admin\Content\Category\CategoryController@addCategory');
             // -- -- Get All Categories
             Route::get('get_all_categories','Admin\Content\Category\CategoryController@getAllCategories');
+        });
+        //endregion
+        //region -- User
+        Route::prefix('user')->group(function(){
+           Route::get('/','UserController@getUser');
         });
         //endregion
     });

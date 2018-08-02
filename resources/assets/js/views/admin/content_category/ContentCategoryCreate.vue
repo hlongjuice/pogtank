@@ -97,7 +97,7 @@
                     if (result) {
                         contentCategoryService.addCategory(this.form)
                             .then(result=>{
-                                this.$router.back();
+                                this.$router.push({name:'content_category'});
                             }).catch(err=>console.log(err))
                     }
                 })
@@ -111,7 +111,7 @@
                 })
             },
             back() {
-                this.$router.back();
+                this.$router.push({name:'content_category'});
             }
         },
         created() {

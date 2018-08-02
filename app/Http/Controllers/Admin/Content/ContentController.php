@@ -10,4 +10,12 @@ class ContentController extends Controller
     public function addContent(){
 
     }
+    //Update Content
+    public function updateContent(){
+
+    }
+    //Delete Content
+    public function deleteContent(){
+
+    }
 }

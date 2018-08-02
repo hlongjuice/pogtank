@@ -1,4 +1,5 @@
-import ContentImageService from '../services/content/image_upload';
+import {ContentImageService} from "../services/content/image_upload_service";
+
 let contentImageService = new ContentImageService();
 export const tinyMceConfig = {
     height: 400,

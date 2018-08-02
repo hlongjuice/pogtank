@@ -43,10 +43,6 @@ const router = new VueRouter({
 router.beforeEach((to,from,next)=>{
     let base_path = window.location.pathname;
     console.log('Before Route');
-    console.log('to',to);
-    console.log('from :',from);
-    console.log('next :',next);
-    console.log('Window location path',base_path);
     if(base_path == '/admin' || base_path == '/public/admin' ||  base_path =='/pogtank/public/admin'){
         store.dispatch('vuePageShow');
         next();

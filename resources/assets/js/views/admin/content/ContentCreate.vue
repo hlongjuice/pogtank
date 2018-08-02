@@ -25,35 +25,65 @@
                             </div>
                             <!--Save Button-->
                             <div class="col-md-3 pull-right text-right">
-                                <a @click="saveContent" class="margin-top-10 margin-bottom-10 btn btn-success btn-block">บันทึก</a>
+                                <a @click="saveContent"
+                                   class="margin-top-10 margin-bottom-10 btn btn-success btn-block">บันทึก</a>
                             </div>
                         </div>
                         <!--Form-->
                         <div class="row">
                             <!-- --Tittle -->
-                            <div class="col-md-12">
+                            <div class="col-md-8">
                                 <div class="form-group">
                                     <label for="content_title" class="control-label">หัวข้อ</label>
                                     <div :class="{'input-error':errors.has('form.content_title')}">
-                                        <input v-model="content.title" id="content_title"
-                                               name="content_title" class="form-control">
+                                        <input
+                                                v-validate="'required'"
+                                                v-model="form.title" id="content_title"
+                                                name="content_title" class="form-control">
                                     </div>
                                     <span v-show="errors.has('form.content_title')"
+                                          class="text-error text-danger">กรุณากรอกข้อมูล</span>
+                                </div>
+                            </div>
+                            <!-- Category -->
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="control-label">หมวดหมู่รายการ</label>
+                                    <div :class="{'input-error':errors.has('form.category')}">
+                                        <!-- label คือ object key ที่จะใช้แสดงหลังเลือก เช่น name,title -->
+                                        <multiselect
+                                                v-model="form.category"
+                                                placeholder="" label="title" track-by="id"
+                                                :options="categories" :option-height="104"
+                                                :show-labels="false"
+                                                :allow-empty="false"
+                                                :max-height="150"
+                                        >
+                                            <template slot="option" slot-scope="props">
+                                                <div class="option__desc">
+                                                    <span class="option__title"> {{ props.option.title }}</span>
+                                                </div>
+                                            </template>
+                                        </multiselect>
+                                        <label>
+                                            <input
+                                                    v-validate="'required'"
+                                                   name="category" hidden
+                                                   v-model="form.category">
+                                        </label>
+                                    </div>
+                                    <span v-show="errors.has('form.category')"
                                           class="text-error text-danger">กรุณากรอกข้อมูล</span>
                                 </div>
                             </div>
                             <!-- --Tiny Mce -->
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="content_details" class="control-label"></label>
-                                    <div :class="{'input-error':errors.has('form.content_details')}">
-                                        <tiny-mce
-                                                v-model="content.details"
-                                                :init="tinyMceInit"
-                                        ></tiny-mce>
-                                    </div>
-                                    <span v-show="errors.has('form.content_details')"
-                                          class="text-error text-danger">กรุณากรอกข้อมูล</span>
+                                    <label class="control-label"></label>
+                                    <tiny-mce
+                                            v-model="form.details"
+                                            :init="tinyMceInit"
+                                    ></tiny-mce>
                                 </div>
                             </div>
                         </div>
@@ -65,28 +95,37 @@
 </template>
 
 <script>
-    // import tinymce from 'tinymce/tinymce'
-    // import 'tinymce/themes/modern/theme'
     import Editor from '@tinymce/tinymce-vue';
     import {tinyMceConfig} from "../../../configs/tinymce";
+    import {ContentCategoryService} from "../../../services/content_category/content_category_service";
     import WebUrl from '../../../services/webUrl';
+
     let webUrl = new WebUrl();
+    let contentCategoryService = new ContentCategoryService();
     export default {
         name: "ContentCreate",
         created() {
             this.$store.commit('notRefreshParent')
+            //Get Categories
+            contentCategoryService.getAllCategories()
+                .then(result => {
+                    this.categories = result;
+                }).catch(err => {
+                console.log(err)
+            })
         },
         data() {
             return {
-                content: {
+                form: {
                     title: '',
-                    details: ''
+                    details: '',
+                    category: ''
                 },
+                categories: [],
                 tinyMceInit: tinyMceConfig
             }
         },
-        computed:{
-        },
+        computed: {},
         methods: {
             viewChange(event) {
                 console.log('View Change', event)
@@ -100,16 +139,14 @@
                 })
             },
             backToPreviousPage() {
-                if (this.content.title.length > 0 || this.content.details.length > 0) {
+                //ถ้ามีข้อความอยู่ จะถามก่อนที่จะทำการย้อนกลับ
+                if (this.form.title.length > 0 || this.form.details.length > 0) {
                     this.$dialog.confirm("เอกสารยังไม่ได้รับการบันทึก ยืนยันการยกเลิก")
                         .then(() => {
-                            // this.$router.push({name:'contents'})
-                            this.$router.back();
-                        }).catch(() => {
-                    })
+                            this.$router.push({name:'content'});
+                        }).catch(() => {})
                 } else {
-                    // this.$router.push({name:'contents'})
-                    this.$router.back();
+                    this.$router.push({name:'content'});
                 }
             },
             saveContent() {

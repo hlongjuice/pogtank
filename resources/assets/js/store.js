@@ -1,12 +1,13 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-
 Vue.use(Vuex);
+
 //Root Vuex ใช้ state : status สำหรับตรวจสอบว่าจำเป็นต้อง Refresh Parent หรือ ไม่
 export const store = new Vuex.Store({
     state: {
         status: false,
-        vuePageHiddenStatus:true
+        vuePageHiddenStatus:true,
+        user:''
     },
     getters: {
         refreshParentStatus(state) {
@@ -14,6 +15,9 @@ export const store = new Vuex.Store({
         },
         vuePageStatus(state){
             return state.vuePageHiddenStatus
+        },
+        getUser(state){
+            return state.user;
         }
     },
     mutations: {
@@ -30,6 +34,8 @@ export const store = new Vuex.Store({
         vuePageShow(state){
             state.vuePageHiddenStatus=false;
         }
+        //User
+
     },
     actions:{
         vuePageShow({commit}){

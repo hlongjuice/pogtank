@@ -1,6 +1,6 @@
 import WebUrl from '../../services/webUrl';
 let webUrl = new WebUrl();
-class ContentImageUpload{
+export class ContentImageService{
     constructor(){
         this.webUrl = webUrl.getUrl();
     }
@@ -17,6 +17,4 @@ class ContentImageUpload{
                 })
         });
     }
-
 }
-export default ContentImageUpload;
