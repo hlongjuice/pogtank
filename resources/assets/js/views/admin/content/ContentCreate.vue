@@ -105,7 +105,8 @@
     export default {
         name: "ContentCreate",
         created() {
-            this.$store.commit('notRefreshParent')
+            //กำหนด vuex state ไม่ใช้ refresh parent component
+            this.$store.commit('notRefreshParent');
             //Get Categories
             contentCategoryService.getAllCategories()
                 .then(result => {
@@ -150,8 +151,9 @@
                 }
             },
             saveContent() {
+                //ทำการ refresh component เพราะมีการ save data ใหม่
                 this.$store.commit('refreshParent');
-                // this.$store.dispatch('refreshParent');
+                //Route back to Content Page
                 this.$router.push({name: 'content'});
             },
             tinyChange(event) {

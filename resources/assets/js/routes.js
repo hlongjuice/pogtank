@@ -46,7 +46,11 @@ router.beforeEach((to,from,next)=>{
     if(base_path == '/admin' || base_path == '/public/admin' ||  base_path =='/pogtank/public/admin'){
         store.dispatch('vuePageShow');
         next();
-    }else{
+    }
+    else if(base_path == 'login' || base_path == 'public/login' ||  base_path =='/pogtank/public/login'){
+        console.log('Login Page',base_path);
+    }
+    else{
         if(to.fullPath !== '/'){
             window.location = webUrl.getRoute('/admin#'+to.fullPath);
         }

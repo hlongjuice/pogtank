@@ -7,6 +7,7 @@
     </div>
 </template>
 <script>
+    import {store} from "../../../store";
     export default {
         data(){
             return {
@@ -14,7 +15,7 @@
             }
         },
         created(){
-
+            console.log('Store',store);
         },
         methods:{
         }

@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 Vue.use(Vuex);
+import {UserService} from "./services/user/user_service";
+let userService = new UserService();
 
 //Root Vuex ใช้ state : status สำหรับตรวจสอบว่าจำเป็นต้อง Refresh Parent หรือ ไม่
 export const store = new Vuex.Store({
@@ -16,6 +18,7 @@ export const store = new Vuex.Store({
         vuePageStatus(state){
             return state.vuePageHiddenStatus
         },
+        //User
         getUser(state){
             return state.user;
         }
@@ -33,8 +36,12 @@ export const store = new Vuex.Store({
         },
         vuePageShow(state){
             state.vuePageHiddenStatus=false;
-        }
+        },
         //User
+        setUser(state,payload){
+            console.log('Set User Payload :',payload);
+            state.user = payload
+        }
 
     },
     actions:{
