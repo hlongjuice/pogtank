@@ -77,7 +77,9 @@
 
 <script>
     import {ContentCategoryService} from "../../../services/content_category/content_category_service";
+    import {UserService} from "../../../services/user/user_service";
 
+    let userService = new UserService();
     let contentCategoryService = new ContentCategoryService();
     export default {
         name: "ContentCategoryCreate",
@@ -90,20 +92,28 @@
                 parentCategoryList: []
             }
         },
+        created() {
+            this.$store.commit('notRefreshParent');
+            this.getAllCategories();
+        },
         methods: {
             addCategory(form) {
                 this.$validator.validateAll(form).then(result => {
                     //If All Input Validate
                     if (result) {
-                        contentCategoryService.addCategory(this.form)
+                        userService.getUser()
                             .then(result=>{
-                                this.$router.push({name:'content_category'});
-                            }).catch(err=>console.log(err))
+                                contentCategoryService.addCategory(this.form)
+                                    .then(result=>{
+                                        this.$router.push({name:'content_category'});
+                                        this.$store.commit('refreshParent');
+                                    }).catch(err=>console.log(err))
+                            }).catch(err=>{});
                     }
                 })
             },
             getAllCategories() {
-                contentCategoryService.getAllCategories()
+                contentCategoryService.getAllCategoriesWithRoot()
                     .then(result => {
                         this.parentCategoryList = result;
                     }).catch(err => {
@@ -113,9 +123,6 @@
             back() {
                 this.$router.push({name:'content_category'});
             }
-        },
-        created() {
-            this.getAllCategories();
         }
     }
 </script>

@@ -34,6 +34,9 @@
 </template>
 
 <script>
+    import {ContentService} from "../../../services/content/content_service";
+
+    let contentService = new ContentService();
     export default {
         name: "ContentList",
         data() {
@@ -41,13 +44,13 @@
                 tableItems: ['A', 'B', 'C'],
             }
         },
-        created() {
-        },
         computed: {
             refreshData() {
                 console.log('Data Refresh', this.$store.getters.refreshParentStatus);
                 return this.$store.getters.refreshParentStatus;
             }
+        },
+        created() {
         },
         mounted() {
         },
@@ -61,6 +64,12 @@
                     }
                 )
             }
+        },
+        activated() {
+
+        },
+        deactivated() {
+            console.log('deactivated')
         }
     }
 </script>

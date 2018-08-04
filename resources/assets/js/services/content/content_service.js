@@ -1,9 +1,11 @@
 import WebUrl from '../webUrl';
 let webUrl = new WebUrl();
-export class contentService {
+export class ContentService {
     constructor(){
         this.url = webUrl.getUrl();
     }
+    //Get All Content
+
     // Add Content
     addContent(dataInput) {
         let url = this.url + '/admin/contents/add_content';

@@ -1,8 +1,8 @@
 # Table
 ## Events
-|name|description|
-|---|---|
-|deleteItems|Delete Selected Items|
+|name|return param|description|
+|---|---|---|
+|deleteItems|`checkedItems`|Delete Selected Items|
 ## Props
 
 |name|Type|default|description|

@@ -1,9 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 Vue.use(Vuex);
-import {UserService} from "./services/user/user_service";
-let userService = new UserService();
-
 //Root Vuex ใช้ state : status สำหรับตรวจสอบว่าจำเป็นต้อง Refresh Parent หรือ ไม่
 export const store = new Vuex.Store({
     state: {

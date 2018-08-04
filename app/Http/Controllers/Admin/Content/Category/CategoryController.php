@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Content\Category;
 use App\Models\Admin\Content\ContentCategory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use DB;
 
 class CategoryController extends Controller
 {
@@ -28,7 +29,8 @@ class CategoryController extends Controller
     //Get All Category
     public function getAllCategories(){
         //Get Category แบบ nested Tree เพื่อจะนำไป Recursive ใส่ '-' ไว้ ด้านหน้า title ตามลำดับ LV
-        $categories = ContentCategory::withDepth()->get()->toTree();
+        $categories = ContentCategory::withDepth()->with('descendants')
+            ->get()->toTree();
         $flatCategories= collect([]);
 
         //Recursive Set '-'
@@ -36,7 +38,8 @@ class CategoryController extends Controller
             foreach ($categories as $category) {
                 $item= collect([
                    'id'=>$category->id,
-                   'title'=>  $prefix.' '.$category->title
+                   'title'=>  $prefix.' '.$category->title,
+                    'descendants' => $category->descendants
                 ]);
                 $flatCategories->push($item);
                 $traverse($category->children, $prefix.'-');
@@ -44,11 +47,25 @@ class CategoryController extends Controller
         };
 
         $traverse($categories);
+//        return response()->json($flatCategories);
+        return $flatCategories;
+    }
+    //Get All Categories with Parent Lv 0 หมวดหมู่หลัก
+    public function getAllCategoriesWithRoot(){
+        $flatCategories = $this->getAllCategories();
         $flatCategories->prepend([
             'id'=>0,
             'title'=>'หมวดหมู่หลัก'
         ]);
-//        return response()->json($flatCategories);
         return $flatCategories;
+    }
+    //Delete Category
+    public function deleteCategories(Request $request){
+        $result= DB::transaction(function() use ($request){
+            //เอามาเฉพาะ ID
+            $item_ids= array_pluck($request->input('categories'),'id');
+            ContentCategory::destroy($item_ids);
+        });
+        return $result;
     }
 }

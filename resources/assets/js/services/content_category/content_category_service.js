@@ -4,7 +4,7 @@ export class ContentCategoryService {
     constructor(){
         this.webUrl = webUrlService.getUrl();
     }
-    //region Add Category
+    //Add Category
     addCategory(dataInput) {
         let url = this.webUrl + '/admin/content_categories/add_category';
         return new Promise((resolve, reject) => {
@@ -16,8 +16,7 @@ export class ContentCategoryService {
             })
         })
     }
-    //endregion
-    //region Get All Categories
+    // Get All Categories
     getAllCategories() {
         let url = this.webUrl + '/admin/content_categories/get_all_categories';
         return new Promise((resolve, reject) => {
@@ -29,6 +28,16 @@ export class ContentCategoryService {
             })
         })
     }
-
-    //endregion
+    // Get All Categories with Root
+    getAllCategoriesWithRoot() {
+        let url = this.webUrl + '/admin/content_categories/get_all_categories_with_root';
+        return new Promise((resolve, reject) => {
+            axios.get(url)
+                .then(result => {
+                    resolve(result.data)
+                }).catch(err => {
+                reject(err)
+            })
+        })
+    }
 }

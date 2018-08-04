@@ -42,7 +42,7 @@
                         <!-- -- -- --Table Body -->
                         <tbody>
                         <!--Table Items-->
-                        <tr  :class="itemRowClass" v-for="(item,index) in items">
+                        <tr :class="itemRowClass" v-for="(item,index) in items">
                             <td class="text-center" v-if="hasCheckBox">
                                 <label><input :value="item" v-model="checkedItems" type="checkbox"/></label>
                             </td>
@@ -64,6 +64,9 @@
     import Pagination from 'laravel-vue-pagination';
 
     export default {
+        components: {
+            'pagination': Pagination
+        },
         props: {
             items: {
                 type: Array
@@ -76,26 +79,26 @@
                 type: Array,
                 default: () => []
             },
-            columnClass:{
-              type:Array,
-              default:()=>[]
+            columnClass: {
+                type: Array,
+                default: () => []
             },
-            headerRowClass:{
-              type:String,
-              default:'table-row-th-center'
+            headerRowClass: {
+                type: String,
+                default: 'table-row-th-center'
             },
-            itemRowClass:{
-                type:String,
-                default:''
+            itemRowClass: {
+                type: String,
+                default: ''
             }
             ,
             hasCheckBox: {
                 type: Boolean,
                 default: false
             },
-            hasDeleteSingleItemBtn:{
-                type:Boolean,
-                default:true
+            hasDeleteSingleItemBtn: {
+                type: Boolean,
+                default: true
             },
             colSpan: {
                 type: Number,
@@ -113,43 +116,43 @@
                 default: false
             }
         },
-        data(){
-            return{
-                checkedAllItems:false,
+        data() {
+            return {
+                checkedAllItems: false,
                 checkedItems: []
             }
         },
-        computed: {
-        },
-        components: {
-            'pagination': Pagination
-        },
+        computed: {},
         watch: {
             checkedAllItems(state) {
                 this.checkedItems.splice(0);
-                if(state)
-                this.items.forEach(item => {
-                    this.checkedItems.push(item);
-                });
+                if (state)
+                    this.items.forEach(item => {
+                        this.checkedItems.push(item);
+                    });
             },
-            items(){
-                if(this.items.length===0){
+            items() {
+                if (this.items.length === 0) {
                     this.checkedAllItems = false;
                 }
             }
         },
         methods: {
             //send checkedItems back to parent
-            deleteSingleItem(item){
-                this.checkedAllItems=false;
+            deleteSingleItem(item) {
+                this.checkedAllItems = false;
                 this.checkedItems.splice(0);
-                this.checkedItems.push(item);
-                this.deleteItems();
+                //ใช้ SetTimeOut เพราะทุกครั้ง ที่ checkedAllItems ผูกกับ Watch หากมี Watch CheckedAllItems fired จะทำให้ค่าที่ push มาใหม่โดนเคลียไปด้วย
+                //เลยต้องทำให้เป็น Async โดยใช้ setTimeout
+                setTimeout(() => {
+                    this.checkedItems.push(item);
+                    this.deleteItems();
+                }, 1);
             }
             ,
-            deleteItems(){
-                this.$emit('deleteItems',{
-                    checkedItems:this.checkedItems
+            deleteItems() {
+                this.$emit('deleteItems', {
+                    checkedItems: this.checkedItems
                 })
             }
         }
