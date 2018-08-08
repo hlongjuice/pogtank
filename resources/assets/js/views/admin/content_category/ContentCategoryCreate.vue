@@ -22,7 +22,8 @@
                             </div>
                             <!--Add Button-->
                             <div class="col-md-4 pull-right text-right">
-                                <button type="submit" class="margin-bottom-10 btn btn-success btn-block">บันทึกรายการ</button>
+                                <button type="submit" class="margin-bottom-10 btn btn-success btn-block">บันทึกรายการ
+                                </button>
                             </div>
                         </div>
                         <div class="row">
@@ -34,7 +35,7 @@
                                         <input
                                                 v-validate="'required'"
                                                 type="text" v-model="form.title" id="title" name="title"
-                                               class="form-control">
+                                                class="form-control">
                                     </div>
                                     <span v-show="errors.has('form.title')"
                                           class="text-error text-danger">กรุณากรอกข้อมูล</span>
@@ -77,9 +78,7 @@
 
 <script>
     import {ContentCategoryService} from "../../../services/content_category/content_category_service";
-    import {UserService} from "../../../services/user/user_service";
 
-    let userService = new UserService();
     let contentCategoryService = new ContentCategoryService();
     export default {
         name: "ContentCategoryCreate",
@@ -87,28 +86,31 @@
             return {
                 form: {
                     title: '',
-                    parentCategory: ''
+                    parentCategory: '',
+                    user: ''
                 },
                 parentCategoryList: []
             }
         },
         created() {
             this.$store.commit('notRefreshParent');
-            this.getAllCategories();
+            this.$store.dispatch('getUser')
+                .then(result=>{
+                    this.form.user = result;
+                    this.getAllCategories();
+                }).catch(err=>{console.log(err)});
         },
         methods: {
             addCategory(form) {
                 this.$validator.validateAll(form).then(result => {
                     //If All Input Validate
                     if (result) {
-                        userService.getUser()
-                            .then(result=>{
-                                contentCategoryService.addCategory(this.form)
-                                    .then(result=>{
-                                        this.$router.push({name:'content_category'});
-                                        this.$store.commit('refreshParent');
-                                    }).catch(err=>console.log(err))
-                            }).catch(err=>{});
+                        this.$store.commit('loading');
+                        contentCategoryService.addCategory(this.form)
+                            .then(result => {
+                                this.$router.push({name: 'content_category'});
+                                this.$store.commit('refreshParent');
+                            }).catch(err => console.log(err))
                     }
                 })
             },
@@ -121,7 +123,7 @@
                 })
             },
             back() {
-                this.$router.push({name:'content_category'});
+                this.$router.push({name: 'content_category'});
             }
         }
     }

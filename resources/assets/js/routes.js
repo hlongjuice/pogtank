@@ -9,6 +9,7 @@ import ContentCreate from './views/admin/content/ContentCreate.vue';
 import ContentCategory from './views/admin/content_category/ContentCategory';
 import ContentCategoryCreate from './views/admin/content_category/ContentCategoryCreate';
 import ContentCategoryList from './views/admin/content_category/ContentCategoryList';
+import ContentCategoryEdit from './views/admin/content_category/ContentCategoryEdit';
 
 
 // window.VueRouter = VueRouter;
@@ -29,7 +30,9 @@ const routes = [
         path: '/content_category', component: ContentCategory, meta: {breadcrumb: 'หมวดหมู่เนื้อหา'},
         children:[
             {path:'',name:'content_category',component:ContentCategoryList},
-            {path:'create',name:'content_category_create',component:ContentCategoryCreate}
+            {path:'create',name:'content_category_create',component:ContentCategoryCreate,meta: {breadcrumb: 'สร้างใหม่'}},
+            {path:'edit/:id/ttt/:title',name:'content_category_edit',component:ContentCategoryEdit,
+                meta: {breadcrumb :'แก้ไขหมวดหมู่' }}
         ]
     },
     //endregion

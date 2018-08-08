@@ -1,5 +1,6 @@
 <template>
     <div>
+        <app-spinner v-if="$store.getters.loadingStatus"></app-spinner>
         <keep-alive include="ContentCategoryList">
             <router-view>
             </router-view>

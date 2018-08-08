@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 280);
+/******/ 	return __webpack_require__(__webpack_require__.s = 388);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -72,7 +72,7 @@
 
 
 var bind = __webpack_require__(4);
-var isBuffer = __webpack_require__(12);
+var isBuffer = __webpack_require__(15);
 
 /*global toString:true*/
 
@@ -376,7 +376,14 @@ module.exports = {
 
 /***/ }),
 
-/***/ 10:
+/***/ 12:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(14);
+
+/***/ }),
+
+/***/ 13:
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -567,7 +574,7 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
-/***/ 11:
+/***/ 14:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -575,7 +582,7 @@ process.umask = function() { return 0; };
 
 var utils = __webpack_require__(0);
 var bind = __webpack_require__(4);
-var Axios = __webpack_require__(13);
+var Axios = __webpack_require__(16);
 var defaults = __webpack_require__(3);
 
 /**
@@ -610,14 +617,14 @@ axios.create = function create(instanceConfig) {
 
 // Expose Cancel & CancelToken
 axios.Cancel = __webpack_require__(8);
-axios.CancelToken = __webpack_require__(27);
+axios.CancelToken = __webpack_require__(30);
 axios.isCancel = __webpack_require__(7);
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(28);
+axios.spread = __webpack_require__(31);
 
 module.exports = axios;
 
@@ -627,7 +634,7 @@ module.exports.default = axios;
 
 /***/ }),
 
-/***/ 12:
+/***/ 15:
 /***/ (function(module, exports) {
 
 /*!
@@ -655,7 +662,7 @@ function isSlowBuffer (obj) {
 
 /***/ }),
 
-/***/ 13:
+/***/ 16:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -663,8 +670,8 @@ function isSlowBuffer (obj) {
 
 var defaults = __webpack_require__(3);
 var utils = __webpack_require__(0);
-var InterceptorManager = __webpack_require__(22);
-var dispatchRequest = __webpack_require__(23);
+var InterceptorManager = __webpack_require__(25);
+var dispatchRequest = __webpack_require__(26);
 
 /**
  * Create a new instance of Axios
@@ -742,7 +749,7 @@ module.exports = Axios;
 
 /***/ }),
 
-/***/ 14:
+/***/ 17:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -762,7 +769,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 /***/ }),
 
-/***/ 15:
+/***/ 18:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -796,7 +803,7 @@ module.exports = function settle(resolve, reject, response) {
 
 /***/ }),
 
-/***/ 16:
+/***/ 19:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -825,7 +832,48 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 /***/ }),
 
-/***/ 17:
+/***/ 2:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var WebUrl = function () {
+    function WebUrl()
+    // private url:string
+    {
+        _classCallCheck(this, WebUrl);
+
+        this.url = 'http://localhost:3000/pogtank/public';
+        // this.url='http://localhost/pogtank/public';
+        // this.url=':2720';
+        // this.url='http://www.ggdemo.com/public';
+        // this.url='http://ggdemo.thddns.net:2720/pogtank/public'
+        // this.url='';
+    }
+
+    _createClass(WebUrl, [{
+        key: 'getUrl',
+        value: function getUrl() {
+            return this.url;
+        }
+    }, {
+        key: 'getRoute',
+        value: function getRoute(url) {
+            return this.url + url;
+        }
+    }]);
+
+    return WebUrl;
+}();
+
+/* harmony default export */ __webpack_exports__["a"] = (WebUrl);
+
+/***/ }),
+
+/***/ 20:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -899,7 +947,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 /***/ }),
 
-/***/ 18:
+/***/ 21:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -960,7 +1008,7 @@ module.exports = function parseHeaders(headers) {
 
 /***/ }),
 
-/***/ 19:
+/***/ 22:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1036,48 +1084,7 @@ module.exports = (
 
 /***/ }),
 
-/***/ 2:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var WebUrl = function () {
-    function WebUrl()
-    // private url:string
-    {
-        _classCallCheck(this, WebUrl);
-
-        this.url = 'http://localhost:3000/pogtank/public';
-        // this.url='http://localhost/pogtank/public';
-        // this.url=':2720';
-        // this.url='http://www.ggdemo.com/public';
-        // this.url='http://ggdemo.thddns.net:2720/pogtank/public'
-        // this.url='';
-    }
-
-    _createClass(WebUrl, [{
-        key: 'getUrl',
-        value: function getUrl() {
-            return this.url;
-        }
-    }, {
-        key: 'getRoute',
-        value: function getRoute(url) {
-            return this.url + url;
-        }
-    }]);
-
-    return WebUrl;
-}();
-
-/* harmony default export */ __webpack_exports__["a"] = (WebUrl);
-
-/***/ }),
-
-/***/ 20:
+/***/ 23:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1121,7 +1128,7 @@ module.exports = btoa;
 
 /***/ }),
 
-/***/ 21:
+/***/ 24:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1182,7 +1189,7 @@ module.exports = (
 
 /***/ }),
 
-/***/ 22:
+/***/ 25:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1242,18 +1249,18 @@ module.exports = InterceptorManager;
 
 /***/ }),
 
-/***/ 23:
+/***/ 26:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(0);
-var transformData = __webpack_require__(24);
+var transformData = __webpack_require__(27);
 var isCancel = __webpack_require__(7);
 var defaults = __webpack_require__(3);
-var isAbsoluteURL = __webpack_require__(25);
-var combineURLs = __webpack_require__(26);
+var isAbsoluteURL = __webpack_require__(28);
+var combineURLs = __webpack_require__(29);
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -1336,7 +1343,7 @@ module.exports = function dispatchRequest(config) {
 
 /***/ }),
 
-/***/ 24:
+/***/ 27:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1364,7 +1371,7 @@ module.exports = function transformData(data, headers, fns) {
 
 /***/ }),
 
-/***/ 25:
+/***/ 28:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1386,7 +1393,7 @@ module.exports = function isAbsoluteURL(url) {
 
 /***/ }),
 
-/***/ 26:
+/***/ 29:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1408,1273 +1415,6 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 /***/ }),
 
-/***/ 27:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var Cancel = __webpack_require__(8);
-
-/**
- * A `CancelToken` is an object that can be used to request cancellation of an operation.
- *
- * @class
- * @param {Function} executor The executor function.
- */
-function CancelToken(executor) {
-  if (typeof executor !== 'function') {
-    throw new TypeError('executor must be a function.');
-  }
-
-  var resolvePromise;
-  this.promise = new Promise(function promiseExecutor(resolve) {
-    resolvePromise = resolve;
-  });
-
-  var token = this;
-  executor(function cancel(message) {
-    if (token.reason) {
-      // Cancellation has already been requested
-      return;
-    }
-
-    token.reason = new Cancel(message);
-    resolvePromise(token.reason);
-  });
-}
-
-/**
- * Throws a `Cancel` if cancellation has been requested.
- */
-CancelToken.prototype.throwIfRequested = function throwIfRequested() {
-  if (this.reason) {
-    throw this.reason;
-  }
-};
-
-/**
- * Returns an object that contains a new `CancelToken` and a function that, when called,
- * cancels the `CancelToken`.
- */
-CancelToken.source = function source() {
-  var cancel;
-  var token = new CancelToken(function executor(c) {
-    cancel = c;
-  });
-  return {
-    token: token,
-    cancel: cancel
-  };
-};
-
-module.exports = CancelToken;
-
-
-/***/ }),
-
-/***/ 28:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/**
- * Syntactic sugar for invoking a function and expanding an array for arguments.
- *
- * Common use case would be to use `Function.prototype.apply`.
- *
- *  ```js
- *  function f(x, y, z) {}
- *  var args = [1, 2, 3];
- *  f.apply(null, args);
- *  ```
- *
- * With `spread` this example can be re-written.
- *
- *  ```js
- *  spread(function(x, y, z) {})([1, 2, 3]);
- *  ```
- *
- * @param {Function} callback
- * @returns {Function}
- */
-module.exports = function spread(callback) {
-  return function wrap(arr) {
-    return callback.apply(null, arr);
-  };
-};
-
-
-/***/ }),
-
-/***/ 280:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(281);
-
-
-/***/ }),
-
-/***/ 281:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_job_service__ = __webpack_require__(32);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_js_services_project_order_porlor_4_service__ = __webpack_require__(38);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__porlor_4_job_add_root_porlor_4_job_add_root__ = __webpack_require__(282);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__porlor_4_job_details_porlor_4_job_details__ = __webpack_require__(283);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__porlor_4_job_details_porlor_4_add_child_job_porlor_4_add_child_job__ = __webpack_require__(284);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__porlor_4_job_details_porlor_4_add_child_job_item_porlor_4_add_child_job_item__ = __webpack_require__(285);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__porlor_4_job_details_porlor_4_edit_child_job_porlor_4_edit_child_job__ = __webpack_require__(286);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__porlor_4_job_details_porlor_4_edit_child_job_item_porlor_4_edit_child_job_item__ = __webpack_require__(287);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__porlor_4_job_edit_root_job_polor_4_job_edit_root_job__ = __webpack_require__(288);
-
-
-
-
-
-
-
-
-
-
-var porlor4 = porlor4FromBlade; // get from index blade template
-var porlor4Service = new __WEBPACK_IMPORTED_MODULE_1__assets_js_services_project_order_porlor_4_service__["a" /* default */]();
-var porlor4JobService = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_job_service__["a" /* default */]();
-
-console.log('Porlor 4 ID :', porlor4.id);
-new Vue({
-    el: '#porlor-4-job-index',
-    mixins: [__WEBPACK_IMPORTED_MODULE_2__porlor_4_job_add_root_porlor_4_job_add_root__["a" /* Porlor4JobAddRoot */], __WEBPACK_IMPORTED_MODULE_3__porlor_4_job_details_porlor_4_job_details__["a" /* Porlor4JobDetails */], __WEBPACK_IMPORTED_MODULE_4__porlor_4_job_details_porlor_4_add_child_job_porlor_4_add_child_job__["a" /* Porlor4AddChildJob */], __WEBPACK_IMPORTED_MODULE_5__porlor_4_job_details_porlor_4_add_child_job_item_porlor_4_add_child_job_item__["a" /* Porlor4AddChildJobItem */], __WEBPACK_IMPORTED_MODULE_6__porlor_4_job_details_porlor_4_edit_child_job_porlor_4_edit_child_job__["a" /* Porlor4EditChildJob */], __WEBPACK_IMPORTED_MODULE_7__porlor_4_job_details_porlor_4_edit_child_job_item_porlor_4_edit_child_job_item__["a" /* Porlor4EditChildJobItem */], __WEBPACK_IMPORTED_MODULE_8__porlor_4_job_edit_root_job_polor_4_job_edit_root_job__["a" /* Porlor4JobEditRootJobModal */]],
-    data: {
-        porlor4: porlor4,
-        //Modal Status
-        addRootJobStatus: false,
-        updatedJobDetailStatus: false,
-        //End Modal Status
-        partDetails: {},
-        showLoading: '',
-        jobs: [],
-        project_details: {
-            province: {},
-            amphoe: {},
-            district: {}
-        }
-    },
-    mounted: function mounted() {
-        this.initialData();
-    },
-    methods: {
-        initialData: function initialData() {
-            var _this = this;
-
-            this.showLoading = true;
-            Promise.all([
-            //Get All Jobs
-            porlor4JobService.getAllRootJobs(this.porlor4.id).then(function (result) {
-                console.log('Init Get Jobs Method Result :', result);
-                _this.jobs = result;
-                _this.showLoading = false;
-            }).catch(function (err) {
-                console.log('Error Job Index Get All Root Jobs :', error);
-            }),
-            //Get Part Details
-            porlor4JobService.getPartDetails(this.porlor4.id).then(function (result) {
-                console.log('Init Get Part Result :', result);
-                _this.partDetails = result;
-            }).catch(function (err) {
-                console.log("Error Job index Get Part Details :", err);
-                _this.showLoading = false;
-            }),
-            //Get Project Details
-            porlor4Service.getProjectDetails(this.porlor4.project_order_id).then(function (result) {
-                console.log('Project Details is : ', result);
-                _this.project_details = result;
-            }).catch(function (err) {
-                console.log('Errors Job Index Get Project Details :', error);
-            })]).then(function () {
-                _this.showLoading = false;
-            }).catch(function () {
-                _this.showLoading = false;
-            });
-        },
-        refreshData: function refreshData() {
-            var _this2 = this;
-
-            this.showLoading = true;
-            //Get All Jobs
-            porlor4JobService.getAllRootJobs(porlor4.id).then(function (result) {
-                console.log('Init Get Jobs Method Result :', result);
-                _this2.jobs = result;
-                _this2.showLoading = false;
-            }).catch(function (err) {
-                alert(err);
-                _this2.showLoading = false;
-            });
-        },
-
-        //Before Close Add Root Job Modal
-        beforeCloseAddRootJobModal: function beforeCloseAddRootJobModal() {
-            if (this.addRootJobStatus) {
-                this.refreshData();
-            }
-        },
-
-        //Before Close Show Job Details Modal
-        beforeCloseJobDetailsModal: function beforeCloseJobDetailsModal() {
-            if (this.updatedJobDetailStatus) {
-                this.refreshData();
-            }
-        },
-
-        //Before Close Edit Root Job Modal
-        beforeClosePorlor4JobEditRootJobModal: function beforeClosePorlor4JobEditRootJobModal(data) {
-            if (data.params.is_updated) {
-                this.refreshData();
-            }
-        },
-
-        //Add Root Job
-        showAddRootJobModal: function showAddRootJobModal() {
-            this.$modal.show('porlor-4-job-add-root-job-modal');
-        },
-
-        //Show Job Details
-        showJobDetailsModal: function showJobDetailsModal(root_job) {
-            this.$modal.show('porlor-4-job-details-modal', {
-                root_job: root_job
-            });
-        },
-
-        //Show Edit Root Job Modal
-        showEditRootJobModal: function showEditRootJobModal(root_job) {
-            this.$modal.show('porlor-4-job-edit-root-job-modal', {
-                root_job: root_job
-            });
-        },
-        porlor4Job_deleteRootJob: function porlor4Job_deleteRootJob(root_job) {
-            var _this3 = this;
-
-            this.$dialog.confirm('' + '<p>ยืนยันการลบ</p>' + '<h4 class="text-danger">' + root_job.name + '</h4>' + '<p>**การลบนี้จะลบงานย่อยทั้งหมดในหมวดหมู่ </p>').then(function () {
-                _this3.showLoading = true;
-                porlor4JobService.deleteRootJob(_this3.porlor4.id, root_job.id).then(function (result) {
-                    _this3.refreshData();
-                    _this3.showLoading = false;
-                }).catch(function (err) {
-                    alert(err);
-                });
-            }).catch();
-        }
-    }
-});
-
-/***/ }),
-
-/***/ 282:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Porlor4JobAddRoot; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_job_service__ = __webpack_require__(32);
-
-
-var porlor4JobService = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_job_service__["a" /* default */]();
-var Porlor4JobAddRoot = {
-    data: function data() {
-        return {
-            form: {
-                root_job_name: ''
-            }
-        };
-    },
-    methods: {
-        beforeOpenAddRootJobModal: function beforeOpenAddRootJobModal() {
-            this.addRootJobStatus = false;
-            this.form.root_job_name = '';
-            console.log('Porlor4 from parent : ', this.porlor4);
-        },
-        addRootJob: function addRootJob(scope, ev) {
-            var _this = this;
-
-            this.$validator.validateAll(scope).then(function (result) {
-                if (result) {
-                    porlor4JobService.addRootJob(_this.porlor4.id, _this.form).then(function () {
-                        _this.addRootJobStatus = true;
-                        toastr.success('บันทึกเสร็จสมบูรณ์');
-                        _this.closeAddRootJobModal();
-                    }).catch(function (err) {
-                        alert(err);
-                    });
-                }
-            });
-        },
-        closeAddRootJobModal: function closeAddRootJobModal() {
-            this.$modal.hide('porlor-4-job-add-root-job-modal');
-        }
-    }
-};
-
-/***/ }),
-
-/***/ 283:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Porlor4JobDetails; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_job_service__ = __webpack_require__(32);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_js_services_project_order_porlor_4_export_service__ = __webpack_require__(37);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__assets_js_services_webUrl__ = __webpack_require__(2);
-
-
-
-
-var webUrlService = new __WEBPACK_IMPORTED_MODULE_2__assets_js_services_webUrl__["a" /* default */]();
-var porlor4JobService = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_job_service__["a" /* default */]();
-var porlor4ExportService = new __WEBPACK_IMPORTED_MODULE_1__assets_js_services_project_order_porlor_4_export_service__["a" /* default */]();
-var Porlor4JobDetails = {
-    data: function data() {
-        return {
-            showLoadingJobDetails: false,
-            root_job: '',
-            child_jobs: [],
-            child_jobs_v2: '',
-            detailScrollable: true,
-            job_details: {
-                pages: []
-            }
-        };
-    },
-    methods: {
-        beforeOpenJobDetailsModal: function beforeOpenJobDetailsModal(event) {
-            //Get Parent Jobs
-            this.root_job = event.params.root_job;
-            console.log('Root Job ID :', this.root_job.id);
-            console.log('Porlor 4 Job Details');
-            this.child_jobs = [];
-            this.job_details = {
-                checked: []
-            };
-        },
-
-        //Opened Job Details Modal
-        openedJobDetailsModal: function openedJobDetailsModal() {
-            this.getAllChildJobAndItems();
-        },
-
-        //Get All Child Job and Item
-        getAllChildJobAndItems: function getAllChildJobAndItems() {
-            var _this = this;
-
-            this.showLoadingJobDetails = true;
-            porlor4JobService.getAllChildJobs(this.porlor4.id, this.root_job.id).then(function (result) {
-                // this.child_jobs = result;
-                _this.child_jobs = result;
-                console.log('All Child Job V2 :', _this.child_jobs);
-                _this.showLoadingJobDetails = false;
-            });
-        },
-        showAddChildJobModal: function showAddChildJobModal(page_number, total_page_number) {
-            this.detailScrollable = false;
-            this.$modal.show('porlor-4-add-child-job-modal', {
-                page_number: page_number,
-                total_page_number: total_page_number
-            });
-        },
-        showAddChildJobItemModal: function showAddChildJobItemModal(job, page_number) {
-            this.detailScrollable = false;
-            console.log('Show Add Child Job Item Modal');
-            this.$modal.show('porlor-4-add-child-job-item-modal', {
-                child_job: job,
-                page_number: page_number
-            });
-        },
-
-        //Show Edit Child Job Modal
-        showEditChildJobModal: function showEditChildJobModal(job) {
-            this.detailScrollable = false;
-            this.$modal.show('porlor-4-edit-child-job-modal', {
-                job: job
-            });
-        },
-
-        //Show Edit Child Job Item Modal
-        showEditChildJobItemModal: function showEditChildJobItemModal(job_item) {
-            this.detailScrollable = false;
-            this.$modal.show('porlor-4-edit-child-job-item-modal', {
-                job_item: job_item
-            });
-        },
-
-        //Close Modal
-        closePorlor4JobDetailsModal: function closePorlor4JobDetailsModal() {
-            this.$modal.hide('porlor-4-job-details-modal');
-        },
-
-        // Before Close Add Child Job
-        beforeCloseAddChildJobModal: function beforeCloseAddChildJobModal(event) {
-            this.detailScrollable = true;
-            var status = event.params.add_status;
-            if (status) {
-                this.getAllChildJobAndItems();
-            }
-        },
-
-        //closedAddChildJobItemModal
-        beforeCloseAddChildJobItemModal: function beforeCloseAddChildJobItemModal(event) {
-            this.detailScrollable = true;
-            console.log('Close Add Child Job Item Modal Event :', event);
-            var status = event.params.add_status;
-            if (status) {
-                this.getAllChildJobAndItems();
-            }
-        },
-
-        //Before Close Edit Child Job
-        beforeCloseEditChildJobModal: function beforeCloseEditChildJobModal(event) {
-            console.log('Before Close Edit Child Job Modal', event);
-            this.detailScrollable = true;
-            var status = event.params.edit_status;
-            if (status) {
-                this.getAllChildJobAndItems();
-            }
-        },
-
-        //Before Close Edit Child Job Item
-        beforeCloseEditChildJobItemModal: function beforeCloseEditChildJobItemModal(event) {
-            console.log('Before Close Edit Child Job Modal', event);
-            this.detailScrollable = true;
-            var status = event.params.edit_status;
-            if (status) {
-                this.getAllChildJobAndItems();
-            }
-        },
-        jobDetails_addPorlor4Page: function jobDetails_addPorlor4Page() {
-            //ถ้ายังไม่มีข้อมูลซักหน้าก็เพิ่มหน้าใหม่ใส่ child_jobs array ได้เลย
-            if (this.child_jobs.length < 1) {
-                var newPage = {
-                    page: 1,
-                    jobs: [],
-                    total_page: 1,
-                    page_sum_price_wage: 0
-                };
-                this.child_jobs.push(newPage);
-                //หากมีข้อมูลเดิมอยู่แล้วต้องมาเช็คเงื่อนไขเพิ่มเติมดังนี้
-            } else {
-                var errCount = 0;
-                var _newPage = {
-                    page: null,
-                    jobs: [],
-                    total_page: null,
-                    page_sum_price_wage: 0
-                };
-                //วนลูปดูการเรียกลำดับ page ว่ามีตัวเลขกระโดดข้ามหน้าหรือไม่ เช่น 1,2,4,5 (หน้า 3 หายไป)
-                for (var i = 1; i < this.child_jobs.length; i++) {
-                    //หากมี หน้าถัดไป - หน้าปัจจุบัน ไม่เท่ากับ 1 แสดงว่ามีหน้าขาด 4 - 2 = 2
-                    if (this.child_jobs[i].page - this.child_jobs[i - 1].page !== 1) {
-                        //แก้โดยให้หน้าปัจจุบัน + 1
-                        _newPage.page = this.child_jobs[i - 1].page + 1;
-                        //แต่หมายเลขหน้าสุดท้ายยังคงเลขเดิมไม่ต้องบวกเพิ่ม
-                        _newPage.total_page = this.child_jobs.slice(-1).pop().page;
-                        this.child_jobs.splice(i, 0, _newPage);
-                        i = this.child_jobs.length;
-                        //หากมีการเรียกหน้ากระโดดข้าม errCount จะ +1
-                        errCount++;
-                    }
-                }
-                //ถ้า errCount === 0 แปลว่าการเรียงเลขหน้าปกติ
-                //หน้าใหม่ก็จะ +1 จากหน้าสุดท้ายของชุดข้อมูลเดิม โดยที่หน้าสุดท้ายใหม่ก็จะเท่ากับหน้าใหม่ด้วยเช่นกัน
-                if (errCount === 0) {
-                    _newPage.page = this.child_jobs.slice(-1).pop().page + 1;
-                    _newPage.total_page = _newPage.page;
-                    this.child_jobs.push(_newPage);
-                }
-            }
-        },
-        jobDetails_deleteItem: function jobDetails_deleteItem(item, order_number, index) {
-            var _this2 = this;
-
-            console.log('delete Item Index :', index);
-            var item_index = index + 1;
-            var item_order_number = order_number + '.1.' + item_index;
-            console.log('Delete Item : ', item);
-            this.$dialog.confirm('' + '<p>ยืนยันการลบ</p><h4 class="text-danger">' + item_order_number + ' ' + item.details.approved_global_details.name + '</h4>').then(function () {
-                _this2.showLoadingJobDetails = true;
-                porlor4JobService.deleteItem(_this2.porlor4.id, item.id).then(function (result) {
-                    _this2.getAllChildJobAndItems();
-                    _this2.showLoadingJobDetails = false;
-                }).catch(function (err) {
-                    alert(err);
-                });
-            }).catch(function () {});
-        },
-        jobDetails_deleteChildJob: function jobDetails_deleteChildJob(job) {
-            var _this3 = this;
-
-            this.$dialog.confirm('' + '<p>ยืนยันการลบ</p><h4 class="text-danger">' + job.job_order_number + ' ' + job.name + '</h4>' + '<p>การลบนี้จะลบรายการย่อยในกลุ่มด้วยทั้งหมด</p>').then(function () {
-                _this3.showLoadingJobDetails = true;
-                console.log('Delete Child Job :', job);
-                porlor4JobService.deleteChildJob(_this3.porlor4.id, job.id).then(function (result) {
-                    _this3.getAllChildJobAndItems();
-                    _this3.showLoadingJobDetails = false;
-                }).catch(function (err) {
-                    alert(err);
-                });
-            }).catch(function () {});
-        },
-        jobDetails_deletePage: function jobDetails_deletePage(index) {
-            this.child_jobs.splice(index, 1);
-        },
-
-
-        //Export Porlor4
-        jobDetails_exportPorlor4ExcelByRootID: function jobDetails_exportPorlor4ExcelByRootID() {
-            porlor4ExportService.exportExcelByRootID(this.porlor4.id, this.root_job.id);
-        }
-    }
-};
-
-/***/ }),
-
-/***/ 284:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Porlor4AddChildJob; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_job_service__ = __webpack_require__(32);
-
-var porlor4JobService = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_job_service__["a" /* default */]();
-var Porlor4AddChildJob = {
-    data: function data() {
-        return {
-            add_child_job: {
-                total_page_number: 0,
-                add_status: false,
-                is_loading: false,
-                form: {
-                    page_number: '',
-                    job_order_number: '',
-                    name: '',
-                    parent: {},
-                    quantity_factor: 0,
-                    unit: '',
-                    group_item_per_unit: false
-                },
-                parents: []
-            }
-        };
-    },
-    methods: {
-        beforeOpenAddChildJobModal: function beforeOpenAddChildJobModal(event) {
-            var _this = this;
-
-            //Reset Data
-            this.addChildJobResetData(event);
-            porlor4JobService.getParentJobs(this.porlor4.id, this.root_job.id).then(function (result) {
-                _this.add_child_job.parents = result;
-                console.log('Parents Job Result :', result);
-            }).catch(function (err) {
-                alert(err);
-            });
-        },
-        openedAddChildJobModal: function openedAddChildJobModal() {},
-
-        //Reset Data
-        addChildJobResetData: function addChildJobResetData(event) {
-            this.add_child_job = {
-                add_status: false,
-                is_loading: false,
-                total_page_number: event.params.total_page_number,
-                form: {
-                    page_number: event.params.page_number,
-                    job_order_number: '',
-                    name: '',
-                    parent: '',
-                    quantity_factor: 0,
-                    unit: '',
-                    group_item_per_unit: false
-                },
-                parents: []
-            };
-        },
-        addChildJob: function addChildJob(scope, event) {
-            var _this2 = this;
-
-            this.$validator.validateAll(scope).then(function (result) {
-                if (result) {
-                    _this2.add_child_job.is_loading = true;
-                    console.log('Add Child Job Loading Status :', _this2.add_child_job.is_loading);
-                    porlor4JobService.addChildJob(_this2.porlor4.id, _this2.root_job.id, _this2.add_child_job.form).then(function (result) {
-                        _this2.add_child_job.add_status = true;
-                        _this2.closeAddChildJobModal();
-                        _this2.add_child_job.is_loading = false;
-                        console.log(result);
-                    }).catch(function (err) {
-                        alert(err);
-                    });
-                } else {
-                    alert('กรุณาระบบข้อมูล');
-                }
-            });
-        },
-        addChildJob_childJobCustomLabel: function addChildJob_childJobCustomLabel(item) {
-            var label = '';
-            label = item.job_order_number + ' ' + item.name;
-            return label;
-        },
-        closeAddChildJobModal: function closeAddChildJobModal() {
-            this.$modal.hide('porlor-4-add-child-job-modal', {
-                add_status: this.add_child_job.add_status
-            });
-        }
-    }
-};
-
-/***/ }),
-
-/***/ 285:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Porlor4AddChildJobItem; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_material_material_type_service__ = __webpack_require__(31);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_js_services_material_material_item_service__ = __webpack_require__(30);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__assets_js_services_project_order_porlor_4_job_service__ = __webpack_require__(32);
-
-
-
-
-var porlor4JobService = new __WEBPACK_IMPORTED_MODULE_2__assets_js_services_project_order_porlor_4_job_service__["a" /* default */]();
-var materialItemService = new __WEBPACK_IMPORTED_MODULE_1__assets_js_services_material_material_item_service__["a" /* default */]();
-var materialTypeService = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_material_material_type_service__["a" /* default */]();
-var Porlor4AddChildJobItem = {
-    data: function data() {
-        return {
-            add_child_job_item: {
-                child_job: '',
-                add_status: false,
-                isLoading: false,
-                show_add_new_material_button: true,
-                show_real_time_add_new_material_button: false,
-                leaf_jobs: [],
-                new_material_item: {
-                    name: '',
-                    is_loading: false
-                },
-                form: {
-                    is_item: 1,
-                    page_number: '',
-                    child_job: '',
-                    items: [{
-                        material_types: [],
-                        material_items: [],
-                        material_type: '',
-                        material_item: '',
-                        material_name: '',
-                        local_price: '',
-                        local_wage: '',
-                        quantity: 0,
-                        unit: ''
-                    }]
-                }
-            }
-        };
-    },
-
-    methods: {
-        beforeOpenAddChildJobItemModal: function beforeOpenAddChildJobItemModal(event) {
-            this.addChildJobItemResetData(event);
-        },
-        openedAddChildJobItemModal: function openedAddChildJobItemModal() {
-            var _this = this;
-
-            this.add_child_job_item.isLoading = true;
-            Promise.all([porlor4JobService.getAllChildJobsWithOutItems(this.porlor4.id, this.root_job.id).then(function (result) {
-                _this.add_child_job_item.leaf_jobs = result;
-                console.log('Leaf Jobs :', _this.add_child_job_item.leaf_jobs);
-            }).catch(function (err) {}),
-            //Get Material Items
-            materialItemService.getItems().then(function (result) {
-                _this.add_child_job_item.form.items[0].material_items = result;
-                console.log('Get Items Results :', result);
-            }).catch(function (err) {
-                alert(err);
-            })]).then(function () {
-                _this.add_child_job_item.isLoading = false;
-            }).catch(function () {
-                _this.add_child_job_item.isLoading = false;
-            });
-        },
-        addChildJobItemResetData: function addChildJobItemResetData(event) {
-            var child_job = event.params.child_job;
-            var page_number = event.params.page_number;
-            if (child_job == null) {
-                child_job = '';
-            }
-            console.log('Add Child Job Item Event data : ', event.params);
-            this.add_child_job_item = {
-                add_status: false,
-                isLoading: false,
-                show_add_new_material_button: true,
-                show_real_time_add_new_material_button: false,
-                leaf_jobs: [],
-                new_material_item: {
-                    name: ''
-                },
-                form: {
-                    is_item: 1,
-                    page_number: page_number,
-                    child_job: child_job,
-                    items: [{
-                        material_types: [],
-                        material_items: [],
-                        material_type: '',
-                        material_item: '',
-                        material_name: '',
-                        local_price: '',
-                        local_wage: '',
-                        quantity: 0,
-                        unit: ''
-                    }]
-                }
-            };
-        },
-        addChildJobItem: function addChildJobItem(form, event) {
-            var _this2 = this;
-
-            //this.project_details จาก ไฟล์ root mixin (porlor_4_index.js)
-            this.add_child_job_item.form.project_details = this.project_details;
-            console.log('Item Form Inputs :', this.add_child_job_item.form);
-            this.$validator.validateAll(form).then(function (result) {
-                if (result) {
-                    _this2.add_child_job_item.isLoading = true;
-                    porlor4JobService.addChildJobItem(_this2.porlor4.id, _this2.add_child_job_item.form).then(function (result) {
-                        console.log('Add New Item Success');
-                        _this2.add_child_job_item.isLoading = false;
-                        _this2.add_child_job_item.add_status = true;
-                        _this2.closeAddChildJobItemModal();
-                    }).catch(function (err) {
-                        alert(err);
-                        _this2.add_child_job_item.isLoading = false;
-                    });
-                } else {
-                    alert('กรุณาระบุข้อมูล');
-                }
-            });
-        },
-        addChildJobItemDeleteInput: function addChildJobItemDeleteInput(index) {
-            this.add_child_job_item.form.items.splice(index, 1);
-        },
-        addChildJobItemGetItemDetails: function addChildJobItemGetItemDetails(index, item) {
-            console.log('Get Item Details ', index, item, parent);
-            if (item) {
-                this.add_child_job_item.form.items[index].local_price = item.global_price;
-                this.add_child_job_item.form.items[index].local_wage = item.global_wage;
-                this.add_child_job_item.form.items[index].unit = item.unit;
-            }
-        },
-        addChildJobItem_AddMoreInputs: function addChildJobItem_AddMoreInputs() {
-            var _this3 = this;
-
-            //
-            if (this.add_child_job_item.isLoading === false) {
-                this.add_child_job_item.isLoading = true;
-            }
-            var new_item = {
-                material_types: [],
-                material_items: [],
-                material_type: '',
-                material_item: '',
-                material_name: '',
-                local_price: '',
-                local_wage: '',
-                quantity: 0,
-                unit: ''
-            };
-            materialItemService.getItems().then(function (result) {
-                new_item.material_items = result;
-                _this3.add_child_job_item.form.items.push(new_item);
-                _this3.add_child_job_item.isLoading = false;
-            }).catch(function (err) {
-                alert(err);
-                _this3.add_child_job_item.isLoading = false;
-            });
-        },
-        test_click: function test_click() {
-            console.log('Clicked');
-        },
-        addChildJobItem_AddNewMaterialItem: function addChildJobItem_AddNewMaterialItem(item, index, event) {
-            var _this4 = this;
-
-            this.$refs.add_child_job_item_multi_select_item[index].deactivate();
-            var inputs = {
-                material_item: {
-                    name: this.add_child_job_item.new_material_item.name
-                }
-            };
-            this.add_child_job_item.show_add_new_material_button = false;
-            this.add_child_job_item.new_material_item.is_loading = true;
-            console.log('Add New Item Inputs', inputs);
-            materialItemService.addNewOtherItem(inputs).then(function (new_item) {
-                console.log('Add New Item Success : ', new_item);
-                item.material_item = new_item;
-                materialItemService.searchItemsByName(_this4.add_child_job_item.new_material_item.name).then(function (items) {
-                    item.material_items = items;
-                    _this4.add_child_job_item.new_material_item.is_loading = false;
-                    _this4.add_child_job_item.show_add_new_material_button = true;
-                }).catch(function (err) {
-                    alert(err);
-                });
-            }).catch(function (err) {
-                alert(err);
-            });
-        },
-        addChildJobItem_SearchItemsByName: function addChildJobItem_SearchItemsByName(item, search_name) {
-            var _this5 = this;
-
-            console.log('Search Items By Name :', search_name);
-            this.add_child_job_item.new_material_item.name = search_name;
-            materialItemService.searchItemsByName(search_name).then(function (result) {
-                console.log('Search Result :', result);
-                item.material_items = result;
-                var findSearchIndex = item.material_items.findIndex(function (item) {
-                    return item.approved_global_details.name == search_name;
-                });
-                _this5.add_child_job_item.show_real_time_add_new_material_button = findSearchIndex < 0;
-                if (item.material_items.length == 0) {
-                    _this5.add_child_job_item.show_real_time_add_new_material_button = false;
-                }
-            }).catch(function (err) {
-                alert(err);
-            });
-        },
-        closeAddChildJobItemModal: function closeAddChildJobItemModal() {
-            this.$modal.hide('porlor-4-add-child-job-item-modal', {
-                add_status: this.add_child_job_item.add_status
-            });
-        },
-        getMaterialTypes: function getMaterialTypes() {},
-
-        //Get Items OF Type
-        getMaterialItemsOfType: function getMaterialItemsOfType(index) {
-            var _this6 = this;
-
-            this.add_child_job_item.form.items[index].material_item = '';
-            materialItemService.getItemsOfType(this.add_child_job_item.form.items[index].material_type.id).then(function (result) {
-                console.log('Material Item :', result);
-                _this6.add_child_job_item.form.items[index].material_items = result;
-            }).catch(function (err) {
-                alert(err);
-            });
-        },
-
-        //Search Item Of Type By name
-        searchMaterialItemsOfType: function searchMaterialItemsOfType(item, search_name) {
-            var _this7 = this;
-
-            this.add_child_job_item.new_material_item.name = search_name;
-            // this.add_child_job_item.isLoading = true;
-            materialItemService.searchItemsOfTypeByName(item.material_type.id, search_name).then(function (result) {
-                console.log('Search Material Items :', result);
-                _this7.add_child_job_item.material_items = result;
-                // this.add_child_job_item.isLoading = false;
-            }).catch(function (err) {
-                alert(err);
-            });
-        },
-        childJobCustomLabel: function childJobCustomLabel(item) {
-            return item.job_order_number + ' ' + item.name;
-        },
-        materialItemCustomLabel: function materialItemCustomLabel(item) {
-            if (item.approved_global_details) {
-                return item.approved_global_details.name;
-            }
-        }
-    },
-    watch: {
-        //หน้าใช้งานใน porlor 4 ราคาต่างๆเป็นราคา ประจำตำบล แต่ข้อมูลที่ดึงมาจาก DB จะดึงราคาส่วนกลางมาแสดง
-        //หากราคาส่วนกลางไม่ตรงกับราคาประจำตำบลนั้นๆ ผู้ใช้สามารถแก้ไขและปรับปรุงได้
-        'add_child_job_item.form.material_item': function add_child_job_itemFormMaterial_item(item) {
-            console.log('Add Child Job Item Selected Item :', item);
-            this.add_child_job_item.form.local_price = item.approved_global_details.global_price;
-            this.add_child_job_item.form.local_wage = item.approved_global_details.global_wage;
-            this.add_child_job_item.form.unit = item.approved_global_details.unit;
-        }
-    }
-};
-
-/***/ }),
-
-/***/ 286:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Porlor4EditChildJob; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_job_service__ = __webpack_require__(32);
-
-
-var porlor4JobService = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_job_service__["a" /* default */]();
-var Porlor4EditChildJob = {
-    data: function data() {
-        return {
-            edit_child_job: {
-                showLoading: false,
-                edit_status: false,
-                child_job: '',
-                form: {
-                    id: '',
-                    page_number: '',
-                    job_order_number: '',
-                    name: '',
-                    parent: {},
-                    quantity_factor: 0,
-                    unit: '',
-                    group_item_per_unit: ''
-                },
-                parents: []
-            }
-        };
-    },
-    methods: {
-        beforeOpenEditChildJobModal: function beforeOpenEditChildJobModal(data) {
-            //พัก job ที่เลือกจากหน้า details ไว้ใน edit_child_job.child_job
-            this.edit_child_job.child_job = data.params.job;
-            console.log('Before OPen Edit Child Job Data :', data);
-        },
-        openedEditChildJobModal: function openedEditChildJobModal() {
-            var _this = this;
-
-            this.edit_child_job.showLoading = true;
-            var child_job = this.edit_child_job.child_job;
-            console.log('Opened Edit Child Job Modal Child Job :', child_job);
-            porlor4JobService.getParentJobs(this.porlor4.id, this.root_job.id).then(function (result) {
-                var group_item_per_unit = child_job.group_item_per_unit;
-                if (group_item_per_unit == 0) {
-                    group_item_per_unit = false;
-                }
-                console.log('Parents Job Result :', result);
-                var parent = child_job.ancestors.filter(function (item) {
-                    return item.id === child_job.parent_id;
-                }).pop();
-                //Initial Data
-                _this.edit_child_job.form = {
-                    id: child_job.id,
-                    page_number: child_job.page_number,
-                    job_order_number: child_job.job_order_number,
-                    name: child_job.name,
-                    parent: parent,
-                    quantity_factor: child_job.quantity_factor,
-                    unit: child_job.unit,
-                    group_item_per_unit: group_item_per_unit
-                };
-                _this.edit_child_job.parents = result;
-                _this.edit_child_job.showLoading = false;
-            }).catch(function (err) {
-                alert(err);
-            });
-        },
-        editChildJob_updateData: function editChildJob_updateData(form, event) {
-            var _this2 = this;
-
-            console.log('Update Data');
-            this.$validator.validateAll(form).then(function (result) {
-                if (result) {
-                    console.log('Pass Validate');
-                    _this2.edit_child_job.showLoading = true;
-                    porlor4JobService.updateChildJob(_this2.porlor4.id, _this2.edit_child_job.form).then(function (result) {
-                        console.log('Update Child Job Success');
-                        _this2.edit_child_job.showLoading = false;
-                        _this2.edit_child_job.edit_status = true;
-                        _this2.closeEditChildJobModal();
-                    }).catch();
-                } else {
-                    alert('กรุณาระบุข้อมูล');
-                }
-            }).catch(function (err) {});
-        },
-        closeEditChildJobModal: function closeEditChildJobModal() {
-            console.log('Close Edit Child Job Modal');
-            this.$modal.hide('porlor-4-edit-child-job-modal', {
-                edit_status: this.edit_child_job.edit_status
-            });
-        },
-        editChildJob_childJobCustomLabel: function editChildJob_childJobCustomLabel(item) {
-            var label = '';
-            label = item.job_order_number + ' ' + item.name;
-            return label;
-        }
-    }
-};
-
-/***/ }),
-
-/***/ 287:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Porlor4EditChildJobItem; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_job_service__ = __webpack_require__(32);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_js_services_material_material_item_service__ = __webpack_require__(30);
-
-
-
-var materialItemService = new __WEBPACK_IMPORTED_MODULE_1__assets_js_services_material_material_item_service__["a" /* default */]();
-var porlor4JobService = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_job_service__["a" /* default */]();
-var Porlor4EditChildJobItem = {
-    data: function data() {
-        return {
-            edit_child_job_item: {
-                job_item: '',
-                show_real_time_add_new_material_button: false,
-                updated_status: false,
-                isLoading: false,
-                new_material_item: {
-                    name: '',
-                    is_loading: false
-                },
-                old_item_id: '',
-                form: {
-                    project_details: '',
-                    job_id: '',
-                    item_id: '',
-                    is_item: 1,
-                    page_number: '',
-                    child_job: '',
-                    material_items: [],
-                    material_type: '',
-                    material_item: '',
-                    material_name: '',
-                    local_price: '',
-                    local_wage: '',
-                    quantity: 0,
-                    unit: ''
-                }
-            }
-        };
-    },
-    methods: {
-        beforeOpenEditChildJobItemModal: function beforeOpenEditChildJobItemModal(event) {
-            console.log('Edit Child Job ITem Job ITem : ', event.params.job_item);
-            console.log('Item ID', this.edit_child_job_item.form.item_id);
-            this.editChildJobItem_resetData();
-            this.edit_child_job_item.old_item_id = '';
-            // this.edit_child_job_item.job_item = event.params.job_item;
-            this.edit_child_job_item.form.job_id = event.params.job_item.id;
-            this.edit_child_job_item.form.item_id = event.params.job_item.item.id;
-            this.edit_child_job_item.form.material_item = event.params.job_item.item.details;
-            this.edit_child_job_item.form.local_price = event.params.job_item.item.local_price;
-            this.edit_child_job_item.form.local_wage = event.params.job_item.item.local_wage;
-            this.edit_child_job_item.form.unit = event.params.job_item.item.unit;
-            this.edit_child_job_item.form.quantity = event.params.job_item.item.quantity;
-            this.edit_child_job_item.form.project_details = this.project_details;
-            this.edit_child_job_item.old_item_id = this.edit_child_job_item.form.material_item.approved_global_details.id;
-            console.log('Edit Child Job Ites Form :', this.edit_child_job_item.form);
-        },
-        openedEditChildJobItemModal: function openedEditChildJobItemModal() {
-            var _this = this;
-
-            this.edit_child_job_item.isLoading = true;
-            Promise.all([
-            //Get Material Items
-            materialItemService.getItems().then(function (result) {
-                _this.edit_child_job_item.form.material_items = result;
-                // this.edit_child_job_item.form.material_item =
-            }).catch(function (err) {
-                alert(err);
-            })]).then(function () {
-                _this.edit_child_job_item.isLoading = false;
-            }).catch(function () {
-                _this.edit_child_job_item.isLoading = false;
-            });
-        },
-
-        //Reset Data Before Use
-        editChildJobItem_resetData: function editChildJobItem_resetData() {
-            this.edit_child_job_item = {
-                job_item: '',
-                show_real_time_add_new_material_button: false,
-                updated_status: false,
-                isLoading: false,
-                new_material_item: {
-                    name: '',
-                    is_loading: false
-                },
-                old_item_id: '',
-                form: {
-                    project_details: '',
-                    job_id: '',
-                    item_id: '',
-                    is_item: 1,
-                    page_number: '',
-                    child_job: '',
-                    material_items: [],
-                    material_type: '',
-                    material_item: '',
-                    material_name: '',
-                    local_price: '',
-                    local_wage: '',
-                    quantity: 0,
-                    unit: ''
-                }
-            };
-        },
-        editChildJobItem_updateItem: function editChildJobItem_updateItem(form, event) {
-            var _this2 = this;
-
-            console.log('Update Item Form', form, event);
-            //this.project_details จาก ไฟล์ root mixin (porlor_4_index.js)
-            console.log('Item Form Inputs :', this.edit_child_job_item.form);
-            this.$validator.validateAll(form).then(function (result) {
-                if (result) {
-                    _this2.edit_child_job_item.isLoading = true;
-                    porlor4JobService.updateChildJobItem(_this2.porlor4.id, _this2.edit_child_job_item.form).then(function (result) {
-                        console.log('Update Child Job Item Success');
-                        _this2.edit_child_job_item.isLoading = false;
-                        _this2.edit_child_job_item.updated_status = true;
-                        _this2.closeEditChildJobItemModal();
-                    }).catch(function (err) {
-                        alert(err);
-                        _this2.edit_child_job_item.isLoading = false;
-                    });
-                } else {
-                    alert('กรุณาระบุข้อมูล');
-                }
-            });
-        },
-        editChildJobItem_getItemDetails: function editChildJobItem_getItemDetails(item) {
-            console.log('Edit Child Job Form Item ID :', this.edit_child_job_item.form.material_item.approved_global_details.id);
-            console.log('Selected Item ', item);
-            if (item) {
-                if (this.edit_child_job_item.old_item_id != item.id || this.edit_child_job_item.old_item_id == '') {
-                    this.edit_child_job_item.form.local_price = item.global_price;
-                    this.edit_child_job_item.form.local_wage = item.global_wage;
-                    this.edit_child_job_item.form.unit = item.unit;
-                }
-            }
-        },
-        editChildJobItem_addNewMaterialItem: function editChildJobItem_addNewMaterialItem() {
-            var _this3 = this;
-
-            var inputs = {
-                material_item: {
-                    name: this.edit_child_job_item.new_material_item.name
-                }
-            };
-            this.$refs.edit_child_job_item_multi_select_item.deactivate();
-            this.add_child_job_item.new_material_item.is_loading = true;
-            console.log('Add New Item Inputs', inputs);
-            materialItemService.addNewOtherItem(inputs).then(function (new_item) {
-                console.log('Add New Item Success : ', new_item);
-                _this3.edit_child_job_item.form.material_item = new_item;
-                materialItemService.searchItemsByName(_this3.edit_child_job_item.new_material_item.name).then(function (items) {
-                    console.log('get New Item Success : ', new_item);
-                    _this3.edit_child_job_item.form.material_items = items;
-                    _this3.add_child_job_item.new_material_item.is_loading = false;
-                }).catch(function (err) {
-                    alert(err);
-                });
-            }).catch(function (err) {
-                alert(err);
-            });
-        },
-        editChildJobItem_searchItemsByName: function editChildJobItem_searchItemsByName(search_name) {
-            var _this4 = this;
-
-            console.log('Search Items By Name :', search_name);
-            this.edit_child_job_item.new_material_item.name = search_name;
-            materialItemService.searchItemsByName(search_name).then(function (result) {
-                console.log('Search Result :', result);
-                _this4.edit_child_job_item.material_items = result;
-                var findSearchIndex = _this4.edit_child_job_item.material_items.findIndex(function (item) {
-                    return item.approved_global_details.name == search_name;
-                });
-                _this4.edit_child_job_item.show_real_time_add_new_material_button = findSearchIndex < 0;
-                if (_this4.edit_child_job_item.material_items.length == 0) {
-                    _this4.edit_child_job_item.show_real_time_add_new_material_button = false;
-                }
-            }).catch(function (err) {
-                alert(err);
-            });
-        },
-        closeEditChildJobItemModal: function closeEditChildJobItemModal() {
-            this.$modal.hide('porlor-4-edit-child-job-item-modal', {
-                edit_status: this.edit_child_job_item.updated_status
-            });
-        },
-        editChildJobItem_customLabel: function editChildJobItem_customLabel(item) {
-            return item.job_order_number + ' ' + item.name;
-        },
-        editChildJobItem_materialItemCustomLabel: function editChildJobItem_materialItemCustomLabel(item) {
-            if (item.approved_global_details) {
-                return item.approved_global_details.name;
-            }
-        }
-    }
-};
-
-/***/ }),
-
-/***/ 288:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Porlor4JobEditRootJobModal; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_job_service__ = __webpack_require__(32);
-
-var porlor4JobService = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_job_service__["a" /* default */]();
-var Porlor4JobEditRootJobModal = {
-    data: function data() {
-        return {
-            edit_root_job: {
-                is_updated: false,
-                is_loading: false,
-                form: {
-                    porlor_4_job_id: '',
-                    root_job_name: ''
-                }
-            }
-
-        };
-    },
-
-    methods: {
-        beforeOpenPorlor4JobEditRootJobModal: function beforeOpenPorlor4JobEditRootJobModal(data) {
-            var root_job = data.params.root_job;
-            this.edit_root_job.is_updated = false;
-            this.edit_root_job.form.porlor_4_job_id = root_job.id;
-            this.edit_root_job.form.root_job_name = root_job.name;
-        },
-        openedPorlor4JobEditRootJobModal: function openedPorlor4JobEditRootJobModal() {},
-        closePorlor4JobEditRootJobModal: function closePorlor4JobEditRootJobModal() {
-            this.$modal.hide('porlor-4-job-edit-root-job-modal', {
-                is_updated: this.edit_root_job.is_updated
-            });
-        },
-        editRootJobModal_updateData: function editRootJobModal_updateData(scope, event) {
-            var _this = this;
-
-            this.$validator.validateAll(scope).then(function (result) {
-                if (result) {
-                    _this.edit_root_job.is_loading = true;
-                    porlor4JobService.updateRootJob(_this.porlor4.id, _this.edit_root_job.form) // this.porlor4.id จาก หน้า index
-                    .then(function (result) {
-                        _this.edit_root_job.is_updated = true;
-                        _this.closePorlor4JobEditRootJobModal();
-                        _this.edit_root_job.is_loading = false;
-                    }).catch(function (err) {
-                        alert(err);
-                    });
-                } else {
-                    alert('กรุณาระบุข้อมูล');
-                }
-            });
-        }
-    }
-};
-
-/***/ }),
-
 /***/ 3:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2682,7 +1422,7 @@ var Porlor4JobEditRootJobModal = {
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(0);
-var normalizeHeaderName = __webpack_require__(14);
+var normalizeHeaderName = __webpack_require__(17);
 
 var DEFAULT_CONTENT_TYPE = {
   'Content-Type': 'application/x-www-form-urlencoded'
@@ -2776,16 +1516,116 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 
 module.exports = defaults;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(13)))
 
 /***/ }),
 
 /***/ 30:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var Cancel = __webpack_require__(8);
+
+/**
+ * A `CancelToken` is an object that can be used to request cancellation of an operation.
+ *
+ * @class
+ * @param {Function} executor The executor function.
+ */
+function CancelToken(executor) {
+  if (typeof executor !== 'function') {
+    throw new TypeError('executor must be a function.');
+  }
+
+  var resolvePromise;
+  this.promise = new Promise(function promiseExecutor(resolve) {
+    resolvePromise = resolve;
+  });
+
+  var token = this;
+  executor(function cancel(message) {
+    if (token.reason) {
+      // Cancellation has already been requested
+      return;
+    }
+
+    token.reason = new Cancel(message);
+    resolvePromise(token.reason);
+  });
+}
+
+/**
+ * Throws a `Cancel` if cancellation has been requested.
+ */
+CancelToken.prototype.throwIfRequested = function throwIfRequested() {
+  if (this.reason) {
+    throw this.reason;
+  }
+};
+
+/**
+ * Returns an object that contains a new `CancelToken` and a function that, when called,
+ * cancels the `CancelToken`.
+ */
+CancelToken.source = function source() {
+  var cancel;
+  var token = new CancelToken(function executor(c) {
+    cancel = c;
+  });
+  return {
+    token: token,
+    cancel: cancel
+  };
+};
+
+module.exports = CancelToken;
+
+
+/***/ }),
+
+/***/ 31:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Syntactic sugar for invoking a function and expanding an array for arguments.
+ *
+ * Common use case would be to use `Function.prototype.apply`.
+ *
+ *  ```js
+ *  function f(x, y, z) {}
+ *  var args = [1, 2, 3];
+ *  f.apply(null, args);
+ *  ```
+ *
+ * With `spread` this example can be re-written.
+ *
+ *  ```js
+ *  spread(function(x, y, z) {})([1, 2, 3]);
+ *  ```
+ *
+ * @param {Function} callback
+ * @returns {Function}
+ */
+module.exports = function spread(callback) {
+  return function wrap(arr) {
+    return callback.apply(null, arr);
+  };
+};
+
+
+/***/ }),
+
+/***/ 32:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__webUrl__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_axios__);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -3074,12 +1914,12 @@ var MaterialItem = function () {
 
 /***/ }),
 
-/***/ 31:
+/***/ 33:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__webUrl__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_axios__);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -3162,7 +2002,7 @@ var MaterialType = function () {
 
 /***/ }),
 
-/***/ 32:
+/***/ 34:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3573,6 +2413,1173 @@ var Porlor4Service = function () {
 
 /***/ }),
 
+/***/ 388:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(389);
+
+
+/***/ }),
+
+/***/ 389:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_job_service__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_js_services_project_order_porlor_4_service__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__porlor_4_job_add_root_porlor_4_job_add_root__ = __webpack_require__(390);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__porlor_4_job_details_porlor_4_job_details__ = __webpack_require__(391);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__porlor_4_job_details_porlor_4_add_child_job_porlor_4_add_child_job__ = __webpack_require__(392);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__porlor_4_job_details_porlor_4_add_child_job_item_porlor_4_add_child_job_item__ = __webpack_require__(393);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__porlor_4_job_details_porlor_4_edit_child_job_porlor_4_edit_child_job__ = __webpack_require__(394);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__porlor_4_job_details_porlor_4_edit_child_job_item_porlor_4_edit_child_job_item__ = __webpack_require__(395);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__porlor_4_job_edit_root_job_polor_4_job_edit_root_job__ = __webpack_require__(396);
+
+
+
+
+
+
+
+
+
+
+var porlor4 = porlor4FromBlade; // get from index blade template
+var porlor4Service = new __WEBPACK_IMPORTED_MODULE_1__assets_js_services_project_order_porlor_4_service__["a" /* default */]();
+var porlor4JobService = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_job_service__["a" /* default */]();
+
+console.log('Porlor 4 ID :', porlor4.id);
+new Vue({
+    el: '#porlor-4-job-index',
+    mixins: [__WEBPACK_IMPORTED_MODULE_2__porlor_4_job_add_root_porlor_4_job_add_root__["a" /* Porlor4JobAddRoot */], __WEBPACK_IMPORTED_MODULE_3__porlor_4_job_details_porlor_4_job_details__["a" /* Porlor4JobDetails */], __WEBPACK_IMPORTED_MODULE_4__porlor_4_job_details_porlor_4_add_child_job_porlor_4_add_child_job__["a" /* Porlor4AddChildJob */], __WEBPACK_IMPORTED_MODULE_5__porlor_4_job_details_porlor_4_add_child_job_item_porlor_4_add_child_job_item__["a" /* Porlor4AddChildJobItem */], __WEBPACK_IMPORTED_MODULE_6__porlor_4_job_details_porlor_4_edit_child_job_porlor_4_edit_child_job__["a" /* Porlor4EditChildJob */], __WEBPACK_IMPORTED_MODULE_7__porlor_4_job_details_porlor_4_edit_child_job_item_porlor_4_edit_child_job_item__["a" /* Porlor4EditChildJobItem */], __WEBPACK_IMPORTED_MODULE_8__porlor_4_job_edit_root_job_polor_4_job_edit_root_job__["a" /* Porlor4JobEditRootJobModal */]],
+    data: {
+        porlor4: porlor4,
+        //Modal Status
+        addRootJobStatus: false,
+        updatedJobDetailStatus: false,
+        //End Modal Status
+        partDetails: {},
+        showLoading: '',
+        jobs: [],
+        project_details: {
+            province: {},
+            amphoe: {},
+            district: {}
+        }
+    },
+    mounted: function mounted() {
+        this.initialData();
+    },
+    methods: {
+        initialData: function initialData() {
+            var _this = this;
+
+            this.showLoading = true;
+            Promise.all([
+            //Get All Jobs
+            porlor4JobService.getAllRootJobs(this.porlor4.id).then(function (result) {
+                console.log('Init Get Jobs Method Result :', result);
+                _this.jobs = result;
+                _this.showLoading = false;
+            }).catch(function (err) {
+                console.log('Error Job Index Get All Root Jobs :', error);
+            }),
+            //Get Part Details
+            porlor4JobService.getPartDetails(this.porlor4.id).then(function (result) {
+                console.log('Init Get Part Result :', result);
+                _this.partDetails = result;
+            }).catch(function (err) {
+                console.log("Error Job index Get Part Details :", err);
+                _this.showLoading = false;
+            }),
+            //Get Project Details
+            porlor4Service.getProjectDetails(this.porlor4.project_order_id).then(function (result) {
+                console.log('Project Details is : ', result);
+                _this.project_details = result;
+            }).catch(function (err) {
+                console.log('Errors Job Index Get Project Details :', error);
+            })]).then(function () {
+                _this.showLoading = false;
+            }).catch(function () {
+                _this.showLoading = false;
+            });
+        },
+        refreshData: function refreshData() {
+            var _this2 = this;
+
+            this.showLoading = true;
+            //Get All Jobs
+            porlor4JobService.getAllRootJobs(porlor4.id).then(function (result) {
+                console.log('Init Get Jobs Method Result :', result);
+                _this2.jobs = result;
+                _this2.showLoading = false;
+            }).catch(function (err) {
+                alert(err);
+                _this2.showLoading = false;
+            });
+        },
+
+        //Before Close Add Root Job Modal
+        beforeCloseAddRootJobModal: function beforeCloseAddRootJobModal() {
+            if (this.addRootJobStatus) {
+                this.refreshData();
+            }
+        },
+
+        //Before Close Show Job Details Modal
+        beforeCloseJobDetailsModal: function beforeCloseJobDetailsModal() {
+            if (this.updatedJobDetailStatus) {
+                this.refreshData();
+            }
+        },
+
+        //Before Close Edit Root Job Modal
+        beforeClosePorlor4JobEditRootJobModal: function beforeClosePorlor4JobEditRootJobModal(data) {
+            if (data.params.is_updated) {
+                this.refreshData();
+            }
+        },
+
+        //Add Root Job
+        showAddRootJobModal: function showAddRootJobModal() {
+            this.$modal.show('porlor-4-job-add-root-job-modal');
+        },
+
+        //Show Job Details
+        showJobDetailsModal: function showJobDetailsModal(root_job) {
+            this.$modal.show('porlor-4-job-details-modal', {
+                root_job: root_job
+            });
+        },
+
+        //Show Edit Root Job Modal
+        showEditRootJobModal: function showEditRootJobModal(root_job) {
+            this.$modal.show('porlor-4-job-edit-root-job-modal', {
+                root_job: root_job
+            });
+        },
+        porlor4Job_deleteRootJob: function porlor4Job_deleteRootJob(root_job) {
+            var _this3 = this;
+
+            this.$dialog.confirm('' + '<p>ยืนยันการลบ</p>' + '<h4 class="text-danger">' + root_job.name + '</h4>' + '<p>**การลบนี้จะลบงานย่อยทั้งหมดในหมวดหมู่ </p>').then(function () {
+                _this3.showLoading = true;
+                porlor4JobService.deleteRootJob(_this3.porlor4.id, root_job.id).then(function (result) {
+                    _this3.refreshData();
+                    _this3.showLoading = false;
+                }).catch(function (err) {
+                    alert(err);
+                });
+            }).catch();
+        }
+    }
+});
+
+/***/ }),
+
+/***/ 390:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Porlor4JobAddRoot; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_job_service__ = __webpack_require__(34);
+
+
+var porlor4JobService = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_job_service__["a" /* default */]();
+var Porlor4JobAddRoot = {
+    data: function data() {
+        return {
+            form: {
+                root_job_name: ''
+            }
+        };
+    },
+    methods: {
+        beforeOpenAddRootJobModal: function beforeOpenAddRootJobModal() {
+            this.addRootJobStatus = false;
+            this.form.root_job_name = '';
+            console.log('Porlor4 from parent : ', this.porlor4);
+        },
+        addRootJob: function addRootJob(scope, ev) {
+            var _this = this;
+
+            this.$validator.validateAll(scope).then(function (result) {
+                if (result) {
+                    porlor4JobService.addRootJob(_this.porlor4.id, _this.form).then(function () {
+                        _this.addRootJobStatus = true;
+                        toastr.success('บันทึกเสร็จสมบูรณ์');
+                        _this.closeAddRootJobModal();
+                    }).catch(function (err) {
+                        alert(err);
+                    });
+                }
+            });
+        },
+        closeAddRootJobModal: function closeAddRootJobModal() {
+            this.$modal.hide('porlor-4-job-add-root-job-modal');
+        }
+    }
+};
+
+/***/ }),
+
+/***/ 391:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Porlor4JobDetails; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_job_service__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_js_services_project_order_porlor_4_export_service__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__assets_js_services_webUrl__ = __webpack_require__(2);
+
+
+
+
+var webUrlService = new __WEBPACK_IMPORTED_MODULE_2__assets_js_services_webUrl__["a" /* default */]();
+var porlor4JobService = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_job_service__["a" /* default */]();
+var porlor4ExportService = new __WEBPACK_IMPORTED_MODULE_1__assets_js_services_project_order_porlor_4_export_service__["a" /* default */]();
+var Porlor4JobDetails = {
+    data: function data() {
+        return {
+            showLoadingJobDetails: false,
+            root_job: '',
+            child_jobs: [],
+            child_jobs_v2: '',
+            detailScrollable: true,
+            job_details: {
+                pages: []
+            }
+        };
+    },
+    methods: {
+        beforeOpenJobDetailsModal: function beforeOpenJobDetailsModal(event) {
+            //Get Parent Jobs
+            this.root_job = event.params.root_job;
+            console.log('Root Job ID :', this.root_job.id);
+            console.log('Porlor 4 Job Details');
+            this.child_jobs = [];
+            this.job_details = {
+                checked: []
+            };
+        },
+
+        //Opened Job Details Modal
+        openedJobDetailsModal: function openedJobDetailsModal() {
+            this.getAllChildJobAndItems();
+        },
+
+        //Get All Child Job and Item
+        getAllChildJobAndItems: function getAllChildJobAndItems() {
+            var _this = this;
+
+            this.showLoadingJobDetails = true;
+            porlor4JobService.getAllChildJobs(this.porlor4.id, this.root_job.id).then(function (result) {
+                // this.child_jobs = result;
+                _this.child_jobs = result;
+                console.log('All Child Job V2 :', _this.child_jobs);
+                _this.showLoadingJobDetails = false;
+            });
+        },
+        showAddChildJobModal: function showAddChildJobModal(page_number, total_page_number) {
+            this.detailScrollable = false;
+            this.$modal.show('porlor-4-add-child-job-modal', {
+                page_number: page_number,
+                total_page_number: total_page_number
+            });
+        },
+        showAddChildJobItemModal: function showAddChildJobItemModal(job, page_number) {
+            this.detailScrollable = false;
+            console.log('Show Add Child Job Item Modal');
+            this.$modal.show('porlor-4-add-child-job-item-modal', {
+                child_job: job,
+                page_number: page_number
+            });
+        },
+
+        //Show Edit Child Job Modal
+        showEditChildJobModal: function showEditChildJobModal(job) {
+            this.detailScrollable = false;
+            this.$modal.show('porlor-4-edit-child-job-modal', {
+                job: job
+            });
+        },
+
+        //Show Edit Child Job Item Modal
+        showEditChildJobItemModal: function showEditChildJobItemModal(job_item) {
+            this.detailScrollable = false;
+            this.$modal.show('porlor-4-edit-child-job-item-modal', {
+                job_item: job_item
+            });
+        },
+
+        //Close Modal
+        closePorlor4JobDetailsModal: function closePorlor4JobDetailsModal() {
+            this.$modal.hide('porlor-4-job-details-modal');
+        },
+
+        // Before Close Add Child Job
+        beforeCloseAddChildJobModal: function beforeCloseAddChildJobModal(event) {
+            this.detailScrollable = true;
+            var status = event.params.add_status;
+            if (status) {
+                this.getAllChildJobAndItems();
+            }
+        },
+
+        //closedAddChildJobItemModal
+        beforeCloseAddChildJobItemModal: function beforeCloseAddChildJobItemModal(event) {
+            this.detailScrollable = true;
+            console.log('Close Add Child Job Item Modal Event :', event);
+            var status = event.params.add_status;
+            if (status) {
+                this.getAllChildJobAndItems();
+            }
+        },
+
+        //Before Close Edit Child Job
+        beforeCloseEditChildJobModal: function beforeCloseEditChildJobModal(event) {
+            console.log('Before Close Edit Child Job Modal', event);
+            this.detailScrollable = true;
+            var status = event.params.edit_status;
+            if (status) {
+                this.getAllChildJobAndItems();
+            }
+        },
+
+        //Before Close Edit Child Job Item
+        beforeCloseEditChildJobItemModal: function beforeCloseEditChildJobItemModal(event) {
+            console.log('Before Close Edit Child Job Modal', event);
+            this.detailScrollable = true;
+            var status = event.params.edit_status;
+            if (status) {
+                this.getAllChildJobAndItems();
+            }
+        },
+        jobDetails_addPorlor4Page: function jobDetails_addPorlor4Page() {
+            //ถ้ายังไม่มีข้อมูลซักหน้าก็เพิ่มหน้าใหม่ใส่ child_jobs array ได้เลย
+            if (this.child_jobs.length < 1) {
+                var newPage = {
+                    page: 1,
+                    jobs: [],
+                    total_page: 1,
+                    page_sum_price_wage: 0
+                };
+                this.child_jobs.push(newPage);
+                //หากมีข้อมูลเดิมอยู่แล้วต้องมาเช็คเงื่อนไขเพิ่มเติมดังนี้
+            } else {
+                var errCount = 0;
+                var _newPage = {
+                    page: null,
+                    jobs: [],
+                    total_page: null,
+                    page_sum_price_wage: 0
+                };
+                //วนลูปดูการเรียกลำดับ page ว่ามีตัวเลขกระโดดข้ามหน้าหรือไม่ เช่น 1,2,4,5 (หน้า 3 หายไป)
+                for (var i = 1; i < this.child_jobs.length; i++) {
+                    //หากมี หน้าถัดไป - หน้าปัจจุบัน ไม่เท่ากับ 1 แสดงว่ามีหน้าขาด 4 - 2 = 2
+                    if (this.child_jobs[i].page - this.child_jobs[i - 1].page !== 1) {
+                        //แก้โดยให้หน้าปัจจุบัน + 1
+                        _newPage.page = this.child_jobs[i - 1].page + 1;
+                        //แต่หมายเลขหน้าสุดท้ายยังคงเลขเดิมไม่ต้องบวกเพิ่ม
+                        _newPage.total_page = this.child_jobs.slice(-1).pop().page;
+                        this.child_jobs.splice(i, 0, _newPage);
+                        i = this.child_jobs.length;
+                        //หากมีการเรียกหน้ากระโดดข้าม errCount จะ +1
+                        errCount++;
+                    }
+                }
+                //ถ้า errCount === 0 แปลว่าการเรียงเลขหน้าปกติ
+                //หน้าใหม่ก็จะ +1 จากหน้าสุดท้ายของชุดข้อมูลเดิม โดยที่หน้าสุดท้ายใหม่ก็จะเท่ากับหน้าใหม่ด้วยเช่นกัน
+                if (errCount === 0) {
+                    _newPage.page = this.child_jobs.slice(-1).pop().page + 1;
+                    _newPage.total_page = _newPage.page;
+                    this.child_jobs.push(_newPage);
+                }
+            }
+        },
+        jobDetails_deleteItem: function jobDetails_deleteItem(item, order_number, index) {
+            var _this2 = this;
+
+            console.log('delete Item Index :', index);
+            var item_index = index + 1;
+            var item_order_number = order_number + '.1.' + item_index;
+            console.log('Delete Item : ', item);
+            this.$dialog.confirm('' + '<p>ยืนยันการลบ</p><h4 class="text-danger">' + item_order_number + ' ' + item.details.approved_global_details.name + '</h4>').then(function () {
+                _this2.showLoadingJobDetails = true;
+                porlor4JobService.deleteItem(_this2.porlor4.id, item.id).then(function (result) {
+                    _this2.getAllChildJobAndItems();
+                    _this2.showLoadingJobDetails = false;
+                }).catch(function (err) {
+                    alert(err);
+                });
+            }).catch(function () {});
+        },
+        jobDetails_deleteChildJob: function jobDetails_deleteChildJob(job) {
+            var _this3 = this;
+
+            this.$dialog.confirm('' + '<p>ยืนยันการลบ</p><h4 class="text-danger">' + job.job_order_number + ' ' + job.name + '</h4>' + '<p>การลบนี้จะลบรายการย่อยในกลุ่มด้วยทั้งหมด</p>').then(function () {
+                _this3.showLoadingJobDetails = true;
+                console.log('Delete Child Job :', job);
+                porlor4JobService.deleteChildJob(_this3.porlor4.id, job.id).then(function (result) {
+                    _this3.getAllChildJobAndItems();
+                    _this3.showLoadingJobDetails = false;
+                }).catch(function (err) {
+                    alert(err);
+                });
+            }).catch(function () {});
+        },
+        jobDetails_deletePage: function jobDetails_deletePage(index) {
+            this.child_jobs.splice(index, 1);
+        },
+
+
+        //Export Porlor4
+        jobDetails_exportPorlor4ExcelByRootID: function jobDetails_exportPorlor4ExcelByRootID() {
+            porlor4ExportService.exportExcelByRootID(this.porlor4.id, this.root_job.id);
+        }
+    }
+};
+
+/***/ }),
+
+/***/ 392:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Porlor4AddChildJob; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_job_service__ = __webpack_require__(34);
+
+var porlor4JobService = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_job_service__["a" /* default */]();
+var Porlor4AddChildJob = {
+    data: function data() {
+        return {
+            add_child_job: {
+                total_page_number: 0,
+                add_status: false,
+                is_loading: false,
+                form: {
+                    page_number: '',
+                    job_order_number: '',
+                    name: '',
+                    parent: {},
+                    quantity_factor: 0,
+                    unit: '',
+                    group_item_per_unit: false
+                },
+                parents: []
+            }
+        };
+    },
+    methods: {
+        beforeOpenAddChildJobModal: function beforeOpenAddChildJobModal(event) {
+            var _this = this;
+
+            //Reset Data
+            this.addChildJobResetData(event);
+            porlor4JobService.getParentJobs(this.porlor4.id, this.root_job.id).then(function (result) {
+                _this.add_child_job.parents = result;
+                console.log('Parents Job Result :', result);
+            }).catch(function (err) {
+                alert(err);
+            });
+        },
+        openedAddChildJobModal: function openedAddChildJobModal() {},
+
+        //Reset Data
+        addChildJobResetData: function addChildJobResetData(event) {
+            this.add_child_job = {
+                add_status: false,
+                is_loading: false,
+                total_page_number: event.params.total_page_number,
+                form: {
+                    page_number: event.params.page_number,
+                    job_order_number: '',
+                    name: '',
+                    parent: '',
+                    quantity_factor: 0,
+                    unit: '',
+                    group_item_per_unit: false
+                },
+                parents: []
+            };
+        },
+        addChildJob: function addChildJob(scope, event) {
+            var _this2 = this;
+
+            this.$validator.validateAll(scope).then(function (result) {
+                if (result) {
+                    _this2.add_child_job.is_loading = true;
+                    console.log('Add Child Job Loading Status :', _this2.add_child_job.is_loading);
+                    porlor4JobService.addChildJob(_this2.porlor4.id, _this2.root_job.id, _this2.add_child_job.form).then(function (result) {
+                        _this2.add_child_job.add_status = true;
+                        _this2.closeAddChildJobModal();
+                        _this2.add_child_job.is_loading = false;
+                        console.log(result);
+                    }).catch(function (err) {
+                        alert(err);
+                    });
+                } else {
+                    alert('กรุณาระบบข้อมูล');
+                }
+            });
+        },
+        addChildJob_childJobCustomLabel: function addChildJob_childJobCustomLabel(item) {
+            var label = '';
+            label = item.job_order_number + ' ' + item.name;
+            return label;
+        },
+        closeAddChildJobModal: function closeAddChildJobModal() {
+            this.$modal.hide('porlor-4-add-child-job-modal', {
+                add_status: this.add_child_job.add_status
+            });
+        }
+    }
+};
+
+/***/ }),
+
+/***/ 393:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Porlor4AddChildJobItem; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_material_material_type_service__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_js_services_material_material_item_service__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__assets_js_services_project_order_porlor_4_job_service__ = __webpack_require__(34);
+
+
+
+
+var porlor4JobService = new __WEBPACK_IMPORTED_MODULE_2__assets_js_services_project_order_porlor_4_job_service__["a" /* default */]();
+var materialItemService = new __WEBPACK_IMPORTED_MODULE_1__assets_js_services_material_material_item_service__["a" /* default */]();
+var materialTypeService = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_material_material_type_service__["a" /* default */]();
+var Porlor4AddChildJobItem = {
+    data: function data() {
+        return {
+            add_child_job_item: {
+                child_job: '',
+                add_status: false,
+                isLoading: false,
+                show_add_new_material_button: true,
+                show_real_time_add_new_material_button: false,
+                leaf_jobs: [],
+                new_material_item: {
+                    name: '',
+                    is_loading: false
+                },
+                form: {
+                    is_item: 1,
+                    page_number: '',
+                    child_job: '',
+                    items: [{
+                        material_types: [],
+                        material_items: [],
+                        material_type: '',
+                        material_item: '',
+                        material_name: '',
+                        local_price: '',
+                        local_wage: '',
+                        quantity: 0,
+                        unit: ''
+                    }]
+                }
+            }
+        };
+    },
+
+    methods: {
+        beforeOpenAddChildJobItemModal: function beforeOpenAddChildJobItemModal(event) {
+            this.addChildJobItemResetData(event);
+        },
+        openedAddChildJobItemModal: function openedAddChildJobItemModal() {
+            var _this = this;
+
+            this.add_child_job_item.isLoading = true;
+            Promise.all([porlor4JobService.getAllChildJobsWithOutItems(this.porlor4.id, this.root_job.id).then(function (result) {
+                _this.add_child_job_item.leaf_jobs = result;
+                console.log('Leaf Jobs :', _this.add_child_job_item.leaf_jobs);
+            }).catch(function (err) {}),
+            //Get Material Items
+            materialItemService.getItems().then(function (result) {
+                _this.add_child_job_item.form.items[0].material_items = result;
+                console.log('Get Items Results :', result);
+            }).catch(function (err) {
+                alert(err);
+            })]).then(function () {
+                _this.add_child_job_item.isLoading = false;
+            }).catch(function () {
+                _this.add_child_job_item.isLoading = false;
+            });
+        },
+        addChildJobItemResetData: function addChildJobItemResetData(event) {
+            var child_job = event.params.child_job;
+            var page_number = event.params.page_number;
+            if (child_job == null) {
+                child_job = '';
+            }
+            console.log('Add Child Job Item Event data : ', event.params);
+            this.add_child_job_item = {
+                add_status: false,
+                isLoading: false,
+                show_add_new_material_button: true,
+                show_real_time_add_new_material_button: false,
+                leaf_jobs: [],
+                new_material_item: {
+                    name: ''
+                },
+                form: {
+                    is_item: 1,
+                    page_number: page_number,
+                    child_job: child_job,
+                    items: [{
+                        material_types: [],
+                        material_items: [],
+                        material_type: '',
+                        material_item: '',
+                        material_name: '',
+                        local_price: '',
+                        local_wage: '',
+                        quantity: 0,
+                        unit: ''
+                    }]
+                }
+            };
+        },
+        addChildJobItem: function addChildJobItem(form, event) {
+            var _this2 = this;
+
+            //this.project_details จาก ไฟล์ root mixin (porlor_4_index.js)
+            this.add_child_job_item.form.project_details = this.project_details;
+            console.log('Item Form Inputs :', this.add_child_job_item.form);
+            this.$validator.validateAll(form).then(function (result) {
+                if (result) {
+                    _this2.add_child_job_item.isLoading = true;
+                    porlor4JobService.addChildJobItem(_this2.porlor4.id, _this2.add_child_job_item.form).then(function (result) {
+                        console.log('Add New Item Success');
+                        _this2.add_child_job_item.isLoading = false;
+                        _this2.add_child_job_item.add_status = true;
+                        _this2.closeAddChildJobItemModal();
+                    }).catch(function (err) {
+                        alert(err);
+                        _this2.add_child_job_item.isLoading = false;
+                    });
+                } else {
+                    alert('กรุณาระบุข้อมูล');
+                }
+            });
+        },
+        addChildJobItemDeleteInput: function addChildJobItemDeleteInput(index) {
+            this.add_child_job_item.form.items.splice(index, 1);
+        },
+        addChildJobItemGetItemDetails: function addChildJobItemGetItemDetails(index, item) {
+            console.log('Get Item Details ', index, item, parent);
+            if (item) {
+                this.add_child_job_item.form.items[index].local_price = item.global_price;
+                this.add_child_job_item.form.items[index].local_wage = item.global_wage;
+                this.add_child_job_item.form.items[index].unit = item.unit;
+            }
+        },
+        addChildJobItem_AddMoreInputs: function addChildJobItem_AddMoreInputs() {
+            var _this3 = this;
+
+            //
+            if (this.add_child_job_item.isLoading === false) {
+                this.add_child_job_item.isLoading = true;
+            }
+            var new_item = {
+                material_types: [],
+                material_items: [],
+                material_type: '',
+                material_item: '',
+                material_name: '',
+                local_price: '',
+                local_wage: '',
+                quantity: 0,
+                unit: ''
+            };
+            materialItemService.getItems().then(function (result) {
+                new_item.material_items = result;
+                _this3.add_child_job_item.form.items.push(new_item);
+                _this3.add_child_job_item.isLoading = false;
+            }).catch(function (err) {
+                alert(err);
+                _this3.add_child_job_item.isLoading = false;
+            });
+        },
+        test_click: function test_click() {
+            console.log('Clicked');
+        },
+        addChildJobItem_AddNewMaterialItem: function addChildJobItem_AddNewMaterialItem(item, index, event) {
+            var _this4 = this;
+
+            this.$refs.add_child_job_item_multi_select_item[index].deactivate();
+            var inputs = {
+                material_item: {
+                    name: this.add_child_job_item.new_material_item.name
+                }
+            };
+            this.add_child_job_item.show_add_new_material_button = false;
+            this.add_child_job_item.new_material_item.is_loading = true;
+            console.log('Add New Item Inputs', inputs);
+            materialItemService.addNewOtherItem(inputs).then(function (new_item) {
+                console.log('Add New Item Success : ', new_item);
+                item.material_item = new_item;
+                materialItemService.searchItemsByName(_this4.add_child_job_item.new_material_item.name).then(function (items) {
+                    item.material_items = items;
+                    _this4.add_child_job_item.new_material_item.is_loading = false;
+                    _this4.add_child_job_item.show_add_new_material_button = true;
+                }).catch(function (err) {
+                    alert(err);
+                });
+            }).catch(function (err) {
+                alert(err);
+            });
+        },
+        addChildJobItem_SearchItemsByName: function addChildJobItem_SearchItemsByName(item, search_name) {
+            var _this5 = this;
+
+            console.log('Search Items By Name :', search_name);
+            this.add_child_job_item.new_material_item.name = search_name;
+            materialItemService.searchItemsByName(search_name).then(function (result) {
+                console.log('Search Result :', result);
+                item.material_items = result;
+                var findSearchIndex = item.material_items.findIndex(function (item) {
+                    return item.approved_global_details.name == search_name;
+                });
+                _this5.add_child_job_item.show_real_time_add_new_material_button = findSearchIndex < 0;
+                if (item.material_items.length == 0) {
+                    _this5.add_child_job_item.show_real_time_add_new_material_button = false;
+                }
+            }).catch(function (err) {
+                alert(err);
+            });
+        },
+        closeAddChildJobItemModal: function closeAddChildJobItemModal() {
+            this.$modal.hide('porlor-4-add-child-job-item-modal', {
+                add_status: this.add_child_job_item.add_status
+            });
+        },
+        getMaterialTypes: function getMaterialTypes() {},
+
+        //Get Items OF Type
+        getMaterialItemsOfType: function getMaterialItemsOfType(index) {
+            var _this6 = this;
+
+            this.add_child_job_item.form.items[index].material_item = '';
+            materialItemService.getItemsOfType(this.add_child_job_item.form.items[index].material_type.id).then(function (result) {
+                console.log('Material Item :', result);
+                _this6.add_child_job_item.form.items[index].material_items = result;
+            }).catch(function (err) {
+                alert(err);
+            });
+        },
+
+        //Search Item Of Type By name
+        searchMaterialItemsOfType: function searchMaterialItemsOfType(item, search_name) {
+            var _this7 = this;
+
+            this.add_child_job_item.new_material_item.name = search_name;
+            // this.add_child_job_item.isLoading = true;
+            materialItemService.searchItemsOfTypeByName(item.material_type.id, search_name).then(function (result) {
+                console.log('Search Material Items :', result);
+                _this7.add_child_job_item.material_items = result;
+                // this.add_child_job_item.isLoading = false;
+            }).catch(function (err) {
+                alert(err);
+            });
+        },
+        childJobCustomLabel: function childJobCustomLabel(item) {
+            return item.job_order_number + ' ' + item.name;
+        },
+        materialItemCustomLabel: function materialItemCustomLabel(item) {
+            if (item.approved_global_details) {
+                return item.approved_global_details.name;
+            }
+        }
+    },
+    watch: {
+        //หน้าใช้งานใน porlor 4 ราคาต่างๆเป็นราคา ประจำตำบล แต่ข้อมูลที่ดึงมาจาก DB จะดึงราคาส่วนกลางมาแสดง
+        //หากราคาส่วนกลางไม่ตรงกับราคาประจำตำบลนั้นๆ ผู้ใช้สามารถแก้ไขและปรับปรุงได้
+        'add_child_job_item.form.material_item': function add_child_job_itemFormMaterial_item(item) {
+            console.log('Add Child Job Item Selected Item :', item);
+            this.add_child_job_item.form.local_price = item.approved_global_details.global_price;
+            this.add_child_job_item.form.local_wage = item.approved_global_details.global_wage;
+            this.add_child_job_item.form.unit = item.approved_global_details.unit;
+        }
+    }
+};
+
+/***/ }),
+
+/***/ 394:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Porlor4EditChildJob; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_job_service__ = __webpack_require__(34);
+
+
+var porlor4JobService = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_job_service__["a" /* default */]();
+var Porlor4EditChildJob = {
+    data: function data() {
+        return {
+            edit_child_job: {
+                showLoading: false,
+                edit_status: false,
+                child_job: '',
+                form: {
+                    id: '',
+                    page_number: '',
+                    job_order_number: '',
+                    name: '',
+                    parent: {},
+                    quantity_factor: 0,
+                    unit: '',
+                    group_item_per_unit: ''
+                },
+                parents: []
+            }
+        };
+    },
+    methods: {
+        beforeOpenEditChildJobModal: function beforeOpenEditChildJobModal(data) {
+            //พัก job ที่เลือกจากหน้า details ไว้ใน edit_child_job.child_job
+            this.edit_child_job.child_job = data.params.job;
+            console.log('Before OPen Edit Child Job Data :', data);
+        },
+        openedEditChildJobModal: function openedEditChildJobModal() {
+            var _this = this;
+
+            this.edit_child_job.showLoading = true;
+            var child_job = this.edit_child_job.child_job;
+            console.log('Opened Edit Child Job Modal Child Job :', child_job);
+            porlor4JobService.getParentJobs(this.porlor4.id, this.root_job.id).then(function (result) {
+                var group_item_per_unit = child_job.group_item_per_unit;
+                if (group_item_per_unit == 0) {
+                    group_item_per_unit = false;
+                }
+                console.log('Parents Job Result :', result);
+                var parent = child_job.ancestors.filter(function (item) {
+                    return item.id === child_job.parent_id;
+                }).pop();
+                //Initial Data
+                _this.edit_child_job.form = {
+                    id: child_job.id,
+                    page_number: child_job.page_number,
+                    job_order_number: child_job.job_order_number,
+                    name: child_job.name,
+                    parent: parent,
+                    quantity_factor: child_job.quantity_factor,
+                    unit: child_job.unit,
+                    group_item_per_unit: group_item_per_unit
+                };
+                _this.edit_child_job.parents = result;
+                _this.edit_child_job.showLoading = false;
+            }).catch(function (err) {
+                alert(err);
+            });
+        },
+        editChildJob_updateData: function editChildJob_updateData(form, event) {
+            var _this2 = this;
+
+            console.log('Update Data');
+            this.$validator.validateAll(form).then(function (result) {
+                if (result) {
+                    console.log('Pass Validate');
+                    _this2.edit_child_job.showLoading = true;
+                    porlor4JobService.updateChildJob(_this2.porlor4.id, _this2.edit_child_job.form).then(function (result) {
+                        console.log('Update Child Job Success');
+                        _this2.edit_child_job.showLoading = false;
+                        _this2.edit_child_job.edit_status = true;
+                        _this2.closeEditChildJobModal();
+                    }).catch();
+                } else {
+                    alert('กรุณาระบุข้อมูล');
+                }
+            }).catch(function (err) {});
+        },
+        closeEditChildJobModal: function closeEditChildJobModal() {
+            console.log('Close Edit Child Job Modal');
+            this.$modal.hide('porlor-4-edit-child-job-modal', {
+                edit_status: this.edit_child_job.edit_status
+            });
+        },
+        editChildJob_childJobCustomLabel: function editChildJob_childJobCustomLabel(item) {
+            var label = '';
+            label = item.job_order_number + ' ' + item.name;
+            return label;
+        }
+    }
+};
+
+/***/ }),
+
+/***/ 395:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Porlor4EditChildJobItem; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_job_service__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_js_services_material_material_item_service__ = __webpack_require__(32);
+
+
+
+var materialItemService = new __WEBPACK_IMPORTED_MODULE_1__assets_js_services_material_material_item_service__["a" /* default */]();
+var porlor4JobService = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_job_service__["a" /* default */]();
+var Porlor4EditChildJobItem = {
+    data: function data() {
+        return {
+            edit_child_job_item: {
+                job_item: '',
+                show_real_time_add_new_material_button: false,
+                updated_status: false,
+                isLoading: false,
+                new_material_item: {
+                    name: '',
+                    is_loading: false
+                },
+                old_item_id: '',
+                form: {
+                    project_details: '',
+                    job_id: '',
+                    item_id: '',
+                    is_item: 1,
+                    page_number: '',
+                    child_job: '',
+                    material_items: [],
+                    material_type: '',
+                    material_item: '',
+                    material_name: '',
+                    local_price: '',
+                    local_wage: '',
+                    quantity: 0,
+                    unit: ''
+                }
+            }
+        };
+    },
+    methods: {
+        beforeOpenEditChildJobItemModal: function beforeOpenEditChildJobItemModal(event) {
+            console.log('Edit Child Job ITem Job ITem : ', event.params.job_item);
+            console.log('Item ID', this.edit_child_job_item.form.item_id);
+            this.editChildJobItem_resetData();
+            this.edit_child_job_item.old_item_id = '';
+            // this.edit_child_job_item.job_item = event.params.job_item;
+            this.edit_child_job_item.form.job_id = event.params.job_item.id;
+            this.edit_child_job_item.form.item_id = event.params.job_item.item.id;
+            this.edit_child_job_item.form.material_item = event.params.job_item.item.details;
+            this.edit_child_job_item.form.local_price = event.params.job_item.item.local_price;
+            this.edit_child_job_item.form.local_wage = event.params.job_item.item.local_wage;
+            this.edit_child_job_item.form.unit = event.params.job_item.item.unit;
+            this.edit_child_job_item.form.quantity = event.params.job_item.item.quantity;
+            this.edit_child_job_item.form.project_details = this.project_details;
+            this.edit_child_job_item.old_item_id = this.edit_child_job_item.form.material_item.approved_global_details.id;
+            console.log('Edit Child Job Ites Form :', this.edit_child_job_item.form);
+        },
+        openedEditChildJobItemModal: function openedEditChildJobItemModal() {
+            var _this = this;
+
+            this.edit_child_job_item.isLoading = true;
+            Promise.all([
+            //Get Material Items
+            materialItemService.getItems().then(function (result) {
+                _this.edit_child_job_item.form.material_items = result;
+                // this.edit_child_job_item.form.material_item =
+            }).catch(function (err) {
+                alert(err);
+            })]).then(function () {
+                _this.edit_child_job_item.isLoading = false;
+            }).catch(function () {
+                _this.edit_child_job_item.isLoading = false;
+            });
+        },
+
+        //Reset Data Before Use
+        editChildJobItem_resetData: function editChildJobItem_resetData() {
+            this.edit_child_job_item = {
+                job_item: '',
+                show_real_time_add_new_material_button: false,
+                updated_status: false,
+                isLoading: false,
+                new_material_item: {
+                    name: '',
+                    is_loading: false
+                },
+                old_item_id: '',
+                form: {
+                    project_details: '',
+                    job_id: '',
+                    item_id: '',
+                    is_item: 1,
+                    page_number: '',
+                    child_job: '',
+                    material_items: [],
+                    material_type: '',
+                    material_item: '',
+                    material_name: '',
+                    local_price: '',
+                    local_wage: '',
+                    quantity: 0,
+                    unit: ''
+                }
+            };
+        },
+        editChildJobItem_updateItem: function editChildJobItem_updateItem(form, event) {
+            var _this2 = this;
+
+            console.log('Update Item Form', form, event);
+            //this.project_details จาก ไฟล์ root mixin (porlor_4_index.js)
+            console.log('Item Form Inputs :', this.edit_child_job_item.form);
+            this.$validator.validateAll(form).then(function (result) {
+                if (result) {
+                    _this2.edit_child_job_item.isLoading = true;
+                    porlor4JobService.updateChildJobItem(_this2.porlor4.id, _this2.edit_child_job_item.form).then(function (result) {
+                        console.log('Update Child Job Item Success');
+                        _this2.edit_child_job_item.isLoading = false;
+                        _this2.edit_child_job_item.updated_status = true;
+                        _this2.closeEditChildJobItemModal();
+                    }).catch(function (err) {
+                        alert(err);
+                        _this2.edit_child_job_item.isLoading = false;
+                    });
+                } else {
+                    alert('กรุณาระบุข้อมูล');
+                }
+            });
+        },
+        editChildJobItem_getItemDetails: function editChildJobItem_getItemDetails(item) {
+            console.log('Edit Child Job Form Item ID :', this.edit_child_job_item.form.material_item.approved_global_details.id);
+            console.log('Selected Item ', item);
+            if (item) {
+                if (this.edit_child_job_item.old_item_id != item.id || this.edit_child_job_item.old_item_id == '') {
+                    this.edit_child_job_item.form.local_price = item.global_price;
+                    this.edit_child_job_item.form.local_wage = item.global_wage;
+                    this.edit_child_job_item.form.unit = item.unit;
+                }
+            }
+        },
+        editChildJobItem_addNewMaterialItem: function editChildJobItem_addNewMaterialItem() {
+            var _this3 = this;
+
+            var inputs = {
+                material_item: {
+                    name: this.edit_child_job_item.new_material_item.name
+                }
+            };
+            this.$refs.edit_child_job_item_multi_select_item.deactivate();
+            this.add_child_job_item.new_material_item.is_loading = true;
+            console.log('Add New Item Inputs', inputs);
+            materialItemService.addNewOtherItem(inputs).then(function (new_item) {
+                console.log('Add New Item Success : ', new_item);
+                _this3.edit_child_job_item.form.material_item = new_item;
+                materialItemService.searchItemsByName(_this3.edit_child_job_item.new_material_item.name).then(function (items) {
+                    console.log('get New Item Success : ', new_item);
+                    _this3.edit_child_job_item.form.material_items = items;
+                    _this3.add_child_job_item.new_material_item.is_loading = false;
+                }).catch(function (err) {
+                    alert(err);
+                });
+            }).catch(function (err) {
+                alert(err);
+            });
+        },
+        editChildJobItem_searchItemsByName: function editChildJobItem_searchItemsByName(search_name) {
+            var _this4 = this;
+
+            console.log('Search Items By Name :', search_name);
+            this.edit_child_job_item.new_material_item.name = search_name;
+            materialItemService.searchItemsByName(search_name).then(function (result) {
+                console.log('Search Result :', result);
+                _this4.edit_child_job_item.material_items = result;
+                var findSearchIndex = _this4.edit_child_job_item.material_items.findIndex(function (item) {
+                    return item.approved_global_details.name == search_name;
+                });
+                _this4.edit_child_job_item.show_real_time_add_new_material_button = findSearchIndex < 0;
+                if (_this4.edit_child_job_item.material_items.length == 0) {
+                    _this4.edit_child_job_item.show_real_time_add_new_material_button = false;
+                }
+            }).catch(function (err) {
+                alert(err);
+            });
+        },
+        closeEditChildJobItemModal: function closeEditChildJobItemModal() {
+            this.$modal.hide('porlor-4-edit-child-job-item-modal', {
+                edit_status: this.edit_child_job_item.updated_status
+            });
+        },
+        editChildJobItem_customLabel: function editChildJobItem_customLabel(item) {
+            return item.job_order_number + ' ' + item.name;
+        },
+        editChildJobItem_materialItemCustomLabel: function editChildJobItem_materialItemCustomLabel(item) {
+            if (item.approved_global_details) {
+                return item.approved_global_details.name;
+            }
+        }
+    }
+};
+
+/***/ }),
+
+/***/ 396:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Porlor4JobEditRootJobModal; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_job_service__ = __webpack_require__(34);
+
+var porlor4JobService = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_job_service__["a" /* default */]();
+var Porlor4JobEditRootJobModal = {
+    data: function data() {
+        return {
+            edit_root_job: {
+                is_updated: false,
+                is_loading: false,
+                form: {
+                    porlor_4_job_id: '',
+                    root_job_name: ''
+                }
+            }
+
+        };
+    },
+
+    methods: {
+        beforeOpenPorlor4JobEditRootJobModal: function beforeOpenPorlor4JobEditRootJobModal(data) {
+            var root_job = data.params.root_job;
+            this.edit_root_job.is_updated = false;
+            this.edit_root_job.form.porlor_4_job_id = root_job.id;
+            this.edit_root_job.form.root_job_name = root_job.name;
+        },
+        openedPorlor4JobEditRootJobModal: function openedPorlor4JobEditRootJobModal() {},
+        closePorlor4JobEditRootJobModal: function closePorlor4JobEditRootJobModal() {
+            this.$modal.hide('porlor-4-job-edit-root-job-modal', {
+                is_updated: this.edit_root_job.is_updated
+            });
+        },
+        editRootJobModal_updateData: function editRootJobModal_updateData(scope, event) {
+            var _this = this;
+
+            this.$validator.validateAll(scope).then(function (result) {
+                if (result) {
+                    _this.edit_root_job.is_loading = true;
+                    porlor4JobService.updateRootJob(_this.porlor4.id, _this.edit_root_job.form) // this.porlor4.id จาก หน้า index
+                    .then(function (result) {
+                        _this.edit_root_job.is_updated = true;
+                        _this.closePorlor4JobEditRootJobModal();
+                        _this.edit_root_job.is_loading = false;
+                    }).catch(function (err) {
+                        alert(err);
+                    });
+                } else {
+                    alert('กรุณาระบุข้อมูล');
+                }
+            });
+        }
+    }
+};
+
+/***/ }),
+
 /***/ 4:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3599,12 +3606,12 @@ module.exports = function bind(fn, thisArg) {
 
 
 var utils = __webpack_require__(0);
-var settle = __webpack_require__(15);
-var buildURL = __webpack_require__(17);
-var parseHeaders = __webpack_require__(18);
-var isURLSameOrigin = __webpack_require__(19);
+var settle = __webpack_require__(18);
+var buildURL = __webpack_require__(20);
+var parseHeaders = __webpack_require__(21);
+var isURLSameOrigin = __webpack_require__(22);
 var createError = __webpack_require__(6);
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(20);
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(23);
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -3701,7 +3708,7 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(21);
+      var cookies = __webpack_require__(24);
 
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -3786,7 +3793,7 @@ module.exports = function xhrAdapter(config) {
 "use strict";
 
 
-var enhanceError = __webpack_require__(16);
+var enhanceError = __webpack_require__(19);
 
 /**
  * Create an Error with the specified message, config, error code, request and response.
@@ -3843,13 +3850,6 @@ Cancel.prototype.__CANCEL__ = true;
 
 module.exports = Cancel;
 
-
-/***/ }),
-
-/***/ 9:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(11);
 
 /***/ })
 

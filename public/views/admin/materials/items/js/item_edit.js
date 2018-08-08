@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 250);
+/******/ 	return __webpack_require__(__webpack_require__.s = 358);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -72,7 +72,7 @@
 
 
 var bind = __webpack_require__(4);
-var isBuffer = __webpack_require__(12);
+var isBuffer = __webpack_require__(15);
 
 /*global toString:true*/
 
@@ -376,7 +376,14 @@ module.exports = {
 
 /***/ }),
 
-/***/ 10:
+/***/ 12:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(14);
+
+/***/ }),
+
+/***/ 13:
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -567,7 +574,7 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
-/***/ 11:
+/***/ 14:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -575,7 +582,7 @@ process.umask = function() { return 0; };
 
 var utils = __webpack_require__(0);
 var bind = __webpack_require__(4);
-var Axios = __webpack_require__(13);
+var Axios = __webpack_require__(16);
 var defaults = __webpack_require__(3);
 
 /**
@@ -610,14 +617,14 @@ axios.create = function create(instanceConfig) {
 
 // Expose Cancel & CancelToken
 axios.Cancel = __webpack_require__(8);
-axios.CancelToken = __webpack_require__(27);
+axios.CancelToken = __webpack_require__(30);
 axios.isCancel = __webpack_require__(7);
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(28);
+axios.spread = __webpack_require__(31);
 
 module.exports = axios;
 
@@ -627,7 +634,7 @@ module.exports.default = axios;
 
 /***/ }),
 
-/***/ 12:
+/***/ 15:
 /***/ (function(module, exports) {
 
 /*!
@@ -655,7 +662,7 @@ function isSlowBuffer (obj) {
 
 /***/ }),
 
-/***/ 13:
+/***/ 16:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -663,8 +670,8 @@ function isSlowBuffer (obj) {
 
 var defaults = __webpack_require__(3);
 var utils = __webpack_require__(0);
-var InterceptorManager = __webpack_require__(22);
-var dispatchRequest = __webpack_require__(23);
+var InterceptorManager = __webpack_require__(25);
+var dispatchRequest = __webpack_require__(26);
 
 /**
  * Create a new instance of Axios
@@ -742,7 +749,7 @@ module.exports = Axios;
 
 /***/ }),
 
-/***/ 14:
+/***/ 17:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -762,7 +769,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 /***/ }),
 
-/***/ 15:
+/***/ 18:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -796,7 +803,7 @@ module.exports = function settle(resolve, reject, response) {
 
 /***/ }),
 
-/***/ 16:
+/***/ 19:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -825,7 +832,48 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 /***/ }),
 
-/***/ 17:
+/***/ 2:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var WebUrl = function () {
+    function WebUrl()
+    // private url:string
+    {
+        _classCallCheck(this, WebUrl);
+
+        this.url = 'http://localhost:3000/pogtank/public';
+        // this.url='http://localhost/pogtank/public';
+        // this.url=':2720';
+        // this.url='http://www.ggdemo.com/public';
+        // this.url='http://ggdemo.thddns.net:2720/pogtank/public'
+        // this.url='';
+    }
+
+    _createClass(WebUrl, [{
+        key: 'getUrl',
+        value: function getUrl() {
+            return this.url;
+        }
+    }, {
+        key: 'getRoute',
+        value: function getRoute(url) {
+            return this.url + url;
+        }
+    }]);
+
+    return WebUrl;
+}();
+
+/* harmony default export */ __webpack_exports__["a"] = (WebUrl);
+
+/***/ }),
+
+/***/ 20:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -899,7 +947,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 /***/ }),
 
-/***/ 18:
+/***/ 21:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -960,7 +1008,7 @@ module.exports = function parseHeaders(headers) {
 
 /***/ }),
 
-/***/ 19:
+/***/ 22:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1036,48 +1084,7 @@ module.exports = (
 
 /***/ }),
 
-/***/ 2:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var WebUrl = function () {
-    function WebUrl()
-    // private url:string
-    {
-        _classCallCheck(this, WebUrl);
-
-        this.url = 'http://localhost:3000/pogtank/public';
-        // this.url='http://localhost/pogtank/public';
-        // this.url=':2720';
-        // this.url='http://www.ggdemo.com/public';
-        // this.url='http://ggdemo.thddns.net:2720/pogtank/public'
-        // this.url='';
-    }
-
-    _createClass(WebUrl, [{
-        key: 'getUrl',
-        value: function getUrl() {
-            return this.url;
-        }
-    }, {
-        key: 'getRoute',
-        value: function getRoute(url) {
-            return this.url + url;
-        }
-    }]);
-
-    return WebUrl;
-}();
-
-/* harmony default export */ __webpack_exports__["a"] = (WebUrl);
-
-/***/ }),
-
-/***/ 20:
+/***/ 23:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1121,7 +1128,7 @@ module.exports = btoa;
 
 /***/ }),
 
-/***/ 21:
+/***/ 24:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1182,7 +1189,7 @@ module.exports = (
 
 /***/ }),
 
-/***/ 22:
+/***/ 25:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1242,18 +1249,18 @@ module.exports = InterceptorManager;
 
 /***/ }),
 
-/***/ 23:
+/***/ 26:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(0);
-var transformData = __webpack_require__(24);
+var transformData = __webpack_require__(27);
 var isCancel = __webpack_require__(7);
 var defaults = __webpack_require__(3);
-var isAbsoluteURL = __webpack_require__(25);
-var combineURLs = __webpack_require__(26);
+var isAbsoluteURL = __webpack_require__(28);
+var combineURLs = __webpack_require__(29);
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -1336,7 +1343,7 @@ module.exports = function dispatchRequest(config) {
 
 /***/ }),
 
-/***/ 24:
+/***/ 27:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1364,7 +1371,7 @@ module.exports = function transformData(data, headers, fns) {
 
 /***/ }),
 
-/***/ 25:
+/***/ 28:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1386,24 +1393,705 @@ module.exports = function isAbsoluteURL(url) {
 
 /***/ }),
 
-/***/ 250:
+/***/ 29:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(251);
+"use strict";
+
+
+/**
+ * Creates a new URL by combining the specified URLs
+ *
+ * @param {string} baseURL The base URL
+ * @param {string} relativeURL The relative URL
+ * @returns {string} The combined URL
+ */
+module.exports = function combineURLs(baseURL, relativeURL) {
+  return relativeURL
+    ? baseURL.replace(/\/+$/, '') + '/' + relativeURL.replace(/^\/+/, '')
+    : baseURL;
+};
 
 
 /***/ }),
 
-/***/ 251:
+/***/ 3:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
+
+var utils = __webpack_require__(0);
+var normalizeHeaderName = __webpack_require__(17);
+
+var DEFAULT_CONTENT_TYPE = {
+  'Content-Type': 'application/x-www-form-urlencoded'
+};
+
+function setContentTypeIfUnset(headers, value) {
+  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
+    headers['Content-Type'] = value;
+  }
+}
+
+function getDefaultAdapter() {
+  var adapter;
+  if (typeof XMLHttpRequest !== 'undefined') {
+    // For browsers use XHR adapter
+    adapter = __webpack_require__(5);
+  } else if (typeof process !== 'undefined') {
+    // For node use HTTP adapter
+    adapter = __webpack_require__(5);
+  }
+  return adapter;
+}
+
+var defaults = {
+  adapter: getDefaultAdapter(),
+
+  transformRequest: [function transformRequest(data, headers) {
+    normalizeHeaderName(headers, 'Content-Type');
+    if (utils.isFormData(data) ||
+      utils.isArrayBuffer(data) ||
+      utils.isBuffer(data) ||
+      utils.isStream(data) ||
+      utils.isFile(data) ||
+      utils.isBlob(data)
+    ) {
+      return data;
+    }
+    if (utils.isArrayBufferView(data)) {
+      return data.buffer;
+    }
+    if (utils.isURLSearchParams(data)) {
+      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
+      return data.toString();
+    }
+    if (utils.isObject(data)) {
+      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
+      return JSON.stringify(data);
+    }
+    return data;
+  }],
+
+  transformResponse: [function transformResponse(data) {
+    /*eslint no-param-reassign:0*/
+    if (typeof data === 'string') {
+      try {
+        data = JSON.parse(data);
+      } catch (e) { /* Ignore */ }
+    }
+    return data;
+  }],
+
+  /**
+   * A timeout in milliseconds to abort a request. If set to 0 (default) a
+   * timeout is not created.
+   */
+  timeout: 0,
+
+  xsrfCookieName: 'XSRF-TOKEN',
+  xsrfHeaderName: 'X-XSRF-TOKEN',
+
+  maxContentLength: -1,
+
+  validateStatus: function validateStatus(status) {
+    return status >= 200 && status < 300;
+  }
+};
+
+defaults.headers = {
+  common: {
+    'Accept': 'application/json, text/plain, */*'
+  }
+};
+
+utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
+  defaults.headers[method] = {};
+});
+
+utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
+  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
+});
+
+module.exports = defaults;
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(13)))
+
+/***/ }),
+
+/***/ 30:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var Cancel = __webpack_require__(8);
+
+/**
+ * A `CancelToken` is an object that can be used to request cancellation of an operation.
+ *
+ * @class
+ * @param {Function} executor The executor function.
+ */
+function CancelToken(executor) {
+  if (typeof executor !== 'function') {
+    throw new TypeError('executor must be a function.');
+  }
+
+  var resolvePromise;
+  this.promise = new Promise(function promiseExecutor(resolve) {
+    resolvePromise = resolve;
+  });
+
+  var token = this;
+  executor(function cancel(message) {
+    if (token.reason) {
+      // Cancellation has already been requested
+      return;
+    }
+
+    token.reason = new Cancel(message);
+    resolvePromise(token.reason);
+  });
+}
+
+/**
+ * Throws a `Cancel` if cancellation has been requested.
+ */
+CancelToken.prototype.throwIfRequested = function throwIfRequested() {
+  if (this.reason) {
+    throw this.reason;
+  }
+};
+
+/**
+ * Returns an object that contains a new `CancelToken` and a function that, when called,
+ * cancels the `CancelToken`.
+ */
+CancelToken.source = function source() {
+  var cancel;
+  var token = new CancelToken(function executor(c) {
+    cancel = c;
+  });
+  return {
+    token: token,
+    cancel: cancel
+  };
+};
+
+module.exports = CancelToken;
+
+
+/***/ }),
+
+/***/ 31:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Syntactic sugar for invoking a function and expanding an array for arguments.
+ *
+ * Common use case would be to use `Function.prototype.apply`.
+ *
+ *  ```js
+ *  function f(x, y, z) {}
+ *  var args = [1, 2, 3];
+ *  f.apply(null, args);
+ *  ```
+ *
+ * With `spread` this example can be re-written.
+ *
+ *  ```js
+ *  spread(function(x, y, z) {})([1, 2, 3]);
+ *  ```
+ *
+ * @param {Function} callback
+ * @returns {Function}
+ */
+module.exports = function spread(callback) {
+  return function wrap(arr) {
+    return callback.apply(null, arr);
+  };
+};
+
+
+/***/ }),
+
+/***/ 32:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__webUrl__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_axios__);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+
+
+var webUrl = new __WEBPACK_IMPORTED_MODULE_0__webUrl__["a" /* default */]();
+//ใน class นี้มากจาก 2 controller
+//1. ItemsController
+//2. NewItemsController
+
+var MaterialItem = function () {
+    function MaterialItem() {
+        _classCallCheck(this, MaterialItem);
+
+        this.url = webUrl.getUrl();
+        this._delete_method = {
+            _method: 'DELETE'
+        };
+    }
+    //***** จาก New Items Controller
+    //Add New Item From Porlor 4 Form
+    //เพิ่ม item ใหม่ในหมวดหมู่ อื่นๆ โดยเฉพาะ
+
+
+    _createClass(MaterialItem, [{
+        key: 'addNewOtherItem',
+        value: function addNewOtherItem(formInputs) {
+            var url = this.url + '/admin/materials/new_items/add_new_other_item';
+            return new Promise(function (resolve, reject) {
+                axios.post(url, formInputs).then(function (result) {
+                    resolve(result.data);
+                }).catch(function (err) {
+                    return reject(err);
+                });
+            });
+        }
+        //Get First 50 items
+
+    }, {
+        key: 'getItems',
+        value: function getItems() {
+            var url = this.url + '/admin/materials/new_items/get_items';
+            return new Promise(function (resolve, reject) {
+                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get(url).then(function (result) {
+                    resolve(result.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
+        //Get Approved Items By Page
+
+    }, {
+        key: 'getApprovedItemsByPage',
+        value: function getApprovedItemsByPage(page) {
+            var url = this.url + '/admin/materials/new_items/get_approved_items_by_page?page=' + page;
+            return new Promise(function (resolve, reject) {
+                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get(url).then(function (result) {
+                    resolve(result.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
+        //Get Waiting Approve Items
+
+    }, {
+        key: 'getWaitingItems',
+        value: function getWaitingItems() {
+            var url = this.url + '/admin/materials/new_items/get_waiting_items';
+            return new Promise(function (resolve, reject) {
+                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get(url).then(function (result) {
+                    resolve(result.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
+    }, {
+        key: 'searchItemsByName',
+        value: function searchItemsByName(material_name) {
+            var inputs = {
+                material_name: material_name
+            };
+            var url = this.url + '/admin/materials/new_items/search_items_by_name';
+            return new Promise(function (resolve, reject) {
+                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post(url, inputs).then(function (result) {
+                    resolve(result.data);
+                }).catch(function (err) {
+                    return reject(err);
+                });
+            });
+        }
+        //***** End From New Item Controller
+
+        //***** จาก ItemsController
+        //Add Local Prices
+
+    }, {
+        key: 'addLocalPrices',
+        value: function addLocalPrices(formInputs) {
+            var url = this.url + '/admin/materials/items/add_local_prices';
+            return new Promise(function (resolve, reject) {
+                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post(url, formInputs).then(function (result) {
+                    resolve(result.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
+        //Get Items Of type
+
+    }, {
+        key: 'getItemsOfType',
+        value: function getItemsOfType(type_id) {
+            var url = this.url + '/admin/materials/items/get_items_of_type/' + type_id;
+            return new Promise(function (resolve, reject) {
+                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get(url).then(function (result) {
+                    resolve(result.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
+
+        //Get Only One Material Item
+
+    }, {
+        key: 'getItem',
+        value: function getItem(materialID) {
+            var url = this.url + '/admin/materials/items/edit/global_details/' + materialID;
+            return new Promise(function (resolve, reject) {
+                axios.get(url).then(function (result) {
+                    resolve(result.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
+        //get Approved Local Price
+
+    }, {
+        key: 'getApprovedLocalPrice',
+        value: function getApprovedLocalPrice(materialID) {
+            var url = this.url + '/admin/materials/items/edit/' + materialID + '/approved_local_prices';
+            return new Promise(function (resolve, reject) {
+                axios.get(url).then(function (result) {
+                    resolve(result.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
+        //Get Waiting Local Price
+
+    }, {
+        key: 'getWaitingLocalPrices',
+        value: function getWaitingLocalPrices(materialID) {
+            var url = this.url + '/admin/materials/items/edit/' + materialID + '/waiting_local_prices';
+            return new Promise(function (resolve, reject) {
+                axios.get(url).then(function (result) {
+                    resolve(result.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
+        //update Global Details Values
+
+    }, {
+        key: 'updateGlobalDetails',
+        value: function updateGlobalDetails(inputData) {
+            inputData._method = 'PUT';
+            var url = this.url + '/admin/materials/items/update_global_details';
+            return new Promise(function (resolve, reject) {
+                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post(url, inputData).then(function (result) {
+                    resolve(result.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
+        //Update Local Price Details
+
+    }, {
+        key: 'updateLocalPriceDetails',
+        value: function updateLocalPriceDetails(inputData, id) {
+            inputData._method = 'PUT';
+            var url = this.url + '/admin/materials/items/update_local_price_details/' + id;
+            // let url=this.url+'/test';
+            return new Promise(function (resolve, reject) {
+                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post(url, inputData).then(function (result) {
+                    resolve(result.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
+        //Delete Approved Item (Root Item)
+
+    }, {
+        key: 'deleteApprovedItem',
+        value: function deleteApprovedItem(inputData) {
+            inputData._method = 'DELETE';
+            var url = this.url + '/admin/materials/new_items/delete_approved_items';
+            return new Promise(function (resolve, reject) {
+                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post(url, inputData).then(function (result) {
+                    resolve(result.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
+        //Delete Waiting Item (Root Item)
+
+    }, {
+        key: 'deleteWaitingItem',
+        value: function deleteWaitingItem(inputData) {
+            inputData._method = 'DELETE';
+            var url = this.url + '/admin/materials/new_items/delete_waiting_items';
+            return new Promise(function (resolve, reject) {
+                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post(url, inputData).then(function (result) {
+                    resolve(result.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
+        //Delete Local Price
+
+    }, {
+        key: 'deleteLocalPrice',
+        value: function deleteLocalPrice(id) {
+            var _this = this;
+
+            var url = this.url + '/admin/materials/items/delete_local_price/' + id;
+            return new Promise(function (resolve, reject) {
+                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post(url, _this._delete_method).then(function (result) {
+                    resolve(result.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
+        //Delete Waiting Local Price
+
+    }, {
+        key: 'deleteWaitingLocalPrice',
+        value: function deleteWaitingLocalPrice(id) {
+            var _this2 = this;
+
+            var url = this.url + '/admin/materials/items/delete_waiting_local_price/' + id;
+            return new Promise(function (resolve, reject) {
+                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post(url, _this2._delete_method).then(function (result) {
+                    resolve(result.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
+        //Search Material Item of type by name
+
+    }, {
+        key: 'searchItemsOfTypeByName',
+        value: function searchItemsOfTypeByName(materialTypeID, materialName) {
+            var inputData = {
+                'material_name': materialName
+            };
+            var url = this.url + '/admin/materials/items/search_items_of_type_by_name/' + materialTypeID;
+            return new Promise(function (resolve, reject) {
+                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post(url, inputData).then(function (result) {
+                    resolve(result.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
+    }]);
+
+    return MaterialItem;
+}();
+
+/* harmony default export */ __webpack_exports__["a"] = (MaterialItem);
+
+/***/ }),
+
+/***/ 33:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__webUrl__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_axios__);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+
+
+var webUrl = new __WEBPACK_IMPORTED_MODULE_0__webUrl__["a" /* default */]();
+
+var MaterialType = function () {
+    function MaterialType() {
+        _classCallCheck(this, MaterialType);
+
+        this.url = webUrl.getUrl();
+    }
+    //Get Material Types
+
+
+    _createClass(MaterialType, [{
+        key: 'getMaterialTypeTree',
+        value: function getMaterialTypeTree() {
+            var url = this.url + '/admin/materials/types/get_material_type_tree';
+            return new Promise(function (resolve, reject) {
+                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get(url).then(function (result) {
+                    resolve(result.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
+        //Get all types that could be parent
+
+    }, {
+        key: 'getMaterialParentTypes',
+        value: function getMaterialParentTypes() {
+            var url = this.url + '/admin/materials/types/get_material_parent_type';
+            return new Promise(function (resolve, reject) {
+                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get(url).then(function (result) {
+                    resolve(result.data);
+                    console.log('Service Get Type :', result);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
+        //get selected material Type
+
+    }, {
+        key: 'getMaterialType',
+        value: function getMaterialType(id) {
+            var url = this.url + '/admin/materials/types/get_material_type/' + id;
+            return new Promise(function (resolve, reject) {
+                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get(url).then(function (result) {
+                    resolve(result.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
+        //get parent siblings types
+
+    }, {
+        key: 'getMaterialParentSiblingTypes',
+        value: function getMaterialParentSiblingTypes(id) {
+            var url = this.url + '/admin/materials/types/get_material_parent_sibling_types/' + id;
+            return new Promise(function (resolve, reject) {
+                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get(url).then(function (result) {
+                    resolve(result.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
+    }]);
+
+    return MaterialType;
+}();
+
+/* harmony default export */ __webpack_exports__["a"] = (MaterialType);
+
+/***/ }),
+
+/***/ 35:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__webUrl__ = __webpack_require__(2);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+// import axios from 'axios';
+
+var webUrl = new __WEBPACK_IMPORTED_MODULE_0__webUrl__["a" /* default */]();
+
+var City = function () {
+    function City() {
+        _classCallCheck(this, City);
+
+        this.webUrl = webUrl.getUrl();
+    }
+    //Static Method
+
+
+    _createClass(City, [{
+        key: 'getProvinces',
+        value: function getProvinces() {
+            var _this = this;
+
+            return new Promise(function (resolve, reject) {
+                axios.get(_this.webUrl + '/admin/materials/city/provinces').then(function (result) {
+                    resolve(result.data);
+                    console.log('Province :', result);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
+    }, {
+        key: 'getDistricts',
+        value: function getDistricts(amphoeID) {
+            console.log('Amphoe ID', amphoeID);
+            var url = this.webUrl + '/admin/materials/items/districts/' + amphoeID;
+            console.log('Get District URL:', url);
+            return new Promise(function (resolve, reject) {
+                axios.get(url).then(function (result) {
+                    resolve(result.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
+    }], [{
+        key: 'allProvince',
+        value: function allProvince() {
+            var url = this.url + '/admin/materials/city/provinces';
+            return new Promise(function (resolve, reject) {
+                axios.get(url).then(function (result) {
+                    resolve(result.data);
+                    console.log(result);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
+    }]);
+
+    return City;
+}();
+
+/* harmony default export */ __webpack_exports__["a"] = (City);
+
+/***/ }),
+
+/***/ 358:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(359);
+
+
+/***/ }),
+
+/***/ 359:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_material_material_item_service__ = __webpack_require__(30);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_js_services_material_material_type_service__ = __webpack_require__(31);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__assets_js_services_city__ = __webpack_require__(33);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__item_edit_add_modal__ = __webpack_require__(45);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__item_edit_edit_modal__ = __webpack_require__(252);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_material_material_item_service__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_js_services_material_material_type_service__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__assets_js_services_city__ = __webpack_require__(35);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__item_edit_add_modal__ = __webpack_require__(46);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__item_edit_edit_modal__ = __webpack_require__(360);
 
 
 
@@ -1768,12 +2456,12 @@ console.log('Master', vm);
 
 /***/ }),
 
-/***/ 252:
+/***/ 360:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EditModal; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_material_material_item_service__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_material_material_item_service__ = __webpack_require__(32);
 
 var materialItemService = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_material_material_item_service__["a" /* default */]();
 var EditModal = {
@@ -1841,687 +2529,6 @@ var EditModal = {
 
 /***/ }),
 
-/***/ 26:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/**
- * Creates a new URL by combining the specified URLs
- *
- * @param {string} baseURL The base URL
- * @param {string} relativeURL The relative URL
- * @returns {string} The combined URL
- */
-module.exports = function combineURLs(baseURL, relativeURL) {
-  return relativeURL
-    ? baseURL.replace(/\/+$/, '') + '/' + relativeURL.replace(/^\/+/, '')
-    : baseURL;
-};
-
-
-/***/ }),
-
-/***/ 27:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var Cancel = __webpack_require__(8);
-
-/**
- * A `CancelToken` is an object that can be used to request cancellation of an operation.
- *
- * @class
- * @param {Function} executor The executor function.
- */
-function CancelToken(executor) {
-  if (typeof executor !== 'function') {
-    throw new TypeError('executor must be a function.');
-  }
-
-  var resolvePromise;
-  this.promise = new Promise(function promiseExecutor(resolve) {
-    resolvePromise = resolve;
-  });
-
-  var token = this;
-  executor(function cancel(message) {
-    if (token.reason) {
-      // Cancellation has already been requested
-      return;
-    }
-
-    token.reason = new Cancel(message);
-    resolvePromise(token.reason);
-  });
-}
-
-/**
- * Throws a `Cancel` if cancellation has been requested.
- */
-CancelToken.prototype.throwIfRequested = function throwIfRequested() {
-  if (this.reason) {
-    throw this.reason;
-  }
-};
-
-/**
- * Returns an object that contains a new `CancelToken` and a function that, when called,
- * cancels the `CancelToken`.
- */
-CancelToken.source = function source() {
-  var cancel;
-  var token = new CancelToken(function executor(c) {
-    cancel = c;
-  });
-  return {
-    token: token,
-    cancel: cancel
-  };
-};
-
-module.exports = CancelToken;
-
-
-/***/ }),
-
-/***/ 28:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/**
- * Syntactic sugar for invoking a function and expanding an array for arguments.
- *
- * Common use case would be to use `Function.prototype.apply`.
- *
- *  ```js
- *  function f(x, y, z) {}
- *  var args = [1, 2, 3];
- *  f.apply(null, args);
- *  ```
- *
- * With `spread` this example can be re-written.
- *
- *  ```js
- *  spread(function(x, y, z) {})([1, 2, 3]);
- *  ```
- *
- * @param {Function} callback
- * @returns {Function}
- */
-module.exports = function spread(callback) {
-  return function wrap(arr) {
-    return callback.apply(null, arr);
-  };
-};
-
-
-/***/ }),
-
-/***/ 3:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {
-
-var utils = __webpack_require__(0);
-var normalizeHeaderName = __webpack_require__(14);
-
-var DEFAULT_CONTENT_TYPE = {
-  'Content-Type': 'application/x-www-form-urlencoded'
-};
-
-function setContentTypeIfUnset(headers, value) {
-  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
-    headers['Content-Type'] = value;
-  }
-}
-
-function getDefaultAdapter() {
-  var adapter;
-  if (typeof XMLHttpRequest !== 'undefined') {
-    // For browsers use XHR adapter
-    adapter = __webpack_require__(5);
-  } else if (typeof process !== 'undefined') {
-    // For node use HTTP adapter
-    adapter = __webpack_require__(5);
-  }
-  return adapter;
-}
-
-var defaults = {
-  adapter: getDefaultAdapter(),
-
-  transformRequest: [function transformRequest(data, headers) {
-    normalizeHeaderName(headers, 'Content-Type');
-    if (utils.isFormData(data) ||
-      utils.isArrayBuffer(data) ||
-      utils.isBuffer(data) ||
-      utils.isStream(data) ||
-      utils.isFile(data) ||
-      utils.isBlob(data)
-    ) {
-      return data;
-    }
-    if (utils.isArrayBufferView(data)) {
-      return data.buffer;
-    }
-    if (utils.isURLSearchParams(data)) {
-      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
-      return data.toString();
-    }
-    if (utils.isObject(data)) {
-      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
-      return JSON.stringify(data);
-    }
-    return data;
-  }],
-
-  transformResponse: [function transformResponse(data) {
-    /*eslint no-param-reassign:0*/
-    if (typeof data === 'string') {
-      try {
-        data = JSON.parse(data);
-      } catch (e) { /* Ignore */ }
-    }
-    return data;
-  }],
-
-  /**
-   * A timeout in milliseconds to abort a request. If set to 0 (default) a
-   * timeout is not created.
-   */
-  timeout: 0,
-
-  xsrfCookieName: 'XSRF-TOKEN',
-  xsrfHeaderName: 'X-XSRF-TOKEN',
-
-  maxContentLength: -1,
-
-  validateStatus: function validateStatus(status) {
-    return status >= 200 && status < 300;
-  }
-};
-
-defaults.headers = {
-  common: {
-    'Accept': 'application/json, text/plain, */*'
-  }
-};
-
-utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
-  defaults.headers[method] = {};
-});
-
-utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
-  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
-});
-
-module.exports = defaults;
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
-
-/***/ }),
-
-/***/ 30:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__webUrl__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_axios__);
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-
-
-var webUrl = new __WEBPACK_IMPORTED_MODULE_0__webUrl__["a" /* default */]();
-//ใน class นี้มากจาก 2 controller
-//1. ItemsController
-//2. NewItemsController
-
-var MaterialItem = function () {
-    function MaterialItem() {
-        _classCallCheck(this, MaterialItem);
-
-        this.url = webUrl.getUrl();
-        this._delete_method = {
-            _method: 'DELETE'
-        };
-    }
-    //***** จาก New Items Controller
-    //Add New Item From Porlor 4 Form
-    //เพิ่ม item ใหม่ในหมวดหมู่ อื่นๆ โดยเฉพาะ
-
-
-    _createClass(MaterialItem, [{
-        key: 'addNewOtherItem',
-        value: function addNewOtherItem(formInputs) {
-            var url = this.url + '/admin/materials/new_items/add_new_other_item';
-            return new Promise(function (resolve, reject) {
-                axios.post(url, formInputs).then(function (result) {
-                    resolve(result.data);
-                }).catch(function (err) {
-                    return reject(err);
-                });
-            });
-        }
-        //Get First 50 items
-
-    }, {
-        key: 'getItems',
-        value: function getItems() {
-            var url = this.url + '/admin/materials/new_items/get_items';
-            return new Promise(function (resolve, reject) {
-                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get(url).then(function (result) {
-                    resolve(result.data);
-                }).catch(function (err) {
-                    reject(err);
-                });
-            });
-        }
-        //Get Approved Items By Page
-
-    }, {
-        key: 'getApprovedItemsByPage',
-        value: function getApprovedItemsByPage(page) {
-            var url = this.url + '/admin/materials/new_items/get_approved_items_by_page?page=' + page;
-            return new Promise(function (resolve, reject) {
-                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get(url).then(function (result) {
-                    resolve(result.data);
-                }).catch(function (err) {
-                    reject(err);
-                });
-            });
-        }
-        //Get Waiting Approve Items
-
-    }, {
-        key: 'getWaitingItems',
-        value: function getWaitingItems() {
-            var url = this.url + '/admin/materials/new_items/get_waiting_items';
-            return new Promise(function (resolve, reject) {
-                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get(url).then(function (result) {
-                    resolve(result.data);
-                }).catch(function (err) {
-                    reject(err);
-                });
-            });
-        }
-    }, {
-        key: 'searchItemsByName',
-        value: function searchItemsByName(material_name) {
-            var inputs = {
-                material_name: material_name
-            };
-            var url = this.url + '/admin/materials/new_items/search_items_by_name';
-            return new Promise(function (resolve, reject) {
-                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post(url, inputs).then(function (result) {
-                    resolve(result.data);
-                }).catch(function (err) {
-                    return reject(err);
-                });
-            });
-        }
-        //***** End From New Item Controller
-
-        //***** จาก ItemsController
-        //Add Local Prices
-
-    }, {
-        key: 'addLocalPrices',
-        value: function addLocalPrices(formInputs) {
-            var url = this.url + '/admin/materials/items/add_local_prices';
-            return new Promise(function (resolve, reject) {
-                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post(url, formInputs).then(function (result) {
-                    resolve(result.data);
-                }).catch(function (err) {
-                    reject(err);
-                });
-            });
-        }
-        //Get Items Of type
-
-    }, {
-        key: 'getItemsOfType',
-        value: function getItemsOfType(type_id) {
-            var url = this.url + '/admin/materials/items/get_items_of_type/' + type_id;
-            return new Promise(function (resolve, reject) {
-                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get(url).then(function (result) {
-                    resolve(result.data);
-                }).catch(function (err) {
-                    reject(err);
-                });
-            });
-        }
-
-        //Get Only One Material Item
-
-    }, {
-        key: 'getItem',
-        value: function getItem(materialID) {
-            var url = this.url + '/admin/materials/items/edit/global_details/' + materialID;
-            return new Promise(function (resolve, reject) {
-                axios.get(url).then(function (result) {
-                    resolve(result.data);
-                }).catch(function (err) {
-                    reject(err);
-                });
-            });
-        }
-        //get Approved Local Price
-
-    }, {
-        key: 'getApprovedLocalPrice',
-        value: function getApprovedLocalPrice(materialID) {
-            var url = this.url + '/admin/materials/items/edit/' + materialID + '/approved_local_prices';
-            return new Promise(function (resolve, reject) {
-                axios.get(url).then(function (result) {
-                    resolve(result.data);
-                }).catch(function (err) {
-                    reject(err);
-                });
-            });
-        }
-        //Get Waiting Local Price
-
-    }, {
-        key: 'getWaitingLocalPrices',
-        value: function getWaitingLocalPrices(materialID) {
-            var url = this.url + '/admin/materials/items/edit/' + materialID + '/waiting_local_prices';
-            return new Promise(function (resolve, reject) {
-                axios.get(url).then(function (result) {
-                    resolve(result.data);
-                }).catch(function (err) {
-                    reject(err);
-                });
-            });
-        }
-        //update Global Details Values
-
-    }, {
-        key: 'updateGlobalDetails',
-        value: function updateGlobalDetails(inputData) {
-            inputData._method = 'PUT';
-            var url = this.url + '/admin/materials/items/update_global_details';
-            return new Promise(function (resolve, reject) {
-                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post(url, inputData).then(function (result) {
-                    resolve(result.data);
-                }).catch(function (err) {
-                    reject(err);
-                });
-            });
-        }
-        //Update Local Price Details
-
-    }, {
-        key: 'updateLocalPriceDetails',
-        value: function updateLocalPriceDetails(inputData, id) {
-            inputData._method = 'PUT';
-            var url = this.url + '/admin/materials/items/update_local_price_details/' + id;
-            // let url=this.url+'/test';
-            return new Promise(function (resolve, reject) {
-                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post(url, inputData).then(function (result) {
-                    resolve(result.data);
-                }).catch(function (err) {
-                    reject(err);
-                });
-            });
-        }
-        //Delete Approved Item (Root Item)
-
-    }, {
-        key: 'deleteApprovedItem',
-        value: function deleteApprovedItem(inputData) {
-            inputData._method = 'DELETE';
-            var url = this.url + '/admin/materials/new_items/delete_approved_items';
-            return new Promise(function (resolve, reject) {
-                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post(url, inputData).then(function (result) {
-                    resolve(result.data);
-                }).catch(function (err) {
-                    reject(err);
-                });
-            });
-        }
-        //Delete Waiting Item (Root Item)
-
-    }, {
-        key: 'deleteWaitingItem',
-        value: function deleteWaitingItem(inputData) {
-            inputData._method = 'DELETE';
-            var url = this.url + '/admin/materials/new_items/delete_waiting_items';
-            return new Promise(function (resolve, reject) {
-                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post(url, inputData).then(function (result) {
-                    resolve(result.data);
-                }).catch(function (err) {
-                    reject(err);
-                });
-            });
-        }
-        //Delete Local Price
-
-    }, {
-        key: 'deleteLocalPrice',
-        value: function deleteLocalPrice(id) {
-            var _this = this;
-
-            var url = this.url + '/admin/materials/items/delete_local_price/' + id;
-            return new Promise(function (resolve, reject) {
-                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post(url, _this._delete_method).then(function (result) {
-                    resolve(result.data);
-                }).catch(function (err) {
-                    reject(err);
-                });
-            });
-        }
-        //Delete Waiting Local Price
-
-    }, {
-        key: 'deleteWaitingLocalPrice',
-        value: function deleteWaitingLocalPrice(id) {
-            var _this2 = this;
-
-            var url = this.url + '/admin/materials/items/delete_waiting_local_price/' + id;
-            return new Promise(function (resolve, reject) {
-                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post(url, _this2._delete_method).then(function (result) {
-                    resolve(result.data);
-                }).catch(function (err) {
-                    reject(err);
-                });
-            });
-        }
-        //Search Material Item of type by name
-
-    }, {
-        key: 'searchItemsOfTypeByName',
-        value: function searchItemsOfTypeByName(materialTypeID, materialName) {
-            var inputData = {
-                'material_name': materialName
-            };
-            var url = this.url + '/admin/materials/items/search_items_of_type_by_name/' + materialTypeID;
-            return new Promise(function (resolve, reject) {
-                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post(url, inputData).then(function (result) {
-                    resolve(result.data);
-                }).catch(function (err) {
-                    reject(err);
-                });
-            });
-        }
-    }]);
-
-    return MaterialItem;
-}();
-
-/* harmony default export */ __webpack_exports__["a"] = (MaterialItem);
-
-/***/ }),
-
-/***/ 31:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__webUrl__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_axios__);
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-
-
-var webUrl = new __WEBPACK_IMPORTED_MODULE_0__webUrl__["a" /* default */]();
-
-var MaterialType = function () {
-    function MaterialType() {
-        _classCallCheck(this, MaterialType);
-
-        this.url = webUrl.getUrl();
-    }
-    //Get Material Types
-
-
-    _createClass(MaterialType, [{
-        key: 'getMaterialTypeTree',
-        value: function getMaterialTypeTree() {
-            var url = this.url + '/admin/materials/types/get_material_type_tree';
-            return new Promise(function (resolve, reject) {
-                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get(url).then(function (result) {
-                    resolve(result.data);
-                }).catch(function (err) {
-                    reject(err);
-                });
-            });
-        }
-        //Get all types that could be parent
-
-    }, {
-        key: 'getMaterialParentTypes',
-        value: function getMaterialParentTypes() {
-            var url = this.url + '/admin/materials/types/get_material_parent_type';
-            return new Promise(function (resolve, reject) {
-                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get(url).then(function (result) {
-                    resolve(result.data);
-                    console.log('Service Get Type :', result);
-                }).catch(function (err) {
-                    reject(err);
-                });
-            });
-        }
-        //get selected material Type
-
-    }, {
-        key: 'getMaterialType',
-        value: function getMaterialType(id) {
-            var url = this.url + '/admin/materials/types/get_material_type/' + id;
-            return new Promise(function (resolve, reject) {
-                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get(url).then(function (result) {
-                    resolve(result.data);
-                }).catch(function (err) {
-                    reject(err);
-                });
-            });
-        }
-        //get parent siblings types
-
-    }, {
-        key: 'getMaterialParentSiblingTypes',
-        value: function getMaterialParentSiblingTypes(id) {
-            var url = this.url + '/admin/materials/types/get_material_parent_sibling_types/' + id;
-            return new Promise(function (resolve, reject) {
-                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get(url).then(function (result) {
-                    resolve(result.data);
-                }).catch(function (err) {
-                    reject(err);
-                });
-            });
-        }
-    }]);
-
-    return MaterialType;
-}();
-
-/* harmony default export */ __webpack_exports__["a"] = (MaterialType);
-
-/***/ }),
-
-/***/ 33:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__webUrl__ = __webpack_require__(2);
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-// import axios from 'axios';
-
-var webUrl = new __WEBPACK_IMPORTED_MODULE_0__webUrl__["a" /* default */]();
-
-var City = function () {
-    function City() {
-        _classCallCheck(this, City);
-
-        this.webUrl = webUrl.getUrl();
-    }
-    //Static Method
-
-
-    _createClass(City, [{
-        key: 'getProvinces',
-        value: function getProvinces() {
-            var _this = this;
-
-            return new Promise(function (resolve, reject) {
-                axios.get(_this.webUrl + '/admin/materials/city/provinces').then(function (result) {
-                    resolve(result.data);
-                    console.log('Province :', result);
-                }).catch(function (err) {
-                    reject(err);
-                });
-            });
-        }
-    }, {
-        key: 'getDistricts',
-        value: function getDistricts(amphoeID) {
-            console.log('Amphoe ID', amphoeID);
-            var url = this.webUrl + '/admin/materials/items/districts/' + amphoeID;
-            console.log('Get District URL:', url);
-            return new Promise(function (resolve, reject) {
-                axios.get(url).then(function (result) {
-                    resolve(result.data);
-                }).catch(function (err) {
-                    reject(err);
-                });
-            });
-        }
-    }], [{
-        key: 'allProvince',
-        value: function allProvince() {
-            var url = this.url + '/admin/materials/city/provinces';
-            return new Promise(function (resolve, reject) {
-                axios.get(url).then(function (result) {
-                    resolve(result.data);
-                    console.log(result);
-                }).catch(function (err) {
-                    reject(err);
-                });
-            });
-        }
-    }]);
-
-    return City;
-}();
-
-/* harmony default export */ __webpack_exports__["a"] = (City);
-
-/***/ }),
-
 /***/ 4:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2541,13 +2548,13 @@ module.exports = function bind(fn, thisArg) {
 
 /***/ }),
 
-/***/ 45:
+/***/ 46:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AddModal", function() { return AddModal; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_material_material_item_service__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_material_material_item_service__ = __webpack_require__(32);
 
 var dict = {
     custom: {
@@ -2630,12 +2637,12 @@ var AddModal = {
 
 
 var utils = __webpack_require__(0);
-var settle = __webpack_require__(15);
-var buildURL = __webpack_require__(17);
-var parseHeaders = __webpack_require__(18);
-var isURLSameOrigin = __webpack_require__(19);
+var settle = __webpack_require__(18);
+var buildURL = __webpack_require__(20);
+var parseHeaders = __webpack_require__(21);
+var isURLSameOrigin = __webpack_require__(22);
 var createError = __webpack_require__(6);
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(20);
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(23);
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -2732,7 +2739,7 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(21);
+      var cookies = __webpack_require__(24);
 
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -2817,7 +2824,7 @@ module.exports = function xhrAdapter(config) {
 "use strict";
 
 
-var enhanceError = __webpack_require__(16);
+var enhanceError = __webpack_require__(19);
 
 /**
  * Create an Error with the specified message, config, error code, request and response.
@@ -2874,13 +2881,6 @@ Cancel.prototype.__CANCEL__ = true;
 
 module.exports = Cancel;
 
-
-/***/ }),
-
-/***/ 9:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(11);
 
 /***/ })
 

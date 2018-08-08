@@ -317,12 +317,16 @@ Route::prefix('admin')->middleware('auth')
         //endregion
         //region -- Content Categories
         Route::prefix('content_categories')->group(function(){
+            // -- -- Add
+            Route::post('add_category','Admin\Content\Category\CategoryController@addCategory');
+            // -- -- Get Single Category
+            Route::get('get_category/{id}','Admin\Content\Category\CategoryController@getCategory');
             // -- -- Get All Categories
             Route::get('get_all_categories','Admin\Content\Category\CategoryController@getAllCategories');
             // -- -- Get All Categories with Root
             Route::get('get_all_categories_with_root','Admin\Content\Category\CategoryController@getAllCategoriesWithRoot');
-            // -- -- Add
-            Route::post('add_category','Admin\Content\Category\CategoryController@addCategory');
+            // -- -- Get All Categories without ID
+            Route::get('get_all_categories_without_id/{id}','Admin\Content\Category\CategoryController@getAllCategoriesWithoutID');
             // -- -- Delete Categories
             Route::delete('delete_categories','Admin\Content\Category\CategoryController@deleteCategories');
         });

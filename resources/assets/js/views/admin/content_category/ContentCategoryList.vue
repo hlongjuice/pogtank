@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="portlet">
+        <div v-if="!$store.getters.loadingStatus" class="portlet">
             <div class="portlet-title">
                 <div class="caption">
                     <i class="fa fa-reorder"></i>หมวดหมู่
@@ -28,7 +28,7 @@
                     <template slot="itemColumn" slot-scope="props">
                         <td>{{props.index +1 }}</td>
                         <td class="text-left">{{props.item.title}}</td>
-                        <td></td>
+                        <td><a @click="editCategory(props.item)" class="btn btn-warning">แก้ไข</a></td>
                     </template>
                 </app-table>
             </div>
@@ -51,35 +51,58 @@
                 }
             }
         },
-        computed: {
-        },
+        computed: {},
         created() {
+            this.$store.commit('loading');
             this.getCategories();
         },
+        mounted() {
+            console.log('Mounted');
+            // this.showLoading=true;
+        },
+        //Activated amd Deactivated fired when enable keep-alive for this component
+        activated() {
+            if (this.$store.getters.refreshParentStatus) {
+                this.getCategories();
+            }
+        },
+        deactivated() {
+
+        },
         methods: {
+            //Get All Categories
             getCategories() {
-                console.log('Get Categories');
+                this.showLoading= true;
                 contentCategoryService.getAllCategories()
                     .then(result => {
                         this.categories = result;
+                        this.$store.commit('stopLoading');
+                        console.log('Get Categories');
                     }).catch(err => {
                     console.log(err)
                 })
             },
+            //Edit Category
+            editCategory(item) {
+                console.log('Title',item.title);
+                this.$router.push({name: 'content_category_edit', params: {id: item.id,title:item.title}})
+            },
             //Delete Categories
             deleteCategories(event) {
-                console.log('Delete Event : ', event);
+                this.$dialog.confirm("<p>การลบหมวดหมู่หลัก จะลบหมวดหมู่รองไปด้วย</p> <br>" +
+                    "<p>ยืนยันการลบ</p>")
+                    .then(() => {
+                        contentCategoryService.deleteCategories(event)
+                            .then(result => {
+                                console.log(result)
+                                this.getCategories();
+                            }).catch(err => {
+                            console.log(err)
+                        })
+                    }).catch(() => {
+                });
             }
         },
-        //Activated amd Deactivated fired when enable keep-alive for this component
-        activated(){
-            if(this.$store.getters.refreshParentStatus){
-                this.getCategories();
-            }
-        },
-        deactivated(){
-
-        }
     }
 </script>
 

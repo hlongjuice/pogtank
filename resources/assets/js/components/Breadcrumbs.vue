@@ -3,13 +3,15 @@
         <template v-for="(crumb, key) in $breadcrumbs">
             <template v-if="key+1 < $breadcrumbs.length">
                 <li>
-                    <router-link class="breadcrumb-item"  :to="linkProp(crumb)" :key="key">{{ crumb | crumbText }}</router-link>
+                    <router-link active-class="active" :to="{ path: crumb.path }">
+                        {{ getBreadcrumb(crumb.meta.breadcrumb) }}
+                    </router-link>
                     <i class="fa fa-angle-right"></i>
                 </li>
             </template>
             <template v-else>
                 <li >
-                    {{crumb | crumbText}}
+                    {{ getBreadcrumb(crumb.meta.breadcrumb) }}
                 </li>
             </template>
         </template>

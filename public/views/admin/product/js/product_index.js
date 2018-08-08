@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 258);
+/******/ 	return __webpack_require__(__webpack_require__.s = 366);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -72,7 +72,7 @@
 
 
 var bind = __webpack_require__(4);
-var isBuffer = __webpack_require__(12);
+var isBuffer = __webpack_require__(15);
 
 /*global toString:true*/
 
@@ -376,7 +376,14 @@ module.exports = {
 
 /***/ }),
 
-/***/ 10:
+/***/ 12:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(14);
+
+/***/ }),
+
+/***/ 13:
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -567,7 +574,7 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
-/***/ 11:
+/***/ 14:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -575,7 +582,7 @@ process.umask = function() { return 0; };
 
 var utils = __webpack_require__(0);
 var bind = __webpack_require__(4);
-var Axios = __webpack_require__(13);
+var Axios = __webpack_require__(16);
 var defaults = __webpack_require__(3);
 
 /**
@@ -610,14 +617,14 @@ axios.create = function create(instanceConfig) {
 
 // Expose Cancel & CancelToken
 axios.Cancel = __webpack_require__(8);
-axios.CancelToken = __webpack_require__(27);
+axios.CancelToken = __webpack_require__(30);
 axios.isCancel = __webpack_require__(7);
 
 // Expose all/spread
 axios.all = function all(promises) {
   return Promise.all(promises);
 };
-axios.spread = __webpack_require__(28);
+axios.spread = __webpack_require__(31);
 
 module.exports = axios;
 
@@ -627,7 +634,7 @@ module.exports.default = axios;
 
 /***/ }),
 
-/***/ 12:
+/***/ 15:
 /***/ (function(module, exports) {
 
 /*!
@@ -655,7 +662,7 @@ function isSlowBuffer (obj) {
 
 /***/ }),
 
-/***/ 13:
+/***/ 16:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -663,8 +670,8 @@ function isSlowBuffer (obj) {
 
 var defaults = __webpack_require__(3);
 var utils = __webpack_require__(0);
-var InterceptorManager = __webpack_require__(22);
-var dispatchRequest = __webpack_require__(23);
+var InterceptorManager = __webpack_require__(25);
+var dispatchRequest = __webpack_require__(26);
 
 /**
  * Create a new instance of Axios
@@ -742,7 +749,7 @@ module.exports = Axios;
 
 /***/ }),
 
-/***/ 14:
+/***/ 17:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -762,7 +769,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 /***/ }),
 
-/***/ 15:
+/***/ 18:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -796,7 +803,7 @@ module.exports = function settle(resolve, reject, response) {
 
 /***/ }),
 
-/***/ 16:
+/***/ 19:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -825,7 +832,48 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 /***/ }),
 
-/***/ 17:
+/***/ 2:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var WebUrl = function () {
+    function WebUrl()
+    // private url:string
+    {
+        _classCallCheck(this, WebUrl);
+
+        this.url = 'http://localhost:3000/pogtank/public';
+        // this.url='http://localhost/pogtank/public';
+        // this.url=':2720';
+        // this.url='http://www.ggdemo.com/public';
+        // this.url='http://ggdemo.thddns.net:2720/pogtank/public'
+        // this.url='';
+    }
+
+    _createClass(WebUrl, [{
+        key: 'getUrl',
+        value: function getUrl() {
+            return this.url;
+        }
+    }, {
+        key: 'getRoute',
+        value: function getRoute(url) {
+            return this.url + url;
+        }
+    }]);
+
+    return WebUrl;
+}();
+
+/* harmony default export */ __webpack_exports__["a"] = (WebUrl);
+
+/***/ }),
+
+/***/ 20:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -899,7 +947,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 /***/ }),
 
-/***/ 18:
+/***/ 21:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -960,7 +1008,7 @@ module.exports = function parseHeaders(headers) {
 
 /***/ }),
 
-/***/ 19:
+/***/ 22:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1036,48 +1084,7 @@ module.exports = (
 
 /***/ }),
 
-/***/ 2:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var WebUrl = function () {
-    function WebUrl()
-    // private url:string
-    {
-        _classCallCheck(this, WebUrl);
-
-        this.url = 'http://localhost:3000/pogtank/public';
-        // this.url='http://localhost/pogtank/public';
-        // this.url=':2720';
-        // this.url='http://www.ggdemo.com/public';
-        // this.url='http://ggdemo.thddns.net:2720/pogtank/public'
-        // this.url='';
-    }
-
-    _createClass(WebUrl, [{
-        key: 'getUrl',
-        value: function getUrl() {
-            return this.url;
-        }
-    }, {
-        key: 'getRoute',
-        value: function getRoute(url) {
-            return this.url + url;
-        }
-    }]);
-
-    return WebUrl;
-}();
-
-/* harmony default export */ __webpack_exports__["a"] = (WebUrl);
-
-/***/ }),
-
-/***/ 20:
+/***/ 23:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1121,7 +1128,7 @@ module.exports = btoa;
 
 /***/ }),
 
-/***/ 21:
+/***/ 24:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1182,7 +1189,7 @@ module.exports = (
 
 /***/ }),
 
-/***/ 22:
+/***/ 25:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1242,18 +1249,18 @@ module.exports = InterceptorManager;
 
 /***/ }),
 
-/***/ 23:
+/***/ 26:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var utils = __webpack_require__(0);
-var transformData = __webpack_require__(24);
+var transformData = __webpack_require__(27);
 var isCancel = __webpack_require__(7);
 var defaults = __webpack_require__(3);
-var isAbsoluteURL = __webpack_require__(25);
-var combineURLs = __webpack_require__(26);
+var isAbsoluteURL = __webpack_require__(28);
+var combineURLs = __webpack_require__(29);
 
 /**
  * Throws a `Cancel` if cancellation has been requested.
@@ -1336,7 +1343,7 @@ module.exports = function dispatchRequest(config) {
 
 /***/ }),
 
-/***/ 24:
+/***/ 27:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1364,7 +1371,7 @@ module.exports = function transformData(data, headers, fns) {
 
 /***/ }),
 
-/***/ 25:
+/***/ 28:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1386,78 +1393,7 @@ module.exports = function isAbsoluteURL(url) {
 
 /***/ }),
 
-/***/ 258:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(259);
-
-
-/***/ }),
-
-/***/ 259:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_product_product_service__ = __webpack_require__(36);
-
-
-var productService = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_product_product_service__["a" /* default */]();
-new Vue({
-    el: '#product-index',
-    data: {
-        showLoading: '',
-        products: {}
-    },
-    mounted: function mounted() {
-        this.showLoading = true;
-        this.initialData();
-    },
-    methods: {
-        //Initial
-        initialData: function initialData() {
-            var _this = this;
-
-            Promise.all([productService.getAllProductsWithPages().then(function (result) {
-                console.log('Products :', result);
-                _this.products = result;
-            }).catch(function (err) {
-                alert(err);
-            })]).then(function () {
-                _this.showLoading = false;
-            }).catch(function () {});
-        },
-
-        //Get All Product
-        refreshData: function refreshData() {
-            var _this2 = this;
-
-            productService.getAllProducts().then(function (result) {
-                _this2.products = result;
-            }).catch(function (err) {
-                alert(err);
-            });
-        },
-
-        //Get Selected Product Page
-        getSelectedProductPage: function getSelectedProductPage(page) {
-            var _this3 = this;
-
-            if (typeof page === 'undefined') {
-                page = 1;
-            }
-            productService.getSelectedProductPage(page).then(function (result) {
-                _this3.products = result;
-            }).catch(function (err) {
-                alert(err);
-            });
-        }
-    }
-});
-
-/***/ }),
-
-/***/ 26:
+/***/ 29:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1479,106 +1415,6 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 /***/ }),
 
-/***/ 27:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var Cancel = __webpack_require__(8);
-
-/**
- * A `CancelToken` is an object that can be used to request cancellation of an operation.
- *
- * @class
- * @param {Function} executor The executor function.
- */
-function CancelToken(executor) {
-  if (typeof executor !== 'function') {
-    throw new TypeError('executor must be a function.');
-  }
-
-  var resolvePromise;
-  this.promise = new Promise(function promiseExecutor(resolve) {
-    resolvePromise = resolve;
-  });
-
-  var token = this;
-  executor(function cancel(message) {
-    if (token.reason) {
-      // Cancellation has already been requested
-      return;
-    }
-
-    token.reason = new Cancel(message);
-    resolvePromise(token.reason);
-  });
-}
-
-/**
- * Throws a `Cancel` if cancellation has been requested.
- */
-CancelToken.prototype.throwIfRequested = function throwIfRequested() {
-  if (this.reason) {
-    throw this.reason;
-  }
-};
-
-/**
- * Returns an object that contains a new `CancelToken` and a function that, when called,
- * cancels the `CancelToken`.
- */
-CancelToken.source = function source() {
-  var cancel;
-  var token = new CancelToken(function executor(c) {
-    cancel = c;
-  });
-  return {
-    token: token,
-    cancel: cancel
-  };
-};
-
-module.exports = CancelToken;
-
-
-/***/ }),
-
-/***/ 28:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/**
- * Syntactic sugar for invoking a function and expanding an array for arguments.
- *
- * Common use case would be to use `Function.prototype.apply`.
- *
- *  ```js
- *  function f(x, y, z) {}
- *  var args = [1, 2, 3];
- *  f.apply(null, args);
- *  ```
- *
- * With `spread` this example can be re-written.
- *
- *  ```js
- *  spread(function(x, y, z) {})([1, 2, 3]);
- *  ```
- *
- * @param {Function} callback
- * @returns {Function}
- */
-module.exports = function spread(callback) {
-  return function wrap(arr) {
-    return callback.apply(null, arr);
-  };
-};
-
-
-/***/ }),
-
 /***/ 3:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1586,7 +1422,7 @@ module.exports = function spread(callback) {
 /* WEBPACK VAR INJECTION */(function(process) {
 
 var utils = __webpack_require__(0);
-var normalizeHeaderName = __webpack_require__(14);
+var normalizeHeaderName = __webpack_require__(17);
 
 var DEFAULT_CONTENT_TYPE = {
   'Content-Type': 'application/x-www-form-urlencoded'
@@ -1680,7 +1516,107 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 
 module.exports = defaults;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(10)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(13)))
+
+/***/ }),
+
+/***/ 30:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var Cancel = __webpack_require__(8);
+
+/**
+ * A `CancelToken` is an object that can be used to request cancellation of an operation.
+ *
+ * @class
+ * @param {Function} executor The executor function.
+ */
+function CancelToken(executor) {
+  if (typeof executor !== 'function') {
+    throw new TypeError('executor must be a function.');
+  }
+
+  var resolvePromise;
+  this.promise = new Promise(function promiseExecutor(resolve) {
+    resolvePromise = resolve;
+  });
+
+  var token = this;
+  executor(function cancel(message) {
+    if (token.reason) {
+      // Cancellation has already been requested
+      return;
+    }
+
+    token.reason = new Cancel(message);
+    resolvePromise(token.reason);
+  });
+}
+
+/**
+ * Throws a `Cancel` if cancellation has been requested.
+ */
+CancelToken.prototype.throwIfRequested = function throwIfRequested() {
+  if (this.reason) {
+    throw this.reason;
+  }
+};
+
+/**
+ * Returns an object that contains a new `CancelToken` and a function that, when called,
+ * cancels the `CancelToken`.
+ */
+CancelToken.source = function source() {
+  var cancel;
+  var token = new CancelToken(function executor(c) {
+    cancel = c;
+  });
+  return {
+    token: token,
+    cancel: cancel
+  };
+};
+
+module.exports = CancelToken;
+
+
+/***/ }),
+
+/***/ 31:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Syntactic sugar for invoking a function and expanding an array for arguments.
+ *
+ * Common use case would be to use `Function.prototype.apply`.
+ *
+ *  ```js
+ *  function f(x, y, z) {}
+ *  var args = [1, 2, 3];
+ *  f.apply(null, args);
+ *  ```
+ *
+ * With `spread` this example can be re-written.
+ *
+ *  ```js
+ *  spread(function(x, y, z) {})([1, 2, 3]);
+ *  ```
+ *
+ * @param {Function} callback
+ * @returns {Function}
+ */
+module.exports = function spread(callback) {
+  return function wrap(arr) {
+    return callback.apply(null, arr);
+  };
+};
+
 
 /***/ }),
 
@@ -1689,7 +1625,7 @@ module.exports = defaults;
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__webUrl__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_axios__);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -1772,6 +1708,77 @@ var ProductService = function () {
 
 /***/ }),
 
+/***/ 366:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(367);
+
+
+/***/ }),
+
+/***/ 367:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_product_product_service__ = __webpack_require__(36);
+
+
+var productService = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_product_product_service__["a" /* default */]();
+new Vue({
+    el: '#product-index',
+    data: {
+        showLoading: '',
+        products: {}
+    },
+    mounted: function mounted() {
+        this.showLoading = true;
+        this.initialData();
+    },
+    methods: {
+        //Initial
+        initialData: function initialData() {
+            var _this = this;
+
+            Promise.all([productService.getAllProductsWithPages().then(function (result) {
+                console.log('Products :', result);
+                _this.products = result;
+            }).catch(function (err) {
+                alert(err);
+            })]).then(function () {
+                _this.showLoading = false;
+            }).catch(function () {});
+        },
+
+        //Get All Product
+        refreshData: function refreshData() {
+            var _this2 = this;
+
+            productService.getAllProducts().then(function (result) {
+                _this2.products = result;
+            }).catch(function (err) {
+                alert(err);
+            });
+        },
+
+        //Get Selected Product Page
+        getSelectedProductPage: function getSelectedProductPage(page) {
+            var _this3 = this;
+
+            if (typeof page === 'undefined') {
+                page = 1;
+            }
+            productService.getSelectedProductPage(page).then(function (result) {
+                _this3.products = result;
+            }).catch(function (err) {
+                alert(err);
+            });
+        }
+    }
+});
+
+/***/ }),
+
 /***/ 4:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1798,12 +1805,12 @@ module.exports = function bind(fn, thisArg) {
 
 
 var utils = __webpack_require__(0);
-var settle = __webpack_require__(15);
-var buildURL = __webpack_require__(17);
-var parseHeaders = __webpack_require__(18);
-var isURLSameOrigin = __webpack_require__(19);
+var settle = __webpack_require__(18);
+var buildURL = __webpack_require__(20);
+var parseHeaders = __webpack_require__(21);
+var isURLSameOrigin = __webpack_require__(22);
 var createError = __webpack_require__(6);
-var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(20);
+var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(23);
 
 module.exports = function xhrAdapter(config) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
@@ -1900,7 +1907,7 @@ module.exports = function xhrAdapter(config) {
     // This is only done if running in a standard browser environment.
     // Specifically not if we're in a web worker, or react-native.
     if (utils.isStandardBrowserEnv()) {
-      var cookies = __webpack_require__(21);
+      var cookies = __webpack_require__(24);
 
       // Add xsrf header
       var xsrfValue = (config.withCredentials || isURLSameOrigin(config.url)) && config.xsrfCookieName ?
@@ -1985,7 +1992,7 @@ module.exports = function xhrAdapter(config) {
 "use strict";
 
 
-var enhanceError = __webpack_require__(16);
+var enhanceError = __webpack_require__(19);
 
 /**
  * Create an Error with the specified message, config, error code, request and response.
@@ -2042,13 +2049,6 @@ Cancel.prototype.__CANCEL__ = true;
 
 module.exports = Cancel;
 
-
-/***/ }),
-
-/***/ 9:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(11);
 
 /***/ })
 

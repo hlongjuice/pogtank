@@ -25,9 +25,11 @@ import Cleave from 'vue-cleave-component';
 //After Use Vue Component Build Web
 import {router} from "./routes";
 import {store} from "./store";
-import VueBreadcrumbs from 'vue-breadcrumbs';
+// import VueBreadcrumbs from 'vue-breadcrumbs';
+import VueBreadcrumbs from 'vue-2-breadcrumbs';
 //My Component
 import Table from './components/Table';
+import Spinner from './components/Spinner';
 //Global Method
 Vue.mixin(Auth);
 window.Vue = Vue;
@@ -40,26 +42,29 @@ Vue.use(VeeValidate);
 Vue.use(VModal);
 Vue.use(VueMoment);
 Vue.use(Vue2Filters);
-Vue.use(VuejsDialog,{
+Vue.use(VuejsDialog, {
     html: true,
     okText: 'ยืนยัน',
     cancelText: 'ยกเลิก',
 });
 Vue.use(VueBreadcrumbs,require('../js/components/Breadcrumbs'));
+// Vue.use(VueBreadcrumbs);
+
 // Global Component
 Vue.component('pagination', require('laravel-vue-pagination'));
 Vue.component('vue-numeric', VueNumeric);
 Vue.component('multiselect', Multiselect);
 Vue.component('loading', loading);
 Vue.component('datepicker', Datepicker);
-Vue.component('cleave',Cleave);
+Vue.component('cleave', Cleave);
 //My Component
 // Vue.component('app-table',require('./components/Table.vue'));
-Vue.component('app-table',Table);
-Vue.component('app-sidebar',require('./views/admin/layouts/SideBar'));
+Vue.component('app-table', Table);
+Vue.component('app-sidebar', require('./views/admin/layouts/SideBar'));
+Vue.component('app-spinner', Spinner);
 
 new Vue({
-    el:'#my-root-vue',
+    el: '#my-root-vue',
     store, // Vuex
     router, // router for vue components
 });

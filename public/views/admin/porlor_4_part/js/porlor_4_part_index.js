@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 289);
+/******/ 	return __webpack_require__(__webpack_require__.s = 397);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -103,109 +103,6 @@ var WebUrl = function () {
 }();
 
 /* harmony default export */ __webpack_exports__["a"] = (WebUrl);
-
-/***/ }),
-
-/***/ 289:
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(290);
-
-
-/***/ }),
-
-/***/ 290:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_part_service__ = __webpack_require__(39);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__porlor_4_part_add_new_part_modal__ = __webpack_require__(291);
-
-
-var porlor4PartService = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_part_service__["a" /* default */]();
-new Vue({
-    el: '#porlor-4-part-index',
-    mixins: [__WEBPACK_IMPORTED_MODULE_1__porlor_4_part_add_new_part_modal__["a" /* AddNewPartModal */]],
-    data: {
-        addNewPartStatus: false,
-        showLoading: '',
-        parts: []
-    },
-    mounted: function mounted() {
-        this.showLoading = true;
-        this.initialData();
-    },
-    methods: {
-        initialData: function initialData() {
-            var _this = this;
-
-            porlor4PartService.getAll().then(function (result) {
-                _this.parts = result;
-                _this.showLoading = false;
-            }).catch(function (err) {
-                alert(err);
-                _this.showLoading = false;
-            });
-        },
-        refreshData: function refreshData() {
-            var _this2 = this;
-
-            this.addNewPartStatus = false;
-            this.showLoading = true;
-            porlor4PartService.getAll().then(function (result) {
-                _this2.parts = result;
-                _this2.showLoading = false;
-            }).catch(function (err) {
-                alert(err);
-                _this2.showLoading = false;
-            });
-        },
-        showAddNewPartModal: function showAddNewPartModal() {
-            this.$modal.show('porlor-4-part-add-new-part-modal');
-        },
-        beforeCloseAddNewPartModal: function beforeCloseAddNewPartModal() {
-            if (this.addNewPartStatus) {
-                this.refreshData();
-            }
-        }
-    }
-});
-
-/***/ }),
-
-/***/ 291:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AddNewPartModal; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_part_service__ = __webpack_require__(39);
-
-var porlor4PartService = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_part_service__["a" /* default */]();
-var AddNewPartModal = {
-    data: function data() {
-        return {
-            form: {
-                part_name: ''
-            }
-        };
-    },
-    methods: {
-        addNewPart: function addNewPart() {
-            var _this = this;
-
-            porlor4PartService.addNewPart(this.form).then(function (result) {
-                _this.addNewPartStatus = true;
-                _this.closeAddNewPartModal();
-            }).catch(function (err) {
-                alert(err);
-            });
-        },
-        closeAddNewPartModal: function closeAddNewPartModal() {
-            this.$modal.hide('porlor-4-part-add-new-part-modal');
-        }
-    }
-};
 
 /***/ }),
 
@@ -285,6 +182,109 @@ var Porlor4Part = function () {
 }();
 
 /* harmony default export */ __webpack_exports__["a"] = (Porlor4Part);
+
+/***/ }),
+
+/***/ 397:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(398);
+
+
+/***/ }),
+
+/***/ 398:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_part_service__ = __webpack_require__(39);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__porlor_4_part_add_new_part_modal__ = __webpack_require__(399);
+
+
+var porlor4PartService = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_part_service__["a" /* default */]();
+new Vue({
+    el: '#porlor-4-part-index',
+    mixins: [__WEBPACK_IMPORTED_MODULE_1__porlor_4_part_add_new_part_modal__["a" /* AddNewPartModal */]],
+    data: {
+        addNewPartStatus: false,
+        showLoading: '',
+        parts: []
+    },
+    mounted: function mounted() {
+        this.showLoading = true;
+        this.initialData();
+    },
+    methods: {
+        initialData: function initialData() {
+            var _this = this;
+
+            porlor4PartService.getAll().then(function (result) {
+                _this.parts = result;
+                _this.showLoading = false;
+            }).catch(function (err) {
+                alert(err);
+                _this.showLoading = false;
+            });
+        },
+        refreshData: function refreshData() {
+            var _this2 = this;
+
+            this.addNewPartStatus = false;
+            this.showLoading = true;
+            porlor4PartService.getAll().then(function (result) {
+                _this2.parts = result;
+                _this2.showLoading = false;
+            }).catch(function (err) {
+                alert(err);
+                _this2.showLoading = false;
+            });
+        },
+        showAddNewPartModal: function showAddNewPartModal() {
+            this.$modal.show('porlor-4-part-add-new-part-modal');
+        },
+        beforeCloseAddNewPartModal: function beforeCloseAddNewPartModal() {
+            if (this.addNewPartStatus) {
+                this.refreshData();
+            }
+        }
+    }
+});
+
+/***/ }),
+
+/***/ 399:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AddNewPartModal; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_part_service__ = __webpack_require__(39);
+
+var porlor4PartService = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_part_service__["a" /* default */]();
+var AddNewPartModal = {
+    data: function data() {
+        return {
+            form: {
+                part_name: ''
+            }
+        };
+    },
+    methods: {
+        addNewPart: function addNewPart() {
+            var _this = this;
+
+            porlor4PartService.addNewPart(this.form).then(function (result) {
+                _this.addNewPartStatus = true;
+                _this.closeAddNewPartModal();
+            }).catch(function (err) {
+                alert(err);
+            });
+        },
+        closeAddNewPartModal: function closeAddNewPartModal() {
+            this.$modal.hide('porlor-4-part-add-new-part-modal');
+        }
+    }
+};
 
 /***/ })
 
