@@ -89,26 +89,35 @@
                     title:'',
                     parent:''
                 },
-                category_id: '',
+                category_id: this.$route.params.id,
                 parentCategoryList: [],
                 showLoading:''
             }
         },
+        watch:{
+            '$route'(to,from){
+                console.log('Edit Page Route Changed');
+            }
+        },
         created() {
             this.showLoading=true;
-            console.log('Params is :', this.$route);
-            this.category_id = this.$route.params.id;
             Promise.all([
                 this.getCategory(),
                 this.getParentCategories()
             ]).then(()=>{
-                console.log('Promise')
             });
-            console.log('Out of promise');
 
         },
         mounted(){
         },
+        // beforeRouteUpdate (to, from, next) {
+        //     // react to route changes...
+        //     // don't forget to call next()
+        //     console.log('BeforeRouteUpdate EditPage To:',to);
+        //     this.form.id = to.params.id;
+        //     this.getCategory();
+        //     next();
+        // },
         methods: {
             getCategory() {
                 contentCategoryService.getCategory(this.category_id)
@@ -116,6 +125,12 @@
                         this.form.id = result.id;
                         this.form.title =result.title;
                         this.form.parent = result.parent;
+                        if(result.parent === null){
+                            this.form.parent = {
+                                id:0,
+                                title:'หมวดหมู่หลัก'
+                            }
+                        }else{this.form.parent = result.parent}
                     }).catch(err => {
                     console.log(err)
                 })
@@ -124,7 +139,6 @@
                 contentCategoryService.getAllCategoriesWithoutID(this.category_id)
                     .then(result => {
                         this.parentCategoryList = result;
-                        console.log('Parent Cat',this.parentCategoryList)
                     }).catch(err => {
                     console.log(err)
                 })
@@ -138,7 +152,8 @@
                 })
             },
             back() {
-                this.$router.push({name: 'content_category'})
+                this.$router.push({name: 'content_category'});
+                // this.$router.back();
             }
 
         }

@@ -24,8 +24,8 @@
                     </template>
                     <template slot="itemColumn" slot-scope="props">
                         <td>{{props.index +1 }}</td>
-                        <td>{{props.item}}</td>
-                        <td></td>
+                        <td>{{props.item.name}}</td>
+                        <td><a class="btn btn-warning" @click="editContent(props.item)">แก้ไข</a></td>
                     </template>
                 </app-table>
             </div>
@@ -41,7 +41,10 @@
         name: "ContentList",
         data() {
             return {
-                tableItems: ['A', 'B', 'C'],
+                tableItems: [
+                    {id:1,name:'A'},
+                    {id:2,name:'B'},
+                    {id:3,name:'C'}],
             }
         },
         computed: {
@@ -54,7 +57,19 @@
         },
         mounted() {
         },
+        beforeRouteUpdate (to, from, next) {
+           console.log('Before Route Update');
+        },
+        activated() {
+
+        },
+        deactivated() {
+            console.log('deactivated')
+        },
         methods: {
+            editContent(item){
+              this.$router.push({name:'content_edit',params:{id:item.id}})
+            },
             deleteItems(params) {
                 //params คือ checked Item from Table Component
                 console.log('Delete Items Methods Data', params.checkedItems);
@@ -64,12 +79,6 @@
                     }
                 )
             }
-        },
-        activated() {
-
-        },
-        deactivated() {
-            console.log('deactivated')
         }
     }
 </script>

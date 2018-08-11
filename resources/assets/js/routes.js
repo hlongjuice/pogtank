@@ -5,11 +5,15 @@ import WebUrl from '../js/services/webUrl';
 import Content from './views/admin/content/Content.vue';
 import ContentList from './views/admin/content/ContentList';
 import ContentCreate from './views/admin/content/ContentCreate.vue';
+import ContentEdit from './views/admin/content/ContentEdit';
 //Content Category
 import ContentCategory from './views/admin/content_category/ContentCategory';
 import ContentCategoryCreate from './views/admin/content_category/ContentCategoryCreate';
 import ContentCategoryList from './views/admin/content_category/ContentCategoryList';
 import ContentCategoryEdit from './views/admin/content_category/ContentCategoryEdit';
+
+//test_route
+import TestRoute from './views/admin/test_route/Home';
 
 
 // window.VueRouter = VueRouter;
@@ -22,6 +26,7 @@ const routes = [
         children: [
             {path: '', name: 'content', component: ContentList},
             {path: 'create', name: 'content_create', component: ContentCreate, meta: {breadcrumb: 'สร้างใหม่'}},
+            {path:':id/edit',name:'content_edit',component:ContentEdit}
         ]
     },
     //endregion
@@ -31,11 +36,14 @@ const routes = [
         children:[
             {path:'',name:'content_category',component:ContentCategoryList},
             {path:'create',name:'content_category_create',component:ContentCategoryCreate,meta: {breadcrumb: 'สร้างใหม่'}},
-            {path:'edit/:id/ttt/:title',name:'content_category_edit',component:ContentCategoryEdit,
-                meta: {breadcrumb :'แก้ไขหมวดหมู่' }}
+            {path:':id',name:'content_category_edit',component:ContentCategoryEdit,
+                meta: {breadcrumb:routeParams=> `แก้ไข - ${routeParams.id}`}}
         ]
     },
     //endregion
+    {path:'category/edit/:id',name:'cat_edit',component:ContentCategoryEdit},
+    {path:'/test_route/:userId',name:'test_route',component:TestRoute}
+    // meta: {breadcrumb :'แก้ไขหมวดหมู่' }}
 ];
 
 const router = new VueRouter({
@@ -45,7 +53,6 @@ const router = new VueRouter({
 //รอเปิดใช้ตอนใช้งานจริง
 router.beforeEach((to,from,next)=>{
     let base_path = window.location.pathname;
-    console.log('Before Route');
     if(base_path == '/admin' || base_path == '/public/admin' ||  base_path =='/pogtank/public/admin'){
         store.dispatch('vuePageShow');
         next();

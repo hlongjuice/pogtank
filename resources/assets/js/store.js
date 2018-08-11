@@ -43,7 +43,6 @@ export const store = new Vuex.Store({
         },
         //User
         setUser(state,payload){
-            console.log('Set User Payload :',payload);
             state.user = payload
         },
         clearUser(state){

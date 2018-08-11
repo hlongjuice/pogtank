@@ -66,5 +66,5 @@ Vue.component('app-spinner', Spinner);
 new Vue({
     el: '#my-root-vue',
     store, // Vuex
-    router, // router for vue components
+    router // router for vue components
 });
