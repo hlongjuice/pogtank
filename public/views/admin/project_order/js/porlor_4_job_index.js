@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 402);
+/******/ 	return __webpack_require__(__webpack_require__.s = 397);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -2413,28 +2413,28 @@ var Porlor4Service = function () {
 
 /***/ }),
 
-/***/ 402:
+/***/ 397:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(403);
+module.exports = __webpack_require__(398);
 
 
 /***/ }),
 
-/***/ 403:
+/***/ 398:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_job_service__ = __webpack_require__(34);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_js_services_project_order_porlor_4_service__ = __webpack_require__(38);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__porlor_4_job_add_root_porlor_4_job_add_root__ = __webpack_require__(404);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__porlor_4_job_details_porlor_4_job_details__ = __webpack_require__(405);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__porlor_4_job_details_porlor_4_add_child_job_porlor_4_add_child_job__ = __webpack_require__(406);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__porlor_4_job_details_porlor_4_add_child_job_item_porlor_4_add_child_job_item__ = __webpack_require__(407);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__porlor_4_job_details_porlor_4_edit_child_job_porlor_4_edit_child_job__ = __webpack_require__(408);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__porlor_4_job_details_porlor_4_edit_child_job_item_porlor_4_edit_child_job_item__ = __webpack_require__(409);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__porlor_4_job_edit_root_job_polor_4_job_edit_root_job__ = __webpack_require__(410);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__porlor_4_job_add_root_porlor_4_job_add_root__ = __webpack_require__(399);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__porlor_4_job_details_porlor_4_job_details__ = __webpack_require__(400);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__porlor_4_job_details_porlor_4_add_child_job_porlor_4_add_child_job__ = __webpack_require__(401);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__porlor_4_job_details_porlor_4_add_child_job_item_porlor_4_add_child_job_item__ = __webpack_require__(402);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__porlor_4_job_details_porlor_4_edit_child_job_porlor_4_edit_child_job__ = __webpack_require__(403);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__porlor_4_job_details_porlor_4_edit_child_job_item_porlor_4_edit_child_job_item__ = __webpack_require__(404);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__porlor_4_job_edit_root_job_polor_4_job_edit_root_job__ = __webpack_require__(405);
 
 
 
@@ -2577,7 +2577,7 @@ new Vue({
 
 /***/ }),
 
-/***/ 404:
+/***/ 399:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2623,7 +2623,7 @@ var Porlor4JobAddRoot = {
 
 /***/ }),
 
-/***/ 405:
+/***/ 400:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2842,7 +2842,7 @@ var Porlor4JobDetails = {
 
 /***/ }),
 
-/***/ 406:
+/***/ 401:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2938,7 +2938,7 @@ var Porlor4AddChildJob = {
 
 /***/ }),
 
-/***/ 407:
+/***/ 402:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3211,7 +3211,7 @@ var Porlor4AddChildJobItem = {
 
 /***/ }),
 
-/***/ 408:
+/***/ 403:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3314,7 +3314,7 @@ var Porlor4EditChildJob = {
 
 /***/ }),
 
-/***/ 409:
+/***/ 404:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3520,7 +3520,7 @@ var Porlor4EditChildJobItem = {
 
 /***/ }),
 
-/***/ 410:
+/***/ 405:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

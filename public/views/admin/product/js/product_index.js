@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 380);
+/******/ 	return __webpack_require__(__webpack_require__.s = 375);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -1708,15 +1708,15 @@ var ProductService = function () {
 
 /***/ }),
 
-/***/ 380:
+/***/ 375:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(381);
+module.exports = __webpack_require__(376);
 
 
 /***/ }),
 
-/***/ 381:
+/***/ 376:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

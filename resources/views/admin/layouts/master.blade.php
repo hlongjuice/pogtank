@@ -531,9 +531,8 @@ License: You must have a valid license purchased only from themeforest(the above
                     <!-- END PAGE HEADER-->
                     <div class="row">
                         <div class="col-xs-12">
-                            {{--<app-spinner v-show="$store.getters.loadingStatus"></app-spinner>--}}
-                            {{--<router-view v-show="!$store.getters.loadingStatus"></router-view>--}}
-                            <router-view></router-view>
+                            <app-spinner v-show="$store.getters.loadingStatus"></app-spinner>
+                            <router-view v-show="!$store.getters.loadingStatus"></router-view>
                         </div>
                     </div>
                 </div>

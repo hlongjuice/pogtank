@@ -40613,8 +40613,8 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(176);
-__webpack_require__(366);
-module.exports = __webpack_require__(367);
+__webpack_require__(361);
+module.exports = __webpack_require__(362);
 
 
 /***/ }),
@@ -40649,11 +40649,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_vue_cleave_component___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13_vue_cleave_component__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__routes__ = __webpack_require__(199);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__store__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16_vue_2_breadcrumbs__ = __webpack_require__(248);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16_vue_2_breadcrumbs__ = __webpack_require__(243);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16_vue_2_breadcrumbs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_16_vue_2_breadcrumbs__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__components_Table__ = __webpack_require__(249);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__components_Table__ = __webpack_require__(244);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__components_Table___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_17__components_Table__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__components_Spinner__ = __webpack_require__(252);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__components_Spinner__ = __webpack_require__(247);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__components_Spinner___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_18__components_Spinner__);
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -40703,7 +40703,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_12_vue
     okText: 'ยืนยัน',
     cancelText: 'ยกเลิก'
 });
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_16_vue_2_breadcrumbs___default.a, __webpack_require__(358));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_16_vue_2_breadcrumbs___default.a, __webpack_require__(353));
 // Vue.use(VueBreadcrumbs);
 
 // Global Component
@@ -40716,7 +40716,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('cleave', __WEBPACK_IMPORT
 //My Component
 // Vue.component('app-table',require('./components/Table.vue'));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('app-table', __WEBPACK_IMPORTED_MODULE_17__components_Table___default.a);
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('app-sidebar', __webpack_require__(361));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('app-sidebar', __webpack_require__(356));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('app-spinner', __WEBPACK_IMPORTED_MODULE_18__components_Spinner___default.a);
 
 new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
@@ -59521,7 +59521,7 @@ var Component = __webpack_require__(4)(
   /* cssModules */
   null
 )
-Component.options.__file = "/Applications/XAMPP/xamppfiles/htdocs/pogtank/node_modules/vue-full-loading/src/Loading.vue"
+Component.options.__file = "C:\\xampp\\htdocs\\pogtank\\node_modules\\vue-full-loading\\src\\Loading.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Loading.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -62439,8 +62439,6 @@ return /******/ (function(modules) { // webpackBootstrap
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__views_admin_content_category_ContentCategoryList___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__views_admin_content_category_ContentCategoryList__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__views_admin_content_category_ContentCategoryEdit__ = __webpack_require__(238);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__views_admin_content_category_ContentCategoryEdit___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10__views_admin_content_category_ContentCategoryEdit__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__views_admin_test_route_Home__ = __webpack_require__(243);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__views_admin_test_route_Home___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11__views_admin_test_route_Home__);
 
 
 
@@ -62453,9 +62451,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 
-
-
-//test_route
 
 
 // window.VueRouter = VueRouter;
@@ -62471,37 +62466,40 @@ var routes = [
 //region Content Category
 {
     path: '/content_category', component: __WEBPACK_IMPORTED_MODULE_7__views_admin_content_category_ContentCategory___default.a, meta: { breadcrumb: 'หมวดหมู่เนื้อหา' },
-    children: [{ path: '', name: 'content_category', component: __WEBPACK_IMPORTED_MODULE_9__views_admin_content_category_ContentCategoryList___default.a }, { path: 'create', name: 'content_category_create', component: __WEBPACK_IMPORTED_MODULE_8__views_admin_content_category_ContentCategoryCreate___default.a, meta: { breadcrumb: 'สร้างใหม่' } }, { path: 'edit/:myID', name: 'content_category_edit', component: __WEBPACK_IMPORTED_MODULE_10__views_admin_content_category_ContentCategoryEdit___default.a,
+    children: [{ path: '', name: 'content_category', component: __WEBPACK_IMPORTED_MODULE_9__views_admin_content_category_ContentCategoryList___default.a }, {
+        path: 'create',
+        name: 'content_category_create',
+        component: __WEBPACK_IMPORTED_MODULE_8__views_admin_content_category_ContentCategoryCreate___default.a,
+        meta: { breadcrumb: 'สร้างใหม่' }
+    }, {
+        path: 'edit/:id', name: 'content_category_edit', component: __WEBPACK_IMPORTED_MODULE_10__views_admin_content_category_ContentCategoryEdit___default.a,
         meta: { breadcrumb: function breadcrumb(routeParams) {
                 return '\u0E41\u0E01\u0E49\u0E44\u0E02 - ' + routeParams.id;
-            } } }]
-},
-//endregion
-{ path: '/test_route/', name: 'test_route', component: __WEBPACK_IMPORTED_MODULE_11__views_admin_test_route_Home___default.a
-    // meta: {breadcrumb :'แก้ไขหมวดหมู่' }}
+            } }
+    }]
 }];
 
 var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
-    routes: routes
+    routes: routes,
+    scrollBehavior: function scrollBehavior(to, from, savedPosition) {
+        return { x: 0, y: 0 };
+    }
 });
-__WEBPACK_IMPORTED_MODULE_0__store__["a" /* store */].dispatch('vuePageShow');
 // Set Middleware Guard
 //รอเปิดใช้ตอนใช้งานจริง
-// router.beforeEach((to,from,next)=>{
-//     let base_path = window.location.pathname;
-//     if(base_path == '/admin' || base_path == '/public/admin' ||  base_path =='/pogtank/public/admin'){
-//         store.dispatch('vuePageShow');
-//         next();
-//     }
-//     else if(base_path == 'login' || base_path == 'public/login' ||  base_path =='/pogtank/public/login'){
-//         console.log('Login Page',base_path);
-//     }
-//     else{
-//         if(to.fullPath !== '/'){
-//             window.location = webUrl.getRoute('/admin#'+to.fullPath);
-//         }
-//     }
-// });
+router.beforeEach(function (to, from, next) {
+    var base_path = window.location.pathname;
+    if (base_path == '/admin' || base_path == '/public/admin' || base_path == '/pogtank/public/admin') {
+        __WEBPACK_IMPORTED_MODULE_0__store__["a" /* store */].dispatch('vuePageShow');
+        next();
+    } else if (base_path == 'login' || base_path == 'public/login' || base_path == '/pogtank/public/login') {
+        console.log('Login Page', base_path);
+    } else {
+        if (to.fullPath !== '/') {
+            window.location = webUrl.getRoute('/admin#' + to.fullPath);
+        }
+    }
+});
 
 
 /***/ }),
@@ -62565,7 +62563,7 @@ var Component = __webpack_require__(4)(
   /* cssModules */
   null
 )
-Component.options.__file = "/Applications/XAMPP/xamppfiles/htdocs/pogtank/resources/assets/js/views/admin/content/Content.vue"
+Component.options.__file = "C:\\xampp\\htdocs\\pogtank\\resources\\assets\\js\\views\\admin\\content\\Content.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Content.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -62650,7 +62648,7 @@ var Component = __webpack_require__(4)(
   /* cssModules */
   null
 )
-Component.options.__file = "/Applications/XAMPP/xamppfiles/htdocs/pogtank/resources/assets/js/views/admin/content/ContentList.vue"
+Component.options.__file = "C:\\xampp\\htdocs\\pogtank\\resources\\assets\\js\\views\\admin\\content\\ContentList.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] ContentList.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -62946,7 +62944,7 @@ var Component = __webpack_require__(4)(
   /* cssModules */
   null
 )
-Component.options.__file = "/Applications/XAMPP/xamppfiles/htdocs/pogtank/resources/assets/js/views/admin/content/ContentCreate.vue"
+Component.options.__file = "C:\\xampp\\htdocs\\pogtank\\resources\\assets\\js\\views\\admin\\content\\ContentCreate.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] ContentCreate.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -63645,7 +63643,7 @@ var Component = __webpack_require__(4)(
   /* cssModules */
   null
 )
-Component.options.__file = "/Applications/XAMPP/xamppfiles/htdocs/pogtank/resources/assets/js/views/admin/content/ContentEdit.vue"
+Component.options.__file = "C:\\xampp\\htdocs\\pogtank\\resources\\assets\\js\\views\\admin\\content\\ContentEdit.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] ContentEdit.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -63801,7 +63799,7 @@ var Component = __webpack_require__(4)(
   /* cssModules */
   null
 )
-Component.options.__file = "/Applications/XAMPP/xamppfiles/htdocs/pogtank/resources/assets/js/views/admin/content_category/ContentCategory.vue"
+Component.options.__file = "C:\\xampp\\htdocs\\pogtank\\resources\\assets\\js\\views\\admin\\content_category\\ContentCategory.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] ContentCategory.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -63827,12 +63825,6 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -63873,41 +63865,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_c('div', {
-    staticClass: "col-xs-12"
-  }, [_c('router-link', {
-    staticClass: "btn btn-default",
+  return _c('div', [_c('keep-alive', {
     attrs: {
-      "to": {
-        name: 'content_category_edit',
-        params: {
-          id: 30
-        }
-      }
+      "include": "ContentCategoryList"
     }
-  }, [_vm._v("A")]), _vm._v(" "), _c('router-link', {
-    staticClass: "btn btn-default",
-    attrs: {
-      "to": {
-        name: 'content_category_edit',
-        params: {
-          id: 33
-        }
-      }
-    }
-  }, [_vm._v("B")]), _vm._v(" "), _c('router-link', {
-    staticClass: "btn btn-default",
-    attrs: {
-      "to": "/content_category/31"
-    }
-  }, [_vm._v("AA")]), _vm._v(" "), _c('a', {
-    staticClass: "btn btn-default",
-    on: {
-      "click": function($event) {
-        _vm.goToPage(44)
-      }
-    }
-  }, [_vm._v("BB")])], 1), _vm._v(" "), _c('router-view')], 1)
+  }, [_c('router-view')], 1)], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -63935,7 +63897,7 @@ var Component = __webpack_require__(4)(
   /* cssModules */
   null
 )
-Component.options.__file = "/Applications/XAMPP/xamppfiles/htdocs/pogtank/resources/assets/js/views/admin/content_category/ContentCategoryCreate.vue"
+Component.options.__file = "C:\\xampp\\htdocs\\pogtank\\resources\\assets\\js\\views\\admin\\content_category\\ContentCategoryCreate.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] ContentCategoryCreate.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -64336,7 +64298,7 @@ var Component = __webpack_require__(4)(
   /* cssModules */
   null
 )
-Component.options.__file = "/Applications/XAMPP/xamppfiles/htdocs/pogtank/resources/assets/js/views/admin/content_category/ContentCategoryList.vue"
+Component.options.__file = "C:\\xampp\\htdocs\\pogtank\\resources\\assets\\js\\views\\admin\\content_category\\ContentCategoryList.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] ContentCategoryList.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -64391,7 +64353,7 @@ exports = module.exports = __webpack_require__(10)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -64492,14 +64454,15 @@ var contentCategoryService = new __WEBPACK_IMPORTED_MODULE_0__services_content_c
                 _this.$store.commit('stopLoading');
             }).catch(function (err) {
                 console.log(err);
+                alert(err);
+                _this.$store.commit('stopLoading');
             });
         },
 
         //Edit Category
         editCategory: function editCategory(item) {
             this.$router.push({
-                name: 'content_category_edit',
-                params: { id: item.id }
+                path: "edit/" + item.id
             });
         },
 
@@ -64508,6 +64471,7 @@ var contentCategoryService = new __WEBPACK_IMPORTED_MODULE_0__services_content_c
             var _this2 = this;
 
             this.$dialog.confirm("<p>การลบหมวดหมู่หลัก จะลบหมวดหมู่รองไปด้วย</p> <br>" + "<p>ยืนยันการลบ</p>").then(function () {
+                _this2.$store.commit('loading');
                 contentCategoryService.deleteCategories(event).then(function (result) {
                     _this2.getCategories();
                 }).catch(function (err) {
@@ -64600,7 +64564,7 @@ var Component = __webpack_require__(4)(
   /* cssModules */
   null
 )
-Component.options.__file = "/Applications/XAMPP/xamppfiles/htdocs/pogtank/resources/assets/js/views/admin/content_category/ContentCategoryEdit.vue"
+Component.options.__file = "C:\\xampp\\htdocs\\pogtank\\resources\\assets\\js\\views\\admin\\content_category\\ContentCategoryEdit.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] ContentCategoryEdit.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -64759,8 +64723,7 @@ var contentCategoryService = new __WEBPACK_IMPORTED_MODULE_0__services_content_c
                 parent: ''
             },
             category_id: this.$route.params.id,
-            parentCategoryList: [],
-            showLoading: ''
+            parentCategoryList: []
         };
     },
 
@@ -64770,55 +64733,59 @@ var contentCategoryService = new __WEBPACK_IMPORTED_MODULE_0__services_content_c
         }
     },
     created: function created() {
-        this.showLoading = true;
-        Promise.all([this.getCategory(), this.getParentCategories()]).then(function () {});
+        var _this = this;
+
+        this.$store.commit('loading');
+        Promise.all([this.getCategory(), this.getParentCategories()]).then(function () {
+            _this.$store.commit('stopLoading');
+        });
     },
     mounted: function mounted() {},
 
-    // beforeRouteUpdate (to, from, next) {
-    //     // react to route changes...
-    //     // don't forget to call next()
-    //     console.log('BeforeRouteUpdate EditPage To:',to);
-    //     this.form.id = to.params.id;
-    //     this.getCategory();
-    //     next();
-    // },
     methods: {
         getCategory: function getCategory() {
-            var _this = this;
+            var _this2 = this;
 
-            contentCategoryService.getCategory(this.category_id).then(function (result) {
-                _this.form.id = result.id;
-                _this.form.title = result.title;
-                _this.form.parent = result.parent;
-                if (result.parent === null) {
-                    _this.form.parent = {
-                        id: 0,
-                        title: 'หมวดหมู่หลัก'
-                    };
-                } else {
-                    _this.form.parent = result.parent;
-                }
-            }).catch(function (err) {
-                console.log(err);
+            return new Promise(function (resolve, reject) {
+                contentCategoryService.getCategory(_this2.category_id).then(function (result) {
+                    _this2.form.id = result.id;
+                    _this2.form.title = result.title;
+                    _this2.form.parent = result.parent;
+                    if (result.parent === null) {
+                        _this2.form.parent = {
+                            id: 0,
+                            title: 'หมวดหมู่หลัก'
+                        };
+                    } else {
+                        _this2.form.parent = result.parent;
+                    }
+                    resolve();
+                }).catch(function (err) {
+                    console.log(err);
+                    reject(err);
+                });
             });
         },
         getParentCategories: function getParentCategories() {
-            var _this2 = this;
+            var _this3 = this;
 
-            contentCategoryService.getAllCategoriesWithoutID(this.category_id).then(function (result) {
-                _this2.parentCategoryList = result;
-            }).catch(function (err) {
-                console.log(err);
+            return new Promise(function (resolve, reject) {
+                contentCategoryService.getAllCategoriesWithoutID(_this3.category_id).then(function (result) {
+                    _this3.parentCategoryList = result;
+                    resolve();
+                }).catch(function (err) {
+                    console.log(err);
+                    reject(err);
+                });
             });
         },
         updateCategory: function updateCategory(form) {
-            var _this3 = this;
+            var _this4 = this;
 
             this.$validator.validateAll(form).then(function (result) {
                 //If All Input Validate
                 if (result) {
-                    contentCategoryService.updateCategory(_this3.form);
+                    contentCategoryService.updateCategory(_this4.form);
                 }
             });
         },
@@ -65011,167 +64978,6 @@ if (false) {
 /* 243 */
 /***/ (function(module, exports, __webpack_require__) {
 
-
-/* styles */
-__webpack_require__(244)
-
-var Component = __webpack_require__(4)(
-  /* script */
-  __webpack_require__(246),
-  /* template */
-  __webpack_require__(247),
-  /* scopeId */
-  "data-v-db3c81dc",
-  /* cssModules */
-  null
-)
-Component.options.__file = "/Applications/XAMPP/xamppfiles/htdocs/pogtank/resources/assets/js/views/admin/test_route/Home.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] Home.vue: functional components are not supported with templates, they should use render functions.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-db3c81dc", Component.options)
-  } else {
-    hotAPI.reload("data-v-db3c81dc", Component.options)
-  }
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 244 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(245);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(11)("011bf3ca", content, false);
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../../../node_modules/css-loader/index.js!../../../../../../node_modules/vue-loader/lib/style-rewriter.js?{\"id\":\"data-v-db3c81dc\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Home.vue", function() {
-     var newContent = require("!!../../../../../../node_modules/css-loader/index.js!../../../../../../node_modules/vue-loader/lib/style-rewriter.js?{\"id\":\"data-v-db3c81dc\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Home.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 245 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(10)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 246 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    name: "Home",
-    data: function data() {
-        return {
-            data: this.$route.params.userId,
-            numb: ''
-        };
-    },
-    beforeRouteEnter: function beforeRouteEnter(to, from, next) {
-        console.log('Before Route Enter');
-        next();
-    },
-    beforeRouteLeave: function beforeRouteLeave(to, from, next) {
-        console.log('Before Route leave');
-        next();
-    },
-    beforeRouteUpdate: function beforeRouteUpdate(to, from, next) {
-        console.log('Route Update');
-        next();
-    },
-
-    methods: {
-        goTest: function goTest(dataInput) {
-            this.numb = dataInput;
-            this.$router.push({ name: 'content_category_edit', params: { myID: this.numb } });
-            // this.$router.push('/test_route/'+number);
-        }
-    }
-});
-
-/***/ }),
-/* 247 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_c('router-link', {
-    key: _vm.AA,
-    attrs: {
-      "to": {
-        name: 'content_category_edit',
-        params: {
-          myID: 1
-        }
-      }
-    }
-  }, [_vm._v("AA")]), _vm._v(" "), _c('router-link', {
-    attrs: {
-      "to": '/content_category/edit/' + 2
-    }
-  }, [_vm._v("BB")]), _vm._v(" "), _c('router-link', {
-    attrs: {
-      "to": '/content_category/edit/' + 1
-    }
-  }, [_vm._v("CC")]), _vm._v(" "), _vm._v("\n  " + _vm._s(_vm.data) + "\n    " + _vm._s(_vm.numb) + "\n")], 1)
-},staticRenderFns: []}
-module.exports.render._withStripped = true
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-db3c81dc", module.exports)
-  }
-}
-
-/***/ }),
-/* 248 */
-/***/ (function(module, exports, __webpack_require__) {
-
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;(function(global,factory){if(true)!(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
@@ -65184,20 +64990,20 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
       `},options))}};_exports.default=_default});
 
 /***/ }),
-/* 249 */
+/* 244 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Component = __webpack_require__(4)(
   /* script */
-  __webpack_require__(250),
+  __webpack_require__(245),
   /* template */
-  __webpack_require__(251),
+  __webpack_require__(246),
   /* scopeId */
   null,
   /* cssModules */
   null
 )
-Component.options.__file = "/Applications/XAMPP/xamppfiles/htdocs/pogtank/resources/assets/js/components/Table.vue"
+Component.options.__file = "C:\\xampp\\htdocs\\pogtank\\resources\\assets\\js\\components\\Table.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Table.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -65218,7 +65024,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 250 */
+/* 245 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -65393,7 +65199,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 251 */
+/* 246 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -65522,24 +65328,24 @@ if (false) {
 }
 
 /***/ }),
-/* 252 */
+/* 247 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(253)
+__webpack_require__(248)
 
 var Component = __webpack_require__(4)(
   /* script */
-  __webpack_require__(255),
+  __webpack_require__(250),
   /* template */
-  __webpack_require__(357),
+  __webpack_require__(352),
   /* scopeId */
   "data-v-4575caaf",
   /* cssModules */
   null
 )
-Component.options.__file = "/Applications/XAMPP/xamppfiles/htdocs/pogtank/resources/assets/js/components/Spinner.vue"
+Component.options.__file = "C:\\xampp\\htdocs\\pogtank\\resources\\assets\\js\\components\\Spinner.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Spinner.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -65560,13 +65366,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 253 */
+/* 248 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(254);
+var content = __webpack_require__(249);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -65586,7 +65392,7 @@ if(false) {
 }
 
 /***/ }),
-/* 254 */
+/* 249 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(10)(false);
@@ -65600,12 +65406,12 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", 
 
 
 /***/ }),
-/* 255 */
+/* 250 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_epic_spinners__ = __webpack_require__(256);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_epic_spinners__ = __webpack_require__(251);
 //
 //
 //
@@ -65630,49 +65436,49 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 256 */
+/* 251 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_lib_HollowDotsSpinner_vue__ = __webpack_require__(257);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_lib_HollowDotsSpinner_vue__ = __webpack_require__(252);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_lib_HollowDotsSpinner_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_lib_HollowDotsSpinner_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_lib_PixelSpinner_vue__ = __webpack_require__(262);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_lib_PixelSpinner_vue__ = __webpack_require__(257);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_lib_PixelSpinner_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_lib_PixelSpinner_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_lib_FlowerSpinner_vue__ = __webpack_require__(267);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_lib_FlowerSpinner_vue__ = __webpack_require__(262);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_lib_FlowerSpinner_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_lib_FlowerSpinner_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_lib_IntersectingCirclesSpinner_vue__ = __webpack_require__(272);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_lib_IntersectingCirclesSpinner_vue__ = __webpack_require__(267);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_lib_IntersectingCirclesSpinner_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_lib_IntersectingCirclesSpinner_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_lib_OrbitSpinner_vue__ = __webpack_require__(277);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_lib_OrbitSpinner_vue__ = __webpack_require__(272);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_lib_OrbitSpinner_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_lib_OrbitSpinner_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_lib_FingerprintSpinner_vue__ = __webpack_require__(282);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_lib_FingerprintSpinner_vue__ = __webpack_require__(277);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_lib_FingerprintSpinner_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_lib_FingerprintSpinner_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_lib_TrinityRingsSpinner_vue__ = __webpack_require__(287);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_lib_TrinityRingsSpinner_vue__ = __webpack_require__(282);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_lib_TrinityRingsSpinner_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__components_lib_TrinityRingsSpinner_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_lib_FulfillingSquareSpinner_vue__ = __webpack_require__(292);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_lib_FulfillingSquareSpinner_vue__ = __webpack_require__(287);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_lib_FulfillingSquareSpinner_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__components_lib_FulfillingSquareSpinner_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_lib_CirclesToRhombusesSpinner_vue__ = __webpack_require__(297);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_lib_CirclesToRhombusesSpinner_vue__ = __webpack_require__(292);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_lib_CirclesToRhombusesSpinner_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__components_lib_CirclesToRhombusesSpinner_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_lib_SemipolarSpinner_vue__ = __webpack_require__(302);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_lib_SemipolarSpinner_vue__ = __webpack_require__(297);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_lib_SemipolarSpinner_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__components_lib_SemipolarSpinner_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_lib_BreedingRhombusSpinner_vue__ = __webpack_require__(307);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_lib_BreedingRhombusSpinner_vue__ = __webpack_require__(302);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_lib_BreedingRhombusSpinner_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10__components_lib_BreedingRhombusSpinner_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_lib_SwappingSquaresSpinner_vue__ = __webpack_require__(312);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_lib_SwappingSquaresSpinner_vue__ = __webpack_require__(307);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_lib_SwappingSquaresSpinner_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11__components_lib_SwappingSquaresSpinner_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_lib_ScalingSquaresSpinner_vue__ = __webpack_require__(317);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_lib_ScalingSquaresSpinner_vue__ = __webpack_require__(312);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_lib_ScalingSquaresSpinner_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12__components_lib_ScalingSquaresSpinner_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_lib_FulfillingBouncingCircleSpinner_vue__ = __webpack_require__(322);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_lib_FulfillingBouncingCircleSpinner_vue__ = __webpack_require__(317);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_lib_FulfillingBouncingCircleSpinner_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13__components_lib_FulfillingBouncingCircleSpinner_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_lib_RadarSpinner_vue__ = __webpack_require__(327);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_lib_RadarSpinner_vue__ = __webpack_require__(322);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_lib_RadarSpinner_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_14__components_lib_RadarSpinner_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_lib_SelfBuildingSquareSpinner_vue__ = __webpack_require__(332);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_lib_SelfBuildingSquareSpinner_vue__ = __webpack_require__(327);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_lib_SelfBuildingSquareSpinner_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_15__components_lib_SelfBuildingSquareSpinner_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_lib_SpringSpinner_vue__ = __webpack_require__(337);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_lib_SpringSpinner_vue__ = __webpack_require__(332);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_lib_SpringSpinner_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_16__components_lib_SpringSpinner_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__components_lib_LoopingRhombusesSpinner_vue__ = __webpack_require__(342);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__components_lib_LoopingRhombusesSpinner_vue__ = __webpack_require__(337);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__components_lib_LoopingRhombusesSpinner_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_17__components_lib_LoopingRhombusesSpinner_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__components_lib_HalfCircleSpinner_vue__ = __webpack_require__(347);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__components_lib_HalfCircleSpinner_vue__ = __webpack_require__(342);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__components_lib_HalfCircleSpinner_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_18__components_lib_HalfCircleSpinner_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__components_lib_AtomSpinner_vue__ = __webpack_require__(352);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__components_lib_AtomSpinner_vue__ = __webpack_require__(347);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__components_lib_AtomSpinner_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_19__components_lib_AtomSpinner_vue__);
 /* harmony reexport (default from non-hamory) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0__components_lib_HollowDotsSpinner_vue___default.a; });
 /* unused harmony reexport PixelSpinner */
@@ -65719,24 +65525,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /***/ }),
-/* 257 */
+/* 252 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(258)
+__webpack_require__(253)
 
 var Component = __webpack_require__(4)(
   /* script */
-  __webpack_require__(260),
+  __webpack_require__(255),
   /* template */
-  __webpack_require__(261),
+  __webpack_require__(256),
   /* scopeId */
   "data-v-ea633102",
   /* cssModules */
   null
 )
-Component.options.__file = "/Applications/XAMPP/xamppfiles/htdocs/pogtank/node_modules/epic-spinners/src/components/lib/HollowDotsSpinner.vue"
+Component.options.__file = "C:\\xampp\\htdocs\\pogtank\\node_modules\\epic-spinners\\src\\components\\lib\\HollowDotsSpinner.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] HollowDotsSpinner.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -65757,13 +65563,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 258 */
+/* 253 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(259);
+var content = __webpack_require__(254);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -65783,7 +65589,7 @@ if(false) {
 }
 
 /***/ }),
-/* 259 */
+/* 254 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(10)(false);
@@ -65797,7 +65603,7 @@ exports.push([module.i, "\n.hollow-dots-spinner[data-v-ea633102], .hollow-dots-s
 
 
 /***/ }),
-/* 260 */
+/* 255 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -65870,7 +65676,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 261 */
+/* 256 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -65894,24 +65700,24 @@ if (false) {
 }
 
 /***/ }),
-/* 262 */
+/* 257 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(263)
+__webpack_require__(258)
 
 var Component = __webpack_require__(4)(
   /* script */
-  __webpack_require__(265),
+  __webpack_require__(260),
   /* template */
-  __webpack_require__(266),
+  __webpack_require__(261),
   /* scopeId */
   "data-v-0ff56a84",
   /* cssModules */
   null
 )
-Component.options.__file = "/Applications/XAMPP/xamppfiles/htdocs/pogtank/node_modules/epic-spinners/src/components/lib/PixelSpinner.vue"
+Component.options.__file = "C:\\xampp\\htdocs\\pogtank\\node_modules\\epic-spinners\\src\\components\\lib\\PixelSpinner.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] PixelSpinner.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -65932,13 +65738,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 263 */
+/* 258 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(264);
+var content = __webpack_require__(259);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -65958,7 +65764,7 @@ if(false) {
 }
 
 /***/ }),
-/* 264 */
+/* 259 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(10)(false);
@@ -65972,7 +65778,7 @@ exports.push([module.i, "\n.pixel-spinner[data-v-0ff56a84], .pixel-spinner *[dat
 
 
 /***/ }),
-/* 265 */
+/* 260 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -66066,7 +65872,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 266 */
+/* 261 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -66087,24 +65893,24 @@ if (false) {
 }
 
 /***/ }),
-/* 267 */
+/* 262 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(268)
+__webpack_require__(263)
 
 var Component = __webpack_require__(4)(
   /* script */
-  __webpack_require__(270),
+  __webpack_require__(265),
   /* template */
-  __webpack_require__(271),
+  __webpack_require__(266),
   /* scopeId */
   "data-v-42e4693d",
   /* cssModules */
   null
 )
-Component.options.__file = "/Applications/XAMPP/xamppfiles/htdocs/pogtank/node_modules/epic-spinners/src/components/lib/FlowerSpinner.vue"
+Component.options.__file = "C:\\xampp\\htdocs\\pogtank\\node_modules\\epic-spinners\\src\\components\\lib\\FlowerSpinner.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] FlowerSpinner.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -66125,13 +65931,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 268 */
+/* 263 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(269);
+var content = __webpack_require__(264);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -66151,7 +65957,7 @@ if(false) {
 }
 
 /***/ }),
-/* 269 */
+/* 264 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(10)(false);
@@ -66165,7 +65971,7 @@ exports.push([module.i, "\n.flower-spinner[data-v-42e4693d],  .flower-spinner *[
 
 
 /***/ }),
-/* 270 */
+/* 265 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -66279,7 +66085,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 271 */
+/* 266 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -66306,24 +66112,24 @@ if (false) {
 }
 
 /***/ }),
-/* 272 */
+/* 267 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(273)
+__webpack_require__(268)
 
 var Component = __webpack_require__(4)(
   /* script */
-  __webpack_require__(275),
+  __webpack_require__(270),
   /* template */
-  __webpack_require__(276),
+  __webpack_require__(271),
   /* scopeId */
   "data-v-790d374a",
   /* cssModules */
   null
 )
-Component.options.__file = "/Applications/XAMPP/xamppfiles/htdocs/pogtank/node_modules/epic-spinners/src/components/lib/IntersectingCirclesSpinner.vue"
+Component.options.__file = "C:\\xampp\\htdocs\\pogtank\\node_modules\\epic-spinners\\src\\components\\lib\\IntersectingCirclesSpinner.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] IntersectingCirclesSpinner.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -66344,13 +66150,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 273 */
+/* 268 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(274);
+var content = __webpack_require__(269);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -66370,7 +66176,7 @@ if(false) {
 }
 
 /***/ }),
-/* 274 */
+/* 269 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(10)(false);
@@ -66384,7 +66190,7 @@ exports.push([module.i, "\n.intersecting-circles-spinner[data-v-790d374a], .inte
 
 
 /***/ }),
-/* 275 */
+/* 270 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -66451,7 +66257,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 276 */
+/* 271 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -66478,24 +66284,24 @@ if (false) {
 }
 
 /***/ }),
-/* 277 */
+/* 272 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(278)
+__webpack_require__(273)
 
 var Component = __webpack_require__(4)(
   /* script */
-  __webpack_require__(280),
+  __webpack_require__(275),
   /* template */
-  __webpack_require__(281),
+  __webpack_require__(276),
   /* scopeId */
   "data-v-34b78b80",
   /* cssModules */
   null
 )
-Component.options.__file = "/Applications/XAMPP/xamppfiles/htdocs/pogtank/node_modules/epic-spinners/src/components/lib/OrbitSpinner.vue"
+Component.options.__file = "C:\\xampp\\htdocs\\pogtank\\node_modules\\epic-spinners\\src\\components\\lib\\OrbitSpinner.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] OrbitSpinner.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -66516,13 +66322,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 278 */
+/* 273 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(279);
+var content = __webpack_require__(274);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -66542,7 +66348,7 @@ if(false) {
 }
 
 /***/ }),
-/* 279 */
+/* 274 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(10)(false);
@@ -66556,7 +66362,7 @@ exports.push([module.i, "\n.orbit-spinner[data-v-34b78b80], .orbit-spinner *[dat
 
 
 /***/ }),
-/* 280 */
+/* 275 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -66605,7 +66411,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 281 */
+/* 276 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -66632,24 +66438,24 @@ if (false) {
 }
 
 /***/ }),
-/* 282 */
+/* 277 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(283)
+__webpack_require__(278)
 
 var Component = __webpack_require__(4)(
   /* script */
-  __webpack_require__(285),
+  __webpack_require__(280),
   /* template */
-  __webpack_require__(286),
+  __webpack_require__(281),
   /* scopeId */
   "data-v-28071ea6",
   /* cssModules */
   null
 )
-Component.options.__file = "/Applications/XAMPP/xamppfiles/htdocs/pogtank/node_modules/epic-spinners/src/components/lib/FingerprintSpinner.vue"
+Component.options.__file = "C:\\xampp\\htdocs\\pogtank\\node_modules\\epic-spinners\\src\\components\\lib\\FingerprintSpinner.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] FingerprintSpinner.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -66670,13 +66476,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 283 */
+/* 278 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(284);
+var content = __webpack_require__(279);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -66696,7 +66502,7 @@ if(false) {
 }
 
 /***/ }),
-/* 284 */
+/* 279 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(10)(false);
@@ -66710,7 +66516,7 @@ exports.push([module.i, "\n.fingerprint-spinner[data-v-28071ea6], .fingerprint-s
 
 
 /***/ }),
-/* 285 */
+/* 280 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -66785,7 +66591,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 286 */
+/* 281 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -66809,24 +66615,24 @@ if (false) {
 }
 
 /***/ }),
-/* 287 */
+/* 282 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(288)
+__webpack_require__(283)
 
 var Component = __webpack_require__(4)(
   /* script */
-  __webpack_require__(290),
+  __webpack_require__(285),
   /* template */
-  __webpack_require__(291),
+  __webpack_require__(286),
   /* scopeId */
   "data-v-abce8e40",
   /* cssModules */
   null
 )
-Component.options.__file = "/Applications/XAMPP/xamppfiles/htdocs/pogtank/node_modules/epic-spinners/src/components/lib/TrinityRingsSpinner.vue"
+Component.options.__file = "C:\\xampp\\htdocs\\pogtank\\node_modules\\epic-spinners\\src\\components\\lib\\TrinityRingsSpinner.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] TrinityRingsSpinner.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -66847,13 +66653,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 288 */
+/* 283 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(289);
+var content = __webpack_require__(284);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -66873,7 +66679,7 @@ if(false) {
 }
 
 /***/ }),
-/* 289 */
+/* 284 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(10)(false);
@@ -66887,7 +66693,7 @@ exports.push([module.i, "\n.trinity-rings-spinner[data-v-abce8e40], .trinity-rin
 
 
 /***/ }),
-/* 290 */
+/* 285 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -66965,7 +66771,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 291 */
+/* 286 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -66992,24 +66798,24 @@ if (false) {
 }
 
 /***/ }),
-/* 292 */
+/* 287 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(293)
+__webpack_require__(288)
 
 var Component = __webpack_require__(4)(
   /* script */
-  __webpack_require__(295),
+  __webpack_require__(290),
   /* template */
-  __webpack_require__(296),
+  __webpack_require__(291),
   /* scopeId */
   "data-v-7b96258e",
   /* cssModules */
   null
 )
-Component.options.__file = "/Applications/XAMPP/xamppfiles/htdocs/pogtank/node_modules/epic-spinners/src/components/lib/FulfillingSquareSpinner.vue"
+Component.options.__file = "C:\\xampp\\htdocs\\pogtank\\node_modules\\epic-spinners\\src\\components\\lib\\FulfillingSquareSpinner.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] FulfillingSquareSpinner.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -67030,13 +66836,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 293 */
+/* 288 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(294);
+var content = __webpack_require__(289);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -67056,7 +66862,7 @@ if(false) {
 }
 
 /***/ }),
-/* 294 */
+/* 289 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(10)(false);
@@ -67070,7 +66876,7 @@ exports.push([module.i, "\n.fulfilling-square-spinner[data-v-7b96258e], .fulfill
 
 
 /***/ }),
-/* 295 */
+/* 290 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -67117,7 +66923,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 296 */
+/* 291 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -67138,24 +66944,24 @@ if (false) {
 }
 
 /***/ }),
-/* 297 */
+/* 292 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(298)
+__webpack_require__(293)
 
 var Component = __webpack_require__(4)(
   /* script */
-  __webpack_require__(300),
+  __webpack_require__(295),
   /* template */
-  __webpack_require__(301),
+  __webpack_require__(296),
   /* scopeId */
   "data-v-b1ed9188",
   /* cssModules */
   null
 )
-Component.options.__file = "/Applications/XAMPP/xamppfiles/htdocs/pogtank/node_modules/epic-spinners/src/components/lib/CirclesToRhombusesSpinner.vue"
+Component.options.__file = "C:\\xampp\\htdocs\\pogtank\\node_modules\\epic-spinners\\src\\components\\lib\\CirclesToRhombusesSpinner.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] CirclesToRhombusesSpinner.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -67176,13 +66982,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 298 */
+/* 293 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(299);
+var content = __webpack_require__(294);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -67202,7 +67008,7 @@ if(false) {
 }
 
 /***/ }),
-/* 299 */
+/* 294 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(10)(false);
@@ -67216,7 +67022,7 @@ exports.push([module.i, "\n.circles-to-rhombuses-spinner[data-v-b1ed9188], .circ
 
 
 /***/ }),
-/* 300 */
+/* 295 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -67291,7 +67097,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 301 */
+/* 296 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -67315,24 +67121,24 @@ if (false) {
 }
 
 /***/ }),
-/* 302 */
+/* 297 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(303)
+__webpack_require__(298)
 
 var Component = __webpack_require__(4)(
   /* script */
-  __webpack_require__(305),
+  __webpack_require__(300),
   /* template */
-  __webpack_require__(306),
+  __webpack_require__(301),
   /* scopeId */
   "data-v-f8672c8c",
   /* cssModules */
   null
 )
-Component.options.__file = "/Applications/XAMPP/xamppfiles/htdocs/pogtank/node_modules/epic-spinners/src/components/lib/SemipolarSpinner.vue"
+Component.options.__file = "C:\\xampp\\htdocs\\pogtank\\node_modules\\epic-spinners\\src\\components\\lib\\SemipolarSpinner.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] SemipolarSpinner.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -67353,13 +67159,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 303 */
+/* 298 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(304);
+var content = __webpack_require__(299);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -67379,7 +67185,7 @@ if(false) {
 }
 
 /***/ }),
-/* 304 */
+/* 299 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(10)(false);
@@ -67393,7 +67199,7 @@ exports.push([module.i, "\n.semipolar-spinner[data-v-f8672c8c], .semipolar-spinn
 
 
 /***/ }),
-/* 305 */
+/* 300 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -67471,7 +67277,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 306 */
+/* 301 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -67495,24 +67301,24 @@ if (false) {
 }
 
 /***/ }),
-/* 307 */
+/* 302 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(308)
+__webpack_require__(303)
 
 var Component = __webpack_require__(4)(
   /* script */
-  __webpack_require__(310),
+  __webpack_require__(305),
   /* template */
-  __webpack_require__(311),
+  __webpack_require__(306),
   /* scopeId */
   "data-v-044ad5a8",
   /* cssModules */
   null
 )
-Component.options.__file = "/Applications/XAMPP/xamppfiles/htdocs/pogtank/node_modules/epic-spinners/src/components/lib/BreedingRhombusSpinner.vue"
+Component.options.__file = "C:\\xampp\\htdocs\\pogtank\\node_modules\\epic-spinners\\src\\components\\lib\\BreedingRhombusSpinner.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] BreedingRhombusSpinner.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -67533,13 +67339,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 308 */
+/* 303 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(309);
+var content = __webpack_require__(304);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -67559,7 +67365,7 @@ if(false) {
 }
 
 /***/ }),
-/* 309 */
+/* 304 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(10)(false);
@@ -67573,7 +67379,7 @@ exports.push([module.i, "\n.breeding-rhombus-spinner[data-v-044ad5a8] {\n  heigh
 
 
 /***/ }),
-/* 310 */
+/* 305 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -67656,7 +67462,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 311 */
+/* 306 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -67684,24 +67490,24 @@ if (false) {
 }
 
 /***/ }),
-/* 312 */
+/* 307 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(313)
+__webpack_require__(308)
 
 var Component = __webpack_require__(4)(
   /* script */
-  __webpack_require__(315),
+  __webpack_require__(310),
   /* template */
-  __webpack_require__(316),
+  __webpack_require__(311),
   /* scopeId */
   "data-v-23f3cf39",
   /* cssModules */
   null
 )
-Component.options.__file = "/Applications/XAMPP/xamppfiles/htdocs/pogtank/node_modules/epic-spinners/src/components/lib/SwappingSquaresSpinner.vue"
+Component.options.__file = "C:\\xampp\\htdocs\\pogtank\\node_modules\\epic-spinners\\src\\components\\lib\\SwappingSquaresSpinner.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] SwappingSquaresSpinner.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -67722,13 +67528,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 313 */
+/* 308 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(314);
+var content = __webpack_require__(309);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -67748,7 +67554,7 @@ if(false) {
 }
 
 /***/ }),
-/* 314 */
+/* 309 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(10)(false);
@@ -67762,7 +67568,7 @@ exports.push([module.i, "\n.swapping-squares-spinner[data-v-23f3cf39], .swapping
 
 
 /***/ }),
-/* 315 */
+/* 310 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -67837,7 +67643,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 316 */
+/* 311 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -67862,24 +67668,24 @@ if (false) {
 }
 
 /***/ }),
-/* 317 */
+/* 312 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(318)
+__webpack_require__(313)
 
 var Component = __webpack_require__(4)(
   /* script */
-  __webpack_require__(320),
+  __webpack_require__(315),
   /* template */
-  __webpack_require__(321),
+  __webpack_require__(316),
   /* scopeId */
   "data-v-8e8f32ae",
   /* cssModules */
   null
 )
-Component.options.__file = "/Applications/XAMPP/xamppfiles/htdocs/pogtank/node_modules/epic-spinners/src/components/lib/ScalingSquaresSpinner.vue"
+Component.options.__file = "C:\\xampp\\htdocs\\pogtank\\node_modules\\epic-spinners\\src\\components\\lib\\ScalingSquaresSpinner.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] ScalingSquaresSpinner.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -67900,13 +67706,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 318 */
+/* 313 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(319);
+var content = __webpack_require__(314);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -67926,7 +67732,7 @@ if(false) {
 }
 
 /***/ }),
-/* 319 */
+/* 314 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(10)(false);
@@ -67940,7 +67746,7 @@ exports.push([module.i, "\n.scaling-squares-spinner[data-v-8e8f32ae], .scaling-s
 
 
 /***/ }),
-/* 320 */
+/* 315 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -68012,7 +67818,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 321 */
+/* 316 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -68037,24 +67843,24 @@ if (false) {
 }
 
 /***/ }),
-/* 322 */
+/* 317 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(323)
+__webpack_require__(318)
 
 var Component = __webpack_require__(4)(
   /* script */
-  __webpack_require__(325),
+  __webpack_require__(320),
   /* template */
-  __webpack_require__(326),
+  __webpack_require__(321),
   /* scopeId */
   "data-v-02a6503e",
   /* cssModules */
   null
 )
-Component.options.__file = "/Applications/XAMPP/xamppfiles/htdocs/pogtank/node_modules/epic-spinners/src/components/lib/FulfillingBouncingCircleSpinner.vue"
+Component.options.__file = "C:\\xampp\\htdocs\\pogtank\\node_modules\\epic-spinners\\src\\components\\lib\\FulfillingBouncingCircleSpinner.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] FulfillingBouncingCircleSpinner.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -68075,13 +67881,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 323 */
+/* 318 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(324);
+var content = __webpack_require__(319);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -68101,7 +67907,7 @@ if(false) {
 }
 
 /***/ }),
-/* 324 */
+/* 319 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(10)(false);
@@ -68115,7 +67921,7 @@ exports.push([module.i, "\n.fulfilling-bouncing-circle-spinner[data-v-02a6503e],
 
 
 /***/ }),
-/* 325 */
+/* 320 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -68177,7 +67983,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 326 */
+/* 321 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -68201,24 +68007,24 @@ if (false) {
 }
 
 /***/ }),
-/* 327 */
+/* 322 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(328)
+__webpack_require__(323)
 
 var Component = __webpack_require__(4)(
   /* script */
-  __webpack_require__(330),
+  __webpack_require__(325),
   /* template */
-  __webpack_require__(331),
+  __webpack_require__(326),
   /* scopeId */
   "data-v-59f04bf8",
   /* cssModules */
   null
 )
-Component.options.__file = "/Applications/XAMPP/xamppfiles/htdocs/pogtank/node_modules/epic-spinners/src/components/lib/RadarSpinner.vue"
+Component.options.__file = "C:\\xampp\\htdocs\\pogtank\\node_modules\\epic-spinners\\src\\components\\lib\\RadarSpinner.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] RadarSpinner.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -68239,13 +68045,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 328 */
+/* 323 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(329);
+var content = __webpack_require__(324);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -68265,7 +68071,7 @@ if(false) {
 }
 
 /***/ }),
-/* 329 */
+/* 324 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(10)(false);
@@ -68279,7 +68085,7 @@ exports.push([module.i, "\n.radar-spinner[data-v-59f04bf8], .radar-spinner *[dat
 
 
 /***/ }),
-/* 330 */
+/* 325 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -68364,7 +68170,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 331 */
+/* 326 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -68394,24 +68200,24 @@ if (false) {
 }
 
 /***/ }),
-/* 332 */
+/* 327 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(333)
+__webpack_require__(328)
 
 var Component = __webpack_require__(4)(
   /* script */
-  __webpack_require__(335),
+  __webpack_require__(330),
   /* template */
-  __webpack_require__(336),
+  __webpack_require__(331),
   /* scopeId */
   "data-v-958d770a",
   /* cssModules */
   null
 )
-Component.options.__file = "/Applications/XAMPP/xamppfiles/htdocs/pogtank/node_modules/epic-spinners/src/components/lib/SelfBuildingSquareSpinner.vue"
+Component.options.__file = "C:\\xampp\\htdocs\\pogtank\\node_modules\\epic-spinners\\src\\components\\lib\\SelfBuildingSquareSpinner.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] SelfBuildingSquareSpinner.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -68432,13 +68238,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 333 */
+/* 328 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(334);
+var content = __webpack_require__(329);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -68458,7 +68264,7 @@ if(false) {
 }
 
 /***/ }),
-/* 334 */
+/* 329 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(10)(false);
@@ -68472,7 +68278,7 @@ exports.push([module.i, "\n.self-building-square-spinner[data-v-958d770a], .self
 
 
 /***/ }),
-/* 335 */
+/* 330 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -68557,7 +68363,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 336 */
+/* 331 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -68584,24 +68390,24 @@ if (false) {
 }
 
 /***/ }),
-/* 337 */
+/* 332 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(338)
+__webpack_require__(333)
 
 var Component = __webpack_require__(4)(
   /* script */
-  __webpack_require__(340),
+  __webpack_require__(335),
   /* template */
-  __webpack_require__(341),
+  __webpack_require__(336),
   /* scopeId */
   "data-v-b993036a",
   /* cssModules */
   null
 )
-Component.options.__file = "/Applications/XAMPP/xamppfiles/htdocs/pogtank/node_modules/epic-spinners/src/components/lib/SpringSpinner.vue"
+Component.options.__file = "C:\\xampp\\htdocs\\pogtank\\node_modules\\epic-spinners\\src\\components\\lib\\SpringSpinner.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] SpringSpinner.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -68622,13 +68428,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 338 */
+/* 333 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(339);
+var content = __webpack_require__(334);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -68648,7 +68454,7 @@ if(false) {
 }
 
 /***/ }),
-/* 339 */
+/* 334 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(10)(false);
@@ -68662,7 +68468,7 @@ exports.push([module.i, "\n.spring-spinner[data-v-b993036a], .spring-spinner *[d
 
 
 /***/ }),
-/* 340 */
+/* 335 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -68764,7 +68570,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 341 */
+/* 336 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -68794,24 +68600,24 @@ if (false) {
 }
 
 /***/ }),
-/* 342 */
+/* 337 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(343)
+__webpack_require__(338)
 
 var Component = __webpack_require__(4)(
   /* script */
-  __webpack_require__(345),
+  __webpack_require__(340),
   /* template */
-  __webpack_require__(346),
+  __webpack_require__(341),
   /* scopeId */
   "data-v-21d50f88",
   /* cssModules */
   null
 )
-Component.options.__file = "/Applications/XAMPP/xamppfiles/htdocs/pogtank/node_modules/epic-spinners/src/components/lib/LoopingRhombusesSpinner.vue"
+Component.options.__file = "C:\\xampp\\htdocs\\pogtank\\node_modules\\epic-spinners\\src\\components\\lib\\LoopingRhombusesSpinner.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] LoopingRhombusesSpinner.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -68832,13 +68638,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 343 */
+/* 338 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(344);
+var content = __webpack_require__(339);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -68858,7 +68664,7 @@ if(false) {
 }
 
 /***/ }),
-/* 344 */
+/* 339 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(10)(false);
@@ -68872,7 +68678,7 @@ exports.push([module.i, "\n.looping-rhombuses-spinner[data-v-21d50f88], .looping
 
 
 /***/ }),
-/* 345 */
+/* 340 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -68947,7 +68753,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 346 */
+/* 341 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -68973,24 +68779,24 @@ if (false) {
 }
 
 /***/ }),
-/* 347 */
+/* 342 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(348)
+__webpack_require__(343)
 
 var Component = __webpack_require__(4)(
   /* script */
-  __webpack_require__(350),
+  __webpack_require__(345),
   /* template */
-  __webpack_require__(351),
+  __webpack_require__(346),
   /* scopeId */
   "data-v-7ed50796",
   /* cssModules */
   null
 )
-Component.options.__file = "/Applications/XAMPP/xamppfiles/htdocs/pogtank/node_modules/epic-spinners/src/components/lib/HalfCircleSpinner.vue"
+Component.options.__file = "C:\\xampp\\htdocs\\pogtank\\node_modules\\epic-spinners\\src\\components\\lib\\HalfCircleSpinner.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] HalfCircleSpinner.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -69011,13 +68817,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 348 */
+/* 343 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(349);
+var content = __webpack_require__(344);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -69037,7 +68843,7 @@ if(false) {
 }
 
 /***/ }),
-/* 349 */
+/* 344 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(10)(false);
@@ -69051,7 +68857,7 @@ exports.push([module.i, "\n.half-circle-spinner[data-v-7ed50796], .half-circle-s
 
 
 /***/ }),
-/* 350 */
+/* 345 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -69109,7 +68915,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 351 */
+/* 346 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -69133,24 +68939,24 @@ if (false) {
 }
 
 /***/ }),
-/* 352 */
+/* 347 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(353)
+__webpack_require__(348)
 
 var Component = __webpack_require__(4)(
   /* script */
-  __webpack_require__(355),
+  __webpack_require__(350),
   /* template */
-  __webpack_require__(356),
+  __webpack_require__(351),
   /* scopeId */
   "data-v-1f14a247",
   /* cssModules */
   null
 )
-Component.options.__file = "/Applications/XAMPP/xamppfiles/htdocs/pogtank/node_modules/epic-spinners/src/components/lib/AtomSpinner.vue"
+Component.options.__file = "C:\\xampp\\htdocs\\pogtank\\node_modules\\epic-spinners\\src\\components\\lib\\AtomSpinner.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] AtomSpinner.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -69171,13 +68977,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 353 */
+/* 348 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(354);
+var content = __webpack_require__(349);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -69197,7 +69003,7 @@ if(false) {
 }
 
 /***/ }),
-/* 354 */
+/* 349 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(10)(false);
@@ -69211,7 +69017,7 @@ exports.push([module.i, "\n.atom-spinner[data-v-1f14a247], .atom-spinner *[data-
 
 
 /***/ }),
-/* 355 */
+/* 350 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -69275,7 +69081,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 356 */
+/* 351 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -69307,7 +69113,7 @@ if (false) {
 }
 
 /***/ }),
-/* 357 */
+/* 352 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -69337,20 +69143,20 @@ if (false) {
 }
 
 /***/ }),
-/* 358 */
+/* 353 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Component = __webpack_require__(4)(
   /* script */
-  __webpack_require__(359),
+  __webpack_require__(354),
   /* template */
-  __webpack_require__(360),
+  __webpack_require__(355),
   /* scopeId */
   null,
   /* cssModules */
   null
 )
-Component.options.__file = "/Applications/XAMPP/xamppfiles/htdocs/pogtank/resources/assets/js/components/Breadcrumbs.vue"
+Component.options.__file = "C:\\xampp\\htdocs\\pogtank\\resources\\assets\\js\\components\\Breadcrumbs.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Breadcrumbs.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -69371,7 +69177,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 359 */
+/* 354 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -69400,7 +69206,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({});
 
 /***/ }),
-/* 360 */
+/* 355 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -69428,24 +69234,24 @@ if (false) {
 }
 
 /***/ }),
-/* 361 */
+/* 356 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
 /* styles */
-__webpack_require__(362)
+__webpack_require__(357)
 
 var Component = __webpack_require__(4)(
   /* script */
-  __webpack_require__(364),
+  __webpack_require__(359),
   /* template */
-  __webpack_require__(365),
+  __webpack_require__(360),
   /* scopeId */
   "data-v-611507d6",
   /* cssModules */
   null
 )
-Component.options.__file = "/Applications/XAMPP/xamppfiles/htdocs/pogtank/resources/assets/js/views/admin/layouts/SideBar.vue"
+Component.options.__file = "C:\\xampp\\htdocs\\pogtank\\resources\\assets\\js\\views\\admin\\layouts\\SideBar.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] SideBar.vue: functional components are not supported with templates, they should use render functions.")}
 
@@ -69466,13 +69272,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 362 */
+/* 357 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(363);
+var content = __webpack_require__(358);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -69492,7 +69298,7 @@ if(false) {
 }
 
 /***/ }),
-/* 363 */
+/* 358 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(10)(false);
@@ -69506,7 +69312,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 
 /***/ }),
-/* 364 */
+/* 359 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -69627,7 +69433,7 @@ var routes = {
 });
 
 /***/ }),
-/* 365 */
+/* 360 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -69764,13 +69570,13 @@ if (false) {
 }
 
 /***/ }),
-/* 366 */
+/* 361 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 367 */
+/* 362 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

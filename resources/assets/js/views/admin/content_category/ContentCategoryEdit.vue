@@ -91,7 +91,6 @@
                 },
                 category_id: this.$route.params.id,
                 parentCategoryList: [],
-                showLoading:''
             }
         },
         watch:{
@@ -100,47 +99,48 @@
             }
         },
         created() {
-            this.showLoading=true;
+            this.$store.commit('loading');
             Promise.all([
                 this.getCategory(),
                 this.getParentCategories()
             ]).then(()=>{
+                this.$store.commit('stopLoading');
             });
 
         },
         mounted(){
         },
-        // beforeRouteUpdate (to, from, next) {
-        //     // react to route changes...
-        //     // don't forget to call next()
-        //     console.log('BeforeRouteUpdate EditPage To:',to);
-        //     this.form.id = to.params.id;
-        //     this.getCategory();
-        //     next();
-        // },
         methods: {
             getCategory() {
-                contentCategoryService.getCategory(this.category_id)
-                    .then(result => {
-                        this.form.id = result.id;
-                        this.form.title =result.title;
-                        this.form.parent = result.parent;
-                        if(result.parent === null){
-                            this.form.parent = {
-                                id:0,
-                                title:'หมวดหมู่หลัก'
-                            }
-                        }else{this.form.parent = result.parent}
-                    }).catch(err => {
-                    console.log(err)
-                })
+                return new Promise((resolve,reject)=>{
+                    contentCategoryService.getCategory(this.category_id)
+                        .then(result => {
+                            this.form.id = result.id;
+                            this.form.title =result.title;
+                            this.form.parent = result.parent;
+                            if(result.parent === null){
+                                this.form.parent = {
+                                    id:0,
+                                    title:'หมวดหมู่หลัก'
+                                }
+                            }else{this.form.parent = result.parent}
+                            resolve();
+                        }).catch(err => {
+                        console.log(err);
+                        reject(err);
+                    })
+                });
             },
             getParentCategories() {
-                contentCategoryService.getAllCategoriesWithoutID(this.category_id)
-                    .then(result => {
-                        this.parentCategoryList = result;
-                    }).catch(err => {
-                    console.log(err)
+                return new Promise((resolve,reject)=>{
+                    contentCategoryService.getAllCategoriesWithoutID(this.category_id)
+                        .then(result => {
+                            this.parentCategoryList = result;
+                            resolve();
+                        }).catch(err => {
+                        console.log(err);
+                        reject(err);
+                    })
                 })
             },
             updateCategory(form) {

@@ -1,15 +1,9 @@
 <template>
     <div>
-        <div class="col-xs-12">
-            <router-link :to="{name:'content_category_edit',params:{id:30}}"  class="btn btn-default">A</router-link>
-            <router-link :to="{name:'content_category_edit',params:{id:33}}" class="btn btn-default">B</router-link>
-            <router-link to="/content_category/31"  class="btn btn-default">AA</router-link>
-            <a @click="goToPage(44)" class="btn btn-default">BB</a>
-        </div>
-        <!--<keep-alive include="ContentCategoryList">-->
+        <keep-alive include="ContentCategoryList">
             <router-view >
             </router-view>
-        <!--</keep-alive>-->
+        </keep-alive>
     </div>
 </template>
 <script>

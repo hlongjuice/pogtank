@@ -84,14 +84,15 @@
                         this.categories = result;
                         this.$store.commit('stopLoading');
                     }).catch(err => {
-                    console.log(err)
+                    console.log(err);
+                    alert(err);
+                    this.$store.commit('stopLoading');
                 })
             },
             //Edit Category
             editCategory(item) {
                 this.$router.push({
-                    name: 'content_category_edit',
-                    params: {id:item.id}
+                    path: `edit/${item.id}`
                 });
             },
             //Delete Categories
@@ -99,6 +100,7 @@
                 this.$dialog.confirm("<p>การลบหมวดหมู่หลัก จะลบหมวดหมู่รองไปด้วย</p> <br>" +
                     "<p>ยืนยันการลบ</p>")
                     .then(() => {
+                        this.$store.commit('loading');
                         contentCategoryService.deleteCategories(event)
                             .then(result => {
                                 this.getCategories();
