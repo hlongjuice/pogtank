@@ -73,7 +73,7 @@ export class ContentCategoryService {
     //Update Category
     updateCategory(dataInput) {
         dataInput._method='PUT';
-        let url = this.url + '/admin/content_category/update_category';
+        let url = this.url + '/admin/content_categories/update_category';
         return new Promise((resolve, reject) => {
             axios.post(url,dataInput )
                 .then(result => {

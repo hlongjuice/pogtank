@@ -305,14 +305,18 @@ Route::prefix('admin')->middleware('auth')
         //endregion
         //region -- Contents
         Route::prefix('contents')->group(function(){
-            // -- Add Content
+            // -- --Add Content
             Route::post('add_content','Admin\Content\ContentController@addContent');
-            // -- Delete Content
-            Route::delete('delete_content','Admin\Content\ContentController@deleteContent');
-            // -- Update Content
+            // -- --Get All Contents
+            Route::get('get_all_contents','Admin\Content\ContentController@getAllContents');
+            // -- --Get Content
+            Route::get('get_content/{id}','Admin\Content\ContentController@getContent');
+            // -- --Update Content
             Route::put('update_content','Admin\Content\ContentController@updateContent');
-            // -- Upload Image
+            // -- --Upload Image
             Route::post('upload_image','Admin\Content\ContentImageController@uploadImage');
+            // -- --Delete Content
+            Route::delete('delete_contents','Admin\Content\ContentController@deleteContent');
         });
         //endregion
         //region -- Content Categories
@@ -327,6 +331,8 @@ Route::prefix('admin')->middleware('auth')
             Route::get('get_all_categories_with_root','Admin\Content\Category\CategoryController@getAllCategoriesWithRoot');
             // -- -- Get All Categories without ID
             Route::get('get_all_categories_without_id/{id}','Admin\Content\Category\CategoryController@getAllCategoriesWithoutID');
+            // -- -- Update Category
+            Route::put('update_category','Admin\Content\Category\CategoryController@updateCategory');
             // -- -- Delete Categories
             Route::delete('delete_categories','Admin\Content\Category\CategoryController@deleteCategories');
         });

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Content\Category;
 
+use App\Models\Admin\Content\Content;
 use App\Models\Admin\Content\ContentCategory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -83,6 +84,19 @@ class CategoryController extends Controller
         $filteredCategories = $flatCategories->where('id', '!=', $id)->values();
         return $filteredCategories;
 //        return $flatCategories;
+    }
+
+    //Update Category
+    public function updateCategory(Request $request){
+        $result=DB::transaction(function() use ($request){
+            $oldCategory = ContentCategory::where('id',$request->input('id'))->first();
+            if($oldCategory->parent_id!=$request->input('parent')['id']){
+                $oldCategory->parent_id = $request->input('parent')['id'];
+            }
+            $oldCategory->title = $request->input('title');
+            $oldCategory->save();
+        });
+        return $result;
     }
 
     //Delete Category

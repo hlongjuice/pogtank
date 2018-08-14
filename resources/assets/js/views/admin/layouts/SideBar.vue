@@ -59,11 +59,11 @@
                     <ul class="sub-menu" style="">
                         <!--Material Types-->
                         <li class="">
-                            <a href="">- หมวดหมู่วัสดุ/อุปกรณ์</a>
+                            <a @click="goToPage(routes.material_item)">- หมวดหมู่วัสดุ/อุปกรณ์</a>
                         </li>
                         <!--Material Item-->
                         <li class="">
-                            <a href="">- วัสดุ/อุปกรณ์</a>
+                            <a @click="goToPage(routes.material_type)">- วัสดุ/อุปกรณ์</a>
                         </li>
                     </ul>
                 </li>
@@ -92,6 +92,8 @@
 
     let webUrl = new WebUrl();
     let routes = {
+        material_item:{url:'/admin/materials/items',active:false},
+        material_type:{url:'/admin/materials/types',active:false},
         project_order: {url: '/admin/project_order', active: false},
         porlor4_part:{url:'/admin/porlor_4_parts',active: false},
         product:{url:'/admin/product',active:false}

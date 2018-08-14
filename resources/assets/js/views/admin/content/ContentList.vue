@@ -12,7 +12,7 @@
                         :columns="['ลำดับ','รายการ','แก้ไข']"
                         :columnWidths="[10,40,30]"
                         :hasCheckBox="true"
-                        :items="tableItems"
+                        :items="content.data"
                         itemRowClass="text-center"
                         @deleteItems="deleteItems"
                 >
@@ -23,11 +23,12 @@
                         </div>
                     </template>
                     <template slot="itemColumn" slot-scope="props">
-                        <td>{{props.index +1 }}</td>
-                        <td>{{props.item.name}}</td>
+                        <td>{{(props.index +1)+(content.per_page * (content.current_page-1)) }}</td>
+                        <td>{{props.item.title}}</td>
                         <td><a class="btn btn-warning" @click="editContent(props.item)">แก้ไข</a></td>
                     </template>
                 </app-table>
+                <pagination :data="content" @pagination-change-page="getContents"></pagination>
             </div>
         </div>
     </div>
@@ -41,43 +42,61 @@
         name: "ContentList",
         data() {
             return {
-                tableItems: [
-                    {id:1,name:'A'},
-                    {id:2,name:'B'},
-                    {id:3,name:'C'}],
+                content:{
+                    data:[],
+                    current_page:1
+                }
             }
         },
         computed: {
-            refreshData() {
-                console.log('Data Refresh', this.$store.getters.refreshParentStatus);
-                return this.$store.getters.refreshParentStatus;
-            }
         },
         created() {
+            this.$store.commit('loading');
+            this.getContents();
         },
         mounted() {
         },
-        beforeRouteUpdate (to, from, next) {
-           console.log('Before Route Update');
-        },
         activated() {
-
+            if (this.$store.getters.refreshParentStatus) {
+                this.getContents();
+            }
         },
         deactivated() {
             console.log('deactivated')
         },
         methods: {
+
+            getContents(page=1){
+                contentService.getAllContents(page)
+                    .then(result=>{
+                        console.log('Content Result',result);
+                        this.content=result;
+                        console.log('Content :',result);
+                        this.$store.commit('stopLoading');
+                    }).catch(err=>{
+                        console.log(err)
+                })
+            },
             editContent(item){
-              this.$router.push({name:'content_edit',params:{id:item.id}})
+              this.$router.push({path:`edit/${item.id}`});
             },
             deleteItems(params) {
-                //params คือ checked Item from Table Component
-                console.log('Delete Items Methods Data', params.checkedItems);
-                //remove item ที่เลือก selected items
-                this.tableItems = this.tableItems.filter(item => {
-                        return !params.checkedItems.find(checkedItem => checkedItem === item)
-                    }
-                )
+                console.log('Selected Items are' ,params);
+                let item_names = params.checkedItems.map(item=>{
+                    return item.title;
+                }).join("<br />");
+                this.$dialog.confirm("<h3>ยืนยันการลบ</h3>" +
+                    "<h4>รายการ</h5>" +
+                    "<p class='text-danger'>"+item_names+"</p>")
+                    .then(() => {
+                        this.$store.commit('loading');
+                        contentService.deleteContents(params)
+                            .then(result=>{
+                                this.getContents();
+                                console.log('Deleted Contents')
+                            }).catch(err=>{console.log(err)})
+                    }).catch(() => {
+                })
             }
         }
     }

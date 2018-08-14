@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- Use Vue Form Validate-->
-        <form @submit.prevent="addCategory('form',$event)"
+        <form @submit.prevent="updateCategory('form',$event)"
               data-vv-scope="form"
         >
             <!-- Portlet -->
@@ -62,7 +62,7 @@
                                         </multiselect>
                                         <input v-validate="'required'"
                                                name="parent_categories" hidden
-                                               v-model="form.parentCategory">
+                                               v-model="form.parent">
                                     </div>
                                     <span v-show="errors.has('form.parent_categories')"
                                           class="text-error text-danger">กรุณากรอกข้อมูล</span>
@@ -147,7 +147,16 @@
                 this.$validator.validateAll(form).then(result => {
                     //If All Input Validate
                     if (result) {
+                        this.$store.commit('loading');
                         contentCategoryService.updateCategory(this.form)
+                            .then(result=>{
+                                this.$store.commit('stopLoading');
+                                this.$store.commit('refreshParent');
+                                this.$router.push({path:'/content_category/'})
+                            }).catch(err=>{
+                                alert('ไม่สามารถเพิ่มข้อมูลได้');
+                                console.log(err)
+                            })
                     }
                 })
             },

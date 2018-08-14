@@ -23,7 +23,7 @@ const routes = [
         children: [
             {path: '', name: 'content', component: ContentList},
             {path: 'create', name: 'content_create', component: ContentCreate, meta: {breadcrumb: 'สร้างใหม่'}},
-            {path: ':id/edit', name: 'content_edit', component: ContentEdit}
+            {path: 'edit/:id', name: 'content_edit', component: ContentEdit}
         ]
     },
     //endregion
@@ -40,7 +40,7 @@ const routes = [
             },
             {
                 path: 'edit/:id', name: 'content_category_edit', component: ContentCategoryEdit,
-                meta: {breadcrumb: routeParams => `แก้ไข - ${routeParams.id}`}
+                meta: {breadcrumb: routeParams => `แก้ไข - ${routeParams.title}`}
             }
         ]
     },

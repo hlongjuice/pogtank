@@ -23,14 +23,7 @@
         mounted(){
           console.log('Mounted Master Page')
         },
-        // beforeRouteUpdate (to, from, next) {
-        //     console.log('Master Page');
-        //     next();
-        // },
         methods:{
-            goToPage(page){
-                this.$router.push({name:'content_category_edit',params:{id:page}})
-            }
         }
     }
 </script>

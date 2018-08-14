@@ -8,4 +8,8 @@ class Content extends Model
 {
     protected $table='contents';
     protected $guarded=[];
+
+    public function category(){
+        return $this->belongsTo('App\Models\Admin\Content\ContentCategory','category_id');
+    }
 }

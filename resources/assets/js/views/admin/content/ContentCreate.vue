@@ -25,8 +25,9 @@
                             </div>
                             <!--Save Button-->
                             <div class="col-md-3 pull-right text-right">
-                                <a @click="saveContent"
-                                   class="margin-top-10 margin-bottom-10 btn btn-success btn-block">บันทึก</a>
+                                <button type="submit"
+                                        class="margin-top-10 margin-bottom-10 btn btn-success btn-block">บันทึก
+                                </button>
                             </div>
                         </div>
                         <!--Form-->
@@ -68,8 +69,8 @@
                                         <label>
                                             <input
                                                     v-validate="'required'"
-                                                   name="category" hidden
-                                                   v-model="form.category">
+                                                    name="category" hidden
+                                                    v-model="form.category">
                                         </label>
                                     </div>
                                     <span v-show="errors.has('form.category')"
@@ -81,7 +82,7 @@
                                 <div class="form-group">
                                     <label class="control-label"></label>
                                     <tiny-mce
-                                            v-model="form.details"
+                                            v-model="form.body"
                                             :init="tinyMceInit"
                                     ></tiny-mce>
                                 </div>
@@ -99,11 +100,25 @@
     import {tinyMceConfig} from "../../../configs/tinymce";
     import {ContentCategoryService} from "../../../services/content_category/content_category_service";
     import WebUrl from '../../../services/webUrl';
+    import {ContentService} from "../../../services/content/content_service";
 
     let webUrl = new WebUrl();
     let contentCategoryService = new ContentCategoryService();
+    let contentService = new ContentService();
     export default {
         name: "ContentCreate",
+        data() {
+            return {
+                form: {
+                    title: '',
+                    body: '',
+                    category: ''
+                },
+                categories: [],
+                tinyMceInit: tinyMceConfig
+            }
+        },
+        computed: {},
         created() {
             //กำหนด vuex state ไม่ใช้ refresh parent component
             this.$store.commit('notRefreshParent');
@@ -115,18 +130,6 @@
                 console.log(err)
             })
         },
-        data() {
-            return {
-                form: {
-                    title: '',
-                    details: '',
-                    category: ''
-                },
-                categories: [],
-                tinyMceInit: tinyMceConfig
-            }
-        },
-        computed: {},
         methods: {
             viewChange(event) {
                 console.log('View Change', event)
@@ -135,19 +138,28 @@
                 this.$validator.validateAll(form).then(result => {
                     //If All Input Validate
                     if (result) {
-
+                        this.$store.commit('loading');
+                        contentService.addContent(this.form)
+                            .then(result => {
+                                this.$store.commit('refreshParent');
+                                this.$router.push({path:'/content/'});
+                            }).catch(err => {
+                                console.log(err)
+                            }
+                        )
                     }
                 })
             },
             backToPreviousPage() {
                 //ถ้ามีข้อความอยู่ จะถามก่อนที่จะทำการย้อนกลับ
-                if (this.form.title.length > 0 || this.form.details.length > 0) {
+                if (this.form.title.length > 0 || this.form.body.length > 0) {
                     this.$dialog.confirm("เอกสารยังไม่ได้รับการบันทึก ยืนยันการยกเลิก")
                         .then(() => {
-                            this.$router.push({name:'content'});
-                        }).catch(() => {})
+                            this.$router.push({name: 'content'});
+                        }).catch(() => {
+                    })
                 } else {
-                    this.$router.push({name:'content'});
+                    this.$router.push({name: 'content'});
                 }
             },
             saveContent() {

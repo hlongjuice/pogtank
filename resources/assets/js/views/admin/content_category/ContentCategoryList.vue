@@ -69,12 +69,6 @@
         deactivated() {
 
         },
-        // beforeRouteUpdate (to, from, next) {
-        //     // react to route changes...
-        //     // don't forget to call next()
-        //     console.log('List Page');
-        //     next();
-        // },
         methods: {
             //Get All Categories
             getCategories() {
@@ -97,8 +91,8 @@
             },
             //Delete Categories
             deleteCategories(event) {
-                this.$dialog.confirm("<p>การลบหมวดหมู่หลัก จะลบหมวดหมู่รองไปด้วย</p> <br>" +
-                    "<p>ยืนยันการลบ</p>")
+                this.$dialog.confirm("<h3>ยืนยันการลบ</h3>" +
+                    "<p class='text-danger'>*** การลบหมวดหมู่หลัก จะลบหมวดหมู่รองไปด้วย</p>")
                     .then(() => {
                         this.$store.commit('loading');
                         contentCategoryService.deleteCategories(event)

@@ -19,10 +19,36 @@ export class ContentService {
         })
     }
 
+    // Get All Contents
+    getAllContents(page) {
+        let url = this.url + '/admin/contents/get_all_contents?page='+page;
+        return new Promise((resolve, reject) => {
+            axios.get(url)
+                .then(result => {
+                    resolve(result.data)
+                }).catch(err => {
+                reject(err)
+            })
+        })
+    }
+
+    // Get Single Content
+    getContent(id) {
+        let url = this.url + '/admin/contents/get_content/'+id;
+        return new Promise((resolve, reject) => {
+            axios.get(url)
+                .then(result => {
+                    resolve(result.data)
+                }).catch(err => {
+                reject(err)
+            })
+        })
+    }
+
     //Update Content
     updateContent(dataInput) {
         dataInput._method = 'PUT';
-        let url = this.url + '/admin/update_content';
+        let url = this.url + '/admin/contents/update_content';
         return new Promise((resolve, reject) => {
             axios.post(url, dataInput)
                 .then(result => {
@@ -34,11 +60,9 @@ export class ContentService {
     }
 
     //Delete Content
-    deleteContent(content_id) {
-        let dataInput ={
-          _method : 'DELETE'
-        };
-        let url = this.url + '/admin/delete_content/'+content_id;
+    deleteContents(dataInput) {
+        dataInput._method ='DELETE';
+        let url = this.url + '/admin/contents/delete_contents';
         return new Promise((resolve, reject) => {
             axios.post(url, dataInput)
                 .then(result => {
