@@ -49,7 +49,7 @@
     let contentService = new ContentService();
     let contentCategoryService = new ContentCategoryService();
     export default {
-        name: "ContentList",
+        name: "PortfolioList",
         data() {
             return {
                 content: {

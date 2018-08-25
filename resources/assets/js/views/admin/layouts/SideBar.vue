@@ -81,6 +81,13 @@
                         <span class="title">หมวดหมู่เนื้อหา</span>
                     </a>
                 </router-link>
+                <!--Portfolio-->
+                <router-link tag="li" :to="{name:'portfolio'}">
+                    <a href="javascript:;">
+                        <i class="fab fa-product-hunt"></i>
+                        <span class="title">ผลงาน</span>
+                    </a>
+                </router-link>
             </ul>
             <!-- END SIDEBAR MENU -->
         </div>

@@ -11,6 +11,8 @@ import ContentCategory from './views/admin/content_category/ContentCategory';
 import ContentCategoryCreate from './views/admin/content_category/ContentCategoryCreate';
 import ContentCategoryList from './views/admin/content_category/ContentCategoryList';
 import ContentCategoryEdit from './views/admin/content_category/ContentCategoryEdit';
+//Portfolio
+import Portfolio from './views/admin/portfolio/Portfolio';
 
 
 // window.VueRouter = VueRouter;
@@ -45,6 +47,10 @@ const routes = [
         ]
     },
     //endregion
+    //Portfolio
+    {
+        path:'/portfolio',name:'portfolio',component:Portfolio
+    }
     // meta: {breadcrumb :'แก้ไขหมวดหมู่' }}
 ];
 

@@ -33,8 +33,8 @@ export class ContentCategoryService {
     //endregion
 
     // Get All Categories
-    getAllCategories() {
-        let url = this.url + '/admin/content_categories/get_all_categories';
+    getAllCategories(parent = 0) {
+        let url = this.url + '/admin/content_categories/get_all_categories/'+parent;
         return new Promise((resolve, reject) => {
             axios.get(url)
                 .then(result => {
@@ -45,8 +45,20 @@ export class ContentCategoryService {
         })
     }
     // Get All Categories with Root
-    getAllCategoriesWithRoot() {
-        let url = this.url + '/admin/content_categories/get_all_categories_with_root';
+    getAllCategoriesWithRoot(parent=0) {
+        let url = this.url + '/admin/content_categories/get_all_categories_with_root/'+parent;
+        return new Promise((resolve, reject) => {
+            axios.get(url)
+                .then(result => {
+                    resolve(result.data)
+                }).catch(err => {
+                reject(err)
+            })
+        })
+    }
+    // Get All Categories with Root
+    getAllCategoriesWithSelectAll(parent=0) {
+        let url = this.url + '/admin/content_categories/get_all_categories_with_select_all/'+parent;
         return new Promise((resolve, reject) => {
             axios.get(url)
                 .then(result => {
@@ -58,8 +70,8 @@ export class ContentCategoryService {
     }
 
     // Get All Categories Without ID
-    getAllCategoriesWithoutID(id) {
-        let url = this.url + '/admin/content_categories/get_all_categories_without_id/'+id;
+    getAllCategoriesWithoutID(id,parent=0) {
+        let url = this.url + '/admin/content_categories/get_all_categories_without_id/'+parent+'/'+id;
         return new Promise((resolve, reject) => {
             axios.get(url)
                 .then(result => {

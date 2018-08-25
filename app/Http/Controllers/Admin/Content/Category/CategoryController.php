@@ -37,11 +37,14 @@ class CategoryController extends Controller
     }
 
     //Get All Category
-    public function getAllCategories()
+    public function getAllCategories($parent)
     {
         //Get Category แบบ nested Tree เพื่อจะนำไป Recursive ใส่ '-' ไว้ ด้านหน้า title ตามลำดับ LV
-        $categories = ContentCategory::withDepth()->with('descendants')
-            ->get()->toTree();
+        $categories = ContentCategory::withDepth()->with('descendants');
+        if ($parent > 0) {
+            $categories->where('id', $parent);
+        }
+        $categories=$categories->get()->toTree();
         $flatCategories = collect([]);
 
         //Recursive Set '-'
@@ -63,9 +66,9 @@ class CategoryController extends Controller
     }
 
     //Get All Categories with Parent Lv 0 หมวดหมู่หลัก
-    public function getAllCategoriesWithRoot()
+    public function getAllCategoriesWithRoot($parent)
     {
-        $flatCategories = $this->getAllCategories();
+        $flatCategories = $this->getAllCategories($parent);
         $flatCategories->prepend([
             'id' => 0,
             'title' => 'หมวดหมู่หลัก'
@@ -74,23 +77,36 @@ class CategoryController extends Controller
     }
 
     //Get All Categories without id
-    public function getAllCategoriesWithoutID($id)
+    public function getAllCategoriesWithoutID($parent,$id)
     {
-        $flatCategories = $this->getAllCategories();
+        $flatCategories = $this->getAllCategories($parent);
         $flatCategories->prepend([
             'id' => 0,
             'title' => 'หมวดหมู่หลัก'
         ]);
-        $filteredCategories = $flatCategories->where('id', '!=', $id)->values();
+        $descendantAndSelfIDs = ContentCategory::whereDescendantOrSelf($id)->pluck('id');
+//        dd($descendantAndSelfIDs);
+        $filteredCategories = $flatCategories->whereNotIn('id', $descendantAndSelfIDs)->values();
         return $filteredCategories;
-//        return $flatCategories;
+    }
+
+    //Get All Category with Select All Root
+    public function getAllCategoriesWithSelectAll($parent)
+    {
+        $flatCategories = $this->getAllCategories($parent);
+        $flatCategories->prepend([
+            'id' => 0,
+            'title' => 'หมวดหมู่ทั้งหมด'
+        ]);
+        return $flatCategories;
     }
 
     //Update Category
-    public function updateCategory(Request $request){
-        $result=DB::transaction(function() use ($request){
-            $oldCategory = ContentCategory::where('id',$request->input('id'))->first();
-            if($oldCategory->parent_id!=$request->input('parent')['id']){
+    public function updateCategory(Request $request)
+    {
+        $result = DB::transaction(function () use ($request) {
+            $oldCategory = ContentCategory::where('id', $request->input('id'))->first();
+            if ($oldCategory->parent_id != $request->input('parent')['id']) {
                 $oldCategory->parent_id = $request->input('parent')['id'];
             }
             $oldCategory->title = $request->input('title');

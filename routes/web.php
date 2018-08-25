@@ -308,7 +308,7 @@ Route::prefix('admin')->middleware('auth')
             // -- --Add Content
             Route::post('add_content','Admin\Content\ContentController@addContent');
             // -- --Get All Contents
-            Route::get('get_all_contents','Admin\Content\ContentController@getAllContents');
+            Route::post('{parent_category_id}/get_all_contents','Admin\Content\ContentController@getAllContents');
             // -- --Get Content
             Route::get('get_content/{id}','Admin\Content\ContentController@getContent');
             // -- --Update Content
@@ -317,6 +317,13 @@ Route::prefix('admin')->middleware('auth')
             Route::post('upload_image','Admin\Content\ContentImageController@uploadImage');
             // -- --Delete Content
             Route::delete('delete_contents','Admin\Content\ContentController@deleteContent');
+            // -- -- Search
+            Route::prefix('search')->group(function(){
+                // -- -- --Search By Category
+                Route::get('by_category/{id}','Admin\Content\ContentSearchController@searchByCategory');
+                // -- -- --Search By Text
+                Route::post('by_text','Admin\Content\ContentSearchController@searchByText');
+            });
         });
         //endregion
         //region -- Content Categories
@@ -326,11 +333,13 @@ Route::prefix('admin')->middleware('auth')
             // -- -- Get Single Category
             Route::get('get_category/{id}','Admin\Content\Category\CategoryController@getCategory');
             // -- -- Get All Categories
-            Route::get('get_all_categories','Admin\Content\Category\CategoryController@getAllCategories');
+            Route::get('get_all_categories/{parent_id}','Admin\Content\Category\CategoryController@getAllCategories');
             // -- -- Get All Categories with Root
-            Route::get('get_all_categories_with_root','Admin\Content\Category\CategoryController@getAllCategoriesWithRoot');
+            Route::get('get_all_categories_with_root/{parent_id}','Admin\Content\Category\CategoryController@getAllCategoriesWithRoot');
             // -- -- Get All Categories without ID
-            Route::get('get_all_categories_without_id/{id}','Admin\Content\Category\CategoryController@getAllCategoriesWithoutID');
+            Route::get('get_all_categories_without_id/{parent_id}/{id}','Admin\Content\Category\CategoryController@getAllCategoriesWithoutID');
+            // -- -- Get All Category With Select All
+            Route::get('get_all_categories_with_select_all/{parent_id}','Admin\Content\Category\CategoryController@getAllCategoriesWithSelectAll');
             // -- -- Update Category
             Route::put('update_category','Admin\Content\Category\CategoryController@updateCategory');
             // -- -- Delete Categories
