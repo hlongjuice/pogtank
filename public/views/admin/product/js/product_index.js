@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 375);
+/******/ 	return __webpack_require__(__webpack_require__.s = 395);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -1620,7 +1620,7 @@ module.exports = function spread(callback) {
 
 /***/ }),
 
-/***/ 37:
+/***/ 38:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1708,20 +1708,20 @@ var ProductService = function () {
 
 /***/ }),
 
-/***/ 375:
+/***/ 395:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(376);
+module.exports = __webpack_require__(396);
 
 
 /***/ }),
 
-/***/ 376:
+/***/ 396:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_product_product_service__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_product_product_service__ = __webpack_require__(38);
 
 
 var productService = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_product_product_service__["a" /* default */]();

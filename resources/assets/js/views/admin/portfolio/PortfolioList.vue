@@ -25,7 +25,7 @@
                     <!--Custom Button-->
                     <template slot="customTopBtn">
                         <div class="col-md-6">
-                            <router-link :to="{name:'content_create'}" class="btn btn-primary">สร้างรายการใหม่
+                            <router-link :to="{name:'portfolio_create'}" class="btn btn-primary">สร้างรายการใหม่
                             </router-link>
                         </div>
                     </template>
@@ -109,7 +109,7 @@
 
             },
             editContent(item) {
-                this.$router.push({path: `/content/edit/${item.id}`});
+                this.$router.push({path: `/portfolio/edit/${item.id}`});
             },
             deleteItems(params) {
                 console.log('Selected Items are', params);

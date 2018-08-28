@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 406);
+/******/ 	return __webpack_require__(__webpack_require__.s = 426);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -106,7 +106,7 @@ var WebUrl = function () {
 
 /***/ }),
 
-/***/ 40:
+/***/ 41:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -185,21 +185,21 @@ var Porlor4Part = function () {
 
 /***/ }),
 
-/***/ 406:
+/***/ 426:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(407);
+module.exports = __webpack_require__(427);
 
 
 /***/ }),
 
-/***/ 407:
+/***/ 427:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_part_service__ = __webpack_require__(40);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__porlor_4_part_add_new_part_modal__ = __webpack_require__(408);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_part_service__ = __webpack_require__(41);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__porlor_4_part_add_new_part_modal__ = __webpack_require__(428);
 
 
 var porlor4PartService = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_part_service__["a" /* default */]();
@@ -253,12 +253,12 @@ new Vue({
 
 /***/ }),
 
-/***/ 408:
+/***/ 428:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AddNewPartModal; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_part_service__ = __webpack_require__(40);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_part_service__ = __webpack_require__(41);
 
 var porlor4PartService = new __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_part_service__["a" /* default */]();
 var AddNewPartModal = {

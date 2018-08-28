@@ -123,7 +123,7 @@
             //กำหนด vuex state ไม่ใช้ refresh parent component
             this.$store.commit('notRefreshParent');
             //Get Categories
-            contentCategoryService.getAllCategories()
+            contentCategoryService.getAllCategories('Text')
                 .then(result => {
                     this.categories = result;
                 }).catch(err => {
@@ -142,7 +142,7 @@
                         contentService.addContent(this.form)
                             .then(result => {
                                 this.$store.commit('refreshParent');
-                                this.$router.push({path:'/content/'});
+                                this.$router.push({name:'portfolio'});
                             }).catch(err => {
                                 console.log(err)
                             }
@@ -155,18 +155,18 @@
                 if (this.form.title.length > 0 || this.form.body.length > 0) {
                     this.$dialog.confirm("เอกสารยังไม่ได้รับการบันทึก ยืนยันการยกเลิก")
                         .then(() => {
-                            this.$router.push({name: 'content'});
+                            this.$router.push({name: 'portfolio'});
                         }).catch(() => {
                     })
                 } else {
-                    this.$router.push({name: 'content'});
+                    this.$router.push({name: 'portfolio'});
                 }
             },
             saveContent() {
                 //ทำการ refresh component เพราะมีการ save data ใหม่
                 this.$store.commit('refreshParent');
                 //Route back to Content Page
-                this.$router.push({name: 'content'});
+                this.$router.push({name: 'portfolio'});
             },
             tinyChange(event) {
                 console.log('exeCommand :', event);

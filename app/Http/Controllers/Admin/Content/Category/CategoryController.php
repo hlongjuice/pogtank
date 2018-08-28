@@ -37,12 +37,15 @@ class CategoryController extends Controller
     }
 
     //Get All Category
-    public function getAllCategories($parent)
+    public function getAllCategories($parentTitle)
     {
         //Get Category แบบ nested Tree เพื่อจะนำไป Recursive ใส่ '-' ไว้ ด้านหน้า title ตามลำดับ LV
         $categories = ContentCategory::withDepth()->with('descendants');
-        if ($parent > 0) {
-            $categories->where('id', $parent);
+//        if ($parent > 0) {
+        if($parentTitle !=0 && $parentTitle != ''){
+            dd('Yo!');
+            $parent = ContentCategory::where('title',$parentTitle)->first();
+            $categories->whereDescendantOf($parent->id);
         }
         $categories=$categories->get()->toTree();
         $flatCategories = collect([]);

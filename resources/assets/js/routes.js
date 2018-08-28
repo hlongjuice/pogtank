@@ -7,19 +7,22 @@ import ContentList from './views/admin/content/ContentList';
 import ContentCreate from './views/admin/content/ContentCreate.vue';
 import ContentEdit from './views/admin/content/ContentEdit';
 //Content Category
-import ContentCategory from './views/admin/content_category/ContentCategory';
-import ContentCategoryCreate from './views/admin/content_category/ContentCategoryCreate';
-import ContentCategoryList from './views/admin/content_category/ContentCategoryList';
-import ContentCategoryEdit from './views/admin/content_category/ContentCategoryEdit';
+import ContentCategory from './views/admin/content/content_category/ContentCategory';
+import ContentCategoryCreate from './views/admin/content/content_category/ContentCategoryCreate';
+import ContentCategoryList from './views/admin/content/content_category/ContentCategoryList';
+import ContentCategoryEdit from './views/admin/content/content_category/ContentCategoryEdit';
 //Portfolio
 import Portfolio from './views/admin/portfolio/Portfolio';
+import PortfolioList from './views/admin/portfolio/PortfolioList';
+import PortfolioCreate from './views/admin/portfolio/PortfolioCreate';
+import PortfolioEdit from './views/admin/portfolio/PortfolioEdit';
 
 
 // window.VueRouter = VueRouter;
 let pathName = window.location.pathname;
 let webUrl = new WebUrl();
 const routes = [
-    //region Content
+    //Content
     {
         path: '/content', component: Content, meta: {breadcrumb: 'เนื้อหา'},
         children: [
@@ -28,8 +31,7 @@ const routes = [
             {path: 'edit/:id', name: 'content_edit', component: ContentEdit}
         ]
     },
-    //endregion
-    //region Content Category
+    //Content Category
     {
         path: '/content_category', component: ContentCategory, meta: {breadcrumb: 'หมวดหมู่เนื้อหา'},
         children: [
@@ -46,10 +48,24 @@ const routes = [
             }
         ]
     },
-    //endregion
     //Portfolio
     {
-        path:'/portfolio',name:'portfolio',component:Portfolio
+        path:'/portfolio',component:Portfolio,meta:{breadcrumb:'ผลงาน'},
+        children: [
+            {path: '', name: 'portfolio', component: PortfolioList},
+            // -- Create
+            {
+                path: 'create',
+                name: 'portfolio_create',
+                component: PortfolioCreate,
+                meta: {breadcrumb: 'สร้างใหม่'}
+            },
+            // -- Edit
+            {
+                path: 'edit/:id', name: 'portfolio_edit', component: PortfolioEdit,
+                meta: {breadcrumb: routeParams => `แก้ไข - ${routeParams.id}`}
+            }
+        ]
     }
     // meta: {breadcrumb :'แก้ไขหมวดหมู่' }}
 ];

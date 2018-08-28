@@ -38,7 +38,7 @@
 </template>
 
 <script>
-    import {ContentCategoryService} from "../../../services/content_category/content_category_service";
+    import {ContentCategoryService} from "../../../../services/content_category/content_category_service";
 
     let contentCategoryService = new ContentCategoryService();
     export default {

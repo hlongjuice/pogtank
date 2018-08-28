@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 393);
+/******/ 	return __webpack_require__(__webpack_require__.s = 413);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -106,7 +106,7 @@ var WebUrl = function () {
 
 /***/ }),
 
-/***/ 38:
+/***/ 39:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -163,7 +163,7 @@ var Porlor4Service = function () {
 
 /***/ }),
 
-/***/ 39:
+/***/ 40:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -268,24 +268,103 @@ var Porlor4Service = function () {
 
 /***/ }),
 
-/***/ 393:
+/***/ 41:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__webUrl__ = __webpack_require__(2);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+
+var webUrl = new __WEBPACK_IMPORTED_MODULE_0__webUrl__["a" /* default */]();
+
+var Porlor4Part = function () {
+    function Porlor4Part() {
+        _classCallCheck(this, Porlor4Part);
+
+        this.url = webUrl.getUrl();
+        this._delete_method = {
+            _method: 'DELETE'
+        };
+        this._put_method = {
+            _method: 'PUT'
+        };
+    }
+    //Add New Part
+
+
+    _createClass(Porlor4Part, [{
+        key: 'addNewPart',
+        value: function addNewPart(dataInputs) {
+            var url = this.url + '/admin/porlor_4_parts/add_new_part';
+            return new Promise(function (resolve, reject) {
+                axios.post(url, dataInputs).then(function (result) {
+                    resolve(result.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
+        //Get All Parts
+
+    }, {
+        key: 'getAll',
+        value: function getAll() {
+            var url = this.url + '/admin/porlor_4_parts/get_all';
+            return new Promise(function (resolve, reject) {
+                axios.get(url).then(function (result) {
+                    resolve(result.data);
+                    console.log('Porlor 4 Part Service :', result.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
+        //Get Available Parts
+
+    }, {
+        key: 'getAvailableParts',
+        value: function getAvailableParts(project_order_id) {
+            var porlor_4_id = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+
+            var url = this.url + '/admin/porlor_4_parts/get_available_parts/' + project_order_id + '/porlor_4/' + porlor_4_id;
+            return new Promise(function (resolve, reject) {
+                axios.get(url).then(function (result) {
+                    resolve(result.data);
+                }).catch(function (err) {
+                    reject(err);
+                });
+            });
+        }
+    }]);
+
+    return Porlor4Part;
+}();
+
+/* harmony default export */ __webpack_exports__["a"] = (Porlor4Part);
+
+/***/ }),
+
+/***/ 413:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(394);
+module.exports = __webpack_require__(414);
 
 
 /***/ }),
 
-/***/ 394:
+/***/ 414:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_service__ = __webpack_require__(39);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_js_services_project_order_porlor_4_export_service__ = __webpack_require__(38);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__add_part_modal__ = __webpack_require__(395);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_service__ = __webpack_require__(40);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_js_services_project_order_porlor_4_export_service__ = __webpack_require__(39);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__add_part_modal__ = __webpack_require__(415);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__assets_js_services_webUrl__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__edit_part_modal__ = __webpack_require__(396);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__edit_part_modal__ = __webpack_require__(416);
 
 
 
@@ -407,13 +486,13 @@ new Vue({
 
 /***/ }),
 
-/***/ 395:
+/***/ 415:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AddNewPartModal; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_part_service__ = __webpack_require__(40);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_js_services_project_order_porlor_4_service__ = __webpack_require__(39);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_part_service__ = __webpack_require__(41);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_js_services_project_order_porlor_4_service__ = __webpack_require__(40);
 
 
 var porlor4Service = new __WEBPACK_IMPORTED_MODULE_1__assets_js_services_project_order_porlor_4_service__["a" /* default */]();
@@ -480,13 +559,13 @@ var AddNewPartModal = {
 
 /***/ }),
 
-/***/ 396:
+/***/ 416:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EditPartModal; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_part_service__ = __webpack_require__(40);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_js_services_project_order_porlor_4_service__ = __webpack_require__(39);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_part_service__ = __webpack_require__(41);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_js_services_project_order_porlor_4_service__ = __webpack_require__(40);
 
 
 var porlor4Service = new __WEBPACK_IMPORTED_MODULE_1__assets_js_services_project_order_porlor_4_service__["a" /* default */]();
@@ -554,85 +633,6 @@ var EditPartModal = {
         }
     }
 };
-
-/***/ }),
-
-/***/ 40:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__webUrl__ = __webpack_require__(2);
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-
-var webUrl = new __WEBPACK_IMPORTED_MODULE_0__webUrl__["a" /* default */]();
-
-var Porlor4Part = function () {
-    function Porlor4Part() {
-        _classCallCheck(this, Porlor4Part);
-
-        this.url = webUrl.getUrl();
-        this._delete_method = {
-            _method: 'DELETE'
-        };
-        this._put_method = {
-            _method: 'PUT'
-        };
-    }
-    //Add New Part
-
-
-    _createClass(Porlor4Part, [{
-        key: 'addNewPart',
-        value: function addNewPart(dataInputs) {
-            var url = this.url + '/admin/porlor_4_parts/add_new_part';
-            return new Promise(function (resolve, reject) {
-                axios.post(url, dataInputs).then(function (result) {
-                    resolve(result.data);
-                }).catch(function (err) {
-                    reject(err);
-                });
-            });
-        }
-        //Get All Parts
-
-    }, {
-        key: 'getAll',
-        value: function getAll() {
-            var url = this.url + '/admin/porlor_4_parts/get_all';
-            return new Promise(function (resolve, reject) {
-                axios.get(url).then(function (result) {
-                    resolve(result.data);
-                    console.log('Porlor 4 Part Service :', result.data);
-                }).catch(function (err) {
-                    reject(err);
-                });
-            });
-        }
-        //Get Available Parts
-
-    }, {
-        key: 'getAvailableParts',
-        value: function getAvailableParts(project_order_id) {
-            var porlor_4_id = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-
-            var url = this.url + '/admin/porlor_4_parts/get_available_parts/' + project_order_id + '/porlor_4/' + porlor_4_id;
-            return new Promise(function (resolve, reject) {
-                axios.get(url).then(function (result) {
-                    resolve(result.data);
-                }).catch(function (err) {
-                    reject(err);
-                });
-            });
-        }
-    }]);
-
-    return Porlor4Part;
-}();
-
-/* harmony default export */ __webpack_exports__["a"] = (Porlor4Part);
 
 /***/ })
 
