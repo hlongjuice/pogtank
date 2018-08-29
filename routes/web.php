@@ -314,16 +314,9 @@ Route::prefix('admin')->middleware('auth')
             // -- --Update Content
             Route::put('update_content','Admin\Content\ContentController@updateContent');
             // -- --Upload Image
-            Route::post('upload_image','Admin\Content\ContentImageController@uploadImage');
+            Route::post('upload_image_in_content','Admin\Content\ContentImageController@uploadImageInContent');
             // -- --Delete Content
             Route::delete('delete_contents','Admin\Content\ContentController@deleteContent');
-            // -- -- Search
-            Route::prefix('search')->group(function(){
-                // -- -- --Search By Category
-                Route::get('by_category/{id}','Admin\Content\ContentSearchController@searchByCategory');
-                // -- -- --Search By Text
-                Route::post('by_text','Admin\Content\ContentSearchController@searchByText');
-            });
         });
         //endregion
         //region -- Content Categories

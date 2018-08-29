@@ -17,10 +17,13 @@ class ContentController extends Controller
             'body' => $request->input('body'),
             'category_id' => $request->input('category')['id']
         ]);
+        if($request->hasFile('images')){
+            dd('Has File');
+        }
         return $result;
     }
 
-    //Get Content Per Page
+    //Get Content Per Page ใช้ในการ filter content ด้วย
     public function getAllContents(Request $request,$parent_category_title)
     {
         $contents = '';

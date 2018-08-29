@@ -75,7 +75,7 @@
         ,
         created() {
             this.$store.commit('loading');
-            contentCategoryService.getAllCategoriesWithSelectAll()
+            contentCategoryService.getAllCategoriesWithSelectAll('Portfolio')
                 .then(result => {
                     this.categories = result;
                     this.getContents();

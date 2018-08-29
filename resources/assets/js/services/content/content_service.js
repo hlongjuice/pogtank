@@ -50,33 +50,6 @@ export class ContentService {
         })
     }
 
-    // Search By Category
-    searchByCategory(category_id) {
-        let url = this.url + '/admin/contents/search/by_category/'+category_id;
-        return new Promise((resolve, reject) => {
-            axios.get(url)
-                .then(result => {
-                    resolve(result.data)
-                }).catch(err => {
-                reject(err)
-            })
-        })
-    }
-
-    // Search By Text
-    searchByText(dataInput) {
-        let url = this.url + '/admin/contents/search/by_text';
-        return new Promise((resolve, reject) => {
-            axios.post(url, dataInput)
-                .then(result => {
-                    resolve(result.data)
-                }).catch(err => {
-                reject(err)
-            })
-        })
-    }
-
-
     //Update Content
     updateContent(dataInput) {
         dataInput._method = 'PUT';

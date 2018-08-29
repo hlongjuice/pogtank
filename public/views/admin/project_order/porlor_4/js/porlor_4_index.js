@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 413);
+/******/ 	return __webpack_require__(__webpack_require__.s = 432);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -347,24 +347,24 @@ var Porlor4Part = function () {
 
 /***/ }),
 
-/***/ 413:
+/***/ 432:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(414);
+module.exports = __webpack_require__(433);
 
 
 /***/ }),
 
-/***/ 414:
+/***/ 433:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_project_order_porlor_4_service__ = __webpack_require__(40);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_js_services_project_order_porlor_4_export_service__ = __webpack_require__(39);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__add_part_modal__ = __webpack_require__(415);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__add_part_modal__ = __webpack_require__(434);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__assets_js_services_webUrl__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__edit_part_modal__ = __webpack_require__(416);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__edit_part_modal__ = __webpack_require__(435);
 
 
 
@@ -486,7 +486,7 @@ new Vue({
 
 /***/ }),
 
-/***/ 415:
+/***/ 434:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -559,7 +559,7 @@ var AddNewPartModal = {
 
 /***/ }),
 
-/***/ 416:
+/***/ 435:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

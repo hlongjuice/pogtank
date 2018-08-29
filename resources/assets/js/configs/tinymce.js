@@ -43,7 +43,7 @@ export const tinyMceConfig = {
         console.log('In side Image Upload Handler:',this);
         // formData.append('file', blobInfo.blob(), blobInfo.filename());
         formData.append('file', blobInfo.blob(), blobInfo.filename());
-        contentImageService.uploadImage(formData)
+        contentImageService.uploadImageInContent(formData)
             .then(result=>{
                 success(result.location)
             }).catch(err=>{console.log(err)})

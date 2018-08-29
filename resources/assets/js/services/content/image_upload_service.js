@@ -5,8 +5,8 @@ export class ContentImageService{
         this.webUrl = webUrl.getUrl();
     }
 
-    uploadImage(formData){
-        let url = this.webUrl+'/admin/contents/upload_image';
+    uploadImageInContent(formData){
+        let url = this.webUrl+'/admin/contents/upload_image_in_content';
         return new Promise((resolve,reject)=>{
             axios.post(url, formData)
                 .then(result => {

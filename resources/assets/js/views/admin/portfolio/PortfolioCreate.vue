@@ -87,6 +87,37 @@
                                     ></tiny-mce>
                                 </div>
                             </div>
+                            <!-- -- File Upload-->
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div v-if="form.images.length > 0" class="col-md-12">
+                                        <app-table
+                                                :columns="['ภาพตัวอย่าง','ชื่อภาพ']"
+                                                :columnWidths="[50,50]"
+                                                :hasCheckBox="true"
+                                                :items="form.images"
+                                                :checkedItemsInit="checkedImages"
+                                                itemRowClass="text-center"
+                                                @deleteItems="deleteImages"
+                                        >
+                                            <template slot="itemColumn" slot-scope="props">
+                                                <td><img :src="props.item.thumb" width="150" height="auto"></td>
+                                                <td>{{props.item.name}}</td>
+                                            </template>
+                                        </app-table>
+                                    </div>
+                                </div>
+                                <file-upload
+                                        ref="upload"
+                                        v-model="form.images"
+                                        class="btn btn-default"
+                                        :multiple="true"
+                                        @input-filter="inputFilter"
+                                        @input-file="inputFile"
+                                >
+                                    Upload File <i class="fa fa-plus"></i>
+                                </file-upload>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -101,24 +132,54 @@
     import {ContentCategoryService} from "../../../services/content_category/content_category_service";
     import WebUrl from '../../../services/webUrl';
     import {ContentService} from "../../../services/content/content_service";
+    import FileUpload from 'vue-upload-component';
+    import {ContentImageService} from "../../../services/content/image_upload_service";
 
     let webUrl = new WebUrl();
     let contentCategoryService = new ContentCategoryService();
     let contentService = new ContentService();
+    let contentImageService = new ContentImageService();
     export default {
         name: "PortfolioCreate",
+        components: {
+            'tiny-mce': Editor,
+            FileUpload
+        },
         data() {
             return {
                 form: {
                     title: '',
                     body: '',
-                    category: ''
+                    category: '',
+                    images: [],
+                    files: []
                 },
+                checkedImages:[],
                 categories: [],
                 tinyMceInit: tinyMceConfig
             }
         },
-        computed: {},
+        computed: {
+            formDataInput() {
+                let formData = new FormData();
+                formData.append('title', this.form.title);
+                formData.append('body', this.form.body);
+                formData.append('category', this.form.category);
+                this.form.images.forEach(image => {
+                    formData.append('images[]', image.file)
+                });
+                return formData;
+            }
+        },
+        watch: {
+            'form.images'() {
+                console.log('Images Change');
+                this.form.files.splice(0);
+                this.form.images.forEach(image => {
+                    this.form.files.push(image.file);
+                })
+            }
+        },
         created() {
             //กำหนด vuex state ไม่ใช้ refresh parent component
             this.$store.commit('notRefreshParent');
@@ -142,7 +203,7 @@
                         contentService.addContent(this.form)
                             .then(result => {
                                 this.$store.commit('refreshParent');
-                                this.$router.push({name:'portfolio'});
+                                this.$router.push({name: 'portfolio'});
                             }).catch(err => {
                                 console.log(err)
                             }
@@ -170,10 +231,118 @@
             },
             tinyChange(event) {
                 console.log('exeCommand :', event);
-            }
-        },
-        components: {
-            'tiny-mce': Editor
+            },
+            deleteImages(param){
+                let result='';
+                this.form.images=this.form.images.filter(image=>{
+                    return param.checkedItems.findIndex(item=>{
+                       return item.id === image.id
+                    }) === -1;
+                })
+                console.log('images',result);
+
+            },
+            inputFilter(newFile, oldFile, prevent) {
+                if (newFile && !oldFile) {
+                    // Before adding a file
+                    // 添加文件前
+                    // Filter system files or hide files
+                    // 过滤系统文件 和隐藏文件
+                    if (/(\/|^)(Thumbs\.db|desktop\.ini|\..+)$/.test(newFile.name)) {
+                        return prevent()
+                    }
+                    // Filter php html js file
+                    // 过滤 php html js 文件
+                    if (/\.(php5?|html?|jsx?)$/i.test(newFile.name)) {
+                        return prevent()
+                    }
+                    // Automatic compression
+                    // 自动压缩
+                    if (newFile.file && newFile.type.substr(0, 6) === 'image/' && this.autoCompress > 0 && this.autoCompress < newFile.size) {
+                        newFile.error = 'compressing'
+                        const imageCompressor = new ImageCompressor(null, {
+                            convertSize: Infinity,
+                            maxWidth: 512,
+                            maxHeight: 512,
+                        })
+                        imageCompressor.compress(newFile.file)
+                            .then((file) => {
+                                this.$refs.upload.update(newFile, {error: '', file, size: file.size, type: file.type})
+                            })
+                            .catch((err) => {
+                                this.$refs.upload.update(newFile, {error: err.message || 'compress'})
+                            })
+                    }
+                }
+                if (newFile && (!oldFile || newFile.file !== oldFile.file)) {
+                    // Create a blob field
+                    // 创建 blob 字段
+                    newFile.blob = ''
+                    let URL = window.URL || window.webkitURL
+                    if (URL && URL.createObjectURL) {
+                        newFile.blob = URL.createObjectURL(newFile.file)
+                    }
+                    // Thumbnails
+                    // 缩略图
+                    newFile.thumb = ''
+                    if (newFile.blob && newFile.type.substr(0, 6) === 'image/') {
+                        newFile.thumb = newFile.blob
+                    }
+                }
+            },
+            inputFile(newFile, oldFile) {
+                if (newFile && !oldFile) {
+                    // Add file
+                }
+
+                if (newFile && oldFile) {
+                    // Update file
+
+                    // Start upload
+                    if (newFile.active !== oldFile.active) {
+                        console.log('Start upload', newFile.active, newFile)
+
+                        // min size
+                        if (newFile.size >= 0 && newFile.size < 100 * 1024) {
+                            newFile = this.$refs.upload.update(newFile, {error: 'size'})
+                        }
+                    }
+
+                    // Upload progress
+                    if (newFile.progress !== oldFile.progress) {
+                        console.log('progress', newFile.progress, newFile)
+                    }
+
+                    // Upload error
+                    if (newFile.error !== oldFile.error) {
+                        console.log('error', newFile.error, newFile)
+                    }
+
+                    // Uploaded successfully
+                    if (newFile.success !== oldFile.success) {
+                        console.log('success', newFile.success, newFile)
+                    }
+                }
+
+                if (!newFile && oldFile) {
+                    // Remove file
+
+                    // Automatically delete files on the server
+                    if (oldFile.success && oldFile.response.id) {
+                        // $.ajax({
+                        //   type: 'DELETE',
+                        //   url: '/file/delete?id=' + oldFile.response.id,
+                        // });
+                    }
+                }
+
+                // Automatic upload
+                if (Boolean(newFile) !== Boolean(oldFile) || oldFile.error !== newFile.error) {
+                    if (!this.$refs.upload.active) {
+                        this.$refs.upload.active = true
+                    }
+                }
+            },
         }
     }
 </script>

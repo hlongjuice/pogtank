@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 411);
+/******/ 	return __webpack_require__(__webpack_require__.s = 430);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -71,7 +71,7 @@
 "use strict";
 
 
-var bind = __webpack_require__(5);
+var bind = __webpack_require__(7);
 var isBuffer = __webpack_require__(15);
 
 /*global toString:true*/
@@ -376,6 +376,46 @@ module.exports = {
 
 /***/ }),
 
+/***/ 10:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function isCancel(value) {
+  return !!(value && value.__CANCEL__);
+};
+
+
+/***/ }),
+
+/***/ 11:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * A `Cancel` is an object that is thrown when an operation is canceled.
+ *
+ * @class
+ * @param {string=} message The message.
+ */
+function Cancel(message) {
+  this.message = message;
+}
+
+Cancel.prototype.toString = function toString() {
+  return 'Cancel' + (this.message ? ': ' + this.message : '');
+};
+
+Cancel.prototype.__CANCEL__ = true;
+
+module.exports = Cancel;
+
+
+/***/ }),
+
 /***/ 12:
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -581,7 +621,7 @@ process.umask = function() { return 0; };
 
 
 var utils = __webpack_require__(0);
-var bind = __webpack_require__(5);
+var bind = __webpack_require__(7);
 var Axios = __webpack_require__(16);
 var defaults = __webpack_require__(3);
 
@@ -616,9 +656,9 @@ axios.create = function create(instanceConfig) {
 };
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(9);
+axios.Cancel = __webpack_require__(11);
 axios.CancelToken = __webpack_require__(30);
-axios.isCancel = __webpack_require__(8);
+axios.isCancel = __webpack_require__(10);
 
 // Expose all/spread
 axios.all = function all(promises) {
@@ -775,7 +815,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 "use strict";
 
 
-var createError = __webpack_require__(7);
+var createError = __webpack_require__(9);
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -1257,7 +1297,7 @@ module.exports = InterceptorManager;
 
 var utils = __webpack_require__(0);
 var transformData = __webpack_require__(27);
-var isCancel = __webpack_require__(8);
+var isCancel = __webpack_require__(10);
 var defaults = __webpack_require__(3);
 var isAbsoluteURL = __webpack_require__(28);
 var combineURLs = __webpack_require__(29);
@@ -1438,10 +1478,10 @@ function getDefaultAdapter() {
   var adapter;
   if (typeof XMLHttpRequest !== 'undefined') {
     // For browsers use XHR adapter
-    adapter = __webpack_require__(6);
+    adapter = __webpack_require__(8);
   } else if (typeof process !== 'undefined') {
     // For node use HTTP adapter
-    adapter = __webpack_require__(6);
+    adapter = __webpack_require__(8);
   }
   return adapter;
 }
@@ -1526,7 +1566,7 @@ module.exports = defaults;
 "use strict";
 
 
-var Cancel = __webpack_require__(9);
+var Cancel = __webpack_require__(11);
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -1620,7 +1660,7 @@ module.exports = function spread(callback) {
 
 /***/ }),
 
-/***/ 35:
+/***/ 36:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1780,21 +1820,21 @@ var ProductService = function () {
 
 /***/ }),
 
-/***/ 411:
+/***/ 430:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(412);
+module.exports = __webpack_require__(431);
 
 
 /***/ }),
 
-/***/ 412:
+/***/ 431:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_js_services_product_product_service__ = __webpack_require__(38);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_js_services_city__ = __webpack_require__(35);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_js_services_city__ = __webpack_require__(36);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__assets_js_services_project_order_project_order_service__ = __webpack_require__(45);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__assets_js_services_webUrl__ = __webpack_require__(2);
 
@@ -2008,7 +2048,7 @@ var ProjectOrderService = function () {
 
 /***/ }),
 
-/***/ 5:
+/***/ 7:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2027,7 +2067,7 @@ module.exports = function bind(fn, thisArg) {
 
 /***/ }),
 
-/***/ 6:
+/***/ 8:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2038,7 +2078,7 @@ var settle = __webpack_require__(18);
 var buildURL = __webpack_require__(20);
 var parseHeaders = __webpack_require__(21);
 var isURLSameOrigin = __webpack_require__(22);
-var createError = __webpack_require__(7);
+var createError = __webpack_require__(9);
 var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(23);
 
 module.exports = function xhrAdapter(config) {
@@ -2215,7 +2255,7 @@ module.exports = function xhrAdapter(config) {
 
 /***/ }),
 
-/***/ 7:
+/***/ 9:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2237,46 +2277,6 @@ module.exports = function createError(message, config, code, request, response) 
   var error = new Error(message);
   return enhanceError(error, config, code, request, response);
 };
-
-
-/***/ }),
-
-/***/ 8:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = function isCancel(value) {
-  return !!(value && value.__CANCEL__);
-};
-
-
-/***/ }),
-
-/***/ 9:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-/**
- * A `Cancel` is an object that is thrown when an operation is canceled.
- *
- * @class
- * @param {string=} message The message.
- */
-function Cancel(message) {
-  this.message = message;
-}
-
-Cancel.prototype.toString = function toString() {
-  return 'Cancel' + (this.message ? ': ' + this.message : '');
-};
-
-Cancel.prototype.__CANCEL__ = true;
-
-module.exports = Cancel;
 
 
 /***/ })
