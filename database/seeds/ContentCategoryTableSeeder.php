@@ -20,6 +20,7 @@ class ContentCategoryTableSeeder extends Seeder
                 ['title' => 'About Us'],
                 ['title' => 'Contact'],
                 ['title' => 'Slide'],
+                ['title' => 'Portfolio']
             ]);
             foreach ($categories as $category){
                 ContentCategory::create($category);
