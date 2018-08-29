@@ -46,6 +46,7 @@ use Kalnoy\Nestedset\NodeTrait;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Admin\Project\Porlor4Job whereRgt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Admin\Project\Porlor4Job whereUnit($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Admin\Project\Porlor4Job whereUpdatedAt($value)
+ * @property-read \App\Models\Admin\Project\Porlor4 $porlor4
  */
 class Porlor4Job extends Model
 {

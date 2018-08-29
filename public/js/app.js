@@ -6932,7 +6932,9 @@ var ContentCategoryService = function () {
     _createClass(ContentCategoryService, [{
         key: 'addCategory',
         value: function addCategory(dataInput) {
-            var url = this.url + '/admin/content_categories/add_category';
+            var parent_category_title = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+
+            var url = this.url + '/admin/content_categories/' + parent_category_title + '/add_category';
             return new Promise(function (resolve, reject) {
                 axios.post(url, dataInput).then(function (result) {
                     resolve(result.data);
@@ -62682,6 +62684,14 @@ return /******/ (function(modules) { // webpackBootstrap
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__views_admin_portfolio_PortfolioCreate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13__views_admin_portfolio_PortfolioCreate__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__views_admin_portfolio_PortfolioEdit__ = __webpack_require__(258);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__views_admin_portfolio_PortfolioEdit___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_14__views_admin_portfolio_PortfolioEdit__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__views_admin_portfolio_portfoilo_category_PortfolioCategory__ = __webpack_require__(436);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__views_admin_portfolio_portfoilo_category_PortfolioCategory___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_15__views_admin_portfolio_portfoilo_category_PortfolioCategory__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__views_admin_portfolio_portfoilo_category_PortfolioCategoryList__ = __webpack_require__(439);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__views_admin_portfolio_portfoilo_category_PortfolioCategoryList___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_16__views_admin_portfolio_portfoilo_category_PortfolioCategoryList__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__views_admin_portfolio_portfoilo_category_PortfolioCategoryCreate__ = __webpack_require__(444);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__views_admin_portfolio_portfoilo_category_PortfolioCategoryCreate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_17__views_admin_portfolio_portfoilo_category_PortfolioCategoryCreate__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__views_admin_portfolio_portfoilo_category_PortfolioCategoryEdit__ = __webpack_require__(449);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__views_admin_portfolio_portfoilo_category_PortfolioCategoryEdit___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_18__views_admin_portfolio_portfoilo_category_PortfolioCategoryEdit__);
 
 
 
@@ -62696,6 +62706,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 //Portfolio
+
+
+
+
+//PortFolio Category
 
 
 
@@ -62739,6 +62754,25 @@ var routes = [
     // -- Edit
     {
         path: 'edit/:id', name: 'portfolio_edit', component: __WEBPACK_IMPORTED_MODULE_14__views_admin_portfolio_PortfolioEdit___default.a,
+        meta: { breadcrumb: function breadcrumb(routeParams) {
+                return '\u0E41\u0E01\u0E49\u0E44\u0E02 - ' + routeParams.id;
+            } }
+    }]
+},
+//Portfolio Category
+{
+    path: '/portfolio_category', component: __WEBPACK_IMPORTED_MODULE_15__views_admin_portfolio_portfoilo_category_PortfolioCategory___default.a, meta: { breadcrumb: 'หมวดหมู่ผลงาน' },
+    children: [{ path: '', name: 'portfolio_category', component: __WEBPACK_IMPORTED_MODULE_16__views_admin_portfolio_portfoilo_category_PortfolioCategoryList___default.a },
+    // -- Create
+    {
+        path: 'create',
+        name: 'portfolio_category_create',
+        component: __WEBPACK_IMPORTED_MODULE_17__views_admin_portfolio_portfoilo_category_PortfolioCategoryCreate___default.a,
+        meta: { breadcrumb: 'สร้างใหม่' }
+    },
+    // -- Edit
+    {
+        path: 'edit/:id', name: 'portfolio_category_edit', component: __WEBPACK_IMPORTED_MODULE_18__views_admin_portfolio_portfoilo_category_PortfolioCategoryEdit___default.a,
         meta: { breadcrumb: function breadcrumb(routeParams) {
                 return '\u0E41\u0E01\u0E49\u0E44\u0E02 - ' + routeParams.id;
             } }
@@ -62970,7 +63004,7 @@ exports = module.exports = __webpack_require__(10)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -62983,7 +63017,6 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_content_content_service__ = __webpack_require__(36);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_content_category_content_category_service__ = __webpack_require__(37);
-//
 //
 //
 //
@@ -63095,6 +63128,9 @@ var contentCategoryService = new __WEBPACK_IMPORTED_MODULE_1__services_content_c
                 console.log(err);
             });
         },
+        openCreatePage: function openCreatePage() {
+            this.$router.push({ name: 'content_create' });
+        },
         editContent: function editContent(item) {
             this.$router.push({ path: "/content/edit/" + item.id });
         },
@@ -63167,14 +63203,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     slot: "customTopBtn"
   }, [_c('div', {
     staticClass: "col-md-6"
-  }, [_c('router-link', {
+  }, [_c('a', {
     staticClass: "btn btn-primary",
-    attrs: {
-      "to": {
-        name: 'content_create'
-      }
+    on: {
+      "click": _vm.openCreatePage
     }
-  }, [_vm._v("สร้างรายการใหม่\n                        ")])], 1)])], 2), _vm._v(" "), _c('pagination', {
+  }, [_vm._v(" สร้างรายการใหม่ ")])])])], 2), _vm._v(" "), _c('pagination', {
     attrs: {
       "data": _vm.content
     },
@@ -64847,7 +64881,7 @@ exports = module.exports = __webpack_require__(10)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -64947,6 +64981,11 @@ var contentCategoryService = new __WEBPACK_IMPORTED_MODULE_0__services_content_c
             });
         },
 
+        //Create
+        openCreatePage: function openCreatePage() {
+            this.$router.push({ name: 'content_category_create' });
+        },
+
         //Edit Category
         editCategory: function editCategory(item) {
             this.$router.push({
@@ -65009,14 +65048,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     slot: "customTopBtn"
   }, [_c('div', {
     staticClass: "col-md-6"
-  }, [_c('router-link', {
+  }, [_c('a', {
     staticClass: "btn btn-primary",
-    attrs: {
-      "to": {
-        name: 'content_category_create'
-      }
+    on: {
+      "click": _vm.openCreatePage
     }
-  }, [_vm._v("\n                            สร้างรายการใหม่\n                        ")])], 1)])], 2)], 1)])])
+  }, [_vm._v("\n                            สร้างรายการใหม่\n                        ")])])])], 2)], 1)])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "portlet-title"
@@ -65661,7 +65698,7 @@ exports = module.exports = __webpack_require__(10)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -65674,7 +65711,6 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_content_content_service__ = __webpack_require__(36);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_content_category_content_category_service__ = __webpack_require__(37);
-//
 //
 //
 //
@@ -65777,7 +65813,7 @@ var contentCategoryService = new __WEBPACK_IMPORTED_MODULE_1__services_content_c
             var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
 
             this.checkedItems.splice(0);
-            contentService.getAllContents(page, this.selectedCategory, this.searchText).then(function (result) {
+            contentService.getAllContents(page, this.selectedCategory, this.searchText, 'Portfolio').then(function (result) {
                 console.log('Content Result', result);
                 _this2.content = result;
                 console.log('Content :', result);
@@ -65785,6 +65821,9 @@ var contentCategoryService = new __WEBPACK_IMPORTED_MODULE_1__services_content_c
             }).catch(function (err) {
                 console.log(err);
             });
+        },
+        openCreatePage: function openCreatePage() {
+            this.$router.push({ name: 'portfolio_create' });
         },
         editContent: function editContent(item) {
             this.$router.push({ path: "/portfolio/edit/" + item.id });
@@ -65858,14 +65897,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     slot: "customTopBtn"
   }, [_c('div', {
     staticClass: "col-md-6"
-  }, [_c('router-link', {
+  }, [_c('a', {
     staticClass: "btn btn-primary",
-    attrs: {
-      "to": {
-        name: 'portfolio_create'
-      }
+    on: {
+      "click": _vm.openCreatePage
     }
-  }, [_vm._v("สร้างรายการใหม่\n                        ")])], 1)])], 2), _vm._v(" "), _c('pagination', {
+  }, [_vm._v(" สร้างรายการใหม่ ")])])])], 2), _vm._v(" "), _c('pagination', {
     attrs: {
       "data": _vm.content
     },
@@ -66105,7 +66142,7 @@ var contentService = new __WEBPACK_IMPORTED_MODULE_4__services_content_content_s
         //กำหนด vuex state ไม่ใช้ refresh parent component
         this.$store.commit('notRefreshParent');
         //Get Categories
-        contentCategoryService.getAllCategories('Text').then(function (result) {
+        contentCategoryService.getAllCategories('Portfolio').then(function (result) {
             _this.categories = result;
         }).catch(function (err) {
             console.log(err);
@@ -66575,7 +66612,7 @@ var contentCategoryService = new __WEBPACK_IMPORTED_MODULE_1__services_content_c
             _this.form.category = result.category;
         }).catch(function (err) {
             console.log(err);
-        }), contentCategoryService.getAllCategories().then(function (result) {
+        }), contentCategoryService.getAllCategories('Portfolio').then(function (result) {
             _this.categories = result;
         }).catch(function (err) {
             console.log(err);
@@ -66603,7 +66640,7 @@ var contentCategoryService = new __WEBPACK_IMPORTED_MODULE_1__services_content_c
             });
         },
         backToPreviousPage: function backToPreviousPage() {
-            this.$router.push({ name: 'content' });
+            this.$router.push({ name: 'portfolio' });
         }
     }
 });
@@ -71289,7 +71326,7 @@ exports = module.exports = __webpack_require__(10)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -71301,6 +71338,24 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_webUrl__ = __webpack_require__(2);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -71507,7 +71562,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "fab fa-product-hunt"
   }), _vm._v(" "), _c('span', {
     staticClass: "title"
-  }, [_vm._v("หมวดหมู่เนื้อหา")])])]), _vm._v(" "), _c('router-link', {
+  }, [_vm._v("หมวดหมู่เนื้อหา")])])]), _vm._v(" "), _c('li', {}, [_vm._m(4), _vm._v(" "), _c('ul', {
+    staticClass: "sub-menu"
+  }, [_c('router-link', {
     attrs: {
       "tag": "li",
       "to": {
@@ -71522,7 +71579,22 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "fab fa-product-hunt"
   }), _vm._v(" "), _c('span', {
     staticClass: "title"
-  }, [_vm._v("ผลงาน")])])])], 1)])])
+  }, [_vm._v("รายการ")])])]), _vm._v(" "), _c('router-link', {
+    attrs: {
+      "tag": "li",
+      "to": {
+        name: 'portfolio_category'
+      }
+    }
+  }, [_c('a', {
+    attrs: {
+      "href": "javascript:;"
+    }
+  }, [_c('i', {
+    staticClass: "fab fa-product-hunt"
+  }), _vm._v(" "), _c('span', {
+    staticClass: "title"
+  }, [_vm._v("หมวดหมู่")])])])], 1)])], 1)])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('li', {
     staticClass: "sidebar-toggler-wrapper"
@@ -71571,6 +71643,20 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }), _vm._v(" "), _c('span', {
     staticClass: "arrow"
   })])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('a', {
+    attrs: {
+      "href": "javascript:;"
+    }
+  }, [_c('i', {
+    staticClass: "far fa-shopping-cart"
+  }), _vm._v(" "), _c('span', {
+    staticClass: "title"
+  }, [_vm._v("ผลงาน")]), _vm._v(" "), _c('span', {
+    staticClass: "selected"
+  }), _vm._v(" "), _c('span', {
+    staticClass: "arrow"
+  })])
 }]}
 module.exports.render._withStripped = true
 if (false) {
@@ -71591,6 +71677,1242 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 383 */,
+/* 384 */,
+/* 385 */,
+/* 386 */,
+/* 387 */,
+/* 388 */,
+/* 389 */,
+/* 390 */,
+/* 391 */,
+/* 392 */,
+/* 393 */,
+/* 394 */,
+/* 395 */,
+/* 396 */,
+/* 397 */,
+/* 398 */,
+/* 399 */,
+/* 400 */,
+/* 401 */,
+/* 402 */,
+/* 403 */,
+/* 404 */,
+/* 405 */,
+/* 406 */,
+/* 407 */,
+/* 408 */,
+/* 409 */,
+/* 410 */,
+/* 411 */,
+/* 412 */,
+/* 413 */,
+/* 414 */,
+/* 415 */,
+/* 416 */,
+/* 417 */,
+/* 418 */,
+/* 419 */,
+/* 420 */,
+/* 421 */,
+/* 422 */,
+/* 423 */,
+/* 424 */,
+/* 425 */,
+/* 426 */,
+/* 427 */,
+/* 428 */,
+/* 429 */,
+/* 430 */,
+/* 431 */,
+/* 432 */,
+/* 433 */,
+/* 434 */,
+/* 435 */,
+/* 436 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(4)(
+  /* script */
+  __webpack_require__(437),
+  /* template */
+  __webpack_require__(438),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "/Applications/XAMPP/xamppfiles/htdocs/pogtank/resources/assets/js/views/admin/portfolio/portfoilo_category/PortfolioCategory.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] PortfolioCategory.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-abd1cb6e", Component.options)
+  } else {
+    hotAPI.reload("data-v-abd1cb6e", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 437 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {};
+    },
+
+    watch: {
+        '$route': function $route(to, from) {
+            console.log('Master Route Changed');
+        }
+    },
+    created: function created() {},
+    mounted: function mounted() {
+        console.log('Mounted Master Page');
+    },
+
+    methods: {}
+});
+
+/***/ }),
+/* 438 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', [_c('keep-alive', {
+    attrs: {
+      "include": "PortfolioCategoryList"
+    }
+  }, [_c('router-view')], 1)], 1)
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-abd1cb6e", module.exports)
+  }
+}
+
+/***/ }),
+/* 439 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(440)
+
+var Component = __webpack_require__(4)(
+  /* script */
+  __webpack_require__(442),
+  /* template */
+  __webpack_require__(443),
+  /* scopeId */
+  "data-v-999d20f2",
+  /* cssModules */
+  null
+)
+Component.options.__file = "/Applications/XAMPP/xamppfiles/htdocs/pogtank/resources/assets/js/views/admin/portfolio/portfoilo_category/PortfolioCategoryList.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] PortfolioCategoryList.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-999d20f2", Component.options)
+  } else {
+    hotAPI.reload("data-v-999d20f2", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 440 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(441);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(11)("7c7e5901", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../../../node_modules/css-loader/index.js!../../../../../../../node_modules/vue-loader/lib/style-rewriter.js?{\"id\":\"data-v-999d20f2\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./PortfolioCategoryList.vue", function() {
+     var newContent = require("!!../../../../../../../node_modules/css-loader/index.js!../../../../../../../node_modules/vue-loader/lib/style-rewriter.js?{\"id\":\"data-v-999d20f2\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./PortfolioCategoryList.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 441 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(10)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 442 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_content_category_content_category_service__ = __webpack_require__(37);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+var contentCategoryService = new __WEBPACK_IMPORTED_MODULE_0__services_content_category_content_category_service__["a" /* ContentCategoryService */]();
+/* harmony default export */ __webpack_exports__["default"] = ({
+    name: "PortfolioCategoryList",
+    data: function data() {
+        return {
+            categories: [],
+            refreshPageStatus: false,
+            form: {
+                selectedCategories: []
+            }
+        };
+    },
+
+    computed: {},
+    created: function created() {
+        this.$store.commit('loading');
+        this.getCategories();
+    },
+    mounted: function mounted() {
+        // this.showLoading=true;
+    },
+
+    //Activated amd Deactivated fired when enable keep-alive for this component
+    activated: function activated() {
+        if (this.$store.getters.refreshParentStatus) {
+            this.getCategories();
+        }
+    },
+    deactivated: function deactivated() {},
+
+    methods: {
+        //Get All Categories
+        getCategories: function getCategories() {
+            var _this = this;
+
+            this.showLoading = true;
+            contentCategoryService.getAllCategories('Portfolio').then(function (result) {
+                _this.categories = result;
+                _this.$store.commit('stopLoading');
+            }).catch(function (err) {
+                console.log(err);
+                alert(err);
+                _this.$store.commit('stopLoading');
+            });
+        },
+        createPage: function createPage() {
+            this.$router.push({ name: 'portfolio_category_create' });
+        },
+
+        //Edit Category
+        editCategory: function editCategory(item) {
+            this.$router.push({
+                path: "portfolio_category/edit/" + item.id
+            });
+        },
+
+        //Delete Categories
+        deleteCategories: function deleteCategories(event) {
+            var _this2 = this;
+
+            this.$dialog.confirm("<h3>ยืนยันการลบ</h3>" + "<p class='text-danger'>*** การลบหมวดหมู่หลัก จะลบหมวดหมู่รองไปด้วย</p>").then(function () {
+                _this2.$store.commit('loading');
+                contentCategoryService.deleteCategories(event).then(function (result) {
+                    _this2.getCategories();
+                }).catch(function (err) {
+                    console.log(err);
+                });
+            }).catch(function () {});
+        }
+    }
+});
+
+/***/ }),
+/* 443 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', [_c('div', {
+    staticClass: "portlet"
+  }, [_vm._m(0), _vm._v(" "), _c('div', {
+    staticClass: "portlet-body"
+  }, [_c('app-table', {
+    attrs: {
+      "columns": ['ลำดับ', 'รายการ', 'แก้ไข'],
+      "columnWidths": [10, 60, 10],
+      "hasCheckBox": true,
+      "items": _vm.categories,
+      "itemRowClass": "text-center"
+    },
+    on: {
+      "deleteItems": _vm.deleteCategories
+    },
+    scopedSlots: _vm._u([{
+      key: "itemColumn",
+      fn: function(props) {
+        return [_c('td', [_vm._v(_vm._s(props.index + 1))]), _vm._v(" "), _c('td', {
+          staticClass: "text-left"
+        }, [_vm._v(_vm._s(props.item.title))]), _vm._v(" "), _c('td', [_c('a', {
+          staticClass: "btn btn-warning",
+          on: {
+            "click": function($event) {
+              _vm.editCategory(props.item)
+            }
+          }
+        }, [_vm._v("แก้ไข")])])]
+      }
+    }])
+  }, [_vm._v("\n\n                >\n                "), _c('template', {
+    slot: "customTopBtn"
+  }, [_c('div', {
+    staticClass: "col-md-6"
+  }, [_c('a', {
+    staticClass: "btn btn-primary",
+    on: {
+      "click": _vm.createPage
+    }
+  }, [_vm._v("\n                            สร้างรายการใหม่\n                        ")])])])], 2)], 1)])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "portlet-title"
+  }, [_c('div', {
+    staticClass: "caption"
+  }, [_c('i', {
+    staticClass: "fa fa-reorder"
+  }), _vm._v("หมวดหมู่\n            ")])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-999d20f2", module.exports)
+  }
+}
+
+/***/ }),
+/* 444 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(445)
+
+var Component = __webpack_require__(4)(
+  /* script */
+  __webpack_require__(447),
+  /* template */
+  __webpack_require__(448),
+  /* scopeId */
+  "data-v-276370a5",
+  /* cssModules */
+  null
+)
+Component.options.__file = "/Applications/XAMPP/xamppfiles/htdocs/pogtank/resources/assets/js/views/admin/portfolio/portfoilo_category/PortfolioCategoryCreate.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] PortfolioCategoryCreate.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-276370a5", Component.options)
+  } else {
+    hotAPI.reload("data-v-276370a5", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 445 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(446);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(11)("89775b86", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../../../node_modules/css-loader/index.js!../../../../../../../node_modules/vue-loader/lib/style-rewriter.js?{\"id\":\"data-v-276370a5\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./PortfolioCategoryCreate.vue", function() {
+     var newContent = require("!!../../../../../../../node_modules/css-loader/index.js!../../../../../../../node_modules/vue-loader/lib/style-rewriter.js?{\"id\":\"data-v-276370a5\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./PortfolioCategoryCreate.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 446 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(10)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 447 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_content_category_content_category_service__ = __webpack_require__(37);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+var contentCategoryService = new __WEBPACK_IMPORTED_MODULE_0__services_content_category_content_category_service__["a" /* ContentCategoryService */]();
+/* harmony default export */ __webpack_exports__["default"] = ({
+    name: "ContentCategoryCreate",
+    data: function data() {
+        return {
+            form: {
+                title: '',
+                parentCategory: '',
+                user: ''
+            },
+            parentCategoryList: []
+        };
+    },
+    created: function created() {
+        var _this = this;
+
+        this.$store.commit('notRefreshParent');
+        this.$store.dispatch('getUser').then(function (result) {
+            _this.form.user = result;
+            _this.getAllCategories();
+        }).catch(function (err) {
+            console.log(err);
+        });
+    },
+
+    methods: {
+        addCategory: function addCategory(form) {
+            var _this2 = this;
+
+            this.$validator.validateAll(form).then(function (result) {
+                //If All Input Validate
+                if (result) {
+                    _this2.$store.commit('loading');
+                    contentCategoryService.addCategory(_this2.form, 'Portfolio').then(function (result) {
+                        _this2.$router.push({ name: 'portfolio_category' });
+                        _this2.$store.commit('refreshParent');
+                    }).catch(function (err) {
+                        return console.log(err);
+                    });
+                }
+            });
+        },
+        getAllCategories: function getAllCategories() {
+            var _this3 = this;
+
+            contentCategoryService.getAllCategoriesWithRoot('Portfolio').then(function (result) {
+                _this3.parentCategoryList = result;
+            }).catch(function (err) {
+                console.log(err);
+            });
+        },
+        back: function back() {
+            this.$router.push({ name: 'portfolio_category' });
+        }
+    }
+});
+
+/***/ }),
+/* 448 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', [_c('form', {
+    attrs: {
+      "data-vv-scope": "form"
+    },
+    on: {
+      "submit": function($event) {
+        $event.preventDefault();
+        _vm.addCategory('form', $event)
+      }
+    }
+  }, [_c('div', {
+    staticClass: "portlet"
+  }, [_vm._m(0), _vm._v(" "), _c('div', {
+    staticClass: "portlet-body form"
+  }, [_c('div', {
+    staticClass: "form-body"
+  }, [_c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-md-2"
+  }, [_c('a', {
+    staticClass: "margin-bottom-10 btn btn-default",
+    on: {
+      "click": _vm.back
+    }
+  }, [_vm._v("ย้อนกลับ")])]), _vm._v(" "), _vm._m(1)]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-md-8"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    staticClass: "control-label",
+    attrs: {
+      "for": "title"
+    }
+  }, [_vm._v("ชื่อ")]), _vm._v(" "), _c('div', {
+    class: {
+      'input-error': _vm.errors.has('form.title')
+    }
+  }, [_c('input', {
+    directives: [{
+      name: "validate",
+      rawName: "v-validate",
+      value: ('required'),
+      expression: "'required'"
+    }, {
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.form.title),
+      expression: "form.title"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "id": "title",
+      "name": "title"
+    },
+    domProps: {
+      "value": (_vm.form.title)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.$set(_vm.form, "title", $event.target.value)
+      }
+    }
+  })]), _vm._v(" "), _c('span', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.errors.has('form.title')),
+      expression: "errors.has('form.title')"
+    }],
+    staticClass: "text-error text-danger"
+  }, [_vm._v("กรุณากรอกข้อมูล")])])]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-4"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    staticClass: "control-label"
+  }, [_vm._v("หมวดหมู่รายการ")]), _vm._v(" "), _c('div', {
+    class: {
+      'input-error': _vm.errors.has('form.parent_categories')
+    }
+  }, [_c('multiselect', {
+    attrs: {
+      "placeholder": "",
+      "label": "title",
+      "track-by": "id",
+      "options": _vm.parentCategoryList,
+      "option-height": 120,
+      "show-labels": false,
+      "allow-empty": false,
+      "max-height": 180
+    },
+    scopedSlots: _vm._u([{
+      key: "option",
+      fn: function(props) {
+        return [_c('div', {
+          staticClass: "option__desc"
+        }, [_c('span', {
+          staticClass: "option__title"
+        }, [_vm._v(_vm._s(props.option.title))])])]
+      }
+    }]),
+    model: {
+      value: (_vm.form.parentCategory),
+      callback: function($$v) {
+        _vm.$set(_vm.form, "parentCategory", $$v)
+      },
+      expression: "form.parentCategory"
+    }
+  }), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "validate",
+      rawName: "v-validate",
+      value: ('required'),
+      expression: "'required'"
+    }, {
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.form.parentCategory),
+      expression: "form.parentCategory"
+    }],
+    attrs: {
+      "name": "parent_categories",
+      "hidden": ""
+    },
+    domProps: {
+      "value": (_vm.form.parentCategory)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.$set(_vm.form, "parentCategory", $event.target.value)
+      }
+    }
+  })], 1), _vm._v(" "), _c('span', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.errors.has('form.parent_categories')),
+      expression: "errors.has('form.parent_categories')"
+    }],
+    staticClass: "text-error text-danger"
+  }, [_vm._v("กรุณากรอกข้อมูล")])])])])])])])])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "portlet-title"
+  }, [_c('div', {
+    staticClass: "caption"
+  }, [_c('i', {
+    staticClass: "fa fa-reorder"
+  }), _vm._v("สร้างหมวดหมู่ใหม่\n                ")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "col-md-4 pull-right text-right"
+  }, [_c('button', {
+    staticClass: "margin-bottom-10 btn btn-success btn-block",
+    attrs: {
+      "type": "submit"
+    }
+  }, [_vm._v("บันทึกรายการ\n                            ")])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-276370a5", module.exports)
+  }
+}
+
+/***/ }),
+/* 449 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(450)
+
+var Component = __webpack_require__(4)(
+  /* script */
+  __webpack_require__(452),
+  /* template */
+  __webpack_require__(453),
+  /* scopeId */
+  "data-v-7b0cd21a",
+  /* cssModules */
+  null
+)
+Component.options.__file = "/Applications/XAMPP/xamppfiles/htdocs/pogtank/resources/assets/js/views/admin/portfolio/portfoilo_category/PortfolioCategoryEdit.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] PortfolioCategoryEdit.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-7b0cd21a", Component.options)
+  } else {
+    hotAPI.reload("data-v-7b0cd21a", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 450 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(451);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(11)("380116bc", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../../../node_modules/css-loader/index.js!../../../../../../../node_modules/vue-loader/lib/style-rewriter.js?{\"id\":\"data-v-7b0cd21a\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./PortfolioCategoryEdit.vue", function() {
+     var newContent = require("!!../../../../../../../node_modules/css-loader/index.js!../../../../../../../node_modules/vue-loader/lib/style-rewriter.js?{\"id\":\"data-v-7b0cd21a\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./PortfolioCategoryEdit.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 451 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(10)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 452 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_content_category_content_category_service__ = __webpack_require__(37);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+var contentCategoryService = new __WEBPACK_IMPORTED_MODULE_0__services_content_category_content_category_service__["a" /* ContentCategoryService */]();
+/* harmony default export */ __webpack_exports__["default"] = ({
+    name: "ContentCategoryEdit",
+    data: function data() {
+        return {
+            form: {
+                id: '',
+                title: '',
+                parent: ''
+            },
+            category_id: this.$route.params.id,
+            parentCategoryList: []
+        };
+    },
+
+    watch: {
+        '$route': function $route(to, from) {
+            console.log('Edit Page Route Changed');
+        }
+    },
+    created: function created() {
+        var _this = this;
+
+        this.$store.commit('loading');
+        Promise.all([this.getCategory(), this.getParentCategories()]).then(function () {
+            _this.$store.commit('stopLoading');
+        });
+    },
+    mounted: function mounted() {},
+
+    methods: {
+        getCategory: function getCategory() {
+            var _this2 = this;
+
+            return new Promise(function (resolve, reject) {
+                contentCategoryService.getCategory(_this2.category_id).then(function (result) {
+                    _this2.form.id = result.id;
+                    _this2.form.title = result.title;
+                    _this2.form.parent = result.parent;
+                    if (result.parent === null) {
+                        _this2.form.parent = {
+                            id: 0,
+                            title: 'หมวดหมู่หลัก'
+                        };
+                    } else {
+                        _this2.form.parent = result.parent;
+                    }
+                    resolve();
+                }).catch(function (err) {
+                    console.log(err);
+                    reject(err);
+                });
+            });
+        },
+        getParentCategories: function getParentCategories() {
+            var _this3 = this;
+
+            return new Promise(function (resolve, reject) {
+                contentCategoryService.getAllCategoriesWithoutID(_this3.category_id).then(function (result) {
+                    _this3.parentCategoryList = result;
+                    resolve();
+                }).catch(function (err) {
+                    console.log(err);
+                    reject(err);
+                });
+            });
+        },
+        updateCategory: function updateCategory(form) {
+            var _this4 = this;
+
+            this.$validator.validateAll(form).then(function (result) {
+                //If All Input Validate
+                if (result) {
+                    _this4.$store.commit('loading');
+                    contentCategoryService.updateCategory(_this4.form).then(function (result) {
+                        _this4.$store.commit('stopLoading');
+                        _this4.$store.commit('refreshParent');
+                        _this4.$router.push({ path: '/content_category/' });
+                    }).catch(function (err) {
+                        alert('ไม่สามารถเพิ่มข้อมูลได้');
+                        console.log(err);
+                    });
+                }
+            });
+        },
+        back: function back() {
+            this.$router.push({ name: 'content_category' });
+            // this.$router.back();
+        }
+    }
+});
+
+/***/ }),
+/* 453 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', [_c('form', {
+    attrs: {
+      "data-vv-scope": "form"
+    },
+    on: {
+      "submit": function($event) {
+        $event.preventDefault();
+        _vm.updateCategory('form', $event)
+      }
+    }
+  }, [_c('div', {
+    staticClass: "portlet"
+  }, [_vm._m(0), _vm._v(" "), _c('div', {
+    staticClass: "portlet-body form"
+  }, [_c('div', {
+    staticClass: "form-body"
+  }, [_c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-md-2"
+  }, [_c('a', {
+    staticClass: "margin-bottom-10 btn btn-default",
+    on: {
+      "click": _vm.back
+    }
+  }, [_vm._v("ย้อนกลับ")])]), _vm._v(" "), _vm._m(1)]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-md-8"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    staticClass: "control-label",
+    attrs: {
+      "for": "title"
+    }
+  }, [_vm._v("ชื่อ")]), _vm._v(" "), _c('div', {
+    class: {
+      'input-error': _vm.errors.has('form.title')
+    }
+  }, [_c('input', {
+    directives: [{
+      name: "validate",
+      rawName: "v-validate",
+      value: ('required'),
+      expression: "'required'"
+    }, {
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.form.title),
+      expression: "form.title"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "id": "title",
+      "name": "title"
+    },
+    domProps: {
+      "value": (_vm.form.title)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.$set(_vm.form, "title", $event.target.value)
+      }
+    }
+  })]), _vm._v(" "), _c('span', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.errors.has('form.title')),
+      expression: "errors.has('form.title')"
+    }],
+    staticClass: "text-error text-danger"
+  }, [_vm._v("กรุณากรอกข้อมูล")])])]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-4"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    staticClass: "control-label"
+  }, [_vm._v("หมวดหมู่รายการ")]), _vm._v(" "), _c('div', {
+    class: {
+      'input-error': _vm.errors.has('form.parent_categories')
+    }
+  }, [_c('multiselect', {
+    attrs: {
+      "placeholder": "",
+      "label": "title",
+      "track-by": "id",
+      "options": _vm.parentCategoryList,
+      "option-height": 120,
+      "show-labels": false,
+      "allow-empty": false,
+      "max-height": 180
+    },
+    scopedSlots: _vm._u([{
+      key: "option",
+      fn: function(props) {
+        return [_c('div', {
+          staticClass: "option__desc"
+        }, [_c('span', {
+          staticClass: "option__title"
+        }, [_vm._v(_vm._s(props.option.title))])])]
+      }
+    }]),
+    model: {
+      value: (_vm.form.parent),
+      callback: function($$v) {
+        _vm.$set(_vm.form, "parent", $$v)
+      },
+      expression: "form.parent"
+    }
+  }), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "validate",
+      rawName: "v-validate",
+      value: ('required'),
+      expression: "'required'"
+    }, {
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.form.parent),
+      expression: "form.parent"
+    }],
+    attrs: {
+      "name": "parent_categories",
+      "hidden": ""
+    },
+    domProps: {
+      "value": (_vm.form.parent)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.$set(_vm.form, "parent", $event.target.value)
+      }
+    }
+  })], 1), _vm._v(" "), _c('span', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.errors.has('form.parent_categories')),
+      expression: "errors.has('form.parent_categories')"
+    }],
+    staticClass: "text-error text-danger"
+  }, [_vm._v("กรุณากรอกข้อมูล")])])])])])])])])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "portlet-title"
+  }, [_c('div', {
+    staticClass: "caption"
+  }, [_c('i', {
+    staticClass: "fa fa-reorder"
+  }), _vm._v("สร้างหมวดหมู่ใหม่\n                ")])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "col-md-4 pull-right text-right"
+  }, [_c('button', {
+    staticClass: "margin-bottom-10 btn btn-success btn-block",
+    attrs: {
+      "type": "submit"
+    }
+  }, [_vm._v("บันทึกรายการ\n                            ")])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-7b0cd21a", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

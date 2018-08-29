@@ -129,7 +129,7 @@
                         this.form.body = result.body;
                         this.form.category = result.category;
                     }).catch(err=>{console.log(err)}),
-                contentCategoryService.getAllCategories()
+                contentCategoryService.getAllCategories('Portfolio')
                     .then(result=>{
                         this.categories= result;
                     }).catch(err=>{console.log(err)})
@@ -158,7 +158,7 @@
                 })
             },
             backToPreviousPage(){
-                this.$router.push({name:'content'})
+                this.$router.push({name:'portfolio'})
             }
         }
     }

@@ -123,7 +123,7 @@
             //กำหนด vuex state ไม่ใช้ refresh parent component
             this.$store.commit('notRefreshParent');
             //Get Categories
-            contentCategoryService.getAllCategories('Text')
+            contentCategoryService.getAllCategories('Portfolio')
                 .then(result => {
                     this.categories = result;
                 }).catch(err => {

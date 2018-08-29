@@ -21,7 +21,7 @@ class ContentController extends Controller
     }
 
     //Get Content Per Page
-    public function getAllContents(Request $request,$parent_category_id)
+    public function getAllContents(Request $request,$parent_category_title)
     {
         $contents = '';
         $categoryID = $request->input('category')['id'];
@@ -29,13 +29,14 @@ class ContentController extends Controller
         //1.การกรองหลัก
         // -- กรอง parent ของ Category
         //1.1 หากเป็น 0 คือ Root ของ Category ทั้งหมด ดังนั้นจึก query content มาทั้งหมด
-        if($parent_category_id == 0){
+        if($parent_category_title == '0'){
             $contents = Content::with('category');
         }
         //1.2 หาก Root Category ไม่ใช่ 0 ให้ทำการเลือก IDs Category นั้น และ ลูกๆหลานๆทั้งหมด
         //1.2.1 และเลือกเฉพาะ contents ที่อยู่ใน Category IDs ที่เลือกมาเท่านั้น
         else{
-            $familyCategoryIDs = ContentCategory::whereDescendantOrSelf($parent_category_id)->pluck('id');
+            $parent = ContentCategory::where('title',$parent_category_title)->first();
+            $familyCategoryIDs = ContentCategory::whereDescendantOrSelf($parent->id)->pluck('id');
             $contents = Content::with('category')->whereIn('category_id',$familyCategoryIDs);
         }
 

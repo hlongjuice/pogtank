@@ -25,8 +25,7 @@
                     <!--Custom Button-->
                     <template slot="customTopBtn">
                         <div class="col-md-6">
-                            <router-link :to="{name:'portfolio_create'}" class="btn btn-primary">สร้างรายการใหม่
-                            </router-link>
+                            <a @click="openCreatePage" class="btn btn-primary"> สร้างรายการใหม่ </a>
                         </div>
                     </template>
                     <template slot="itemColumn" slot-scope="props">
@@ -97,7 +96,7 @@
         methods: {
             getContents(page = 1) {
                 this.checkedItems.splice(0);
-                contentService.getAllContents(page,this.selectedCategory,this.searchText)
+                contentService.getAllContents(page,this.selectedCategory,this.searchText,'Portfolio')
                     .then(result => {
                         console.log('Content Result', result);
                         this.content = result;
@@ -108,6 +107,10 @@
                 })
 
             },
+            openCreatePage(){
+                this.$router.push({name:'portfolio_create'})
+            }
+            ,
             editContent(item) {
                 this.$router.push({path: `/portfolio/edit/${item.id}`});
             },

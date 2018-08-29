@@ -25,8 +25,7 @@
                     <!--Custom Button-->
                     <template slot="customTopBtn">
                         <div class="col-md-6">
-                            <router-link :to="{name:'content_create'}" class="btn btn-primary">สร้างรายการใหม่
-                            </router-link>
+                            <a @click="openCreatePage" class="btn btn-primary"> สร้างรายการใหม่ </a>
                         </div>
                     </template>
                     <template slot="itemColumn" slot-scope="props">
@@ -108,6 +107,10 @@
                 })
 
             },
+            openCreatePage(){
+                this.$router.push({name:'content_create'});
+            }
+            ,
             editContent(item) {
                 this.$router.push({path: `/content/edit/${item.id}`});
             },

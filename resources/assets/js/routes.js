@@ -16,6 +16,11 @@ import Portfolio from './views/admin/portfolio/Portfolio';
 import PortfolioList from './views/admin/portfolio/PortfolioList';
 import PortfolioCreate from './views/admin/portfolio/PortfolioCreate';
 import PortfolioEdit from './views/admin/portfolio/PortfolioEdit';
+//PortFolio Category
+import PortfolioCategory from './views/admin/portfolio/portfoilo_category/PortfolioCategory';
+import PortfolioCategoryList from './views/admin/portfolio/portfoilo_category/PortfolioCategoryList';
+import PortfolioCategoryCreate from './views/admin/portfolio/portfoilo_category/PortfolioCategoryCreate';
+import PortfolioCategoryEdit from './views/admin/portfolio/portfoilo_category/PortfolioCategoryEdit';
 
 
 // window.VueRouter = VueRouter;
@@ -63,6 +68,25 @@ const routes = [
             // -- Edit
             {
                 path: 'edit/:id', name: 'portfolio_edit', component: PortfolioEdit,
+                meta: {breadcrumb: routeParams => `แก้ไข - ${routeParams.id}`}
+            }
+        ]
+    },
+    //Portfolio Category
+    {
+        path:'/portfolio_category',component:PortfolioCategory,meta:{breadcrumb:'หมวดหมู่ผลงาน'},
+        children: [
+            {path: '', name: 'portfolio_category', component: PortfolioCategoryList},
+            // -- Create
+            {
+                path: 'create',
+                name: 'portfolio_category_create',
+                component: PortfolioCategoryCreate,
+                meta: {breadcrumb: 'สร้างใหม่'}
+            },
+            // -- Edit
+            {
+                path: 'edit/:id', name: 'portfolio_category_edit', component: PortfolioCategoryEdit,
                 meta: {breadcrumb: routeParams => `แก้ไข - ${routeParams.id}`}
             }
         ]

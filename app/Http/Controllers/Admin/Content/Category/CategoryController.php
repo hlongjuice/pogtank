@@ -11,8 +11,9 @@ use DB;
 class CategoryController extends Controller
 {
     //Add Category
-    public function addCategory(Request $request)
+    public function addCategory(Request $request,$master_category_title)
     {
+        $parentID = $request->input('parentCategory')['id'];
         $categoryInput = [
             'title' => $request->input('title'),
             'body' => $request->input('body'),
@@ -21,7 +22,17 @@ class CategoryController extends Controller
         $result = null;
         //ถ้าเป็นหมวดหมู่หลัก
         if ($request->input('parentCategory')['id'] == 0) {
-            $result = ContentCategory::create($categoryInput);
+            //หาก $master Category ไม่ใช่ 0
+            //Category ใหม่เป็นลูกของ Master
+            if($master_category_title != '0'){
+                $parent = ContentCategory::where('title',$master_category_title)->first();
+                $result = $parent->children()->create($categoryInput);
+            }
+            //หากเป็น 0 คือเป็นหมวดหมู่ Category ใหม่ เป็น Master Parent
+            else{
+
+                $result = ContentCategory::create($categoryInput);
+            }
         } else {
             $parent = ContentCategory::withDepth()->where('id', $request->input('parentCategory')['id'])->first();
             $result = $parent->children()->create($categoryInput);
@@ -41,15 +52,12 @@ class CategoryController extends Controller
     {
         //Get Category แบบ nested Tree เพื่อจะนำไป Recursive ใส่ '-' ไว้ ด้านหน้า title ตามลำดับ LV
         $categories = ContentCategory::withDepth()->with('descendants');
-//        if ($parent > 0) {
-        if($parentTitle !=0 && $parentTitle != ''){
-            dd('Yo!');
+        if($parentTitle !='0'){
             $parent = ContentCategory::where('title',$parentTitle)->first();
             $categories->whereDescendantOf($parent->id);
         }
         $categories=$categories->get()->toTree();
         $flatCategories = collect([]);
-
         //Recursive Set '-'
         $traverse = function ($categories, $prefix = '') use (&$traverse, $flatCategories) {
             foreach ($categories as $category) {
@@ -62,9 +70,7 @@ class CategoryController extends Controller
                 $traverse($category->children, $prefix . '-');
             }
         };
-
         $traverse($categories);
-//        return response()->json($flatCategories);
         return $flatCategories;
     }
 

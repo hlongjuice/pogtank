@@ -20,7 +20,7 @@
                     >
                     <template slot="customTopBtn">
                         <div class="col-md-6">
-                            <a @click="openCreatePage" class="btn btn-primary">
+                            <a  @click="createPage" class="btn btn-primary">
                                 สร้างรายการใหม่
                             </a>
                         </div>
@@ -28,7 +28,6 @@
                     <template slot="itemColumn" slot-scope="props">
                         <td>{{props.index +1 }}</td>
                         <td class="text-left">{{props.item.title}}</td>
-                        <!--<td><router-link tag="a" :to="'/content_category/edit/'+props.item.id" class="btn btn-warning">แก้ไข</router-link></td>-->
                         <td><a @click="editCategory(props.item)" class="btn btn-warning">แก้ไข</a></td>
                     </template>
                 </app-table>
@@ -42,7 +41,7 @@
 
     let contentCategoryService = new ContentCategoryService();
     export default {
-        name: "ContentCategoryList",
+        name: "PortfolioCategoryList",
         data() {
             return {
                 categories: [],
@@ -73,7 +72,7 @@
             //Get All Categories
             getCategories() {
                 this.showLoading = true;
-                contentCategoryService.getAllCategories()
+                contentCategoryService.getAllCategories('Portfolio')
                     .then(result => {
                         this.categories = result;
                         this.$store.commit('stopLoading');
@@ -83,14 +82,13 @@
                     this.$store.commit('stopLoading');
                 })
             },
-            //Create
-            openCreatePage(){
-                this.$router.push({name:'content_category_create'})
+            createPage(){
+              this.$router.push({name:'portfolio_category_create'})
             },
             //Edit Category
             editCategory(item) {
                 this.$router.push({
-                    path: `edit/${item.id}`
+                    path: `portfolio_category/edit/${item.id}`
                 });
             },
             //Delete Categories

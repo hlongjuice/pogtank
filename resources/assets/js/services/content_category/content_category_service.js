@@ -5,8 +5,8 @@ export class ContentCategoryService {
         this.url = webUrlService.getUrl();
     }
     //Add Category
-    addCategory(dataInput) {
-        let url = this.url + '/admin/content_categories/add_category';
+    addCategory(dataInput,parent_category_title = 0) {
+        let url = this.url + '/admin/content_categories/'+parent_category_title+'/add_category';
         return new Promise((resolve, reject) => {
             axios.post(url,dataInput)
                 .then(result => {

@@ -40,6 +40,9 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Admin\Project\ProjectOrder whereRefereeName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Admin\Project\ProjectOrder whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property string|null $referee_calculated_date
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Admin\Project\ProjectReferee[] $referees
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Admin\Project\ProjectOrder whereRefereeCalculatedDate($value)
  */
 class ProjectOrder extends Model
 {

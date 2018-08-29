@@ -82,12 +82,30 @@
                     </a>
                 </router-link>
                 <!--Portfolio-->
-                <router-link tag="li" :to="{name:'portfolio'}">
+                <li class="">
                     <a href="javascript:;">
-                        <i class="fab fa-product-hunt"></i>
+                        <i class="far fa-shopping-cart"></i>
                         <span class="title">ผลงาน</span>
+                        <span class="selected"></span>
+                        <span class="arrow"></span>
                     </a>
-                </router-link>
+                    <ul class="sub-menu" style="">
+                        <!--Portfolio-->
+                        <router-link tag="li" :to="{name:'portfolio'}">
+                            <a href="javascript:;">
+                                <i class="fab fa-product-hunt"></i>
+                                <span class="title">รายการ</span>
+                            </a>
+                        </router-link>
+                        <!--Portfolio Category-->
+                        <router-link tag="li" :to="{name:'portfolio_category'}">
+                            <a href="javascript:;">
+                                <i class="fab fa-product-hunt"></i>
+                                <span class="title">หมวดหมู่</span>
+                            </a>
+                        </router-link>
+                    </ul>
+                </li>
             </ul>
             <!-- END SIDEBAR MENU -->
         </div>

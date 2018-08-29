@@ -329,7 +329,7 @@ Route::prefix('admin')->middleware('auth')
         //region -- Content Categories
         Route::prefix('content_categories')->group(function(){
             // -- -- Add
-            Route::post('add_category','Admin\Content\Category\CategoryController@addCategory');
+            Route::post('{parent_category_title}/add_category','Admin\Content\Category\CategoryController@addCategory');
             // -- -- Get Single Category
             Route::get('get_category/{id}','Admin\Content\Category\CategoryController@getCategory');
             // -- -- Get All Categories
