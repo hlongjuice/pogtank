@@ -12,15 +12,18 @@ class ContentController extends Controller
 {
     public function addContent(Request $request)
     {
-        $result = Content::create([
+        $newContent = Content::create([
             'title' => trim($request->input('title')),
             'body' => $request->input('body'),
-            'category_id' => $request->input('category')['id']
+            'category_id' => json_decode($request->input('category'))->id
         ]);
         if($request->hasFile('images')){
-            dd('Has File');
+          $contentImageController = new  ContentImageController();
+          foreach ($request->file('images') as $image)
+          $path= $contentImageController->uploadImage($image,$newContent->id);
+          dd('Path',$path);
         }
-        return $result;
+        return $newContent;
     }
 
     //Get Content Per Page ใช้ในการ filter content ด้วย

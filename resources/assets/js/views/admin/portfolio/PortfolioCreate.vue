@@ -87,7 +87,7 @@
                                     ></tiny-mce>
                                 </div>
                             </div>
-                            <!-- -- File Upload-->
+                            <!-- -- Image Upload-->
                             <div class="col-md-12">
                                 <div class="row">
                                     <div v-if="form.images.length > 0" class="col-md-12">
@@ -107,15 +107,15 @@
                                         </app-table>
                                     </div>
                                 </div>
+                                <!--@input-filter สำหรับกรองรูปและสร้าง thumbnail-->
                                 <file-upload
                                         ref="upload"
                                         v-model="form.images"
-                                        class="btn btn-default"
+                                        class="btn btn-info"
                                         :multiple="true"
                                         @input-filter="inputFilter"
-                                        @input-file="inputFile"
                                 >
-                                    Upload File <i class="fa fa-plus"></i>
+                                    เพิ่มรูปภาพ  <i class="fa fa-plus"></i>
                                 </file-upload>
                             </div>
                         </div>
@@ -164,7 +164,7 @@
                 let formData = new FormData();
                 formData.append('title', this.form.title);
                 formData.append('body', this.form.body);
-                formData.append('category', this.form.category);
+                formData.append('category', JSON.stringify(this.form.category));
                 this.form.images.forEach(image => {
                     formData.append('images[]', image.file)
                 });
@@ -200,7 +200,7 @@
                     //If All Input Validate
                     if (result) {
                         this.$store.commit('loading');
-                        contentService.addContent(this.form)
+                        contentService.addContent(this.formDataInput)
                             .then(result => {
                                 this.$store.commit('refreshParent');
                                 this.$router.push({name: 'portfolio'});
@@ -234,16 +234,20 @@
             },
             deleteImages(param){
                 let result='';
+                //วน filter เช็ค images ดูว่ามี image อันไหนที่ไม่ตรงกับที่จะลบออก
                 this.form.images=this.form.images.filter(image=>{
+                    //โดยใช้ findIndex มาหา index ที่เป็น -1 ก็คือไม่ตรงกับที่จะลบ และ ให้เก็บ image นั้นไว้
+                    //อันที่ไม่ใช่ -1 คืออันที่ต้องการลบออก ดั้งนั้นจึงเป็นเหตุผลว่าทำไมต้องเป็น -1
                     return param.checkedItems.findIndex(item=>{
                        return item.id === image.id
                     }) === -1;
-                })
-                console.log('images',result);
-
+                });
             },
             inputFilter(newFile, oldFile, prevent) {
                 if (newFile && !oldFile) {
+                    console.log('Before Add NEw File ',newFile);
+                    //newFile.name=
+                    newFile = newFile.name.replace(/\s+/g,'-').toLowerCase();
                     // Before adding a file
                     // 添加文件前
                     // Filter system files or hide files
@@ -255,23 +259,6 @@
                     // 过滤 php html js 文件
                     if (/\.(php5?|html?|jsx?)$/i.test(newFile.name)) {
                         return prevent()
-                    }
-                    // Automatic compression
-                    // 自动压缩
-                    if (newFile.file && newFile.type.substr(0, 6) === 'image/' && this.autoCompress > 0 && this.autoCompress < newFile.size) {
-                        newFile.error = 'compressing'
-                        const imageCompressor = new ImageCompressor(null, {
-                            convertSize: Infinity,
-                            maxWidth: 512,
-                            maxHeight: 512,
-                        })
-                        imageCompressor.compress(newFile.file)
-                            .then((file) => {
-                                this.$refs.upload.update(newFile, {error: '', file, size: file.size, type: file.type})
-                            })
-                            .catch((err) => {
-                                this.$refs.upload.update(newFile, {error: err.message || 'compress'})
-                            })
                     }
                 }
                 if (newFile && (!oldFile || newFile.file !== oldFile.file)) {
@@ -289,60 +276,7 @@
                         newFile.thumb = newFile.blob
                     }
                 }
-            },
-            inputFile(newFile, oldFile) {
-                if (newFile && !oldFile) {
-                    // Add file
-                }
-
-                if (newFile && oldFile) {
-                    // Update file
-
-                    // Start upload
-                    if (newFile.active !== oldFile.active) {
-                        console.log('Start upload', newFile.active, newFile)
-
-                        // min size
-                        if (newFile.size >= 0 && newFile.size < 100 * 1024) {
-                            newFile = this.$refs.upload.update(newFile, {error: 'size'})
-                        }
-                    }
-
-                    // Upload progress
-                    if (newFile.progress !== oldFile.progress) {
-                        console.log('progress', newFile.progress, newFile)
-                    }
-
-                    // Upload error
-                    if (newFile.error !== oldFile.error) {
-                        console.log('error', newFile.error, newFile)
-                    }
-
-                    // Uploaded successfully
-                    if (newFile.success !== oldFile.success) {
-                        console.log('success', newFile.success, newFile)
-                    }
-                }
-
-                if (!newFile && oldFile) {
-                    // Remove file
-
-                    // Automatically delete files on the server
-                    if (oldFile.success && oldFile.response.id) {
-                        // $.ajax({
-                        //   type: 'DELETE',
-                        //   url: '/file/delete?id=' + oldFile.response.id,
-                        // });
-                    }
-                }
-
-                // Automatic upload
-                if (Boolean(newFile) !== Boolean(oldFile) || oldFile.error !== newFile.error) {
-                    if (!this.$refs.upload.active) {
-                        this.$refs.upload.active = true
-                    }
-                }
-            },
+            }
         }
     }
 </script>

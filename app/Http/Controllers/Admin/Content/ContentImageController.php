@@ -55,7 +55,7 @@ class ContentImageController extends Controller
             $ramDomString = rand(0,1000);
             $originalName=$imageInput->getClientOriginalName();
             $fileName = pathinfo($originalName, PATHINFO_FILENAME);
-            $filePath='images/content/'.$today.'/'.$current.'-'.$fileName.'.jpg';
+            $filePath='images/content/'.$contentID.'/'.$current.'-'.$fileName.'.jpg';
 
             $img=Image::make($imageInput);
 
