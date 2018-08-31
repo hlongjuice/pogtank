@@ -247,6 +247,7 @@
                 if (newFile && !oldFile) {
                     console.log('Before Add NEw File ',newFile);
                     console.log('Test');
+                    console.log('This is 1.02 Version');
                     //newFile.name=
                     newFile = newFile.name.replace(/\s+/g,'-').toLowerCase();
                     // Before adding a file
