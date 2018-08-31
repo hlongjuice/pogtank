@@ -246,6 +246,7 @@
             inputFilter(newFile, oldFile, prevent) {
                 if (newFile && !oldFile) {
                     console.log('Before Add NEw File ',newFile);
+                    console.log('Test');
                     //newFile.name=
                     newFile = newFile.name.replace(/\s+/g,'-').toLowerCase();
                     // Before adding a file
