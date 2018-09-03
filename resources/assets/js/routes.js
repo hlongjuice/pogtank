@@ -11,25 +11,19 @@ import ContentCategory from './views/admin/content/content_category/ContentCateg
 import ContentCategoryCreate from './views/admin/content/content_category/ContentCategoryCreate';
 import ContentCategoryList from './views/admin/content/content_category/ContentCategoryList';
 import ContentCategoryEdit from './views/admin/content/content_category/ContentCategoryEdit';
-//Portfolio
-import Portfolio from './views/admin/portfolio/Portfolio';
-import PortfolioList from './views/admin/portfolio/PortfolioList';
-import PortfolioCreate from './views/admin/portfolio/PortfolioCreate';
-import PortfolioEdit from './views/admin/portfolio/PortfolioEdit';
-//PortFolio Category
-import PortfolioCategory from './views/admin/portfolio/portfoilo_category/PortfolioCategory';
-import PortfolioCategoryList from './views/admin/portfolio/portfoilo_category/PortfolioCategoryList';
-import PortfolioCategoryCreate from './views/admin/portfolio/portfoilo_category/PortfolioCategoryCreate';
-import PortfolioCategoryEdit from './views/admin/portfolio/portfoilo_category/PortfolioCategoryEdit';
+//Fixed Category Content
+import FixedCategoryContent from './views/admin/content/FixedCategoryContent'
 
 
 // window.VueRouter = VueRouter;
 let pathName = window.location.pathname;
 let webUrl = new WebUrl();
 const routes = [
+    //Fixed Category Content
+    {path:'/fixed_category_content/:categoryTitle',component:FixedCategoryContent,meta:{breadcrumb: routeParams => routeParams.categoryTitle}},
     //Content
     {
-        path: '/content', component: Content, meta: {breadcrumb: 'เนื้อหา'},
+        path: '/content/:categoryTitle', component: Content, meta: {breadcrumb: 'เนื้อหา'},
         children: [
             {path: '', name: 'content', component: ContentList},
             {path: 'create', name: 'content_create', component: ContentCreate, meta: {breadcrumb: 'สร้างใหม่'}},
@@ -38,7 +32,7 @@ const routes = [
     },
     //Content Category
     {
-        path: '/content_category', component: ContentCategory, meta: {breadcrumb: 'หมวดหมู่เนื้อหา'},
+        path: '/content_category/:categoryTitle', component: ContentCategory, meta: {breadcrumb: 'หมวดหมู่เนื้อหา'},
         children: [
             {path: '', name: 'content_category', component: ContentCategoryList},
             {
@@ -53,45 +47,6 @@ const routes = [
             }
         ]
     },
-    //Portfolio
-    {
-        path:'/portfolio',component:Portfolio,meta:{breadcrumb:'ผลงาน'},
-        children: [
-            {path: '', name: 'portfolio', component: PortfolioList},
-            // -- Create
-            {
-                path: 'create',
-                name: 'portfolio_create',
-                component: PortfolioCreate,
-                meta: {breadcrumb: 'สร้างใหม่'}
-            },
-            // -- Edit
-            {
-                path: 'edit/:id', name: 'portfolio_edit', component: PortfolioEdit,
-                meta: {breadcrumb: routeParams => `แก้ไข - ${routeParams.id}`}
-            }
-        ]
-    },
-    //Portfolio Category
-    {
-        path:'/portfolio_category',component:PortfolioCategory,meta:{breadcrumb:'หมวดหมู่ผลงาน'},
-        children: [
-            {path: '', name: 'portfolio_category', component: PortfolioCategoryList},
-            // -- Create
-            {
-                path: 'create',
-                name: 'portfolio_category_create',
-                component: PortfolioCategoryCreate,
-                meta: {breadcrumb: 'สร้างใหม่'}
-            },
-            // -- Edit
-            {
-                path: 'edit/:id', name: 'portfolio_category_edit', component: PortfolioCategoryEdit,
-                meta: {breadcrumb: routeParams => `แก้ไข - ${routeParams.id}`}
-            }
-        ]
-    }
-    // meta: {breadcrumb :'แก้ไขหมวดหมู่' }}
 ];
 
 const router = new VueRouter({

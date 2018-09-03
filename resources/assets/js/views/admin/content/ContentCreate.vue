@@ -87,6 +87,37 @@
                                     ></tiny-mce>
                                 </div>
                             </div>
+                            <!-- -- Image Upload-->
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div v-if="form.images.length > 0" class="col-md-12">
+                                        <app-table
+                                                :columns="['ภาพตัวอย่าง','ชื่อภาพ']"
+                                                :columnWidths="[50,50]"
+                                                :hasCheckBox="true"
+                                                :items="form.images"
+                                                :checkedItemsInit="checkedImages"
+                                                itemRowClass="text-center"
+                                                @deleteItems="deleteImages"
+                                        >
+                                            <template slot="itemColumn" slot-scope="props">
+                                                <td><img :src="props.item.thumb" width="150" height="auto"></td>
+                                                <td>{{props.item.name}}</td>
+                                            </template>
+                                        </app-table>
+                                    </div>
+                                </div>
+                                <!--@input-filter สำหรับกรองรูปและสร้าง thumbnail-->
+                                <file-upload
+                                        ref="upload"
+                                        v-model="form.images"
+                                        class="btn btn-info"
+                                        :multiple="true"
+                                        @input-filter="inputFilter"
+                                >
+                                    เพิ่มรูปภาพ <i class="fa fa-plus"></i>
+                                </file-upload>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -101,29 +132,49 @@
     import {ContentCategoryService} from "../../../services/content_category/content_category_service";
     import WebUrl from '../../../services/webUrl';
     import {ContentService} from "../../../services/content/content_service";
+    import FileUpload from 'vue-upload-component';
 
     let webUrl = new WebUrl();
     let contentCategoryService = new ContentCategoryService();
     let contentService = new ContentService();
     export default {
         name: "ContentCreate",
+        components: {
+            'tiny-mce': Editor,
+            FileUpload
+        },
         data() {
             return {
                 form: {
                     title: '',
                     body: '',
-                    category: ''
+                    category: '',
+                    images: []
                 },
+                checkedImages:[],
                 categories: [],
+                categoryTitle:this.$route.params.categoryTitle,
                 tinyMceInit: tinyMceConfig
             }
         },
-        computed: {},
+        computed: {
+            formDataInput() {
+                let formData = new FormData();
+                formData.append('title', this.form.title);
+                formData.append('body', this.form.body);
+                formData.append('category', JSON.stringify(this.form.category));
+                this.form.images.forEach(image => {
+                    //formData.append('ชื่อตัวแปร',ไฟล์,'ชื่อไฟล์ใหม่ที่แก้ไขแล้ว')
+                    formData.append('images[]', image.file,image.name)
+                });
+                return formData;
+            }
+        },
         created() {
             //กำหนด vuex state ไม่ใช้ refresh parent component
             this.$store.commit('notRefreshParent');
             //Get Categories
-            contentCategoryService.getAllCategories()
+            contentCategoryService.getAllCategories(this.categoryTitle)
                 .then(result => {
                     this.categories = result;
                 }).catch(err => {
@@ -131,18 +182,15 @@
             })
         },
         methods: {
-            viewChange(event) {
-                console.log('View Change', event)
-            },
             addContent(form, event) {
                 this.$validator.validateAll(form).then(result => {
                     //If All Input Validate
                     if (result) {
                         this.$store.commit('loading');
-                        contentService.addContent(this.form)
+                        contentService.addContent(this.formDataInput)
                             .then(result => {
                                 this.$store.commit('refreshParent');
-                                this.$router.push({path:'/content/'});
+                                this.$router.push({path: '/content/'+this.categoryTitle});
                             }).catch(err => {
                                 console.log(err)
                             }
@@ -155,25 +203,64 @@
                 if (this.form.title.length > 0 || this.form.body.length > 0) {
                     this.$dialog.confirm("เอกสารยังไม่ได้รับการบันทึก ยืนยันการยกเลิก")
                         .then(() => {
-                            this.$router.push({name: 'content'});
+                            this.$router.push({path: '/content/'+this.categoryTitle});
                         }).catch(() => {
                     })
                 } else {
-                    this.$router.push({name: 'content'});
+                    this.$router.push({path: '/content/'+this.categoryTitle});
                 }
             },
-            saveContent() {
-                //ทำการ refresh component เพราะมีการ save data ใหม่
-                this.$store.commit('refreshParent');
-                //Route back to Content Page
-                this.$router.push({name: 'content'});
+            deleteImages(param){
+                let result='';
+                //วน filter เช็ค images ดูว่ามี image อันไหนที่ไม่ตรงกับที่จะลบออก
+                this.form.images=this.form.images.filter(image=>{
+                    //โดยใช้ findIndex มาหา index ที่เป็น -1 ก็คือไม่ตรงกับที่จะลบ และ ให้เก็บ image นั้นไว้
+                    //อันที่ไม่ใช่ -1 คืออันที่ต้องการลบออก ดั้งนั้นจึงเป็นเหตุผลว่าทำไมต้องเป็น -1
+                    return param.checkedItems.findIndex(item=>{
+                        return item.id === image.id
+                    }) === -1;
+                });
+            },
+            inputFilter(newFile, oldFile, prevent) {
+                if (newFile && !oldFile) {
+                    console.log('Before Add NEw File ',newFile);
+                    //newFile.name=
+                    newFile.name = newFile.name.replace(/\s+/g,'-').toLowerCase();
+                    // Before adding a file
+                    // 添加文件前
+                    // Filter system files or hide files
+                    // 过滤系统文件 和隐藏文件
+                    if (/(\/|^)(Thumbs\.db|desktop\.ini|\..+)$/.test(newFile.name)) {
+                        return prevent()
+                    }
+                    // Filter php html js file
+                    // 过滤 php html js 文件
+                    if (/\.(php5?|html?|jsx?)$/i.test(newFile.name)) {
+                        return prevent()
+                    }
+                }
+                if (newFile && (!oldFile || newFile.file !== oldFile.file)) {
+                    // Create a blob field
+                    // 创建 blob 字段
+                    newFile.blob = ''
+                    let URL = window.URL || window.webkitURL
+                    if (URL && URL.createObjectURL) {
+                        newFile.blob = URL.createObjectURL(newFile.file)
+                    }
+                    // Thumbnails
+                    // 缩略图
+                    newFile.thumb = ''
+                    if (newFile.blob && newFile.type.substr(0, 6) === 'image/') {
+                        newFile.thumb = newFile.blob
+                    }
+                }
             },
             tinyChange(event) {
                 console.log('exeCommand :', event);
-            }
-        },
-        components: {
-            'tiny-mce': Editor
+            },
+            viewChange(event) {
+                console.log('View Change', event)
+            },
         }
     }
 </script>

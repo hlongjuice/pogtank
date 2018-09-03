@@ -40,4 +40,13 @@ class ContentCategory extends Model
     protected $table='content_categories';
     protected $guarded=[];
 
+    public function contents(){
+        return $this->hasMany('App\Models\Admin\Content\Content','category_id');
+    }
+
+    public function latestContent(){
+        return $this->hasOne('App\Models\Admin\Content\Content','category_id')
+            ->with('images')->orderBy('id');
+    }
+
 }

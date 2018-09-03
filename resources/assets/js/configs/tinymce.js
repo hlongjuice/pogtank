@@ -14,15 +14,16 @@ export const tinyMceConfig = {
     //endregion
     //region Menu
     menu: {
-        insert: {title: 'Insert', items: 'image link'},
+        // insert: {title: 'Insert', items: 'image link'},
         table: {title: 'Table', items: 'inserttable tableprops deletetable cell row column'}
     },
     //endregion
     //region ToolBar
-    toolbar: ["undo redo | styleselect| forecolor backcolor | bold italic "
+    toolbar: ["undo redo | fontsizeselect | styleselect| forecolor backcolor | bold underline italic "
     + "| alignleft aligncenter alignright alignjustify |"
     + "bullist numlist outdent indent| code",
-        " link image | fullscreen"],
+        " link | fullscreen"],
+        // " link image | fullscreen"],
     //endregion
     //region Async Method After Init TinyMce
     init_instance_callback: function (editor) {

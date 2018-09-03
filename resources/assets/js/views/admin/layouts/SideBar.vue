@@ -67,20 +67,31 @@
                         </li>
                     </ul>
                 </li>
-                <!--Content-->
-                <router-link tag="li" :to="{name:'content'}">
+                <!--All Content-->
+                <li class="">
                     <a href="javascript:;">
-                        <i class="fab fa-product-hunt"></i>
-                        <span class="title">เนื้อหา</span>
+                        <i class="far fa-shopping-cart"></i>
+                        <span class="title">เนื้อหาทั้งหมด</span>
+                        <span class="selected"></span>
+                        <span class="arrow"></span>
                     </a>
-                </router-link>
-                <!--Content Category-->
-                <router-link tag="li" :to="{name:'content_category'}">
-                    <a href="javascript:;">
-                        <i class="fab fa-product-hunt"></i>
-                        <span class="title">หมวดหมู่เนื้อหา</span>
-                    </a>
-                </router-link>
+                    <ul class="sub-menu" style="">
+                        <!--Content-->
+                        <router-link tag="li" :to="{path:'/content/0'}">
+                            <a href="javascript:;">
+                                <i class="fab fa-product-hunt"></i>
+                                <span class="title">รายการ</span>
+                            </a>
+                        </router-link>
+                        <!--Category-->
+                        <router-link tag="li" :to="{path:'/content_category/0'}">
+                            <a href="javascript:;">
+                                <i class="fab fa-product-hunt"></i>
+                                <span class="title">หมวดหมู่</span>
+                            </a>
+                        </router-link>
+                    </ul>
+                </li>
                 <!--Portfolio-->
                 <li class="">
                     <a href="javascript:;">
@@ -91,14 +102,14 @@
                     </a>
                     <ul class="sub-menu" style="">
                         <!--Portfolio-->
-                        <router-link tag="li" :to="{name:'portfolio'}">
+                        <router-link tag="li" :to="{path:'/content/ผลงาน'}">
                             <a href="javascript:;">
                                 <i class="fab fa-product-hunt"></i>
                                 <span class="title">รายการ</span>
                             </a>
                         </router-link>
                         <!--Portfolio Category-->
-                        <router-link tag="li" :to="{name:'portfolio_category'}">
+                        <router-link tag="li" :to="{path:'/content_category/ผลงาน'}">
                             <a href="javascript:;">
                                 <i class="fab fa-product-hunt"></i>
                                 <span class="title">หมวดหมู่</span>
@@ -106,6 +117,21 @@
                         </router-link>
                     </ul>
                 </li>
+                <!--About Us-->
+                <router-link tag="li" :to="{path:'/fixed_category_content/About Us'}">
+                    <a href="javascript:;">
+                        <i class="fab fa-product-hunt"></i>
+                        <span class="title">About US</span>
+                    </a>
+                </router-link>
+                <!--Contact-->
+                <router-link tag="li" :to="{path:'/fixed_category_content/ข้อมูลติดต่อ'}">
+                    <a href="javascript:;">
+                        <i class="fab fa-product-hunt"></i>
+                        <span class="title">ข้อมูลติดต่อ</span>
+                    </a>
+                </router-link>
+
             </ul>
             <!-- END SIDEBAR MENU -->
         </div>

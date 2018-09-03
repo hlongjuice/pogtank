@@ -46,6 +46,11 @@ class CategoryController extends Controller
         $category = ContentCategory::with('Parent')->where('id', $id)->first();
         return $category;
     }
+    //Get Category from Title
+    public function getCategoryFromTitle($categoryTitle){
+        $category = ContentCategory::with(['Parent','contents','latestContent'])->where('title',$categoryTitle)->first();
+        return $category;
+    }
 
     //Get All Category
     public function getAllCategories($parentTitle)
@@ -55,6 +60,7 @@ class CategoryController extends Controller
         if($parentTitle !='0'){
             $parent = ContentCategory::where('title',$parentTitle)->first();
             $categories->whereDescendantOf($parent->id);
+//            $categories->whereDescendantOrSelf($parent->id);
         }
         $categories=$categories->get()->toTree();
         $flatCategories = collect([]);
@@ -75,9 +81,9 @@ class CategoryController extends Controller
     }
 
     //Get All Categories with Parent Lv 0 หมวดหมู่หลัก
-    public function getAllCategoriesWithRoot($parent)
+    public function getAllCategoriesWithRoot($parentTitle)
     {
-        $flatCategories = $this->getAllCategories($parent);
+        $flatCategories = $this->getAllCategories($parentTitle);
         $flatCategories->prepend([
             'id' => 0,
             'title' => 'หมวดหมู่หลัก'
@@ -86,9 +92,9 @@ class CategoryController extends Controller
     }
 
     //Get All Categories without id
-    public function getAllCategoriesWithoutID($parent,$id)
+    public function getAllCategoriesWithoutID($parentTitle,$id)
     {
-        $flatCategories = $this->getAllCategories($parent);
+        $flatCategories = $this->getAllCategories($parentTitle);
         $flatCategories->prepend([
             'id' => 0,
             'title' => 'หมวดหมู่หลัก'

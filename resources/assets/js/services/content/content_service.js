@@ -52,8 +52,23 @@ export class ContentService {
 
     //Update Content
     updateContent(dataInput) {
-        dataInput._method = 'PUT';
+        // dataInput._method = 'PUT';
+        dataInput.append('_method','PUT');
         let url = this.url + '/admin/contents/update_content';
+        return new Promise((resolve, reject) => {
+            axios.post(url, dataInput)
+                .then(result => {
+                    resolve(result.data)
+                }).catch(err => {
+                reject(err)
+            })
+        })
+    }
+    //Update Or Create Content
+    updateOrCreateContent(dataInput,categoryTitle) {
+        // dataInput._method = 'PUT';
+        dataInput.append('_method','PUT');
+        let url = this.url + '/admin/contents/'+categoryTitle+'/update_or_create_content';
         return new Promise((resolve, reject) => {
             axios.post(url, dataInput)
                 .then(result => {

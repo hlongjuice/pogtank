@@ -17,7 +17,6 @@ export class ContentCategoryService {
         })
     }
     //Get Selected Category
-    //region Get Selected Category
     getCategory(id) {
         let url = this.url + '/admin/content_categories/get_category/'+id;
         return new Promise((resolve, reject) => {
@@ -29,8 +28,18 @@ export class ContentCategoryService {
             })
         })
     }
-
-    //endregion
+    //Get Selected Category
+    getCategoryFromTitle(categoryTitle) {
+        let url = this.url + '/admin/content_categories/get_category_from_title/'+categoryTitle;
+        return new Promise((resolve, reject) => {
+            axios.get(url)
+                .then(result => {
+                    resolve(result.data)
+                }).catch(err => {
+                reject(err)
+            })
+        })
+    }
 
     // Get All Categories
     getAllCategories(parent = 0) {

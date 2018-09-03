@@ -84,6 +84,7 @@
         name: "ContentCategoryCreate",
         data() {
             return {
+                categoryTitle:this.$route.params.categoryTitle,
                 form: {
                     title: '',
                     parentCategory: '',
@@ -115,7 +116,7 @@
                 })
             },
             getAllCategories() {
-                contentCategoryService.getAllCategoriesWithRoot()
+                contentCategoryService.getAllCategoriesWithRoot(this.categoryTitle)
                     .then(result => {
                         this.parentCategoryList = result;
                     }).catch(err => {
@@ -123,7 +124,7 @@
                 })
             },
             back() {
-                this.$router.push({name: 'content_category'});
+                this.$router.push({path:'/content_category/'+this.categoryTitle});
             }
         }
     }

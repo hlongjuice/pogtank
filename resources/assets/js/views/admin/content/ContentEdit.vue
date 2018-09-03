@@ -87,6 +87,60 @@
                                     ></tiny-mce>
                                 </div>
                             </div>
+                            <!--Old Image-->
+                            <div v-if="form.images.length > 0" class="col-xs-12">
+                                <h3>รูปภาพที่อัพโหลดไว้แล้ว</h3>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <app-table
+                                                :columns="['ภาพตัวอย่าง']"
+                                                :columnWidths="[100]"
+                                                :hasCheckBox="true"
+                                                :items="form.images"
+                                                :checkedItemsInit="checkedImages"
+                                                itemRowClass="text-center"
+                                                @deleteItems="deleteOldImage"
+                                        >
+                                            <template slot="itemColumn" slot-scope="props">
+                                                <td><img :src="props.item.path" width="150" height="auto"></td>
+                                            </template>
+                                        </app-table>
+                                    </div>
+                                </div>
+                                <hr>
+                            </div>
+                            <!-- -- New Image Upload-->
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div v-if="form.newImages.length > 0" class="col-md-12">
+                                        <h3>รูปภาพใหม่</h3>
+                                        <app-table
+                                                :columns="['ภาพตัวอย่าง','ชื่อภาพ']"
+                                                :columnWidths="[50,50]"
+                                                :hasCheckBox="true"
+                                                :items="form.newImages"
+                                                :checkedItemsInit="checkedImages"
+                                                itemRowClass="text-center"
+                                                @deleteItems="deleteNewImages"
+                                        >
+                                            <template slot="itemColumn" slot-scope="props">
+                                                <td><img :src="props.item.thumb" width="150" height="auto"></td>
+                                                <td>{{props.item.name}}</td>
+                                            </template>
+                                        </app-table>
+                                    </div>
+                                </div>
+                                <!--@input-filter สำหรับกรองรูปและสร้าง thumbnail-->
+                                <file-upload
+                                        ref="upload"
+                                        v-model="form.newImages"
+                                        class="btn btn-info"
+                                        :multiple="true"
+                                        @input-filter="inputFilter"
+                                >
+                                    เพิ่มรูปภาพ <i class="fa fa-plus"></i>
+                                </file-upload>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -100,34 +154,57 @@
     import {ContentCategoryService} from "../../../services/content_category/content_category_service";
     import {tinyMceConfig} from "../../../configs/tinymce";
     import TinyMce from '@tinymce/tinymce-vue';
+    import FileUpload from 'vue-upload-component';
 
     let contentService = new ContentService();
     let contentCategoryService = new ContentCategoryService();
     export default {
         name: "ContentEdit",
         components: {
-            'tiny-mce': TinyMce
+            'tiny-mce': TinyMce,
+            FileUpload
         },
         data(){
           return{
+              categoryTitle:this.$route.params.categoryTitle,
               form:{
                   id:this.$route.params.id,
                   title:'',
                   body:'',
-                  category:''
+                  category:'',
+                  images:[],
+                  newImages:[]
               },
+              checkedImages:[],
+              checkedNewImages:[],
               categories:[],
               tinyMceInit:tinyMceConfig
           }
+        },
+        computed:{
+            formDataInput() {
+                let formData = new FormData();
+                formData.append('id',this.form.id);
+                formData.append('title', this.form.title);
+                formData.append('body', this.form.body);
+                formData.append('category', JSON.stringify(this.form.category));
+                this.form.newImages.forEach(image => {
+                    //formData.append('ชื่อตัวแปร',ไฟล์,'ชื่อไฟล์ใหม่ที่แก้ไขแล้ว')
+                    formData.append('newImages[]', image.file,image.name)
+                });
+                return formData;
+            }
         },
         created(){
             this.$store.commit('loading');
             Promise.all([
                 contentService.getContent(this.form.id)
                     .then(result=>{
+                        console.log('result',result);
                         this.form.title = result.title;
                         this.form.body = result.body;
                         this.form.category = result.category;
+                        this.form.images = result.images;
                     }).catch(err=>{console.log(err)}),
                 contentCategoryService.getAllCategories()
                     .then(result=>{
@@ -142,23 +219,71 @@
 
         },
         methods:{
+            backToPreviousPage(){
+                this.$router.push({path:'/content/'+this.categoryTitle})
+            },
+            deleteOldImage(){
+
+            },
+            deleteNewImages(param){
+                let result='';
+                //วน filter เช็ค images ดูว่ามี image อันไหนที่ไม่ตรงกับที่จะลบออก
+                this.form.newImages=this.form.newImages.filter(image=>{
+                    //โดยใช้ findIndex มาหา index ที่เป็น -1 ก็คือไม่ตรงกับที่จะลบ และ ให้เก็บ image นั้นไว้
+                    //อันที่ไม่ใช่ -1 คืออันที่ต้องการลบออก ดั้งนั้นจึงเป็นเหตุผลว่าทำไมต้องเป็น -1
+                    return param.checkedItems.findIndex(item=>{
+                        return item.id === image.id
+                    }) === -1;
+                });
+            },
+            inputFilter(newFile, oldFile, prevent) {
+                if (newFile && !oldFile) {
+                    console.log('Before Add NEw File ',newFile);
+                    //newFile.name=
+                    newFile.name = newFile.name.replace(/\s+/g,'-').toLowerCase();
+                    // Before adding a file
+                    // 添加文件前
+                    // Filter system files or hide files
+                    // 过滤系统文件 和隐藏文件
+                    if (/(\/|^)(Thumbs\.db|desktop\.ini|\..+)$/.test(newFile.name)) {
+                        return prevent()
+                    }
+                    // Filter php html js file
+                    // 过滤 php html js 文件
+                    if (/\.(php5?|html?|jsx?)$/i.test(newFile.name)) {
+                        return prevent()
+                    }
+                }
+                if (newFile && (!oldFile || newFile.file !== oldFile.file)) {
+                    // Create a blob field
+                    // 创建 blob 字段
+                    newFile.blob = ''
+                    let URL = window.URL || window.webkitURL
+                    if (URL && URL.createObjectURL) {
+                        newFile.blob = URL.createObjectURL(newFile.file)
+                    }
+                    // Thumbnails
+                    // 缩略图
+                    newFile.thumb = ''
+                    if (newFile.blob && newFile.type.substr(0, 6) === 'image/') {
+                        newFile.thumb = newFile.blob
+                    }
+                }
+            },
             updateContent(form){
                 this.$validator.validateAll(form).then(result => {
                     //If All Input Validate
                     if (result) {
                         this.$store.commit('loading');
-                        contentService.updateContent(this.form)
+                        contentService.updateContent(this.formDataInput)
                             .then(result=>{
                                 this.$store.commit('refreshParent');
-                                this.$router.push({name:'content'});
+                                this.$router.push({path:'/content/'+this.categoryTitle});
                             }).catch(err=>{
 
                         })
                     }
                 })
-            },
-            backToPreviousPage(){
-                this.$router.push({name:'content'})
             }
         }
     }

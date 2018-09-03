@@ -84,6 +84,7 @@
         name: "ContentCategoryEdit",
         data() {
             return {
+                categoryTitle:this.$route.params.categoryTitle,
                 form: {
                     id:'',
                     title:'',
@@ -152,7 +153,7 @@
                             .then(result=>{
                                 this.$store.commit('stopLoading');
                                 this.$store.commit('refreshParent');
-                                this.$router.push({path:'/content_category/'})
+                                this.$router.push({path:'/content_category/'+this.categoryTitle})
                             }).catch(err=>{
                                 alert('ไม่สามารถเพิ่มข้อมูลได้');
                                 console.log(err)
@@ -161,7 +162,7 @@
                 })
             },
             back() {
-                this.$router.push({name: 'content_category'});
+                this.$router.push({path:'/content_category/'+this.categoryTitle});
                 // this.$router.back();
             }
 

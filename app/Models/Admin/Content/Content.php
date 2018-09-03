@@ -34,4 +34,7 @@ class Content extends Model
     public function category(){
         return $this->belongsTo('App\Models\Admin\Content\ContentCategory','category_id');
     }
+    public function images(){
+        return $this->hasMany('App\Models\Admin\Content\ContentImage','content_id');
+    }
 }

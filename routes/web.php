@@ -308,11 +308,13 @@ Route::prefix('admin')->middleware('auth')
             // -- --Add Content
             Route::post('add_content','Admin\Content\ContentController@addContent');
             // -- --Get All Contents
-            Route::post('{parent_category_id}/get_all_contents','Admin\Content\ContentController@getAllContents');
+            Route::post('{parent_category_title}/get_all_contents','Admin\Content\ContentController@getAllContents');
             // -- --Get Content
             Route::get('get_content/{id}','Admin\Content\ContentController@getContent');
             // -- --Update Content
             Route::put('update_content','Admin\Content\ContentController@updateContent');
+            // -- -- Update Or Create Content
+            Route::put('{parent_category_title}/update_or_create_content','Admin\Content\ContentController@updateOrCreateContent');
             // -- --Upload Image
             Route::post('upload_image_in_content','Admin\Content\ContentImageController@uploadImageInContent');
             // -- --Delete Content
@@ -325,6 +327,8 @@ Route::prefix('admin')->middleware('auth')
             Route::post('{parent_category_title}/add_category','Admin\Content\Category\CategoryController@addCategory');
             // -- -- Get Single Category
             Route::get('get_category/{id}','Admin\Content\Category\CategoryController@getCategory');
+            // -- -- Get Single Category from title
+            Route::get('get_category_from_title/{categoryTitle}','Admin\Content\Category\CategoryController@getCategoryFromTitle');
             // -- -- Get All Categories
             Route::get('get_all_categories/{parent_id}','Admin\Content\Category\CategoryController@getAllCategories');
             // -- -- Get All Categories with Root

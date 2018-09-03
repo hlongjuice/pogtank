@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- Use Vue Form Validate-->
-        <form @submit.prevent="addContent('form',$event)"
+        <form @submit.prevent="updateOrCreateContent('form',$event)"
               data-vv-scope="form"
         >
             <!-- Portlet -->
@@ -9,7 +9,7 @@
                 <!-- Title -->
                 <div class="portlet-title">
                     <div class="caption">
-                        <i class="fa fa-reorder"></i>สร้างรายการใหม่
+                        <i class="fa fa-reorder"></i>About Us
                     </div>
                 </div>
                 <!-- Body -->
@@ -32,51 +32,6 @@
                         </div>
                         <!--Form-->
                         <div class="row">
-                            <!-- --Tittle -->
-                            <div class="col-md-8">
-                                <div class="form-group">
-                                    <label for="content_title" class="control-label">หัวข้อ</label>
-                                    <div :class="{'input-error':errors.has('form.content_title')}">
-                                        <input
-                                                v-validate="'required'"
-                                                v-model="form.title" id="content_title"
-                                                name="content_title" class="form-control">
-                                    </div>
-                                    <span v-show="errors.has('form.content_title')"
-                                          class="text-error text-danger">กรุณากรอกข้อมูล</span>
-                                </div>
-                            </div>
-                            <!-- Category -->
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label class="control-label">หมวดหมู่รายการ</label>
-                                    <div :class="{'input-error':errors.has('form.category')}">
-                                        <!-- label คือ object key ที่จะใช้แสดงหลังเลือก เช่น name,title -->
-                                        <multiselect
-                                                v-model="form.category"
-                                                placeholder="" label="title" track-by="id"
-                                                :options="categories" :option-height="104"
-                                                :show-labels="false"
-                                                :allow-empty="false"
-                                                :max-height="150"
-                                        >
-                                            <template slot="option" slot-scope="props">
-                                                <div class="option__desc">
-                                                    <span class="option__title"> {{ props.option.title }}</span>
-                                                </div>
-                                            </template>
-                                        </multiselect>
-                                        <label>
-                                            <input
-                                                    v-validate="'required'"
-                                                    name="category" hidden
-                                                    v-model="form.category">
-                                        </label>
-                                    </div>
-                                    <span v-show="errors.has('form.category')"
-                                          class="text-error text-danger">กรุณากรอกข้อมูล</span>
-                                </div>
-                            </div>
                             <!-- --Tiny Mce -->
                             <div class="col-md-12">
                                 <div class="form-group">
@@ -87,18 +42,41 @@
                                     ></tiny-mce>
                                 </div>
                             </div>
-                            <!-- -- Image Upload-->
-                            <div class="col-md-12">
+                            <!--Old Image-->
+                            <div v-if="form.images.length > 0" class="col-xs-12">
+                                <h3>รูปภาพที่อัพโหลดไว้แล้ว</h3>
                                 <div class="row">
-                                    <div v-if="form.images.length > 0" class="col-md-12">
+                                    <div class="col-md-12">
                                         <app-table
-                                                :columns="['ภาพตัวอย่าง','ชื่อภาพ']"
-                                                :columnWidths="[50,50]"
+                                                :columns="['ภาพตัวอย่าง']"
+                                                :columnWidths="[100]"
                                                 :hasCheckBox="true"
                                                 :items="form.images"
                                                 :checkedItemsInit="checkedImages"
                                                 itemRowClass="text-center"
-                                                @deleteItems="deleteImages"
+                                                @deleteItems="deleteOldImage"
+                                        >
+                                            <template slot="itemColumn" slot-scope="props">
+                                                <td><img :src="props.item.path" width="150" height="auto"></td>
+                                            </template>
+                                        </app-table>
+                                    </div>
+                                </div>
+                                <hr>
+                            </div>
+                            <!-- -- New Image Upload-->
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div v-if="form.newImages.length > 0" class="col-md-12">
+                                        <h3>รูปภาพใหม่</h3>
+                                        <app-table
+                                                :columns="['ภาพตัวอย่าง','ชื่อภาพ']"
+                                                :columnWidths="[50,50]"
+                                                :hasCheckBox="true"
+                                                :items="form.newImages"
+                                                :checkedItemsInit="checkedImages"
+                                                itemRowClass="text-center"
+                                                @deleteItems="deleteNewImages"
                                         >
                                             <template slot="itemColumn" slot-scope="props">
                                                 <td><img :src="props.item.thumb" width="150" height="auto"></td>
@@ -110,12 +88,12 @@
                                 <!--@input-filter สำหรับกรองรูปและสร้าง thumbnail-->
                                 <file-upload
                                         ref="upload"
-                                        v-model="form.images"
+                                        v-model="form.newImages"
                                         class="btn btn-info"
                                         :multiple="true"
                                         @input-filter="inputFilter"
                                 >
-                                    เพิ่มรูปภาพ  <i class="fa fa-plus"></i>
+                                    เพิ่มรูปภาพ <i class="fa fa-plus"></i>
                                 </file-upload>
                             </div>
                         </div>
@@ -133,29 +111,27 @@
     import WebUrl from '../../../services/webUrl';
     import {ContentService} from "../../../services/content/content_service";
     import FileUpload from 'vue-upload-component';
-    import {ContentImageService} from "../../../services/content/image_upload_service";
 
     let webUrl = new WebUrl();
     let contentCategoryService = new ContentCategoryService();
     let contentService = new ContentService();
-    let contentImageService = new ContentImageService();
     export default {
-        name: "PortfolioCreate",
+        name: "FixedCategoryContent",
         components: {
             'tiny-mce': Editor,
             FileUpload
         },
         data() {
             return {
+                categoryTitle:this.$route.params.categoryTitle,
                 form: {
-                    title: '',
+                    title: 'About Us',
                     body: '',
                     category: '',
                     images: [],
-                    files: []
+                    newImages:[]
                 },
                 checkedImages:[],
-                categories: [],
                 tinyMceInit: tinyMceConfig
             }
         },
@@ -165,45 +141,53 @@
                 formData.append('title', this.form.title);
                 formData.append('body', this.form.body);
                 formData.append('category', JSON.stringify(this.form.category));
-                this.form.images.forEach(image => {
-                    formData.append('images[]', image.file)
+                this.form.newImages.forEach(image => {
+                    //formData.append('ชื่อตัวแปร',ไฟล์,'ชื่อไฟล์ใหม่ที่แก้ไขแล้ว')
+                    formData.append('newImages[]', image.file,image.name)
                 });
                 return formData;
             }
         },
-        watch: {
-            'form.images'() {
-                console.log('Images Change');
-                this.form.files.splice(0);
-                this.form.images.forEach(image => {
-                    this.form.files.push(image.file);
-                })
+        watch:{
+            '$route'(to,from){
+                this.categoryTitle = to.params.categoryTitle;
+                this.initData();
             }
         },
         created() {
-            //กำหนด vuex state ไม่ใช้ refresh parent component
-            this.$store.commit('notRefreshParent');
-            //Get Categories
-            contentCategoryService.getAllCategories('Portfolio')
-                .then(result => {
-                    this.categories = result;
-                }).catch(err => {
-                console.log(err)
-            })
+            this.initData();
         },
         methods: {
-            viewChange(event) {
-                console.log('View Change', event)
+            initData(){
+                this.$store.commit('loading');
+                //Get Categories
+                this.form.newImages = [];
+
+                contentCategoryService.getCategoryFromTitle(this.categoryTitle)
+                    .then(result => {
+                        console.log('About Us Category',result);
+                        this.form.category = result;
+                        if(result.latest_content){
+                            this.form.title = result.latest_content.title;
+                            this.form.body = result.latest_content.body;
+                            this.form.images = result.latest_content.images
+                        }
+                        this.$store.commit('stopLoading');
+                    }).catch(err => {
+                    console.log(err)
+                })
             },
-            addContent(form, event) {
+            updateOrCreateContent(form, event) {
                 this.$validator.validateAll(form).then(result => {
                     //If All Input Validate
                     if (result) {
                         this.$store.commit('loading');
-                        contentService.addContent(this.formDataInput)
+                        contentService.updateOrCreateContent(this.formDataInput,this.categoryTitle)
                             .then(result => {
-                                this.$store.commit('refreshParent');
-                                this.$router.push({name: 'portfolio'});
+                                this.$store.commit('stopLoading')
+                                // this.$store.commit('refreshParent');
+                                this.initData();
+                                toastr.success('บันทึกเสร็จสมบูรณ์');
                             }).catch(err => {
                                 console.log(err)
                             }
@@ -216,40 +200,32 @@
                 if (this.form.title.length > 0 || this.form.body.length > 0) {
                     this.$dialog.confirm("เอกสารยังไม่ได้รับการบันทึก ยืนยันการยกเลิก")
                         .then(() => {
-                            this.$router.push({name: 'portfolio'});
+                            this.$router.push({path: '/content/'+this.categoryTitle});
                         }).catch(() => {
                     })
                 } else {
-                    this.$router.push({name: 'portfolio'});
+                    this.$router.push({path: '/content/'+this.categoryTitle});
                 }
             },
-            saveContent() {
-                //ทำการ refresh component เพราะมีการ save data ใหม่
-                this.$store.commit('refreshParent');
-                //Route back to Content Page
-                this.$router.push({name: 'portfolio'});
+            deleteOldImage(){
+
             },
-            tinyChange(event) {
-                console.log('exeCommand :', event);
-            },
-            deleteImages(param){
+            deleteNewImages(param){
                 let result='';
                 //วน filter เช็ค images ดูว่ามี image อันไหนที่ไม่ตรงกับที่จะลบออก
-                this.form.images=this.form.images.filter(image=>{
+                this.form.newImages=this.form.newImages.filter(image=>{
                     //โดยใช้ findIndex มาหา index ที่เป็น -1 ก็คือไม่ตรงกับที่จะลบ และ ให้เก็บ image นั้นไว้
                     //อันที่ไม่ใช่ -1 คืออันที่ต้องการลบออก ดั้งนั้นจึงเป็นเหตุผลว่าทำไมต้องเป็น -1
                     return param.checkedItems.findIndex(item=>{
-                       return item.id === image.id
+                        return item.id === image.id
                     }) === -1;
                 });
             },
             inputFilter(newFile, oldFile, prevent) {
                 if (newFile && !oldFile) {
                     console.log('Before Add NEw File ',newFile);
-                    console.log('Test');
-                    console.log('This is 1.02 Version');
                     //newFile.name=
-                    newFile = newFile.name.replace(/\s+/g,'-').toLowerCase();
+                    newFile.name = newFile.name.replace(/\s+/g,'-').toLowerCase();
                     // Before adding a file
                     // 添加文件前
                     // Filter system files or hide files
@@ -278,7 +254,13 @@
                         newFile.thumb = newFile.blob
                     }
                 }
-            }
+            },
+            tinyChange(event) {
+                console.log('exeCommand :', event);
+            },
+            viewChange(event) {
+                console.log('View Change', event)
+            },
         }
     }
 </script>

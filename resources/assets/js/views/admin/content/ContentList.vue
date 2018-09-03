@@ -51,39 +51,35 @@
         name: "ContentList",
         data() {
             return {
+                categoryTitle:this.$route.params.categoryTitle,
                 content: {
                     data: [],
                     current_page: 1
                 },
                 checkedItems: [],
                 categories: [],
-                searchText:'',
-                selectedCategory:''
+                searchText: '',
+                selectedCategory: ''
             }
         },
-        computed: {
-
-        },
-        watch:{
-            searchText(){
+        computed: {},
+        watch: {
+            searchText() {
                 this.getContents();
             },
-            selectedCategory(){
+            selectedCategory() {
                 this.getContents();
+            },
+            '$route'(to,from){
+                this.categoryTitle =  to.params.categoryTitle;
+                this.initData();
             }
-        }
-        ,
+        },
         created() {
-            this.$store.commit('loading');
-            contentCategoryService.getAllCategoriesWithSelectAll()
-                .then(result => {
-                    this.categories = result;
-                    this.getContents();
-                }).catch((err) => {
-                console.log(err)
-            })
+            this.initData();
         },
         mounted() {
+            console.log('Category Title ',this.categoryTitle);
         },
         activated() {
             if (this.$store.getters.refreshParentStatus) {
@@ -94,9 +90,19 @@
             console.log('deactivated')
         },
         methods: {
+            initData(){
+                this.$store.commit('loading');
+                contentCategoryService.getAllCategoriesWithSelectAll(this.categoryTitle)
+                    .then(result => {
+                        this.categories = result;
+                        this.getContents();
+                    }).catch((err) => {
+                    console.log(err)
+                })
+            },
             getContents(page = 1) {
                 this.checkedItems.splice(0);
-                contentService.getAllContents(page,this.selectedCategory,this.searchText)
+                contentService.getAllContents(page, this.selectedCategory, this.searchText, this.categoryTitle)
                     .then(result => {
                         console.log('Content Result', result);
                         this.content = result;
@@ -107,12 +113,12 @@
                 })
 
             },
-            openCreatePage(){
-                this.$router.push({name:'content_create'});
+            openCreatePage() {
+                this.$router.push({path:'/content/'+this.categoryTitle+'/create'});
             }
             ,
             editContent(item) {
-                this.$router.push({path: `/content/edit/${item.id}`});
+                this.$router.push({path: `/content/${this.categoryTitle}/edit/${item.id}`});
             },
             deleteItems(params) {
                 console.log('Selected Items are', params);

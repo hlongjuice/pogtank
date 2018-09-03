@@ -72,4 +72,9 @@ class ContentImageController extends Controller
         });
         return $result;
     }
+    //Delete Image
+    public function deleteImageFolder($path){
+        $folderName = dirname($path);
+        File::deleteDirectory($folderName);
+    }
 }

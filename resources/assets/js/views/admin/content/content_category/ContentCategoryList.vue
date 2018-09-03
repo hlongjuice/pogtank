@@ -45,6 +45,7 @@
         name: "ContentCategoryList",
         data() {
             return {
+                categoryTitle:this.$route.params.categoryTitle,
                 categories: [],
                 refreshPageStatus: false,
                 form: {
@@ -53,9 +54,14 @@
             }
         },
         computed: {},
+        watch:{
+          '$route'(to,from){
+              this.categoryTitle = to.params.categoryTitle;
+              this.initData();
+          }
+        },
         created() {
-            this.$store.commit('loading');
-            this.getCategories();
+            this.initData();
         },
         mounted() {
             // this.showLoading=true;
@@ -63,7 +69,7 @@
         //Activated amd Deactivated fired when enable keep-alive for this component
         activated() {
             if (this.$store.getters.refreshParentStatus) {
-                this.getCategories();
+                this.initData();
             }
         },
         deactivated() {
@@ -71,9 +77,13 @@
         },
         methods: {
             //Get All Categories
+            initData(){
+                this.$store.commit('loading');
+                this.getCategories();
+            },
             getCategories() {
                 this.showLoading = true;
-                contentCategoryService.getAllCategories()
+                contentCategoryService.getAllCategories(this.categoryTitle)
                     .then(result => {
                         this.categories = result;
                         this.$store.commit('stopLoading');
@@ -85,12 +95,12 @@
             },
             //Create
             openCreatePage(){
-                this.$router.push({name:'content_category_create'})
+                this.$router.push({path:'/content_category/'+this.categoryTitle+'/create'})
             },
             //Edit Category
             editCategory(item) {
                 this.$router.push({
-                    path: `edit/${item.id}`
+                    path: '/content_category/'+this.categoryTitle+'/edit/'+item.id
                 });
             },
             //Delete Categories
